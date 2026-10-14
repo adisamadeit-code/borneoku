@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Borneoku - Karya Nusantara, Pasar Dunia</title>
+  <title>BorneoKU - Karya Nusantara, Pasar Dunia</title>
   
   <!-- Tailwind CSS & FontAwesome Icons -->
   <script src="https://cdn.tailwindcss.com"></script>
@@ -36,7 +36,7 @@
           <i class="fa-solid fa-store text-xl"></i>
         </div>
         <div>
-          <h1 class="text-xl font-extrabold tracking-tight text-white leading-none">Borneo<span class="text-gold">ku</span></h1>
+          <h1 class="text-xl font-extrabold tracking-tight text-white leading-none">Borneo<span class="text-gold">KU</span></h1>
           <p class="text-[9px] tracking-widest text-emerald-200 uppercase font-medium mt-0.5">Karya Nusantara, Pasar Dunia</p>
         </div>
       </div>
@@ -100,8 +100,8 @@
             <i class="fa-solid fa-cart-arrow-down"></i>
             <span>Mulai Belanja &rarr;</span>
           </a>
-          <!-- TOMBOL DAFTAR MITRA DENGAN TEKS 'Borneoku' -->
-          <a href="https://wa.me/6281241170658?text=Halo%20Admin%20Borneoku,%20saya%20ingin%20mendaftar%20sebagai%20Mitra%20Penjual%20UMKM.%0A%0A*Formulir%20Pendaftaran%20Mitra:*%0A-%20*Nama%20Toko/Usaha*:%20%0A-%20*Nama%20Pemilik*:%20%0A-%20*Kategori%20Produk*:%20%0A-%20*No.%20WhatsApp*:%20%0A-%20*Kota/Alamat*:%20" target="_blank" class="bg-amber-500 hover:bg-amber-600 text-white font-bold py-2.5 px-5 rounded-xl shadow-lg transition text-xs flex items-center space-x-2">
+          <!-- TOMBOL DAFTAR MITRA -->
+          <a href="https://wa.me/6281241170658?text=Halo%20Admin%20BorneoKU,%20saya%20ingin%20mendaftar%20sebagai%20Mitra%20Penjual%20UMKM.%0A%0A*Formulir%20Pendaftaran%20Mitra:*%0A-%20*Nama%20Toko/Usaha*:%20%0A-%20*Nama%20Pemilik*:%20%0A-%20*Kategori%20Produk*:%20%0A-%20*No.%20WhatsApp*:%20%0A-%20*Kota/Alamat*:%20" target="_blank" class="bg-amber-500 hover:bg-amber-600 text-white font-bold py-2.5 px-5 rounded-xl shadow-lg transition text-xs flex items-center space-x-2">
             <i class="fa-solid fa-user-plus"></i>
             <span>Daftar Jadi Mitra Penjual &rarr;</span>
           </a>
@@ -171,7 +171,7 @@
   <!-- FOOTER -->
   <footer class="bg-gray-900 text-gray-400 text-xs py-6 px-4 border-t border-gray-800 mt-8">
     <div class="max-w-7xl mx-auto text-center space-y-1">
-      <p class="font-bold text-gray-300">&copy; 2026 Borneoku. Seluruh hak cipta dilindungi.</p>
+      <p class="font-bold text-gray-300">&copy; 2026 BorneoKU. Seluruh hak cipta dilindungi.</p>
       <p class="text-gray-500 text-[11px]">Platform Pemberdayaan UMKM & Pasar Digital Nusantara</p>
     </div>
   </footer>
@@ -235,7 +235,7 @@
         return;
       }
       const targetWA = cart[0].whatsapp || adminWA;
-      let message = `Halo, saya ingin memesan beberapa produk dari Borneoku:\n\n`;
+      let message = `Halo, saya ingin memesan beberapa produk dari BorneoKU:\n\n`;
       cart.forEach((item, i) => {
         message += `${i + 1}. ${item.name} - Rp ${Number(item.price).toLocaleString('id-ID')}\n`;
       });
@@ -278,7 +278,7 @@
                     <i class="fa-solid fa-cart-plus text-[10px]"></i>
                     <span>+ Keranjang</span>
                   </button>
-                  <a href="https://wa.me/${noWa}?text=Halo,%20saya%20tertarik%20dengan%20produk%20${encodeURIComponent(namaProduk)}%20di%20Borneoku" 
+                  <a href="https://wa.me/${noWa}?text=Halo,%20saya%20tertarik%20dengan%20produk%20${encodeURIComponent(namaProduk)}%20di%20BorneoKU" 
                      target="_blank" class="w-full bg-emerald-900 hover:bg-emerald-950 text-white text-center py-1.5 rounded-lg text-[11px] font-bold transition flex items-center justify-center space-x-1">
                     <i class="fa-brands fa-whatsapp text-xs"></i>
                     <span>Pesan WA</span>
@@ -296,4 +296,4 @@
     loadProducts();
   </script>
 </body>
-</html>
+  </html>
