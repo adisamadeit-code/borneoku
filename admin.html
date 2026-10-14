@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Admin Panel - Borneoku</title>
   
-  <!-- Tailwind CSS & FontAwesome Icons -->
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   
@@ -55,7 +54,6 @@
   <!-- DASHBOARD PANEL -->
   <div id="dashboard-section" class="max-w-4xl mx-auto my-8 p-4 md:p-6 space-y-6 hidden">
     
-    <!-- BAGIAN 1: FORM TAMBAH / EDIT PRODUK -->
     <div class="bg-white p-6 rounded-2xl shadow-md border border-gray-100 space-y-4">
       <h3 id="form-title" class="text-lg font-bold text-gray-900 border-b pb-3 flex items-center gap-2">
         <i class="fa-solid fa-square-plus text-emerald-800"></i> <span id="form-mode-text">Tambah Produk & Kelola Stok</span>
@@ -78,12 +76,6 @@
         </div>
 
         <div>
-          <label class="block text-xs font-bold text-gray-700 mb-1">Jumlah Stok Produk</label>
-          <input type="text" id="prod-stock" placeholder="Contoh: 10 stel atau Tersedia" 
-                 class="w-full px-3 py-2 rounded-xl border border-gray-300 text-xs focus:ring-2 focus:ring-emerald-600">
-        </div>
-
-        <div>
           <label class="block text-xs font-bold text-gray-700 mb-1">Kategori Produk</label>
           <select id="prod-category" class="w-full px-3 py-2 rounded-xl border border-gray-300 text-xs focus:ring-2 focus:ring-emerald-600">
             <option value="Kerajinan">Kerajinan Tangan</option>
@@ -94,17 +86,11 @@
           </select>
         </div>
 
-        <div>
-          <label class="block text-xs font-bold text-gray-700 mb-1">No. WhatsApp Penjual</label>
-          <input type="text" id="prod-wa" placeholder="Contoh: 081241170658" required
-                 class="w-full px-3 py-2 rounded-xl border border-gray-300 text-xs focus:ring-2 focus:ring-emerald-600">
-        </div>
-
         <div class="md:col-span-2">
           <label class="block text-xs font-bold text-gray-700 mb-1">Unggah Foto Produk dari Galeri HP</label>
           <input type="file" id="prod-file" accept="image/*" onchange="previewImage(event)"
                  class="w-full px-3 py-2 rounded-xl border border-gray-300 text-xs bg-gray-50 file:mr-4 file:py-1 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-emerald-50 file:text-emerald-700 hover:file:bg-emerald-100">
-          <p class="text-[10px] text-gray-500 mt-1">Pilih foto dari galeri HP Kakak. Jika dikosongkan, akan memakai gambar standar.</p>
+          <p class="text-[10px] text-gray-500 mt-1">Pilih foto dari galeri HP Kakak.</p>
         </div>
 
         <div class="md:col-span-2 pt-2 flex gap-2">
@@ -119,13 +105,10 @@
       </form>
     </div>
 
-    <!-- BAGIAN 2: KURASI, VERIFIKASI, & BLOKIR PRODUK -->
     <div class="bg-white p-6 rounded-2xl shadow-md border border-gray-100 space-y-4">
       <h3 class="text-lg font-bold text-gray-900 border-b pb-3 flex items-center gap-2">
-        <i class="fa-solid fa-shield-halved text-emerald-800"></i> Kurasi & Verifikasi Produk UMKM (Halal/Layak Jual)
+        <i class="fa-solid fa-shield-halved text-emerald-800"></i> Kurasi & Verifikasi Produk UMKM
       </h3>
-      <p class="text-xs text-gray-500">Periksa daftar produk dari mitra di bawah ini. Setujui produk yang layak atau blokir/hapus produk yang tidak sesuai ketentuan.</p>
-      
       <div id="admin-product-list" class="space-y-3">
         <p class="text-center text-xs text-gray-400 py-6">Memuat data produk...</p>
       </div>
@@ -144,8 +127,7 @@
 
     function handleLogin(e) {
       e.preventDefault();
-      const inputPass = document.getElementById('admin-password').value;
-      if (inputPass === PASS_ADMIN) {
+      if (document.getElementById('admin-password').value === PASS_ADMIN) {
         document.getElementById('login-section').classList.add('hidden');
         document.getElementById('dashboard-section').classList.remove('hidden');
         loadAdminProducts();
@@ -178,40 +160,17 @@
         }
 
         container.innerHTML = cachedProducts.map(item => {
-          const nama = item.name || item.nama_produk || item.nama || 'Produk';
-          const harga = item.price !== undefined ? item.price : (item.harga !== undefined ? item.harga : 0);
+          const nama = item.title || 'Produk';
+          const harga = item.price || 0;
           const status = item.status || 'disetujui';
-          const stok = item.stok !== undefined ? item.stok : (item.stock !== undefined ? item.stock : 'Tersedia');
-          const wa = item.whatsapp || item.wa || '-';
-          
-          let statusBadge = '';
-          if (status === 'disetujui') {
-            statusBadge = `<span class="bg-emerald-100 text-emerald-800 text-[10px] font-bold px-2 py-0.5 rounded-full">Disetujui (Aktif)</span>`;
-          } else if (status === 'diblokir') {
-            statusBadge = `<span class="bg-red-100 text-red-800 text-[10px] font-bold px-2 py-0.5 rounded-full">Diblokir / Ditolak</span>`;
-          } else {
-            statusBadge = `<span class="bg-amber-100 text-amber-800 text-[10px] font-bold px-2 py-0.5 rounded-full">Pending (Perlu Cek)</span>`;
-          }
 
           return `
             <div class="flex flex-col md:flex-row items-start md:items-center justify-between p-3.5 bg-gray-50 rounded-xl border border-gray-200 gap-3">
               <div class="space-y-1">
-                <div class="flex items-center gap-2">
-                  <p class="font-bold text-xs text-gray-900">${nama}</p>
-                  ${statusBadge}
-                </div>
-                <p class="text-[11px] text-emerald-900 font-semibold">Rp ${Number(harga).toLocaleString('id-ID')} | Stok: ${stok} | WA: ${wa}</p>
+                <p class="font-bold text-xs text-gray-900">${nama}</p>
+                <p class="text-[11px] text-emerald-900 font-semibold">Rp ${Number(harga).toLocaleString('id-ID')} | Kategori: ${item.category || '-'}</p>
               </div>
-              <div class="flex items-center gap-2 w-full md:w-auto justify-end flex-wrap">
-                <button onclick="updateStatus('${item.id}', 'disetujui')" class="text-emerald-700 hover:text-emerald-900 text-[11px] font-bold px-2.5 py-1 bg-emerald-50 rounded-lg border border-emerald-300">
-                  <i class="fa-solid fa-check"></i> Setujui
-                </button>
-                <button onclick="updateStatus('${item.id}', 'diblokir')" class="text-amber-700 hover:text-amber-900 text-[11px] font-bold px-2.5 py-1 bg-amber-50 rounded-lg border border-amber-300">
-                  <i class="fa-solid fa-ban"></i> Blokir
-                </button>
-                <button onclick="editProduct('${item.id}')" class="text-blue-600 hover:text-blue-800 text-[11px] font-bold px-2.5 py-1 bg-blue-50 rounded-lg border border-blue-200">
-                  <i class="fa-solid fa-pen-to-square"></i> Edit
-                </button>
+              <div class="flex items-center gap-2">
                 <button onclick="deleteProduct('${item.id}')" class="text-red-500 hover:text-red-700 text-[11px] font-bold px-2.5 py-1 bg-red-50 rounded-lg border border-red-200">
                   <i class="fa-solid fa-trash-can"></i> Hapus
                 </button>
@@ -224,45 +183,12 @@
       }
     }
 
-    async function updateStatus(id, newStatus) {
-      try {
-        const { error } = await supabaseClient.from('products').update({ status: newStatus }).eq('id', id);
-        if (error) throw error;
-        alert(`Status produk berhasil diubah menjadi: ${newStatus.toUpperCase()}`);
-        loadAdminProducts();
-      } catch (err) {
-        alert('Gagal mengubah status: ' + err.message);
-      }
-    }
-
-    function editProduct(id) {
-      const prod = cachedProducts.find(p => p.id == id);
-      if (!prod) return;
-
-      document.getElementById('edit-prod-id').value = prod.id;
-      document.getElementById('prod-name').value = prod.name || prod.nama_produk || prod.nama || '';
-      document.getElementById('prod-price').value = prod.price !== undefined ? prod.price : (prod.harga !== undefined ? prod.harga : 0);
-      document.getElementById('prod-stock').value = prod.stok || prod.stock || 'Tersedia';
-      document.getElementById('prod-category').value = prod.category || prod.kategori || 'Kerajinan';
-      document.getElementById('prod-wa').value = prod.whatsapp || prod.wa || '';
-      document.getElementById('prod-img-url').value = prod.image_url || 'https://images.unsplash.com/photo-1544816155-12df9643f363?auto=format&fit=crop&w=400&q=80';
-
-      document.getElementById('form-mode-text').innerText = 'Edit Produk';
-      document.getElementById('btn-save-text').innerText = 'Perbarui Produk';
-      document.getElementById('btn-cancel').classList.remove('hidden');
-
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
-
     function resetForm() {
       document.getElementById('edit-prod-id').value = '';
       document.getElementById('prod-name').value = '';
       document.getElementById('prod-price').value = '';
-      document.getElementById('prod-stock').value = '';
-      document.getElementById('prod-wa').value = '';
       document.getElementById('prod-file').value = '';
       document.getElementById('prod-img-url').value = 'https://images.unsplash.com/photo-1544816155-12df9643f363?auto=format&fit=crop&w=400&q=80';
-
       document.getElementById('form-mode-text').innerText = 'Tambah Produk & Kelola Stok';
       document.getElementById('btn-save-text').innerText = 'Simpan Produk ke Database';
       document.getElementById('btn-cancel').classList.add('hidden');
@@ -273,38 +199,18 @@
       const saveBtn = document.getElementById('btn-save');
       saveBtn.disabled = true;
 
-      const editId = document.getElementById('edit-prod-id').value;
-      const nameVal = document.getElementById('prod-name').value;
-      const priceVal = Number(document.getElementById('prod-price').value);
-      const stockVal = document.getElementById('prod-stock').value || 'Tersedia';
-      const categoryVal = document.getElementById('prod-category').value;
-      let waVal = document.getElementById('prod-wa').value.trim();
-      const imgVal = document.getElementById('prod-img-url').value;
-
-      if (waVal.startsWith('0')) {
-        waVal = '62' + waVal.slice(1);
-      }
-
-      // Menggunakan kolom 'name' dan 'price' persis sesuai struktur Supabase Kakak
       const payload = {
-        name: nameVal,
-        price: priceVal,
-        category: categoryVal,
-        whatsapp: waVal,
-        image_url: imgVal,
+        title: document.getElementById('prod-name').value,
+        price: Number(document.getElementById('prod-price').value),
+        category: document.getElementById('prod-category').value,
+        image_url: document.getElementById('prod-img-url').value,
         status: 'disetujui'
       };
 
       try {
-        if (editId) {
-          const { error } = await supabaseClient.from('products').update(payload).eq('id', editId);
-          if (error) throw error;
-          alert('Produk berhasil diperbarui!');
-        } else {
-          const { error } = await supabaseClient.from('products').insert([payload]);
-          if (error) throw error;
-          alert('Produk berhasil ditambahkan ke database!');
-        }
+        const { error } = await supabaseClient.from('products').insert([payload]);
+        if (error) throw error;
+        alert('Produk berhasil ditambahkan ke database!');
         resetForm();
         loadAdminProducts();
       } catch (err) {
@@ -315,16 +221,16 @@
     }
 
     async function deleteProduct(id) {
-      if (!confirm('Apakah Anda yakin ingin menghapus produk ini secara permanen?')) return;
+      if (!confirm('Hapus produk ini?')) return;
       try {
         const { error } = await supabaseClient.from('products').delete().eq('id', id);
         if (error) throw error;
         alert('Produk berhasil dihapus!');
         loadAdminProducts();
       } catch (err) {
-        alert('Gagal menghapus produk: ' + err.message);
+        alert('Gagal menghapus: ' + err.message);
       }
     }
   </script>
 </body>
-  </html>
+</html>
