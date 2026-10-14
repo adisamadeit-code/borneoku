@@ -8,51 +8,104 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
-<body class="bg-gray-50 text-gray-800 font-sans pb-20">
+<body class="bg-gray-50 text-gray-800 font-sans">
+
+  <!-- Header -->
   <header class="bg-emerald-700 text-white sticky top-0 z-50 shadow-md">
     <div class="max-w-6xl mx-auto px-4 py-3 flex justify-between items-center">
       <div class="flex items-center space-x-2">
-        <i class="fa-solid fa-store text-2xl text-amber-300"></i>
+        <i class="fa-solid fa-store text-2xl"></i>
         <h1 class="text-xl font-bold tracking-wide">BorneoKu</h1>
       </div>
-      <button onclick="toggleCart()" class="relative bg-emerald-800 px-3 py-2 rounded-lg text-sm flex items-center gap-2 hover:bg-emerald-900 transition">
-        <i class="fa-solid fa-cart-shopping text-lg text-amber-300"></i>
+      <button onclick="toggleCart()" class="relative bg-emerald-800 hover:bg-emerald-900 px-4 py-2 rounded-lg flex items-center gap-2 transition">
+        <i class="fa-solid fa-cart-shopping"></i>
         <span>Keranjang</span>
-        <span id="cart-count" class="bg-amber-400 text-emerald-950 text-xs font-bold px-2 py-0.5 rounded-full">0</span>
+        <span id="cart-count" class="bg-amber-400 text-emerald-950 font-bold text-xs px-2 py-0.5 rounded-full">0</span>
       </button>
     </div>
   </header>
+
+  <!-- Banner -->
   <section class="bg-emerald-800 text-white py-8 px-4 text-center">
-    <div class="max-w-3xl mx-auto">
-      <h2 class="text-2xl md:text-3xl font-extrabold mb-2">Produk Unggulan UMKM Kalimantan & Indonesia</h2>
-      <p class="text-emerald-100 text-sm">Belanja produk lokal berkualitas, cepat, aman, dan langsung dari pengrajin.</p>
-    </div>
+    <h2 class="text-2xl font-bold mb-2">Marketplace Produk Unggulan Borneo</h2>
+    <p class="text-emerald-100 max-w-xl mx-auto text-sm">Dukung produk lokal berkualitas tinggi dari para pengrajin dan UMKM terbaik.</p>
   </section>
-  <main class="max-w-6xl mx-auto px-4 py-6">
-    <h3 class="text-lg font-bold mb-4 border-l-4 border-emerald-600 pl-3">Katalog Produk</h3>
-    <div id="product-list" class="grid grid-cols-2 md:grid-cols-4 gap-4">
-      <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden flex flex-col justify-between">
-        <img src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=500" alt="Produk Sample" class="w-full h-40 object-cover">
-        <div class="p-3 flex-1 flex flex-col justify-between">
-          <div>
-            <span class="bg-emerald-100 text-emerald-800 text-[10px] font-semibold px-2 py-0.5 rounded">Kerajinan</span>
-            <h4 class="font-bold text-sm mt-1 line-clamp-2">Souvenir Khas Borneo</h4>
-            <p class="text-emerald-700 font-bold text-sm mt-1">Rp 75.000</p>
-          </div>
-          <button onclick="addToCart('Souvenir Khas Borneo', 75000)" class="mt-3 w-full bg-emerald-600 text-white text-xs py-2 rounded-lg font-medium hover:bg-emerald-700 transition">
-            + Keranjang
-          </button>
-        </div>
-      </div>
+
+  <!-- Daftar Produk -->
+  <main class="max-w-6xl mx-auto px-4 py-8">
+    <h3 class="text-xl font-bold mb-6 text-emerald-900 border-b pb-2">Produk Terbaru</h3>
+    
+    <div id="loading" class="text-center py-12 text-gray-500">
+      <i class="fa-solid fa-spinner fa-spin text-3xl text-emerald-600 mb-2"></i>
+      <p>Memuat produk dari database...</p>
     </div>
+
+    <div id="product-list" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 hidden"></div>
   </main>
+
+  <!-- Script Supabase -->
   <script>
+    const SUPABASE_URL = 'https://iegqvegvoqjqjjyucpss.supabase.co';
+    const SUPABASE_KEY = 'sb_publishable_7o0SP7VYOFhYJ0qyDrPtzw_2VvkuiMy';
+
+    const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
     let cart = [];
-    function toggleCart() {}
+
+    async function fetchProducts() {
+      const { data, error } = await supabaseClient.from('products').select('*');
+      
+      const loadingEl = document.getElementById('loading');
+      const listEl = document.getElementById('product-list');
+
+      loadingEl.classList.add('hidden');
+      listEl.classList.remove('hidden');
+
+      if (error) {
+        listEl.innerHTML = `<p class="col-span-full text-red-500 text-center">Gagal memuat produk: ${error.message}</p>`;
+        return;
+      }
+
+      if (!data || data.length === 0) {
+        listEl.innerHTML = `<p class="col-span-full text-center text-gray-500">Belum ada produk yang tersedia.</p>`;
+        return;
+      }
+
+      listEl.innerHTML = data.map(product => `
+        <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-md transition flex flex-col justify-between">
+          <img src="${product.image_url || 'https://via.placeholder.com/300'}" alt="${product.title}" class="w-full h-48 object-cover">
+          <div class="p-4 flex-1 flex flex-col justify-between">
+            <div>
+              <span class="text-xs bg-emerald-50 text-emerald-700 px-2 py-1 rounded font-medium">${product.category || 'Umum'}</span>
+              <h4 class="font-bold text-gray-800 mt-2 text-base line-clamp-1">${product.title}</h4>
+            </div>
+            <div class="mt-4 flex justify-between items-center">
+              <span class="text-emerald-700 font-bold">Rp ${Number(product.price).toLocaleString('id-ID')}</span>
+              <button onclick="addToCart('${product.title}', ${product.price})" class="bg-emerald-600 text-white px-3 py-1.5 rounded-lg text-sm hover:bg-emerald-700 transition flex items-center gap-1">
+                <i class="fa-solid fa-plus text-xs"></i> Beli
+              </button>
+            </div>
+          </div>
+        </div>
+      `).join('');
+    }
+
     function addToCart(title, price) {
       cart.push({ title, price });
-      alert(title + " ditambahkan!");
+      document.getElementById('cart-count').innerText = cart.length;
+      alert(`"${title}" berhasil ditambahkan ke keranjang!`);
     }
+
+    function toggleCart() {
+      if (cart.length === 0) {
+        alert("Keranjang belanja masih kosong.");
+      } else {
+        const total = cart.reduce((sum, item) => sum + item.price, 0);
+        alert(`Keranjang berisi ${cart.length} barang.\nTotal: Rp ${total.toLocaleString('id-ID')}`);
+      }
+    }
+
+    fetchProducts();
   </script>
 </body>
 </html>
