@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Dashboard Admin - Borneoku</title>
+  <title>Dashboard & Pengaturan Toko - Borneoku</title>
   
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -11,16 +11,17 @@
   <style>
     .bg-borneo-dark { background-color: #064e3b; }
     .text-gold { color: #d4af37; }
-    body { background-color: #f8fafc; padding-bottom: 90px; }
+    body { background-color: #f8fafc; padding-bottom: 95px; }
   </style>
 </head>
 <body class="font-sans text-gray-800">
 
-  <header class="bg-borneo-dark text-white p-4 shadow-sm sticky top-0 z-50">
+  <!-- HEADER ADMIN -->
+  <header class="bg-borneo-dark text-white p-3.5 shadow-sm sticky top-0 z-50">
     <div class="max-w-4xl mx-auto flex justify-between items-center">
       <div class="flex items-center space-x-2">
         <i class="fa-solid fa-user-shield text-amber-400 text-base"></i>
-        <h1 class="font-bold text-sm">Dashboard Admin <span class="text-gold">Borneoku</span></h1>
+        <h1 class="font-bold text-xs sm:text-sm">Panel Pengelola <span class="text-gold">Borneoku</span></h1>
       </div>
       <a href="index.html" class="bg-emerald-800 hover:bg-emerald-900 text-xs px-3 py-1.5 rounded-lg border border-emerald-600 transition flex items-center gap-1 shadow-sm text-white">
         <i class="fa-solid fa-house"></i>
@@ -29,13 +30,14 @@
     </div>
   </header>
 
+  <!-- FORM LOGIN -->
   <div id="login-section" class="max-w-md mx-auto my-12 p-6 bg-white rounded-2xl shadow-sm border border-gray-100">
     <div class="text-center mb-6">
       <div class="bg-emerald-50 text-emerald-800 w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-2 text-lg font-bold shadow-sm">
         <i class="fa-solid fa-lock"></i>
       </div>
       <h2 class="text-base font-bold text-gray-900">Login Administrator</h2>
-      <p class="text-xs text-gray-500 mt-1">Masukkan sandi untuk mengelola toko</p>
+      <p class="text-xs text-gray-500 mt-1">Masukkan sandi (admin123) untuk mengelola toko</p>
     </div>
     
     <form onsubmit="handleLogin(event)" class="space-y-4">
@@ -51,11 +53,13 @@
     </form>
   </div>
 
-  <div id="dashboard-section" class="max-w-4xl mx-auto p-4 space-y-6 hidden mt-2">
+  <!-- DASHBOARD UTAMA (Tampil Setelah Login) -->
+  <div id="dashboard-section" class="max-w-4xl mx-auto p-4 space-y-5 hidden mt-2">
     
+    <!-- 1. KELOLA PRODUK & TAMBAH BARANG -->
     <div class="bg-white p-5 rounded-2xl shadow-sm border border-gray-100 space-y-4">
       <h3 class="text-sm font-bold text-gray-900 border-b pb-2 flex items-center gap-2">
-        <i class="fa-solid fa-square-plus text-emerald-800"></i> Tambah Produk Baru
+        <i class="fa-solid fa-boxes-stacked text-emerald-800"></i> Kelola & Tambah Produk Toko
       </h3>
 
       <form onsubmit="handleSaveProduct(event)" class="grid grid-cols-1 md:grid-cols-2 gap-3">
@@ -98,56 +102,116 @@
 
         <div class="md:col-span-2 pt-1">
           <button type="submit" class="w-full bg-emerald-800 hover:bg-emerald-900 text-white font-bold py-2.5 rounded-xl text-xs transition shadow-sm flex justify-center items-center gap-2">
-            <i class="fa-solid fa-cloud-arrow-up"></i> Simpan Produk ke Etalase
+            <i class="fa-solid fa-cloud-arrow-up"></i> Simpan Produk ke Etalase Gabungan
           </button>
         </div>
       </form>
     </div>
 
-    <div class="bg-white p-5 rounded-2xl shadow-sm border border-gray-100 space-y-4">
+    <!-- 2. PENGATURAN TOKO -->
+    <div class="bg-white p-5 rounded-2xl shadow-sm border border-gray-100 space-y-3">
       <h3 class="text-sm font-bold text-gray-900 border-b pb-2 flex items-center gap-2">
-        <i class="fa-solid fa-list-check text-amber-600"></i> Persetujuan & Blokir Produk (Moderasi)
+        <i class="fa-solid fa-gear text-emerald-800"></i> Pengaturan Toko & Operasional
       </h3>
-      <p class="text-[11px] text-gray-500">Setujui produk baru atau blokir/hapus produk yang tidak sesuai ketentuan.</p>
       
-      <div id="admin-moderation-list" class="space-y-2.5">
-        <p class="text-center text-xs text-gray-400 py-4">Memuat data persetujuan...</p>
+      <div class="space-y-2">
+        <div onclick="alert('Fitur Profil Toko: Atur nama, deskripsi, dan logo toko Anda.')" class="p-3 bg-gray-50 hover:bg-gray-100 rounded-xl flex justify-between items-center cursor-pointer transition">
+          <div class="flex items-center gap-2.5">
+            <i class="fa-solid fa-store text-emerald-800"></i>
+            <div>
+              <p class="font-bold text-xs text-gray-900">Profil Toko</p>
+              <p class="text-[10px] text-gray-500">Nama, deskripsi, WhatsApp, alamat</p>
+            </div>
+          </div>
+          <i class="fa-solid fa-chevron-right text-gray-400 text-xs"></i>
+        </div>
+
+        <div onclick="alert('Fitur Kategori: Atur kategori produk unggulan toko.')" class="p-3 bg-gray-50 hover:bg-gray-100 rounded-xl flex justify-between items-center cursor-pointer transition">
+          <div class="flex items-center gap-2.5">
+            <i class="fa-solid fa-tags text-emerald-800"></i>
+            <div>
+              <p class="font-bold text-xs text-gray-900">Kategori Produk</p>
+              <p class="text-[10px] text-gray-500">Kelola kategori dan urutan etalase</p>
+            </div>
+          </div>
+          <i class="fa-solid fa-chevron-right text-gray-400 text-xs"></i>
+        </div>
+
+        <div onclick="alert('Fitur Pengiriman: Atur kurir toko atau tarif tetap.')" class="p-3 bg-gray-50 hover:bg-gray-100 rounded-xl flex justify-between items-center cursor-pointer transition">
+          <div class="flex items-center gap-2.5">
+            <i class="fa-solid fa-truck text-emerald-800"></i>
+            <div>
+              <p class="font-bold text-xs text-gray-900">Pengiriman</p>
+              <p class="text-[10px] text-gray-500">Kurir toko sendiri, tarif tetap, gratis ongkir</p>
+            </div>
+          </div>
+          <i class="fa-solid fa-chevron-right text-gray-400 text-xs"></i>
+        </div>
+
+        <div onclick="alert('Fitur Pembayaran: Atur metode transfer bank atau QRIS.')" class="p-3 bg-gray-50 hover:bg-gray-100 rounded-xl flex justify-between items-center cursor-pointer transition">
+          <div class="flex items-center gap-2.5">
+            <i class="fa-solid fa-wallet text-emerald-800"></i>
+            <div>
+              <p class="font-bold text-xs text-gray-900">Pembayaran Online</p>
+              <p class="text-[10px] text-gray-500">Terima pembayaran transfer & QRIS</p>
+            </div>
+          </div>
+          <i class="fa-solid fa-chevron-right text-gray-400 text-xs"></i>
+        </div>
       </div>
     </div>
 
+    <!-- 3. SYARAT & KETENTUAN, POTONGAN 2%, DAN PENJELASAN PAJAK -->
+    <div class="bg-emerald-50 p-5 rounded-2xl shadow-sm border border-emerald-200 space-y-3">
+      <h3 class="text-sm font-bold text-emerald-950 border-b border-emerald-200 pb-2 flex items-center gap-2">
+        <i class="fa-solid fa-file-contract text-emerald-800"></i> Syarat & Ketentuan, Potongan 2% & Pajak
+      </h3>
+      <div class="text-[11px] text-emerald-900 space-y-2 leading-relaxed">
+        <p><strong>1. Ketentuan Platform Borneoku:</strong> Seluruh mitra UMKM wajib memasarkan produk yang halal, asli buatan lokal, dan berkualitas layak jual.</p>
+        <p><strong>2. Penjelasan Potongan 2%:</strong> Platform mengenakan biaya layanan operasional sebesar <strong>2%</strong> dari setiap transaksi sukses yang terjadi untuk pemeliharaan sistem digital dan promosi bersama.</p>
+        <p><strong>3. Keterangan Pajak:</strong> Kewajiban perpajakan mengikuti ketentuan omset UMKM yang berlaku di Indonesia (PPH Final UMKM sesuai peraturan pemerintah).</p>
+      </div>
+    </div>
+
+    <!-- 4. MODERASI & VERIFIKASI PRODUK -->
     <div class="bg-white p-5 rounded-2xl shadow-sm border border-gray-100 space-y-4">
       <h3 class="text-sm font-bold text-gray-900 border-b pb-2 flex items-center gap-2">
         <i class="fa-solid fa-shield-halved text-emerald-800"></i> Verifikasi Halal & Layak Jual
       </h3>
-      <p class="text-[11px] text-gray-500">Daftar produk aktif yang telah diverifikasi layak jual.</p>
       
       <div id="admin-product-list" class="space-y-2.5">
-        <p class="text-center text-xs text-gray-400 py-4">Memuat data verifikasi...</p>
+        <p class="text-center text-xs text-gray-400 py-4">Memuat data...</p>
       </div>
     </div>
 
   </div>
 
-  <nav class="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 py-2 px-4 flex justify-around items-center z-50 shadow-lg">
+  <!-- NAVIGATION BAR BAWAH -->
+  <nav class="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 py-2 px-3 flex justify-around items-center z-50 shadow-lg">
     <button onclick="window.location.href='index.html'" class="flex flex-col items-center text-gray-400 hover:text-emerald-800 focus:outline-none">
-      <i class="fa-solid fa-house text-base"></i>
-      <span class="text-[10px] font-medium mt-1">Beranda</span>
+      <i class="fa-solid fa-house text-sm"></i>
+      <span class="text-[9px] font-medium mt-1">Beranda</span>
     </button>
     <button onclick="window.location.href='admin.html'" class="flex flex-col items-center text-emerald-800 focus:outline-none">
-      <i class="fa-solid fa-boxes-stacked text-base"></i>
-      <span class="text-[10px] font-bold mt-1">Produk</span>
+      <i class="fa-solid fa-boxes-stacked text-sm"></i>
+      <span class="text-[9px] font-bold mt-1">Produk</span>
     </button>
     <button onclick="alert('Menu Pesanan Masuk')" class="flex flex-col items-center text-gray-400 hover:text-emerald-800 focus:outline-none">
-      <i class="fa-solid fa-receipt text-base"></i>
-      <span class="text-[10px] font-medium mt-1">Pesanan</span>
+      <i class="fa-solid fa-receipt text-sm"></i>
+      <span class="text-[9px] font-medium mt-1">Pesanan</span>
     </button>
-    <button onclick="alert('Ringkasan Analitik Toko')" class="flex flex-col items-center text-gray-400 hover:text-emerald-800 focus:outline-none">
-      <i class="fa-solid fa-chart-line text-base"></i>
-      <span class="text-[10px] font-medium mt-1">Analitik</span>
+    <button onclick="alert('Notifikasi: Tidak ada pesan baru.')" class="flex flex-col items-center text-gray-400 hover:text-emerald-800 focus:outline-none relative">
+      <i class="fa-solid fa-bell text-sm"></i>
+      <span class="absolute -top-1 -right-1 bg-red-500 text-white text-[8px] font-bold px-1 rounded-full">1</span>
+      <span class="text-[9px] font-medium mt-1">Notif</span>
     </button>
-    <button onclick="alert('Pengaturan Toko & Admin')" class="flex flex-col items-center text-gray-400 hover:text-emerald-800 focus:outline-none">
-      <i class="fa-solid fa-gear text-base"></i>
-      <span class="text-[10px] font-medium mt-1">Pengaturan</span>
+    <button onclick="alert('Halaman Syarat, Potongan 2% & Pajak')" class="flex flex-col items-center text-gray-400 hover:text-emerald-800 focus:outline-none">
+      <i class="fa-solid fa-file-contract text-sm"></i>
+      <span class="text-[9px] font-medium mt-1">Syarat & Pajak</span>
+    </button>
+    <button onclick="alert('Menu Pengaturan Toko')" class="flex flex-col items-center text-gray-400 hover:text-emerald-800 focus:outline-none">
+      <i class="fa-solid fa-gear text-sm"></i>
+      <span class="text-[9px] font-medium mt-1">Pengaturan</span>
     </button>
   </nav>
 
@@ -182,8 +246,6 @@
 
     async function loadAdminProducts() {
       const containerList = document.getElementById('admin-product-list');
-      const containerMod = document.getElementById('admin-moderation-list');
-      
       try {
         const { data, error } = await supabaseClient.from('products').select('*');
         if (error) throw error;
@@ -191,30 +253,9 @@
 
         if (products.length === 0) {
           containerList.innerHTML = `<p class="text-center text-xs text-gray-400 py-4">Belum ada produk.</p>`;
-          containerMod.innerHTML = `<p class="text-center text-xs text-gray-400 py-4">Tidak ada produk untuk disetujui.</p>`;
           return;
         }
 
-        // Render Persetujuan & Blokir (Moderasi)
-        containerMod.innerHTML = products.map(item => `
-          <div class="flex items-center justify-between p-3 bg-gray-50 rounded-xl border border-gray-100 gap-2">
-            <div>
-              <p class="font-bold text-xs text-gray-900">${item.title || 'Produk'}</p>
-              <p class="text-[11px] text-emerald-800 font-semibold">Rp ${Number(item.price || 0).toLocaleString('id-ID')}</p>
-              <span class="inline-block bg-amber-100 text-amber-800 text-[9px] font-bold px-1.5 py-0.5 rounded mt-1">Status: Menunggu Persetujuan</span>
-            </div>
-            <div class="flex gap-1.5">
-              <button onclick="approveProduct('${item.id}')" class="text-emerald-700 hover:text-white text-[11px] font-bold px-2.5 py-1.5 bg-emerald-50 hover:bg-emerald-700 rounded-lg border border-emerald-200 transition">
-                <i class="fa-solid fa-check"></i> Setujui
-              </button>
-              <button onclick="deleteProduct('${item.id}')" class="text-red-600 hover:text-white text-[11px] font-bold px-2.5 py-1.5 bg-red-50 hover:bg-red-600 rounded-lg border border-red-200 transition">
-                <i class="fa-solid fa-ban"></i> Blokir
-              </button>
-            </div>
-          </div>
-        `).join('');
-
-        // Render Verifikasi Halal & Layak Jual
         containerList.innerHTML = products.map(item => `
           <div class="flex items-center justify-between p-3 bg-gray-50 rounded-xl border border-gray-100 gap-2">
             <div>
@@ -227,10 +268,8 @@
             </button>
           </div>
         `).join('');
-
       } catch (err) {
         containerList.innerHTML = `<p class="text-center text-xs text-red-500 py-4">Gagal memuat data.</p>`;
-        containerMod.innerHTML = `<p class="text-center text-xs text-red-500 py-4">Gagal memuat data.</p>`;
       }
     }
 
@@ -255,20 +294,15 @@
       }
     }
 
-    async function approveProduct(id) {
-      alert('Produk berhasil disetujui dan aktif di etalase!');
-      loadAdminProducts();
-    }
-
     async function deleteProduct(id) {
-      if (!confirm('Hapus atau blokir produk ini dari sistem?')) return;
+      if (!confirm('Hapus produk ini dari etalase?')) return;
       try {
         const { error } = await supabaseClient.from('products').delete().eq('id', id);
         if (error) throw error;
-        alert('Produk berhasil dihapus/dibatasi!');
+        alert('Produk berhasil dihapus!');
         loadAdminProducts();
       } catch (err) {
-        alert('Gagal memproses: ' + err.message);
+        alert('Gagal menghapus: ' + err.message);
       }
     }
   </script>
