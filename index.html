@@ -149,3 +149,11 @@
 
 </body>
 </html>
+  <!-- SUPABASE SCRIPT & INTEGRASI KATALOG -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script>
+    // Konfigurasi Koneksi Supabase BorneoKU
+    const SUPABASE_URL = 'https://iegqvegvoqjqjjyucpss.supabase.co';
+    const SUPABASE_ANON_KEY = 'sb_publishable_7o0SP7VYOFhYJ0qyDrPtzw_2VvkuiMy';
+    
+    const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
