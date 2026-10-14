@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>BorneoKU - Karya Nusantara, Pasar Dunia</title>
+  <title>Borneoku - Karya Nusantara, Pasar Dunia</title>
   
   <!-- Tailwind CSS & FontAwesome Icons -->
   <script src="https://cdn.tailwindcss.com"></script>
@@ -18,65 +18,97 @@
 
   <!-- HEADER / NAVBAR -->
   <header class="bg-borneo-dark text-white shadow-md">
-    <!-- BARIS ATAS KHUSUS LINK ADMIN KECIL DI POJOK KIRI -->
     <div class="max-w-7xl mx-auto px-4 pt-2 flex justify-between items-center text-[11px] text-emerald-200 border-b border-emerald-800/40 pb-1">
       <a href="admin.html" class="hover:text-amber-300 transition flex items-center gap-1">
         <i class="fa-solid fa-user-gear text-[10px]"></i>
-        <span>Admin</span>
+        <span>Admin Panel</span>
       </a>
-      <span class="text-[10px] text-emerald-300 opacity-80">Pasar Digital UMKM</span>
+      <span class="text-[10px] text-emerald-300 opacity-80">Pasar Digital UMKM Nusantara</span>
     </div>
 
-    <!-- UTAMA HEADER -->
     <div class="max-w-7xl mx-auto px-4 py-3 flex flex-wrap items-center justify-between gap-3">
-      
-      <!-- LOGO -->
       <div class="flex items-center space-x-2.5">
         <div class="bg-white p-2 rounded-xl text-emerald-900 shadow-sm">
           <i class="fa-solid fa-store text-xl"></i>
         </div>
         <div>
-          <h1 class="text-xl font-extrabold tracking-tight text-white leading-none">Borneo<span class="text-gold">KU</span></h1>
+          <h1 class="text-xl font-extrabold tracking-tight text-white leading-none">BORNEO<span class="text-gold">KU</span></h1>
           <p class="text-[9px] tracking-widest text-emerald-200 uppercase font-medium mt-0.5">Karya Nusantara, Pasar Dunia</p>
         </div>
       </div>
 
-      <!-- BUTTON KERANJANG DI ATAS -->
       <button onclick="toggleCart()" class="bg-emerald-900 hover:bg-emerald-950 text-white px-3 py-1.5 rounded-xl text-xs font-bold transition flex items-center space-x-1.5 border border-emerald-700 cursor-pointer shadow-sm">
         <i class="fa-solid fa-cart-shopping text-xs"></i>
         <span>Keranjang</span>
         <span id="cart-count" class="bg-amber-400 text-emerald-950 text-[10px] px-1.5 py-0.2 rounded-full font-black">0</span>
       </button>
 
-      <!-- SEARCH BAR -->
       <div class="w-full relative">
-        <input type="text" placeholder="Cari produk, kategori, atau toko..." 
+        <input type="text" id="search-input" onkeyup="filterProducts()" placeholder="Cari produk, kategori, atau toko..." 
                class="w-full pl-10 pr-4 py-2 rounded-xl text-gray-800 text-xs focus:outline-none focus:ring-2 focus:ring-amber-400 border border-emerald-800 shadow-inner">
         <i class="fa-solid fa-magnifying-glass absolute left-3 top-2.5 text-gray-400 text-xs"></i>
       </div>
-
     </div>
   </header>
 
-  <!-- MODAL / TAMPILAN KERANJANG -->
-  <div id="cart-modal" class="fixed inset-0 bg-black/50 z-50 hidden flex items-center justify-center p-4">
-    <div class="bg-white w-full max-w-md rounded-2xl shadow-2xl overflow-hidden p-6 space-y-4">
+  <!-- MODAL KERANJANG & CHECKOUT LENGKAP -->
+  <div id="cart-modal" class="fixed inset-0 bg-black/60 z-50 hidden flex items-center justify-center p-4">
+    <div class="bg-white w-full max-w-lg rounded-2xl shadow-2xl overflow-hidden p-6 space-y-4 max-h-[90vh] overflow-y-auto">
       <div class="flex justify-between items-center border-b pb-3">
-        <h3 class="font-bold text-lg text-gray-900 flex items-center gap-2">
-          <i class="fa-solid fa-cart-shopping text-emerald-800"></i> Keranjang Belanja Anda
+        <h3 class="font-bold text-base text-gray-900 flex items-center gap-2">
+          <i class="fa-solid fa-cart-shopping text-emerald-800"></i> Keranjang & Opsi Pengiriman
         </h3>
         <button onclick="toggleCart()" class="text-gray-400 hover:text-gray-600 font-bold text-lg">✕</button>
       </div>
-      <div id="cart-items" class="space-y-3 max-h-60 overflow-y-auto text-sm text-gray-600">
+
+      <div id="cart-items" class="space-y-3 max-h-48 overflow-y-auto text-xs text-gray-600 border-b pb-3">
         <p class="text-center py-6 text-gray-400">Keranjang belanja masih kosong.</p>
       </div>
-      <div class="border-t pt-3 flex justify-between items-center font-bold text-gray-900">
-        <span>Total:</span>
-        <span id="cart-total" class="text-emerald-900 text-base">Rp 0</span>
+
+      <!-- FORMULIR PENGIRIMAN & DETAIL PEMESAN -->
+      <div class="space-y-3 pt-1">
+        <h4 class="font-bold text-xs text-emerald-900 flex items-center gap-1.5">
+          <i class="fa-solid fa-truck-ramp-box"></i> Detail Alamat & Kurir Pengiriman:
+        </h4>
+        
+        <div>
+          <label class="block text-[11px] font-semibold text-gray-700">Nama Penerima</label>
+          <input type="text" id="cust-name" placeholder="Nama Lengkap Pemesan" class="w-full px-3 py-1.5 rounded-lg border text-xs mt-0.5">
+        </div>
+
+        <div>
+          <label class="block text-[11px] font-semibold text-gray-700">Alamat Lengkap & Kota/Kecamatan</label>
+          <textarea id="cust-address" rows="2" placeholder="Jl. Contoh No. 123, Kel. X, Kec. Y, Kota Z" class="w-full px-3 py-1.5 rounded-lg border text-xs mt-0.5"></textarea>
+        </div>
+
+        <div class="grid grid-cols-2 gap-2">
+          <div>
+            <label class="block text-[11px] font-semibold text-gray-700">Opsi Ekspedisi / Kurir</label>
+            <select id="courier-option" class="w-full px-2 py-1.5 rounded-lg border text-xs mt-0.5">
+              <option value="JNT / JNE / POS (Cek Ongkir oleh Admin)">JNT / JNE / POS (Reguler)</option>
+              <option value="Kurir Lokal / Ojek Online (COD)">Kurir Lokal / COD</option>
+              <option value="Ambil Sendiri di Toko">Ambil Sendiri di Toko</option>
+            </select>
+          </div>
+          <div>
+            <label class="block text-[11px] font-semibold text-gray-700">Metode Pembayaran</label>
+            <select id="payment-option" class="w-full px-2 py-1.5 rounded-lg border text-xs mt-0.5">
+              <option value="Transfer Bank / QRIS">Transfer Bank / QRIS</option>
+              <option value="Bayar di Tempat (COD)">Bayar di Tempat (COD)</option>
+            </select>
+          </div>
+        </div>
       </div>
-      <button onclick="checkoutWhatsApp()" class="w-full bg-emerald-900 hover:bg-emerald-950 text-white py-3 rounded-xl text-xs font-bold transition flex items-center justify-center space-x-2">
-        <i class="fa-brands fa-whatsapp text-base"></i>
-        <span>Pesan Semua via WhatsApp</span>
+
+      <div class="border-t pt-3 flex justify-between items-center font-bold text-gray-900">
+        <span class="text-xs">Total Harga Produk:</span>
+        <span id="cart-total" class="text-emerald-900 text-sm">Rp 0</span>
+      </div>
+      <p class="text-[10px] text-gray-500 italic">*Biaya ongkir akan dihitung dan dikonfirmasi langsung oleh penjual via WhatsApp.</p>
+
+      <button onclick="checkoutWhatsApp()" class="w-full bg-emerald-900 hover:bg-emerald-950 text-white py-2.5 rounded-xl text-xs font-bold transition flex items-center justify-center space-x-2 shadow-md">
+        <i class="fa-brands fa-whatsapp text-sm"></i>
+        <span>Kirim Pesanan Lengkap via WhatsApp</span>
       </button>
     </div>
   </div>
@@ -84,31 +116,27 @@
   <!-- HERO BANNER SECTION -->
   <section class="relative bg-gradient-to-r from-emerald-900 to-emerald-950 text-white py-10 px-4 overflow-hidden">
     <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
-      
-      <!-- KONTEN TEKS BANNER -->
       <div class="w-full md:w-3/5 space-y-3 text-center md:text-left z-10">
         <h2 class="text-2xl md:text-4xl font-black leading-tight">
           Satu Marketplace,<br>
           <span class="text-gold">Berjuta Produk Unggulan Indonesia</span>
         </h2>
         <p class="text-gray-200 text-xs md:text-sm max-w-2xl leading-relaxed">
-          Temukan beragam produk berkualitas dari UMKM, pengrajin, dan pelaku usaha lokal dari seluruh penjuru Indonesia. 
-          Dukung karya anak bangsa dan temukan produk favoritmu dalam satu marketplace.
+          Dukung UMKM & Pengrajin lokal Nusantara. Temukan berbagai produk unik, makanan khas, hingga kerajinan pilihan dari toko terpercaya.
         </p>
         <div class="flex flex-wrap gap-3 pt-2 justify-center md:justify-start">
           <a href="#katalog" class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-2.5 px-5 rounded-xl shadow-lg transition text-xs flex items-center space-x-2">
             <i class="fa-solid fa-cart-arrow-down"></i>
             <span>Mulai Belanja &rarr;</span>
           </a>
-          <!-- TOMBOL DAFTAR MITRA -->
-          <a href="https://wa.me/6281241170658?text=Halo%20Admin%20BorneoKU,%20saya%20ingin%20mendaftar%20sebagai%20Mitra%20Penjual%20UMKM.%0A%0A*Formulir%20Pendaftaran%20Mitra:*%0A-%20*Nama%20Toko/Usaha*:%20%0A-%20*Nama%20Pemilik*:%20%0A-%20*Kategori%20Produk*:%20%0A-%20*No.%20WhatsApp*:%20%0A-%20*Kota/Alamat*:%20" target="_blank" class="bg-amber-500 hover:bg-amber-600 text-white font-bold py-2.5 px-5 rounded-xl shadow-lg transition text-xs flex items-center space-x-2">
+          <!-- TOMBOL DAFTAR MITRA (TEKS FIXED: Borneoku) -->
+          <a href="https://wa.me/6281241170658?text=Halo%20Admin%20Borneoku,%20saya%20ingin%20mendaftar%20sebagai%20Mitra%20Penjual%20UMKM.%0A%0A*Formulir%20Pendaftaran%20Mitra:*%0A-%20*Nama%20Toko/Usaha*:%20%0A-%20*Nama%20Pemilik*:%20%0A-%20*Kategori%20Produk*:%20%0A-%20*Estimasi%20Stok%20Barang*:%20%0A-%20*No.%20WhatsApp*:%20%0A-%20*Kota/Alamat%20Pengiriman*:%20" target="_blank" class="bg-amber-500 hover:bg-amber-600 text-white font-bold py-2.5 px-5 rounded-xl shadow-lg transition text-xs flex items-center space-x-2">
             <i class="fa-solid fa-user-plus"></i>
             <span>Daftar Jadi Mitra Penjual &rarr;</span>
           </a>
         </div>
       </div>
 
-      <!-- GAMBAR DEKORATIF BANNER -->
       <div class="w-full md:w-2/5 flex justify-center z-10">
         <div class="relative w-full max-w-xs bg-emerald-800/50 p-3 rounded-2xl border border-emerald-700/50 backdrop-blur-sm">
           <img src="https://images.unsplash.com/photo-1544816155-12df9643f363?auto=format&fit=crop&w=600&q=80" 
@@ -116,54 +144,19 @@
           <p class="text-[11px] text-amber-200 text-center mt-2 font-semibold">✨ Karya Seni & Kerajinan Tangan Asli UMKM</p>
         </div>
       </div>
-
     </div>
   </section>
 
-  <!-- VALUE PROPOSITION / BAR KEUNGGULAN -->
-  <section class="bg-amber-50 border-b border-amber-200 py-4 px-4">
-    <div class="max-w-7xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-3 text-gray-700">
-      <div class="flex items-start space-x-2.5">
-        <div class="text-amber-600 text-xl mt-0.5"><i class="fa-solid fa-shield-halved"></i></div>
-        <div>
-          <h4 class="font-bold text-xs text-gray-900">Produk Berkualitas</h4>
-          <p class="text-[10px] text-gray-600">Langsung dari UMKM terpercaya</p>
-        </div>
-      </div>
-      <div class="flex items-start space-x-2.5">
-        <div class="text-amber-600 text-xl mt-0.5"><i class="fa-solid fa-truck-fast"></i></div>
-        <div>
-          <h4 class="font-bold text-xs text-gray-900">Dari Seluruh Indonesia</h4>
-          <p class="text-[10px] text-gray-600">Produk unik dari setiap daerah</p>
-        </div>
-      </div>
-      <div class="flex items-start space-x-2.5">
-        <div class="text-amber-600 text-xl mt-0.5"><i class="fa-solid fa-hand-holding-heart"></i></div>
-        <div>
-          <h4 class="font-bold text-xs text-gray-900">Dukung Usaha Lokal</h4>
-          <p class="text-[10px] text-gray-600">Bantu pertumbuhan UMKM</p>
-        </div>
-      </div>
-      <div class="flex items-start space-x-2.5">
-        <div class="text-amber-600 text-xl mt-0.5"><i class="fa-solid fa-earth-asia"></i></div>
-        <div>
-          <h4 class="font-bold text-xs text-gray-900">Menuju Pasar Dunia</h4>
-          <p class="text-[10px] text-gray-600">Karya Indonesia untuk dunia</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- KATALOG PRODUK DINAMIS (SUPABASE) -->
+  <!-- KATALOG PRODUK DINAMIS -->
   <section id="katalog" class="max-w-7xl mx-auto px-4 py-8">
     <h3 class="text-lg md:text-xl font-bold text-gray-900 mb-4 flex items-center gap-2">
-      <span>🛍️</span> Produk Unggulan UMKM Nusantara
+      <span>🛍️</span> Katalog Produk Unggulan UMKM
     </h3>
 
     <div id="product-list" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-5">
       <div class="col-span-full text-center py-10 text-gray-500">
         <i class="fa-solid fa-spinner fa-spin text-2xl mb-2 text-emerald-800"></i>
-        <p class="text-xs">Memuat produk UMKM...</p>
+        <p class="text-xs">Memuat produk Borneoku...</p>
       </div>
     </div>
   </section>
@@ -171,12 +164,12 @@
   <!-- FOOTER -->
   <footer class="bg-gray-900 text-gray-400 text-xs py-6 px-4 border-t border-gray-800 mt-8">
     <div class="max-w-7xl mx-auto text-center space-y-1">
-      <p class="font-bold text-gray-300">&copy; 2026 BorneoKU. Seluruh hak cipta dilindungi.</p>
+      <p class="font-bold text-gray-300">&copy; 2026 Borneoku. Seluruh hak cipta dilindungi.</p>
       <p class="text-gray-500 text-[11px]">Platform Pemberdayaan UMKM & Pasar Digital Nusantara</p>
     </div>
   </footer>
 
-  <!-- SUPABASE SCRIPT & INTERAKSI KERANJANG -->
+  <!-- SCRIPT KONEKSI SUPABASE & PENGELOLAAN KERANJANG -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script>
     const SUPABASE_URL = 'https://iegqvegvoqjqjjyucpss.supabase.co';
@@ -184,12 +177,11 @@
     const adminWA = '6281241170658';
     
     const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-
+    let allProducts = [];
     let cart = [];
 
     function toggleCart() {
-      const modal = document.getElementById('cart-modal');
-      modal.classList.toggle('hidden');
+      document.getElementById('cart-modal').classList.toggle('hidden');
     }
 
     function addToCart(name, price, whatsapp) {
@@ -234,11 +226,31 @@
         alert('Keranjang belanja masih kosong!');
         return;
       }
+      const custName = document.getElementById('cust-name').value;
+      const custAddr = document.getElementById('cust-address').value;
+      const courier = document.getElementById('courier-option').value;
+      const payment = document.getElementById('payment-option').value;
+
+      if (!custName || !custAddr) {
+        alert('Mohon lengkapi Nama Penerima dan Alamat Lengkap terlebih dahulu!');
+        return;
+      }
+
       const targetWA = cart[0].whatsapp || adminWA;
-      let message = `Halo, saya ingin memesan beberapa produk dari BorneoKU:\n\n`;
+      let total = 0;
+      let message = `Halo Admin Borneoku, saya ingin memesan barang berikut:\n\n`;
+      message += `📋 *Rincian Pesanan:*\n`;
       cart.forEach((item, i) => {
+        total += Number(item.price);
         message += `${i + 1}. ${item.name} - Rp ${Number(item.price).toLocaleString('id-ID')}\n`;
       });
+      message += `\n💰 *Total Produk*: Rp ${total.toLocaleString('id-ID')}\n`;
+      message += `\n👤 *Nama Penerima*: ${custName}\n`;
+      message += `📍 *Alamat Pengiriman*: ${custAddr}\n`;
+      message += `🚚 *Pilihan Kurir*: ${courier}\n`;
+      message += `💳 *Metode Pembayaran*: ${payment}\n\n`;
+      message += `Mohon info total biaya beserta ongkos kirimnya. Terima kasih!`;
+
       window.open(`https://wa.me/${targetWA}?text=${encodeURIComponent(message)}`, '_blank');
     }
 
@@ -247,53 +259,72 @@
       try {
         const { data, error } = await supabaseClient.from('products').select('*');
         if (error) throw error;
-
-        if (!data || data.length === 0) {
-          productList.innerHTML = `
-            <div class="col-span-full text-center py-12 text-gray-500 bg-white rounded-2xl shadow-sm border border-gray-100">
-              <i class="fa-solid fa-box-open text-4xl mb-3 text-amber-600"></i>
-              <p class="font-semibold text-gray-700">Belum ada produk dari mitra UMKM.</p>
-              <p class="text-xs text-gray-500 mt-1">Produk yang diunggah mitra akan tampil otomatis di sini.</p>
-            </div>`;
-          return;
-        }
-
-        productList.innerHTML = data.map(product => {
-          const namaProduk = product.nama_produk || product.nama || product.name || 'Produk UMKM';
-          const kategoriProduk = product.kategori || product.category || 'Kerajinan';
-          const hargaProduk = product.harga || product.price || 0;
-          const gambarProduk = product.image_url || product.gambar || 'https://images.unsplash.com/photo-1544816155-12df9643f363?auto=format&fit=crop&w=400&q=80';
-          const noWa = product.whatsapp || product.no_hp || product.phone || adminWA;
-
-          return `
-            <div class="bg-white rounded-2xl shadow-md overflow-hidden border border-gray-100 hover:shadow-xl transition flex flex-col">
-              <img src="${gambarProduk}" alt="${namaProduk}" class="w-full h-40 object-cover">
-              <div class="p-3 flex flex-col flex-grow">
-                <span class="text-[9px] bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded-full font-bold uppercase tracking-wider w-max mb-1.5">${kategoriProduk}</span>
-                <h4 class="font-bold text-gray-900 text-xs mb-1 line-clamp-1">${namaProduk}</h4>
-                <p class="text-emerald-900 font-extrabold text-sm mb-2">Rp ${Number(hargaProduk).toLocaleString('id-ID')}</p>
-                <div class="mt-auto space-y-1.5">
-                  <button onclick="addToCart('${namaProduk.replace(/'/g, "\\'")}', ${hargaProduk}, '${noWa}')" 
-                          class="w-full bg-amber-500 hover:bg-amber-600 text-white text-center py-1.5 rounded-lg text-[11px] font-bold transition flex items-center justify-center space-x-1 cursor-pointer shadow-sm">
-                    <i class="fa-solid fa-cart-plus text-[10px]"></i>
-                    <span>+ Keranjang</span>
-                  </button>
-                  <a href="https://wa.me/${noWa}?text=Halo,%20saya%20tertarik%20dengan%20produk%20${encodeURIComponent(namaProduk)}%20di%20BorneoKU" 
-                     target="_blank" class="w-full bg-emerald-900 hover:bg-emerald-950 text-white text-center py-1.5 rounded-lg text-[11px] font-bold transition flex items-center justify-center space-x-1">
-                    <i class="fa-brands fa-whatsapp text-xs"></i>
-                    <span>Pesan WA</span>
-                  </a>
-                </div>
-              </div>
-            </div>
-          `;
-        }).join('');
+        allProducts = data || [];
+        renderProducts(allProducts);
       } catch (err) {
         console.error('Gagal memuat produk:', err);
         productList.innerHTML = `<div class="col-span-full text-center py-8 text-red-500 text-sm">Gagal menyambungkan ke database Supabase.</div>`;
       }
     }
+
+    function renderProducts(products) {
+      const productList = document.getElementById('product-list');
+      if (!products || products.length === 0) {
+        productList.innerHTML = `
+          <div class="col-span-full text-center py-12 text-gray-500 bg-white rounded-2xl shadow-sm border border-gray-100">
+            <i class="fa-solid fa-box-open text-4xl mb-3 text-amber-600"></i>
+            <p class="font-semibold text-gray-700">Tidak ada produk ditemukan.</p>
+          </div>`;
+        return;
+      }
+
+      productList.innerHTML = products.map(product => {
+        const namaProduk = product.nama_produk || product.nama || product.name || 'Produk UMKM';
+        const kategoriProduk = product.kategori || product.category || 'Kerajinan';
+        const hargaProduk = product.harga || product.price || 0;
+        const stokProduk = product.stok !== undefined ? product.stok : 'Tersedia';
+        const gambarProduk = product.image_url || product.gambar || 'https://images.unsplash.com/photo-1544816155-12df9643f363?auto=format&fit=crop&w=400&q=80';
+        const noWa = product.whatsapp || product.no_hp || adminWA;
+
+        return `
+          <div class="bg-white rounded-2xl shadow-md overflow-hidden border border-gray-100 hover:shadow-xl transition flex flex-col">
+            <img src="${gambarProduk}" alt="${namaProduk}" class="w-full h-40 object-cover">
+            <div class="p-3 flex flex-col flex-grow">
+              <div class="flex items-center justify-between mb-1">
+                <span class="text-[9px] bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded-full font-bold uppercase">${kategoriProduk}</span>
+                <span class="text-[9px] text-gray-500 font-semibold">Stok: ${stokProduk}</span>
+              </div>
+              <h4 class="font-bold text-gray-900 text-xs mb-1 line-clamp-1">${namaProduk}</h4>
+              <p class="text-emerald-900 font-extrabold text-sm mb-2">Rp ${Number(hargaProduk).toLocaleString('id-ID')}</p>
+              <div class="mt-auto space-y-1.5">
+                <button onclick="addToCart('${namaProduk.replace(/'/g, "\\'")}', ${hargaProduk}, '${noWa}')" 
+                        class="w-full bg-amber-500 hover:bg-amber-600 text-white text-center py-1.5 rounded-lg text-[11px] font-bold transition flex items-center justify-center space-x-1 cursor-pointer shadow-sm">
+                  <i class="fa-solid fa-cart-plus text-[10px]"></i>
+                  <span>+ Keranjang</span>
+                </button>
+                <a href="https://wa.me/${noWa}?text=Halo,%20saya%20tertarik%20dengan%20produk%20${encodeURIComponent(namaProduk)}%20di%20Borneoku" 
+                   target="_blank" class="w-full bg-emerald-900 hover:bg-emerald-950 text-white text-center py-1.5 rounded-lg text-[11px] font-bold transition flex items-center justify-center space-x-1">
+                  <i class="fa-brands fa-whatsapp text-xs"></i>
+                  <span>Pesan WA</span>
+                </a>
+              </div>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function filterProducts() {
+      const query = document.getElementById('search-input').value.toLowerCase();
+      const filtered = allProducts.filter(p => {
+        const name = (p.nama_produk || p.nama || '').toLowerCase();
+        const cat = (p.kategori || '').toLowerCase();
+        return name.includes(query) || cat.includes(query);
+      });
+      renderProducts(filtered);
+    }
+
     loadProducts();
   </script>
 </body>
-  </html>
+</html>
