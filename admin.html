@@ -95,8 +95,8 @@
         </div>
 
         <div>
-          <label class="block text-xs font-bold text-gray-700 mb-1">No. WhatsApp Penjual (Gunakan 62)</label>
-          <input type="text" id="prod-wa" placeholder="Contoh: 6281241170658" required
+          <label class="block text-xs font-bold text-gray-700 mb-1">No. WhatsApp Penjual</label>
+          <input type="text" id="prod-wa" placeholder="Contoh: 081241170658 atau 62812..." required
                  class="w-full px-3 py-2 rounded-xl border border-gray-300 text-xs focus:ring-2 focus:ring-emerald-600">
         </div>
 
@@ -154,7 +154,6 @@
       }
     }
 
-    // Mengubah file gambar yang dipilih di galeri menjadi format teks (Base64) agar bisa disimpan di Supabase
     function previewImage(event) {
       const file = event.target.files[0];
       if (file) {
@@ -180,9 +179,10 @@
 
         container.innerHTML = cachedProducts.map(item => {
           const nama = item.nama_produk || item.nama || 'Produk';
-          const harga = item.harga || 0;
+          const harga = item.harga !== undefined ? item.harga : (item.price !== undefined ? item.price : 0);
           const status = item.status || 'disetujui';
           const stok = item.stok !== undefined ? item.stok : 'Tersedia';
+          const wa = item.whatsapp || item.wa || '-';
           
           let statusBadge = '';
           if (status === 'disetujui') {
@@ -200,7 +200,7 @@
                   <p class="font-bold text-xs text-gray-900">${nama}</p>
                   ${statusBadge}
                 </div>
-                <p class="text-[11px] text-emerald-900 font-semibold">Rp ${Number(harga).toLocaleString('id-ID')} | Stok: ${stok} | WA: ${item.whatsapp || '-'}</p>
+                <p class="text-[11px] text-emerald-900 font-semibold">Rp ${Number(harga).toLocaleString('id-ID')} | Stok: ${stok} | WA: ${wa}</p>
               </div>
               <div class="flex items-center gap-2 w-full md:w-auto justify-end flex-wrap">
                 <button onclick="updateStatus('${item.id}', 'disetujui')" class="text-emerald-700 hover:text-emerald-900 text-[11px] font-bold px-2.5 py-1 bg-emerald-50 rounded-lg border border-emerald-300">
@@ -241,10 +241,10 @@
 
       document.getElementById('edit-prod-id').value = prod.id;
       document.getElementById('prod-name').value = prod.nama_produk || prod.nama || '';
-      document.getElementById('prod-price').value = prod.harga || 0;
+      document.getElementById('prod-price').value = prod.harga !== undefined ? prod.harga : (prod.price !== undefined ? prod.price : 0);
       document.getElementById('prod-stock').value = prod.stok || 'Tersedia';
       document.getElementById('prod-category').value = prod.kategori || 'Kerajinan';
-      document.getElementById('prod-wa').value = prod.whatsapp || '6281241170658';
+      document.getElementById('prod-wa').value = prod.whatsapp || prod.wa || '';
       document.getElementById('prod-img-url').value = prod.image_url || 'https://images.unsplash.com/photo-1544816155-12df9643f363?auto=format&fit=crop&w=400&q=80';
 
       document.getElementById('form-mode-text').innerText = 'Edit Produk';
@@ -275,19 +275,28 @@
 
       const editId = document.getElementById('edit-prod-id').value;
       const name = document.getElementById('prod-name').value;
-      const price = document.getElementById('prod-price').value;
-      const stock = document.getElementById('prod-stock').value || 'Tersedia';
-      const category = document.getElementById('prod-category').value;
-      const wa = document.getElementById('prod-wa').value;
-      const img = document.getElementById('prod-img-url').value;
+      const priceVal = document.getElementById('prod-price').value;
+      const stockVal = document.getElementById('prod-stock').value || 'Tersedia';
+      const categoryVal = document.getElementById('prod-category').value;
+      let waVal = document.getElementById('prod-wa').value.trim();
+      const imgVal = document.getElementById('prod-img-url').value;
 
+      // Format nomor WhatsApp otomatis jika diawali angka 0 (misal: 0812... jadi 62812...)
+      if (waVal.startsWith('0')) {
+        waVal = '62' + waVal.slice(1);
+      }
+
+      // Payload universal yang mendukung berbagai variasi nama kolom di Supabase
       const payload = {
         nama_produk: name,
-        harga: price,
-        stok: stock,
-        kategori: category,
-        whatsapp: wa,
-        image_url: img
+        harga: priceVal,
+        price: priceVal,
+        stok: stockVal,
+        kategori: categoryVal,
+        whatsapp: waVal,
+        wa: waVal,
+        image_url: imgVal,
+        status: 'disetujui'
       };
 
       try {
@@ -296,10 +305,9 @@
           if (error) throw error;
           alert('Produk berhasil diperbarui!');
         } else {
-          payload.status = 'disetujui'; // Otomatis disetujui jika admin yang input
           const { error } = await supabaseClient.from('products').insert([payload]);
           if (error) throw error;
-          alert('Produk berhasil ditambahkan!');
+          alert('Produk berhasil ditambahkan ke database!');
         }
         resetForm();
         loadAdminProducts();
