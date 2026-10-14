@@ -11,56 +11,56 @@
   <style>
     .bg-borneo-dark { background-color: #064e3b; }
     .text-gold { color: #d4af37; }
-    body { padding-bottom: 80px; background-color: #f8fafc; }
+    body { padding-bottom: 85px; background-color: #f8fafc; }
   </style>
 </head>
 <body class="font-sans text-gray-800">
 
   <!-- HEADER UTAMA -->
-  <header class="bg-borneo-dark text-white p-4 shadow-sm sticky top-0 z-50">
+  <header class="bg-borneo-dark text-white p-3.5 shadow-md sticky top-0 z-50">
     <div class="max-w-6xl mx-auto flex justify-between items-center">
-      <div class="flex items-center space-x-3">
-        <div class="bg-white text-emerald-900 p-2 rounded-xl shadow-sm">
-          <i class="fa-solid fa-store text-lg"></i>
+      <div class="flex items-center space-x-2.5">
+        <div class="bg-white text-emerald-900 p-1.5 rounded-xl shadow-sm">
+          <i class="fa-solid fa-store text-base"></i>
         </div>
         <div>
-          <h1 class="font-extrabold text-base tracking-wide">BORNEOKU</h1>
-          <p class="text-[9px] text-amber-300 font-medium tracking-wider">KARYA NUSANTARA, PASAR DUNIA</p>
+          <h1 class="font-extrabold text-sm tracking-wide leading-tight">BORNEOKU</h1>
+          <p class="text-[8.5px] text-amber-300 font-medium tracking-wider">KARYA NUSANTARA, PASAR DUNIA</p>
         </div>
       </div>
       
-      <button onclick="alert('Keranjang belanja masih kosong.')" class="bg-emerald-800 hover:bg-emerald-900 text-xs px-3 py-2 rounded-xl border border-emerald-600 transition flex items-center gap-1.5 font-semibold shadow-sm text-white">
-        <i class="fa-solid fa-cart-shopping text-amber-300"></i>
-        <span>Keranjang <span id="cart-count" class="bg-amber-400 text-emerald-950 px-1.5 py-0.2 rounded-full text-[10px] font-bold">0</span></span>
+      <!-- Keranjang Belanja Interaktif -->
+      <button onclick="viewCart()" class="bg-emerald-800 hover:bg-emerald-900 text-xs px-3 py-1.5 rounded-xl border border-emerald-600 transition flex items-center gap-1.5 font-semibold shadow-sm text-white">
+        <i class="fa-solid fa-cart-shopping text-amber-300 text-xs"></i>
+        <span class="text-[11px]">Keranjang <span id="cart-count" class="bg-amber-400 text-emerald-950 px-1.5 py-0.2 rounded-full text-[9px] font-bold">0</span></span>
       </button>
     </div>
   </header>
 
   <!-- KONTEN BERANDA -->
   <div id="section-beranda" class="space-y-4">
-    <!-- HERO & PENCARIAN -->
-    <section class="bg-borneo-dark text-white py-8 px-4 text-center">
-      <div class="max-w-2xl mx-auto space-y-3">
-        <h2 class="text-xl md:text-2xl font-extrabold">Satu Marketplace, <span class="text-gold">Berjuta Produk Unggulan</span> Indonesia</h2>
-        <p class="text-xs text-emerald-100">Dukung UMKM & Pengrajin lokal Nusantara. Temukan berbagai produk unik dan kerajinan pilihan.</p>
+    <!-- HERO & PENCARIAN (Sudah Disesuaikan Agar Teks Tidak Menggantung/Terpotong) -->
+    <section class="bg-borneo-dark text-white pt-5 pb-7 px-4 text-center">
+      <div class="max-w-2xl mx-auto space-y-2.5">
+        <h2 class="text-base sm:text-lg md:text-2xl font-extrabold leading-snug">Satu Marketplace, <span class="text-gold">Berjuta Produk Unggulan</span> Indonesia</h2>
+        <p class="text-[10.5px] text-emerald-100 leading-relaxed max-w-xl mx-auto">Dukung UMKM & Pengrajin lokal Nusantara. Temukan berbagai produk unik dan kerajinan pilihan.</p>
         
-        <!-- Kolom Pencarian dengan Tombol Enter & Kamera di Ujung Kanan -->
+        <!-- Kolom Pencarian -->
         <div class="relative max-w-lg mx-auto pt-2">
-          <span class="absolute inset-y-0 left-0 flex items-center pl-4 pt-2 pointer-events-none text-gray-400">
-            <i class="fa-solid fa-magnifying-glass"></i>
+          <span class="absolute inset-y-0 left-0 flex items-center pl-3.5 pt-2 pointer-events-none text-gray-400">
+            <i class="fa-solid fa-magnifying-glass text-xs"></i>
           </span>
           <form onsubmit="event.preventDefault(); filterProducts();" class="w-full relative flex items-center">
             <input type="text" id="search-input" placeholder="Cari produk, pakaian, atau kerajinan..." 
-                   class="w-full pl-11 pr-20 py-3 rounded-2xl text-gray-900 text-xs focus:outline-none focus:ring-2 focus:ring-emerald-500 shadow-md"
+                   class="w-full pl-9 pr-20 py-2.5 rounded-2xl text-gray-900 text-xs focus:outline-none focus:ring-2 focus:ring-emerald-500 shadow-md"
                    oninput="filterProducts()" onkeypress="handleSearchKey(event)">
             
-            <!-- Tombol Tambahan di Kanan (Kamera & Cari/Enter) -->
-            <div class="absolute right-2 flex items-center gap-1.5 pt-1">
-              <button type="button" onclick="triggerCameraSearch()" title="Cari dengan Foto/Kamera" class="text-gray-400 hover:text-emerald-700 p-1.5 rounded-full hover:bg-gray-100 transition">
-                <i class="fa-solid fa-camera text-sm"></i>
+            <div class="absolute right-2 flex items-center gap-1 pt-0.5">
+              <button type="button" onclick="triggerCameraSearch()" title="Cari dengan Foto" class="text-gray-400 hover:text-emerald-700 p-1 rounded-full hover:bg-gray-100 transition">
+                <i class="fa-solid fa-camera text-xs"></i>
               </button>
-              <button type="submit" title="Cari" class="bg-emerald-800 hover:bg-emerald-900 text-amber-300 w-7 h-7 rounded-xl flex items-center justify-center shadow transition">
-                <i class="fa-solid fa-arrow-right text-xs"></i>
+              <button type="submit" title="Cari" class="bg-emerald-800 hover:bg-emerald-900 text-amber-300 w-6 h-6 rounded-lg flex items-center justify-center shadow transition">
+                <i class="fa-solid fa-arrow-right text-[10px]"></i>
               </button>
             </div>
           </form>
@@ -68,35 +68,35 @@
       </div>
     </section>
 
-    <!-- KELOLA TOKO PINTASAN -->
-    <section class="max-w-4xl mx-auto px-4 mt-2">
-      <div class="bg-white p-4 rounded-2xl shadow-sm border border-gray-100 flex items-center justify-between">
-        <div class="flex items-center gap-3">
-          <div class="bg-emerald-50 text-emerald-800 p-3 rounded-xl text-base font-bold">
+    <!-- PINTASAN KELOLA TOKO (Ikon Plus & Seluruh Kartu Aktif saat Diklik) -->
+    <section class="max-w-4xl mx-auto px-4">
+      <div onclick="switchTab('produk')" class="bg-white p-3 rounded-2xl shadow-sm border border-gray-100 flex items-center justify-between gap-2 cursor-pointer hover:border-emerald-300 transition">
+        <div class="flex items-center gap-2.5 min-w-0">
+          <div class="bg-emerald-50 hover:bg-emerald-100 text-emerald-800 p-2.5 rounded-xl text-xs font-bold shrink-0 transition">
             <i class="fa-solid fa-circle-plus"></i>
           </div>
-          <div>
-            <h4 class="font-bold text-xs text-gray-900">Kelola Produk & Etalase</h4>
-            <p class="text-[10px] text-gray-500">Tambah barang, verifikasi halal, & kelola stok</p>
+          <div class="min-w-0">
+            <h4 class="font-bold text-xs text-gray-900 truncate">Kelola Produk & Etalase</h4>
+            <p class="text-[9.5px] text-gray-500 truncate">Tambah barang, verifikasi halal, & kelola stok</p>
           </div>
         </div>
-        <button onclick="switchTab('produk')" class="bg-emerald-800 hover:bg-emerald-900 text-white font-bold px-3.5 py-2 rounded-xl text-xs transition shadow-sm flex items-center gap-1.5">
-          <span>Buka Panel</span> <i class="fa-solid fa-arrow-right"></i>
+        <button class="bg-emerald-800 hover:bg-emerald-900 text-white font-bold px-3 py-1.5 rounded-xl text-[11px] transition shadow-sm flex items-center gap-1 shrink-0">
+          <span>Buka Panel</span> <i class="fa-solid fa-arrow-right text-[9px]"></i>
         </button>
       </div>
     </section>
 
     <!-- ETALASE PRODUK -->
-    <main class="max-w-6xl mx-auto p-4 space-y-4">
+    <main class="max-w-6xl mx-auto px-4 space-y-3">
       <div class="flex justify-between items-center border-b border-gray-200 pb-2">
-        <h3 class="font-bold text-gray-900 text-sm flex items-center gap-2">
+        <h3 onclick="resetFilter()" title="Klik untuk tampilkan semua produk" class="font-bold text-gray-900 text-xs flex items-center gap-1.5 cursor-pointer hover:text-emerald-800 transition">
           <i class="fa-solid fa-bag-shopping text-emerald-800"></i> Etalase Produk UMKM
         </h3>
-        <span id="product-count" class="text-xs text-gray-500 font-medium">Memuat...</span>
+        <span id="product-count" class="text-[10px] text-gray-500 font-medium">Memuat...</span>
       </div>
 
       <div id="product-grid" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
-        <p class="col-span-full text-center text-xs text-gray-400 py-10">Memuat produk...</p>
+        <p class="col-span-full text-center text-xs text-gray-400 py-8">Memuat produk...</p>
       </div>
     </main>
   </div>
@@ -104,24 +104,24 @@
   <!-- NAVIGATION BAR BAWAH -->
   <nav class="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 py-2 px-4 flex justify-around items-center z-50 shadow-lg">
     <button onclick="switchTab('beranda')" id="nav-beranda" class="flex flex-col items-center text-emerald-800 focus:outline-none">
-      <i class="fa-solid fa-house text-base"></i>
-      <span class="text-[10px] font-bold mt-1">Beranda</span>
+      <i class="fa-solid fa-house text-sm"></i>
+      <span class="text-[9.5px] font-bold mt-1">Beranda</span>
     </button>
     <button onclick="switchTab('produk')" id="nav-produk" class="flex flex-col items-center text-gray-400 hover:text-emerald-800 focus:outline-none">
-      <i class="fa-solid fa-boxes-stacked text-base"></i>
-      <span class="text-[10px] font-medium mt-1">Produk</span>
+      <i class="fa-solid fa-boxes-stacked text-sm"></i>
+      <span class="text-[9.5px] font-medium mt-1">Produk</span>
     </button>
     <button onclick="switchTab('pesanan')" id="nav-pesanan" class="flex flex-col items-center text-gray-400 hover:text-emerald-800 focus:outline-none">
-      <i class="fa-solid fa-receipt text-base"></i>
-      <span class="text-[10px] font-medium mt-1">Pesanan</span>
+      <i class="fa-solid fa-receipt text-sm"></i>
+      <span class="text-[9.5px] font-medium mt-1">Pesanan</span>
     </button>
     <button onclick="switchTab('analitik')" id="nav-analitik" class="flex flex-col items-center text-gray-400 hover:text-emerald-800 focus:outline-none">
-      <i class="fa-solid fa-chart-line text-base"></i>
-      <span class="text-[10px] font-medium mt-1">Analitik</span>
+      <i class="fa-solid fa-chart-line text-sm"></i>
+      <span class="text-[9.5px] font-medium mt-1">Analitik</span>
     </button>
     <button onclick="switchTab('pengaturan')" id="nav-pengaturan" class="flex flex-col items-center text-gray-400 hover:text-emerald-800 focus:outline-none">
-      <i class="fa-solid fa-gear text-base"></i>
-      <span class="text-[10px] font-medium mt-1">Pengaturan</span>
+      <i class="fa-solid fa-gear text-sm"></i>
+      <span class="text-[9.5px] font-medium mt-1">Pengaturan</span>
     </button>
   </nav>
 
@@ -132,6 +132,7 @@
     const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
     let allProducts = [];
+    let cartItemCount = 0;
 
     async function fetchProducts() {
       const grid = document.getElementById('product-grid');
@@ -150,7 +151,7 @@
       document.getElementById('product-count').innerText = `${products.length} Produk Tersedia`;
 
       if (products.length === 0) {
-        grid.innerHTML = `<p class="col-span-full text-center text-xs text-gray-400 py-10">Tidak ada produk ditemukan.</p>`;
+        grid.innerHTML = `<p class="col-span-full text-center text-xs text-gray-400 py-8">Tidak ada produk ditemukan.</p>`;
         return;
       }
 
@@ -169,24 +170,35 @@
             <div>
               <div class="h-36 bg-gray-100 overflow-hidden relative">
                 <img src="${img}" alt="${title}" class="w-full h-full object-cover">
-                <span class="absolute top-2 left-2 bg-emerald-900/80 text-amber-300 text-[9px] font-bold px-2 py-0.5 rounded-md backdrop-blur-sm">${category}</span>
+                <span class="absolute top-2 left-2 bg-emerald-900/80 text-amber-300 text-[8.5px] font-bold px-1.5 py-0.5 rounded-md backdrop-blur-sm">${category}</span>
               </div>
-              <div class="p-2.5 space-y-1">
+              <div class="p-2 space-y-0.5">
                 <h4 class="font-bold text-xs text-gray-900 line-clamp-1">${title}</h4>
                 <p class="text-xs text-emerald-800 font-extrabold">Rp ${price}</p>
               </div>
             </div>
-            <div class="p-2.5 pt-0 grid grid-cols-2 gap-1">
-              <button onclick="alert('Produk dimasukkan ke keranjang!')" class="bg-amber-500 hover:bg-amber-600 text-white font-bold py-1.5 rounded-lg text-[10px] transition shadow-sm">
+            <div class="p-2 pt-0 grid grid-cols-2 gap-1">
+              <button onclick="addToCart('${title}')" class="bg-amber-500 hover:bg-amber-600 text-white font-bold py-1.5 rounded-lg text-[9.5px] transition shadow-sm active:scale-95">
                 + Keranjang
               </button>
-              <a href="${waLink}" target="_blank" class="bg-emerald-800 hover:bg-emerald-900 text-white font-bold py-1.5 rounded-lg text-[10px] transition text-center flex items-center justify-center gap-1 shadow-sm text-white">
-                <i class="fa-brands fa-whatsapp"></i> Pesan
+              <a href="${waLink}" target="_blank" class="bg-emerald-800 hover:bg-emerald-900 text-white font-bold py-1.5 rounded-lg text-[9.5px] transition text-center flex items-center justify-center gap-0.5 shadow-sm">
+                <i class="fa-brands fa-whatsapp text-[10px]"></i> Pesan
               </a>
             </div>
           </div>
         `;
       }).join('');
+    }
+
+    // Fungsi Tambah Keranjang Interaktif
+    function addToCart(productTitle) {
+      cartItemCount++;
+      document.getElementById('cart-count').innerText = cartItemCount;
+      alert(`"${productTitle}" berhasil ditambahkan ke keranjang!`);
+    }
+
+    function viewCart() {
+      alert(`Keranjang Belanja Anda berisi ${cartItemCount} item.`);
     }
 
     function filterProducts() {
@@ -206,6 +218,11 @@
       }
     }
 
+    function resetFilter() {
+      document.getElementById('search-input').value = '';
+      renderProducts(allProducts);
+    }
+
     function triggerCameraSearch() {
       alert('Fitur pencarian foto/kamera produk akan segera hadir!');
     }
@@ -221,4 +238,4 @@
     fetchProducts();
   </script>
 </body>
-  </html>
+</html>
