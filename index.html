@@ -1,1 +1,151 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BorneoKU - Karya Nusantara, Pasar Dunia</title>
+  <!-- Tailwind CSS & FontAwesome Icons -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    .bg-borneo-dark { background-color: #033f2e; }
+    .text-gold { color: #d4af37; }
+    .bg-gold-btn { background-color: #f39c12; }
+    .bg-gold-btn:hover { background-color: #d68910; }
+  </style>
+</head>
+<body class="bg-gray-50 text-gray-800 font-sans">
 
+  <!-- HEADER / NAVBAR -->
+  <header class="bg-borneo-dark text-white sticky top-0 z-50 shadow-md">
+    <div class="max-w-7xl mx-auto px-4 py-3 flex flex-col md:flex-row items-center justify-between gap-4">
+      
+      <!-- LOGO -->
+      <div class="flex items-center space-x-3">
+        <div class="bg-white p-2 rounded-lg text-emerald-900 text-2xl font-bold">
+          <i class="fa-solid fa-store"></i>
+        </div>
+        <div>
+          <h1 class="text-2xl font-extrabold tracking-wide text-white">Borneo<span class="text-gold">Ku</span></h1>
+          <p class="text-[10px] tracking-widest text-gray-200 uppercase font-semibold">Karya Nusantara, Pasar Dunia</p>
+        </div>
+      </div>
+
+      <!-- SEARCH BAR -->
+      <div class="w-full md:w-1/2 relative">
+        <input type="text" placeholder="Cari produk, kategori, atau toko..." 
+               class="w-full pl-10 pr-4 py-2 rounded-full text-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-amber-400 shadow-inner">
+        <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-2.5 text-gray-400"></i>
+      </div>
+
+      <!-- BUTTONS AKSI -->
+      <div class="flex items-center space-x-3 w-full md:w-auto justify-end">
+        <a href="#daftar-mitra" class="bg-gold-btn text-white px-4 py-2 rounded-lg font-bold text-sm flex items-center space-x-2 shadow hover:shadow-lg transition">
+          <i class="fa-solid fa-user-plus"></i>
+          <span>Daftar Mitra Penjual</span>
+        </a>
+        <a href="#keranjang" class="bg-emerald-900 text-white px-4 py-2 rounded-lg font-bold text-sm flex items-center space-x-2 border border-emerald-700">
+          <i class="fa-solid fa-cart-shopping"></i>
+          <span>Keranjang</span>
+          <span class="bg-amber-400 text-emerald-950 rounded-full px-2 py-0.5 text-xs font-black">0</span>
+        </a>
+      </div>
+
+    </div>
+  </header>
+
+  <!-- HERO BANNER SECTION -->
+  <section class="relative bg-gradient-to-r from-emerald-950 via-borneo-dark to-emerald-900 text-white overflow-hidden py-12 md:py-20 px-4">
+    <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-8">
+      
+      <!-- KONTEN TEKS BANNER -->
+      <div class="w-full md:w-3/5 space-y-6 z-10">
+        <h2 class="text-3xl md:text-5xl lg:text-6xl font-black leading-tight">
+          Satu Marketplace,<br>
+          <span class="text-gold">Berjuta Produk</span><br>
+          Unggulan Indonesia
+        </h2>
+        
+        <p class="text-gray-200 text-sm md:text-base leading-relaxed max-w-xl">
+          Temukan beragam produk berkualitas dari UMKM, pengrajin, dan pelaku usaha lokal dari seluruh penjuru Indonesia.<br>
+          Dukung karya anak bangsa, jelajahi keunikan setiap daerah, dan temukan produk favoritmu dalam satu marketplace.
+        </p>
+
+        <div class="flex flex-wrap gap-4 pt-2">
+          <a href="#katalog" class="bg-borneo-dark border-2 border-emerald-500 hover:bg-emerald-800 text-white px-6 py-3 rounded-xl font-bold flex items-center space-x-2 transition shadow-lg">
+            <i class="fa-solid fa-cart-arrow-down"></i>
+            <span>Mulai Belanja &rarr;</span>
+          </a>
+          <a href="#daftar-mitra" class="bg-gold-btn hover:bg-amber-600 text-white px-6 py-3 rounded-xl font-bold flex items-center space-x-2 transition shadow-lg">
+            <i class="fa-solid fa-user-plus"></i>
+            <span>Daftar Jadi Mitra Penjual &rarr;</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- GAMBAR DEKORATIF BANNER -->
+      <div class="w-full md:w-2/5 flex justify-center z-10">
+        <div class="relative w-full max-w-md bg-white/10 backdrop-blur-md p-4 rounded-3xl border border-white/20 shadow-2xl text-center">
+          <img src="https://images.unsplash.com/photo-1544816155-12df9643f363?auto=format&fit=crop&w=600&q=80" 
+               alt="Produk Kerajinan Indonesia" class="rounded-2xl w-full h-56 object-cover shadow-md">
+          <p class="text-xs text-amber-200 mt-3 font-medium">✨ Karya Seni & Kerajinan Tangan Asli UMKM Nusantara</p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- VALUE PROPOSITION / BAR KEUNGGULAN -->
+  <section class="bg-amber-50 border-b border-amber-200 py-8 px-4">
+    <div class="max-w-7xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-6 text-gray-800">
+      
+      <div class="flex items-start space-x-3">
+        <div class="text-amber-600 text-2xl md:text-3xl"><i class="fa-solid fa-shield-halved"></i></div>
+        <div>
+          <h4 class="font-bold text-xs md:text-sm">Produk Berkualitas</h4>
+          <p class="text-[11px] text-gray-600">Langsung dari UMKM terpercaya</p>
+        </div>
+      </div>
+
+      <div class="flex items-start space-x-3">
+        <div class="text-amber-600 text-2xl md:text-3xl"><i class="fa-solid fa-truck-fast"></i></div>
+        <div>
+          <h4 class="font-bold text-xs md:text-sm">Dari Seluruh Indonesia</h4>
+          <p class="text-[11px] text-gray-600">Produk unik dari setiap daerah</p>
+        </div>
+      </div>
+
+      <div class="flex items-start space-x-3">
+        <div class="text-amber-600 text-2xl md:text-3xl"><i class="fa-solid fa-hand-holding-heart"></i></div>
+        <div>
+          <h4 class="font-bold text-xs md:text-sm">Dukung Usaha Lokal</h4>
+          <p class="text-[11px] text-gray-600">Bantu pertumbuhan UMKM Indonesia</p>
+        </div>
+      </div>
+
+      <div class="flex items-start space-x-3">
+        <div class="text-amber-600 text-2xl md:text-3xl"><i class="fa-solid fa-globe"></i></div>
+        <div>
+          <h4 class="font-bold text-xs md:text-sm">Menuju Pasar Dunia</h4>
+          <p class="text-[11px] text-gray-600">Karya Indonesia untuk dunia</p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- KATALOG PRODUK DINAMIS (SUPABASE) -->
+  <section id="katalog" class="max-w-7xl mx-auto py-12 px-4">
+    <h3 class="text-xl md:text-2xl font-bold text-gray-900 mb-6 flex items-center space-x-2">
+      <span>🛍️ Produk Unggulan UMKM Nusantara</span>
+    </h3>
+    <div id="product-list" class="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
+      <div class="col-span-full text-center py-12 text-gray-500">
+        <i class="fa-solid fa-spinner fa-spin text-3xl mb-2 text-emerald-700"></i>
+        <p class="text-sm">Memuat produk UMKM...</p>
+      </div>
+    </div>
+  </section>
+
+</body>
+</html>
