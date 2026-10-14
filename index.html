@@ -1,270 +1,141 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>BorneoKu - Marketplace UMKM Indonesia</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BorneoKu - Marketplace UMKM Kalimantan</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body class="bg-gray-50 text-gray-800 font-sans">
 
-  <!-- Header -->
-  <header class="bg-emerald-700 text-white sticky top-0 z-50 shadow-md">
-    <div class="max-w-6xl mx-auto px-4 py-3 flex justify-between items-center">
-      <div class="flex items-center space-x-2">
-        <i class="fa-solid fa-store text-2xl"></i>
-        <h1 class="text-xl font-bold tracking-wide">BorneoKu</h1>
-      </div>
-      <button onclick="toggleCartModal()" class="relative bg-emerald-800 hover:bg-emerald-900 px-4 py-2 rounded-lg flex items-center gap-2 transition">
-        <i class="fa-solid fa-cart-shopping"></i>
-        <span>Keranjang</span>
-        <span id="cart-count" class="bg-amber-400 text-emerald-950 font-bold text-xs px-2 py-0.5 rounded-full">0</span>
-      </button>
-    </div>
-  </header>
-
-  <!-- Banner -->
-  <section class="bg-emerald-800 text-white py-8 px-4 text-center">
-    <h2 class="text-2xl font-bold mb-2">Marketplace Produk Unggulan Borneo</h2>
-    <p class="text-emerald-100 max-w-xl mx-auto text-sm">Dukung produk lokal berkualitas tinggi dari para pengrajin dan UMKM terbaik.</p>
-  </section>
-
-  <!-- Daftar Produk -->
-  <main class="max-w-6xl mx-auto px-4 py-8">
-    <h3 class="text-xl font-bold mb-6 text-emerald-900 border-b pb-2">Produk Terbaru</h3>
-    
-    <div id="loading" class="text-center py-12 text-gray-500">
-      <i class="fa-solid fa-spinner fa-spin text-3xl text-emerald-600 mb-2"></i>
-      <p>Memuat produk dari database...</p>
-    </div>
-
-    <div id="product-list" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 hidden"></div>
-  </main>
-
-  <!-- Modal Keranjang & Checkout -->
-  <div id="cart-modal" class="fixed inset-0 bg-black/50 z-50 hidden flex items-center justify-center p-4">
-    <div class="bg-white rounded-2xl max-w-lg w-full max-h-[90vh] flex flex-col overflow-hidden shadow-2xl">
-      <!-- Modal Header -->
-      <div class="bg-emerald-700 text-white px-5 py-4 flex justify-between items-center">
-        <h3 class="font-bold text-lg flex items-center gap-2">
-          <i class="fa-solid fa-basket-shopping"></i> Keranjang & Checkout
-        </h3>
-        <button onclick="toggleCartModal()" class="text-white hover:text-gray-200 text-xl font-bold">&times;</button>
-      </div>
-
-      <!-- Modal Body -->
-      <div class="p-5 overflow-y-auto space-y-4 text-sm flex-1">
-        <!-- List Item -->
-        <div id="cart-items" class="space-y-2 divide-y divide-gray-100"></div>
-
-        <!-- Form Pemesanan -->
-        <div class="pt-4 border-t space-y-3">
-          <h4 class="font-bold text-emerald-900 text-base">Informasi Pengiriman</h4>
-          
-          <div>
-            <label class="block text-xs font-semibold mb-1">Nama Lengkap</label>
-            <input type="text" id="cust-name" placeholder="Masukkan nama Anda" class="w-full border p-2.5 rounded-lg focus:ring-2 focus:ring-emerald-500 outline-none">
-          </div>
-
-          <div>
-            <label class="block text-xs font-semibold mb-1">No. WhatsApp</label>
-            <input type="tel" id="cust-phone" placeholder="Contoh: 08123456789" class="w-full border p-2.5 rounded-lg focus:ring-2 focus:ring-emerald-500 outline-none">
-          </div>
-
-          <div>
-            <label class="block text-xs font-semibold mb-1">Wilayah Pengiriman (Ongkir)</label>
-            <select id="shipping-zone" onchange="calculateTotal()" class="w-full border p-2.5 rounded-lg focus:ring-2 focus:ring-emerald-500 outline-none bg-white">
-              <option value="0">-- Pilih Wilayah --</option>
-              <option value="15000">Lokal / Nunukan & Sekitar (Rp 15.000)</option>
-              <option value="25000">Kalimantan Utara / Kaltara (Rp 25.000)</option>
-              <option value="35000">Kalimantan Lainnya (Rp 35.000)</option>
-              <option value="45000">Luar Kalimantan / Pulau Jawa & Lainnya (Rp 45.000)</option>
-            </select>
-          </div>
-
-          <div>
-            <label class="block text-xs font-semibold mb-1">Alamat Lengkap</label>
-            <textarea id="cust-address" rows="2" placeholder="Jalan, RT/RW, Kecamatan, Kabupaten" class="w-full border p-2.5 rounded-lg focus:ring-2 focus:ring-emerald-500 outline-none"></textarea>
-          </div>
-
-          <div>
-            <label class="block text-xs font-semibold mb-1">Metode Pembayaran</label>
-            <select id="payment-method" class="w-full border p-2.5 rounded-lg focus:ring-2 focus:ring-emerald-500 outline-none bg-white">
-              <option value="Transfer Bank Jago / Rekening Bisnis">Transfer Bank (Bank Jago / Kantong Bisnis)</option>
-              <option value="Transfer Bank BRI">Transfer Bank (BRI)</option>
-              <option value="QRIS / E-Wallet">QRIS / E-Wallet (Gopay/OVO/Dana)</option>
-              <option value="COD (Bayar di Tempat)">COD (Bayar di Tempat - Khusus Lokal)</option>
-            </select>
-          </div>
-        </div>
-
-        <!-- Rincian Biaya -->
-        <div class="bg-emerald-50 p-3 rounded-xl space-y-1 text-xs">
-          <div class="flex justify-between">
-            <span>Subtotal Produk:</span>
-            <span id="subtotal-price" class="font-semibold">Rp 0</span>
-          </div>
-          <div class="flex justify-between">
-            <span>Ongkos Kirim:</span>
-            <span id="shipping-price" class="font-semibold">Rp 0</span>
-          </div>
-          <div class="flex justify-between text-sm font-bold text-emerald-900 border-t pt-1 mt-1">
-            <span>Total Pembayaran:</span>
-            <span id="grand-total" class="text-emerald-700">Rp 0</span>
-          </div>
-        </div>
-      </div>
-
-      <!-- Modal Footer -->
-      <div class="p-4 bg-gray-50 border-t flex gap-2">
-        <button onclick="toggleCartModal()" class="w-1/3 bg-gray-200 text-gray-700 py-2.5 rounded-xl font-bold hover:bg-gray-300 transition">Batal</button>
-        <button onclick="submitOrder()" class="w-2/3 bg-emerald-600 text-white py-2.5 rounded-xl font-bold hover:bg-emerald-700 transition flex items-center justify-center gap-2">
-          <i class="fa-brands fa-whatsapp text-lg"></i> Kirim Pesanan
-        </button>
-      </div>
-    </div>
-  </div>
-
-  <!-- Script Supabase & Transaksi -->
-  <script>
-    const SUPABASE_URL = 'https://iegqvegvoqjqjjyucpss.supabase.co';
-    const SUPABASE_KEY = 'sb_publishable_7o0SP7VYOFhYJ0qyDrPtzw_2VvkuiMy';
-
-    const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
-
-    let cart = [];
-
-    async function fetchProducts() {
-      const { data, error } = await supabaseClient.from('products').select('*');
-      
-      const loadingEl = document.getElementById('loading');
-      const listEl = document.getElementById('product-list');
-
-      loadingEl.classList.add('hidden');
-      listEl.classList.remove('hidden');
-
-      if (error) {
-        listEl.innerHTML = `<p class="col-span-full text-red-500 text-center">Gagal memuat produk: ${error.message}</p>`;
-        return;
-      }
-
-      if (!data || data.length === 0) {
-        listEl.innerHTML = `<p class="col-span-full text-center text-gray-500">Belum ada produk yang tersedia.</p>`;
-        return;
-      }
-
-      listEl.innerHTML = data.map(product => `
-        <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-md transition flex flex-col justify-between">
-          <img src="${product.image_url || 'https://via.placeholder.com/300'}" alt="${product.title}" class="w-full h-48 object-cover">
-          <div class="p-4 flex-1 flex flex-col justify-between">
-            <div>
-              <span class="text-xs bg-emerald-50 text-emerald-700 px-2 py-1 rounded font-medium">${product.category || 'Umum'}</span>
-              <h4 class="font-bold text-gray-800 mt-2 text-base line-clamp-1">${product.title}</h4>
+    <!-- Header -->
+    <header class="bg-emerald-700 text-white sticky top-0 z-40 shadow-md">
+        <div class="max-w-6xl mx-auto px-4 py-3 flex justify-between items-center">
+            <div class="flex items-center space-x-2">
+                <i class="fa-solid fa-store text-2xl"></i>
+                <h1 class="text-xl font-bold tracking-wide">BorneoKu</h1>
             </div>
-            <div class="mt-4 flex justify-between items-center">
-              <span class="text-emerald-700 font-bold">Rp ${Number(product.price).toLocaleString('id-ID')}</span>
-              <button onclick="addToCart('${product.title}', ${product.price})" class="bg-emerald-600 text-white px-3 py-1.5 rounded-lg text-sm hover:bg-emerald-700 transition flex items-center gap-1">
-                <i class="fa-solid fa-plus text-xs"></i> Beli
-              </button>
+            <div class="flex items-center space-x-2">
+                <button onclick="openSellerModal()" class="bg-amber-500 hover:bg-amber-600 text-white text-xs md:text-sm font-semibold px-3 py-1.5 rounded-lg transition shadow">
+                    <i class="fa-solid fa-user-plus mr-1"></i> Daftar Mitra UMKM
+                </button>
+                <button onclick="toggleCartModal()" class="bg-emerald-800 hover:bg-emerald-900 px-3 py-1.5 rounded-lg flex items-center space-x-2 text-sm font-medium transition">
+                    <i class="fa-solid fa-cart-shopping"></i>
+                    <span>Keranjang</span>
+                    <span id="cart-count" class="bg-amber-400 text-emerald-950 font-bold text-xs px-2 py-0.5 rounded-full">0</span>
+                </button>
             </div>
-          </div>
         </div>
-      `).join('');
-    }
+    </header>
 
-    function addToCart(title, price) {
-      cart.push({ title, price });
-      document.getElementById('cart-count').innerText = cart.length;
-      renderCartItems();
-      alert(`"${title}" berhasil ditambahkan ke keranjang!`);
-    }
+    <!-- Banner Utama -->
+    <section class="bg-emerald-800 text-white py-10 px-4 text-center">
+        <div class="max-w-3xl mx-auto">
+            <h2 class="text-2xl md:text-3xl font-bold mb-2">Marketplace Produk Unggulan BorneoKu</h2>
+            <p class="text-emerald-100 text-sm md:text-base">Dukung produk lokal berkualitas tinggi langsung dari para pengrajin dan UMKM terbaik se-Kalimantan.</p>
+        </div>
+    </section>
 
-    function toggleCartModal() {
-      const modal = document.getElementById('cart-modal');
-      modal.classList.toggle('hidden');
-      renderCartItems();
-    }
-
-    function renderCartItems() {
-      const itemsContainer = document.getElementById('cart-items');
-      if (cart.length === 0) {
-        itemsContainer.innerHTML = '<p class="text-center text-gray-400 py-4">Keranjang belanja Anda masih kosong.</p>';
-      } else {
-        itemsContainer.innerHTML = cart.map((item, index) => `
-          <div class="flex justify-between items-center py-2">
-            <div>
-              <p class="font-semibold text-gray-800">${item.title}</p>
-              <p class="text-xs text-emerald-600 font-bold">Rp ${Number(item.price).toLocaleString('id-ID')}</p>
+    <!-- Main Content -->
+    <main class="max-w-6xl mx-auto px-4 py-8">
+        <h3 class="text-xl font-bold text-gray-800 mb-6 border-b pb-2">Produk Terbaru</h3>
+        <div id="product-list" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
+            <!-- Loading State -->
+            <div class="col-span-full text-center py-10 text-gray-500">
+                <i class="fa-solid fa-spinner fa-spin text-2xl mb-2"></i>
+                <p>Memuat produk UMKM...</p>
             </div>
-            <button onclick="removeFromCart(${index})" class="text-red-500 hover:text-red-700 text-xs font-bold">Hapus</button>
-          </div>
-        `).join('');
-      }
-      calculateTotal();
-    }
+        </div>
+    </main>
 
-    function removeFromCart(index) {
-      cart.splice(index, 1);
-      document.getElementById('cart-count').innerText = cart.length;
-      renderCartItems();
-    }
+    <!-- Modal Pendaftaran Mitra UMKM -->
+    <div id="seller-modal" class="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center hidden p-4">
+        <div class="bg-white rounded-xl max-w-md w-full p-6 relative shadow-2xl max-h-[90vh] overflow-y-auto">
+            <button onclick="closeSellerModal()" class="absolute top-4 right-4 text-gray-400 hover:text-gray-600 text-xl">&times;</button>
+            <h3 class="text-lg font-bold text-emerald-800 mb-1"><i class="fa-solid fa-shop mr-2"></i>Daftar Jadi Mitra UMKM</h3>
+            <p class="text-xs text-gray-500 mb-4">Bergabunglah dengan BorneoKu dan pasarkan produk unggulan Anda ke seluruh Indonesia.</p>
+            
+            <form id="seller-form" onsubmit="submitSellerRegistration(event)" class="space-y-3">
+                <div>
+                    <label class="block text-xs font-semibold text-gray-700 mb-1">Nama Toko / Usaha</label>
+                    <input type="text" id="store_name" required placeholder="Contoh: Rumah Jahit Adisa" class="w-full text-sm p-2.5 border rounded-lg focus:ring-2 focus:ring-emerald-500 outline-none">
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-gray-700 mb-1">Nama Pemilik Usaha</label>
+                    <input type="text" id="owner_name" required placeholder="Nama Lengkap Anda" class="w-full text-sm p-2.5 border rounded-lg focus:ring-2 focus:ring-emerald-500 outline-none">
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-gray-700 mb-1">Nomor WhatsApp Aktif</label>
+                    <input type="tel" id="seller_whatsapp" required placeholder="08123456789" class="w-full text-sm p-2.5 border rounded-lg focus:ring-2 focus:ring-emerald-500 outline-none">
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-gray-700 mb-1">Kota / Kabupaten (Kalimantan)</label>
+                    <input type="text" id="seller_city" required placeholder="Contoh: Nunukan, Tarakan, Samarinda" class="w-full text-sm p-2.5 border rounded-lg focus:ring-2 focus:ring-emerald-500 outline-none">
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-gray-700 mb-1">Kategori Utama Produk</label>
+                    <select id="seller_category" required class="w-full text-sm p-2.5 border rounded-lg focus:ring-2 focus:ring-emerald-500 outline-none">
+                        <option value="">-- Pilih Kategori --</option>
+                        <option value="Kerajinan & Seni">Kerajinan & Seni</option>
+                        <option value="Busana & Fesyen">Busana & Fesyen</option>
+                        <option value="Makanan & Minuman Herbal">Makanan & Minuman Herbal</option>
+                        <option value="Kuliner Khas">Kuliner Khas</option>
+                        <option value="Lainnya">Lainnya</option>
+                    </select>
+                </div>
+                <button type="submit" id="btn-submit-seller" class="w-full bg-emerald-700 hover:bg-emerald-800 text-white font-semibold py-2.5 rounded-lg text-sm transition shadow mt-4">
+                    Kirim Pendaftaran
+                </button>
+            </form>
+        </div>
+    </div>
 
-    function calculateTotal() {
-      const subtotal = cart.reduce((sum, item) => sum + Number(item.price), 0);
-      const shipping = Number(document.getElementById('shipping-zone').value) || 0;
-      const grandTotal = subtotal + shipping;
+    <!-- Script Koneksi Supabase & Logika -->
+    <script>
+        const SUPABASE_URL = 'https://syqhyqffvxpxzhyxptwq.supabase.co';
+        const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InN5cWh5cWZmdnhweHpoeXhwdHdxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDEyMTcwNTUsImV4cCI6MjA1Njc5MzA1NX0.S_1Uf19J3oM4r2tQ1o7B80u2S4xR2jN8P8Y8Z8Z8Z8Z'; // Diselaraskan dengan skrip utama
+        const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
-      document.getElementById('subtotal-price').innerText = `Rp ${subtotal.toLocaleString('id-ID')}`;
-      document.getElementById('shipping-price').innerText = `Rp ${shipping.toLocaleString('id-ID')}`;
-      document.getElementById('grand-total').innerText = `Rp ${grandTotal.toLocaleString('id-ID')}`;
-    }
+        function openSellerModal() {
+            document.getElementById('seller-modal').classList.remove('hidden');
+        }
 
-    function submitOrder() {
-      if (cart.length === 0) {
-        alert('Keranjang belanja Anda masih kosong!');
-        return;
-      }
+        function closeSellerModal() {
+            document.getElementById('seller-modal').classList.add('hidden');
+        }
 
-      const name = document.getElementById('cust-name').value.trim();
-      const phone = document.getElementById('cust-phone').value.trim();
-      const shippingCost = Number(document.getElementById('shipping-zone').value);
-      const address = document.getElementById('cust-address').value.trim();
-      const payment = document.getElementById('payment-method').value;
+        async function submitSellerRegistration(event) {
+            event.preventDefault();
+            const btn = document.getElementById('btn-submit-seller');
+            btn.disabled = true;
+            btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin mr-1"></i> Mengirim...';
 
-      if (!name || !phone || !address || shippingCost === 0) {
-        alert('Mohon lengkapi Nama, No. WhatsApp, Wilayah Pengiriman, dan Alamat Lengkap Anda.');
-        return;
-      }
+            const store_name = document.getElementById('store_name').value;
+            const owner_name = document.getElementById('owner_name').value;
+            const whatsapp = document.getElementById('seller_whatsapp').value;
+            const city = document.getElementById('seller_city').value;
+            const category = document.getElementById('seller_category').value;
 
-      const subtotal = cart.reduce((sum, item) => sum + Number(item.price), 0);
-      const total = subtotal + shippingCost;
+            try {
+                const { data, error } = await supabase
+                    .from('sellers')
+                    .insert([{ store_name, owner_name, whatsapp, city, category }]);
 
-      // Format Pesanan WhatsApp
-      let itemList = cart.map((item, i) => `${i + 1}. ${item.title} (Rp ${Number(item.price).toLocaleString('id-ID')})`).join('\n');
-      
-      let message = `Halo Admin BorneoKu, saya ingin memesan:\n\n` +
-                    `*RINCIAN PESANAN:*\n${itemList}\n\n` +
-                    `*DETAIL PEMBAYARAN:*\n` +
-                    `- Subtotal Produk: Rp ${subtotal.toLocaleString('id-ID')}\n` +
-                    `- Ongkos Kirim: Rp ${shippingCost.toLocaleString('id-ID')}\n` +
-                    `- *Total Pembayaran: Rp ${total.toLocaleString('id-ID')}*\n` +
-                    `- Metode Pembayaran: ${payment}\n\n` +
-                    `*DATA PENGIRIMAN:*\n` +
-                    `- Nama: ${name}\n` +
-                    `- No. HP/WA: ${phone}\n` +
-                    `- Alamat: ${address}\n\n` +
-                    `Mohon diproses dan diinfokan nomor rekening/prosedur pembayarannya. Terima kasih!`;
+                if (error) throw error;
 
-      // Nomor Admin WhatsApp
-      const adminWA = '6281241170658'; 
-      const waUrl = `https://wa.me/${adminWA}?text=${encodeURIComponent(message)}`;
-
-      window.open(waUrl, '_blank');
-    }
-
-    fetchProducts();
-  </script>
+                alert('Pendaftaran Berhasil! Tim BorneoKu akan menghubungi Anda melalui WhatsApp untuk verifikasi toko.');
+                document.getElementById('seller-form').reset();
+                closeSellerModal();
+            } catch (err) {
+                alert('Terjadi kesalahan saat pendaftaran. Silakan coba lagi.');
+                console.error(err);
+            } finally {
+                btn.disabled = false;
+                btn.innerHTML = 'Kirim Pendaftaran';
+            }
+        }
+    </script>
 </body>
 </html>
