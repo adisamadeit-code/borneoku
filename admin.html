@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Dashboard & Pengaturan Toko - Borneoku</title>
+  <title>Panel Pengelola - Borneoku</title>
   
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -30,161 +30,184 @@
     </div>
   </header>
 
-  <!-- FORM LOGIN -->
-  <div id="login-section" class="max-w-md mx-auto my-12 p-6 bg-white rounded-2xl shadow-sm border border-gray-100">
-    <div class="text-center mb-6">
-      <div class="bg-emerald-50 text-emerald-800 w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-2 text-lg font-bold shadow-sm">
-        <i class="fa-solid fa-lock"></i>
-      </div>
-      <h2 class="text-base font-bold text-gray-900">Login Administrator</h2>
-      <p class="text-xs text-gray-500 mt-1">Masukkan sandi (admin123) untuk mengelola toko</p>
-    </div>
+  <!-- KONTEN UTAMA (PANEL ADMIN) -->
+  <main class="max-w-4xl mx-auto p-4 mt-2">
     
-    <form onsubmit="handleLogin(event)" class="space-y-4">
-      <div>
-        <label class="block text-xs font-bold text-gray-700 mb-1">Kata Sandi</label>
-        <input type="password" id="admin-password" placeholder="Masukkan sandi..." required 
-               class="w-full px-3.5 py-2.5 rounded-xl border border-gray-200 text-xs focus:outline-none focus:ring-2 focus:ring-emerald-500">
+    <!-- SECTION 1: KELOLA & TAMBAH PRODUK TOKO -->
+    <div id="section-produk" class="tab-content space-y-5 hidden">
+      <div class="bg-white p-5 rounded-2xl shadow-sm border border-gray-100 space-y-4">
+        <h3 class="text-sm font-bold text-gray-900 border-b pb-2 flex items-center gap-2">
+          <i class="fa-solid fa-boxes-stacked text-emerald-800"></i> Kelola & Tambah Produk Toko
+        </h3>
+
+        <form onsubmit="handleSaveProduct(event)" class="grid grid-cols-1 md:grid-cols-2 gap-3">
+          <input type="hidden" id="prod-img-url" value="https://images.unsplash.com/photo-1544816155-12df9643f363?auto=format&fit=crop&w=400&q=80">
+
+          <div>
+            <label class="block text-xs font-bold text-gray-700 mb-1">Nama Produk</label>
+            <input type="text" id="prod-name" placeholder="Contoh: Tas Anjat Kalimantan" required
+                   class="w-full px-3 py-2 rounded-xl border border-gray-200 text-xs focus:ring-2 focus:ring-emerald-500">
+          </div>
+
+          <div>
+            <label class="block text-xs font-bold text-gray-700 mb-1">Harga (Rp)</label>
+            <input type="number" id="prod-price" placeholder="Contoh: 150000" required
+                   class="w-full px-3 py-2 rounded-xl border border-gray-200 text-xs focus:ring-2 focus:ring-emerald-500">
+          </div>
+
+          <div>
+            <label class="block text-xs font-bold text-gray-700 mb-1">Kategori Produk</label>
+            <select id="prod-category" class="w-full px-3 py-2 rounded-xl border border-gray-200 text-xs focus:ring-2 focus:ring-emerald-500">
+              <option value="Kerajinan">Kerajinan Tangan</option>
+              <option value="Tekstil & Pakaian">Tekstil & Pakaian</option>
+              <option value="Makanan & Minuman">Makanan & Minuman Khas</option>
+              <option value="Aksesoris">Aksesoris & Perhiasan</option>
+              <option value="Lainnya">Lainnya</option>
+            </select>
+          </div>
+
+          <div>
+            <label class="block text-xs font-bold text-gray-700 mb-1">No. WhatsApp Penjual</label>
+            <input type="text" id="prod-wa" placeholder="6281241170648" required
+                   class="w-full px-3 py-2 rounded-xl border border-gray-200 text-xs focus:ring-2 focus:ring-emerald-500">
+          </div>
+
+          <div class="md:col-span-2">
+            <label class="block text-xs font-bold text-gray-700 mb-1">Unggah Foto Produk dari Galeri HP</label>
+            <input type="file" id="prod-file" accept="image/*" onchange="previewImage(event)"
+                   class="w-full px-3 py-2 rounded-xl border border-gray-200 text-xs bg-gray-50 file:mr-4 file:py-1 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-emerald-50 file:text-emerald-700">
+          </div>
+
+          <div class="md:col-span-2 pt-1">
+            <button type="submit" class="w-full bg-emerald-800 hover:bg-emerald-900 text-white font-bold py-2.5 rounded-xl text-xs transition shadow-sm flex justify-center items-center gap-2">
+              <i class="fa-solid fa-cloud-arrow-up"></i> Simpan Produk ke Etalase Gabungan
+            </button>
+          </div>
+        </form>
       </div>
-      <p id="login-error" class="text-xs text-red-500 hidden font-semibold">Kata sandi salah.</p>
-      <button type="submit" class="w-full bg-emerald-800 hover:bg-emerald-900 text-white font-bold py-2.5 rounded-xl text-xs transition shadow-sm">
-        Masuk Dashboard &rarr;
-      </button>
-    </form>
-  </div>
 
-  <!-- DASHBOARD UTAMA (Tampil Setelah Login) -->
-  <div id="dashboard-section" class="max-w-4xl mx-auto p-4 space-y-5 hidden mt-2">
-    
-    <!-- 1. KELOLA PRODUK & TAMBAH BARANG -->
-    <div class="bg-white p-5 rounded-2xl shadow-sm border border-gray-100 space-y-4">
-      <h3 class="text-sm font-bold text-gray-900 border-b pb-2 flex items-center gap-2">
-        <i class="fa-solid fa-boxes-stacked text-emerald-800"></i> Kelola & Tambah Produk Toko
-      </h3>
-
-      <form onsubmit="handleSaveProduct(event)" class="grid grid-cols-1 md:grid-cols-2 gap-3">
-        <input type="hidden" id="prod-img-url" value="https://images.unsplash.com/photo-1544816155-12df9643f363?auto=format&fit=crop&w=400&q=80">
-
-        <div>
-          <label class="block text-xs font-bold text-gray-700 mb-1">Nama Produk</label>
-          <input type="text" id="prod-name" placeholder="Contoh: Tas Anjat Kalimantan" required
-                 class="w-full px-3 py-2 rounded-xl border border-gray-200 text-xs focus:ring-2 focus:ring-emerald-500">
-        </div>
-
-        <div>
-          <label class="block text-xs font-bold text-gray-700 mb-1">Harga (Rp)</label>
-          <input type="number" id="prod-price" placeholder="Contoh: 150000" required
-                 class="w-full px-3 py-2 rounded-xl border border-gray-200 text-xs focus:ring-2 focus:ring-emerald-500">
-        </div>
-
-        <div>
-          <label class="block text-xs font-bold text-gray-700 mb-1">Kategori Produk</label>
-          <select id="prod-category" class="w-full px-3 py-2 rounded-xl border border-gray-200 text-xs focus:ring-2 focus:ring-emerald-500">
-            <option value="Kerajinan">Kerajinan Tangan</option>
-            <option value="Tekstil & Pakaian">Tekstil & Pakaian</option>
-            <option value="Makanan & Minuman">Makanan & Minuman Khas</option>
-            <option value="Aksesoris">Aksesoris & Perhiasan</option>
-            <option value="Lainnya">Lainnya</option>
-          </select>
-        </div>
-
-        <div>
-          <label class="block text-xs font-bold text-gray-700 mb-1">No. WhatsApp Penjual</label>
-          <input type="text" id="prod-wa" placeholder="6281241170648" required
-                 class="w-full px-3 py-2 rounded-xl border border-gray-200 text-xs focus:ring-2 focus:ring-emerald-500">
-        </div>
-
-        <div class="md:col-span-2">
-          <label class="block text-xs font-bold text-gray-700 mb-1">Unggah Foto Produk dari Galeri HP</label>
-          <input type="file" id="prod-file" accept="image/*" onchange="previewImage(event)"
-                 class="w-full px-3 py-2 rounded-xl border border-gray-200 text-xs bg-gray-50 file:mr-4 file:py-1 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-emerald-50 file:text-emerald-700">
-        </div>
-
-        <div class="md:col-span-2 pt-1">
-          <button type="submit" class="w-full bg-emerald-800 hover:bg-emerald-900 text-white font-bold py-2.5 rounded-xl text-xs transition shadow-sm flex justify-center items-center gap-2">
-            <i class="fa-solid fa-cloud-arrow-up"></i> Simpan Produk ke Etalase Gabungan
-          </button>
-        </div>
-      </form>
-    </div>
-
-    <!-- 2. PENGATURAN TOKO -->
-    <div class="bg-white p-5 rounded-2xl shadow-sm border border-gray-100 space-y-3">
-      <h3 class="text-sm font-bold text-gray-900 border-b pb-2 flex items-center gap-2">
-        <i class="fa-solid fa-gear text-emerald-800"></i> Pengaturan Toko & Operasional
-      </h3>
-      
-      <div class="space-y-2">
-        <div onclick="alert('Fitur Profil Toko: Atur nama, deskripsi, dan logo toko Anda.')" class="p-3 bg-gray-50 hover:bg-gray-100 rounded-xl flex justify-between items-center cursor-pointer transition">
-          <div class="flex items-center gap-2.5">
-            <i class="fa-solid fa-store text-emerald-800"></i>
-            <div>
-              <p class="font-bold text-xs text-gray-900">Profil Toko</p>
-              <p class="text-[10px] text-gray-500">Nama, deskripsi, WhatsApp, alamat</p>
-            </div>
-          </div>
-          <i class="fa-solid fa-chevron-right text-gray-400 text-xs"></i>
-        </div>
-
-        <div onclick="alert('Fitur Kategori: Atur kategori produk unggulan toko.')" class="p-3 bg-gray-50 hover:bg-gray-100 rounded-xl flex justify-between items-center cursor-pointer transition">
-          <div class="flex items-center gap-2.5">
-            <i class="fa-solid fa-tags text-emerald-800"></i>
-            <div>
-              <p class="font-bold text-xs text-gray-900">Kategori Produk</p>
-              <p class="text-[10px] text-gray-500">Kelola kategori dan urutan etalase</p>
-            </div>
-          </div>
-          <i class="fa-solid fa-chevron-right text-gray-400 text-xs"></i>
-        </div>
-
-        <div onclick="alert('Fitur Pengiriman: Atur kurir toko atau tarif tetap.')" class="p-3 bg-gray-50 hover:bg-gray-100 rounded-xl flex justify-between items-center cursor-pointer transition">
-          <div class="flex items-center gap-2.5">
-            <i class="fa-solid fa-truck text-emerald-800"></i>
-            <div>
-              <p class="font-bold text-xs text-gray-900">Pengiriman</p>
-              <p class="text-[10px] text-gray-500">Kurir toko sendiri, tarif tetap, gratis ongkir</p>
-            </div>
-          </div>
-          <i class="fa-solid fa-chevron-right text-gray-400 text-xs"></i>
-        </div>
-
-        <div onclick="alert('Fitur Pembayaran: Atur metode transfer bank atau QRIS.')" class="p-3 bg-gray-50 hover:bg-gray-100 rounded-xl flex justify-between items-center cursor-pointer transition">
-          <div class="flex items-center gap-2.5">
-            <i class="fa-solid fa-wallet text-emerald-800"></i>
-            <div>
-              <p class="font-bold text-xs text-gray-900">Pembayaran Online</p>
-              <p class="text-[10px] text-gray-500">Terima pembayaran transfer & QRIS</p>
-            </div>
-          </div>
-          <i class="fa-solid fa-chevron-right text-gray-400 text-xs"></i>
+      <!-- DAFTAR VERIFIKASI HALAL & LAYAK JUAL -->
+      <div class="bg-white p-5 rounded-2xl shadow-sm border border-gray-100 space-y-4">
+        <h3 class="text-sm font-bold text-gray-900 border-b pb-2 flex items-center gap-2">
+          <i class="fa-solid fa-shield-halved text-emerald-800"></i> Verifikasi Halal & Layak Jual
+        </h3>
+        <div id="admin-product-list" class="space-y-2.5">
+          <p class="text-center text-xs text-gray-400 py-4">Memuat data produk...</p>
         </div>
       </div>
     </div>
 
-    <!-- 3. SYARAT & KETENTUAN, POTONGAN 2%, DAN PENJELASAN PAJAK -->
-    <div class="bg-emerald-50 p-5 rounded-2xl shadow-sm border border-emerald-200 space-y-3">
-      <h3 class="text-sm font-bold text-emerald-950 border-b border-emerald-200 pb-2 flex items-center gap-2">
-        <i class="fa-solid fa-file-contract text-emerald-800"></i> Syarat & Ketentuan, Potongan 2% & Pajak
-      </h3>
-      <div class="text-[11px] text-emerald-900 space-y-2 leading-relaxed">
-        <p><strong>1. Ketentuan Platform Borneoku:</strong> Seluruh mitra UMKM wajib memasarkan produk yang halal, asli buatan lokal, dan berkualitas layak jual.</p>
-        <p><strong>2. Penjelasan Potongan 2%:</strong> Platform mengenakan biaya layanan operasional sebesar <strong>2%</strong> dari setiap transaksi sukses yang terjadi untuk pemeliharaan sistem digital dan promosi bersama.</p>
-        <p><strong>3. Keterangan Pajak:</strong> Kewajiban perpajakan mengikuti ketentuan omset UMKM yang berlaku di Indonesia (PPH Final UMKM sesuai peraturan pemerintah).</p>
+    <!-- SECTION 2: PESANAN MASUK -->
+    <div id="section-pesanan" class="tab-content hidden">
+      <div class="bg-white p-5 rounded-2xl shadow-sm border border-gray-100 space-y-3">
+        <h3 class="text-sm font-bold text-gray-900 border-b pb-2 flex items-center gap-2">
+          <i class="fa-solid fa-receipt text-emerald-800"></i> Daftar Pesanan Masuk
+        </h3>
+        <p class="text-center text-xs text-gray-400 py-8">Belum ada pesanan masuk saat ini.</p>
       </div>
     </div>
 
-    <!-- 4. MODERASI & VERIFIKASI PRODUK -->
-    <div class="bg-white p-5 rounded-2xl shadow-sm border border-gray-100 space-y-4">
-      <h3 class="text-sm font-bold text-gray-900 border-b pb-2 flex items-center gap-2">
-        <i class="fa-solid fa-shield-halved text-emerald-800"></i> Verifikasi Halal & Layak Jual
-      </h3>
-      
-      <div id="admin-product-list" class="space-y-2.5">
-        <p class="text-center text-xs text-gray-400 py-4">Memuat data...</p>
+    <!-- SECTION 3: NOTIFIKASI -->
+    <div id="section-notif" class="tab-content hidden">
+      <div class="bg-white p-5 rounded-2xl shadow-sm border border-gray-100 space-y-3">
+        <h3 class="text-sm font-bold text-gray-900 border-b pb-2 flex items-center gap-2">
+          <i class="fa-solid fa-bell text-emerald-800"></i> Pemberitahuan & Notifikasi
+        </h3>
+        <div class="p-3 bg-emerald-50 rounded-xl border border-emerald-100">
+          <p class="font-bold text-xs text-emerald-950">Selamat Datang di Borneoku!</p>
+          <p class="text-[11px] text-emerald-800 mt-0.5">Sistem Borneoku siap digunakan untuk mengelola toko dan menerima produk UMKM.</p>
+        </div>
       </div>
     </div>
 
-  </div>
+    <!-- SECTION 4: SYARAT, KETENTUAN, POTONGAN 2% & PAJAK (KHUSUS HALAMAN INI) -->
+    <div id="section-ketentuan" class="tab-content hidden space-y-4">
+      <div class="bg-emerald-50 p-6 rounded-2xl shadow-sm border border-emerald-200 space-y-4">
+        <h3 class="text-base font-bold text-emerald-950 border-b border-emerald-200 pb-3 flex items-center gap-2">
+          <i class="fa-solid fa-file-contract text-emerald-800 text-lg"></i> Syarat & Ketentuan, Potongan 2% & Pajak
+        </h3>
+        
+        <div class="text-xs text-emerald-900 space-y-3 leading-relaxed">
+          <div class="bg-white p-3.5 rounded-xl border border-emerald-100 shadow-xs">
+            <h4 class="font-bold text-emerald-950 mb-1 flex items-center gap-1.5">
+              <i class="fa-solid fa-check-circle text-emerald-700"></i> 1. Ketentuan Platform & Ketertiban Toko
+            </h4>
+            <p>Seluruh mitra UMKM wajib mematuhi persyaratan, menjaga ketertiban toko, serta memasarkan produk yang halal, asli buatan lokal Nusantara, dan berkualitas layak jual.</p>
+          </div>
+
+          <div class="bg-white p-3.5 rounded-xl border border-emerald-100 shadow-xs">
+            <h4 class="font-bold text-emerald-950 mb-1 flex items-center gap-1.5">
+              <i class="fa-solid fa-percent text-emerald-700"></i> 2. Penjelasan Potongan 2%
+            </h4>
+            <p>Platform mengenakan biaya layanan operasional sebesar <strong>2%</strong> dari setiap transaksi sukses yang terjadi untuk pemeliharaan sistem digital, pengembangan fitur, serta promosi bersama.</p>
+          </div>
+
+          <div class="bg-white p-3.5 rounded-xl border border-emerald-100 shadow-xs">
+            <h4 class="font-bold text-emerald-950 mb-1 flex items-center gap-1.5">
+              <i class="fa-solid fa-scale-balanced text-emerald-700"></i> 3. Pemberitahuan Pajak
+            </h4>
+            <p>Kewajiban perpajakan mengikuti ketentuan omset UMKM yang berlaku secara resmi di Indonesia (PPh Final UMKM sesuai dengan peraturan perpajakan pemerintah).</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SECTION 5: PENGATURAN TOKO & OPERASIONAL -->
+    <div id="section-pengaturan" class="tab-content hidden">
+      <div class="bg-white p-5 rounded-2xl shadow-sm border border-gray-100 space-y-3">
+        <h3 class="text-sm font-bold text-gray-900 border-b pb-2 flex items-center gap-2">
+          <i class="fa-solid fa-gear text-emerald-800"></i> Pengaturan Toko & Operasional
+        </h3>
+        
+        <div class="space-y-2">
+          <div onclick="alert('Profil Toko')" class="p-3 bg-gray-50 hover:bg-gray-100 rounded-xl flex justify-between items-center cursor-pointer transition">
+            <div class="flex items-center gap-2.5">
+              <i class="fa-solid fa-store text-emerald-800"></i>
+              <div>
+                <p class="font-bold text-xs text-gray-900">Profil Toko</p>
+                <p class="text-[10px] text-gray-500">Nama, deskripsi, WhatsApp, alamat</p>
+              </div>
+            </div>
+            <i class="fa-solid fa-chevron-right text-gray-400 text-xs"></i>
+          </div>
+
+          <div onclick="alert('Kategori Produk')" class="p-3 bg-gray-50 hover:bg-gray-100 rounded-xl flex justify-between items-center cursor-pointer transition">
+            <div class="flex items-center gap-2.5">
+              <i class="fa-solid fa-tags text-emerald-800"></i>
+              <div>
+                <p class="font-bold text-xs text-gray-900">Kategori Produk</p>
+                <p class="text-[10px] text-gray-500">Kelola kategori dan urutan etalase</p>
+              </div>
+            </div>
+            <i class="fa-solid fa-chevron-right text-gray-400 text-xs"></i>
+          </div>
+
+          <div onclick="alert('Pengiriman')" class="p-3 bg-gray-50 hover:bg-gray-100 rounded-xl flex justify-between items-center cursor-pointer transition">
+            <div class="flex items-center gap-2.5">
+              <i class="fa-solid fa-truck text-emerald-800"></i>
+              <div>
+                <p class="font-bold text-xs text-gray-900">Pengiriman</p>
+                <p class="text-[10px] text-gray-500">Kurir toko sendiri, tarif tetap, gratis ongkir</p>
+              </div>
+            </div>
+            <i class="fa-solid fa-chevron-right text-gray-400 text-xs"></i>
+          </div>
+
+          <div onclick="alert('Pembayaran Online')" class="p-3 bg-gray-50 hover:bg-gray-100 rounded-xl flex justify-between items-center cursor-pointer transition">
+            <div class="flex items-center gap-2.5">
+              <i class="fa-solid fa-wallet text-emerald-800"></i>
+              <div>
+                <p class="font-bold text-xs text-gray-900">Pembayaran Online</p>
+                <p class="text-[10px] text-gray-500">Terima pembayaran transfer & QRIS</p>
+              </div>
+            </div>
+            <i class="fa-solid fa-chevron-right text-gray-400 text-xs"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </main>
 
   <!-- NAVIGATION BAR BAWAH -->
   <nav class="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 py-2 px-3 flex justify-around items-center z-50 shadow-lg">
@@ -192,24 +215,29 @@
       <i class="fa-solid fa-house text-sm"></i>
       <span class="text-[9px] font-medium mt-1">Beranda</span>
     </button>
-    <button onclick="window.location.href='admin.html'" class="flex flex-col items-center text-emerald-800 focus:outline-none">
+    
+    <button onclick="showTab('produk')" id="nav-btn-produk" class="nav-btn flex flex-col items-center text-gray-400 hover:text-emerald-800 focus:outline-none">
       <i class="fa-solid fa-boxes-stacked text-sm"></i>
-      <span class="text-[9px] font-bold mt-1">Produk</span>
+      <span class="text-[9px] font-medium mt-1">Produk</span>
     </button>
-    <button onclick="alert('Menu Pesanan Masuk')" class="flex flex-col items-center text-gray-400 hover:text-emerald-800 focus:outline-none">
+    
+    <button onclick="showTab('pesanan')" id="nav-btn-pesanan" class="nav-btn flex flex-col items-center text-gray-400 hover:text-emerald-800 focus:outline-none">
       <i class="fa-solid fa-receipt text-sm"></i>
       <span class="text-[9px] font-medium mt-1">Pesanan</span>
     </button>
-    <button onclick="alert('Notifikasi: Tidak ada pesan baru.')" class="flex flex-col items-center text-gray-400 hover:text-emerald-800 focus:outline-none relative">
+    
+    <button onclick="showTab('notif')" id="nav-btn-notif" class="nav-btn flex flex-col items-center text-gray-400 hover:text-emerald-800 focus:outline-none relative">
       <i class="fa-solid fa-bell text-sm"></i>
       <span class="absolute -top-1 -right-1 bg-red-500 text-white text-[8px] font-bold px-1 rounded-full">1</span>
       <span class="text-[9px] font-medium mt-1">Notif</span>
     </button>
-    <button onclick="alert('Halaman Syarat, Potongan 2% & Pajak')" class="flex flex-col items-center text-gray-400 hover:text-emerald-800 focus:outline-none">
+    
+    <button onclick="showTab('ketentuan')" id="nav-btn-ketentuan" class="nav-btn flex flex-col items-center text-gray-400 hover:text-emerald-800 focus:outline-none">
       <i class="fa-solid fa-file-contract text-sm"></i>
       <span class="text-[9px] font-medium mt-1">Syarat & Pajak</span>
     </button>
-    <button onclick="alert('Menu Pengaturan Toko')" class="flex flex-col items-center text-gray-400 hover:text-emerald-800 focus:outline-none">
+    
+    <button onclick="showTab('pengaturan')" id="nav-btn-pengaturan" class="nav-btn flex flex-col items-center text-gray-400 hover:text-emerald-800 focus:outline-none">
       <i class="fa-solid fa-gear text-sm"></i>
       <span class="text-[9px] font-medium mt-1">Pengaturan</span>
     </button>
@@ -220,16 +248,32 @@
     const SUPABASE_URL = 'https://iegqvegvoqjqjjyucpss.supabase.co';
     const SUPABASE_ANON_KEY = 'sb_publishable_7o0SP7VYOFhYJ0qyDrPtzw_2VvkuiMy';
     const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-    const PASS_ADMIN = "admin123";
 
-    function handleLogin(e) {
-      e.preventDefault();
-      if (document.getElementById('admin-password').value === PASS_ADMIN) {
-        document.getElementById('login-section').classList.add('hidden');
-        document.getElementById('dashboard-section').classList.remove('hidden');
+    function showTab(tabName) {
+      // Sembunyikan semua section
+      document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+      
+      // Reset warna tombol nav
+      document.querySelectorAll('.nav-btn').forEach(el => {
+        el.classList.remove('text-emerald-800', 'font-bold');
+        el.classList.add('text-gray-400', 'font-medium');
+      });
+
+      // Tampilkan section yang dipilih
+      const activeSection = document.getElementById('section-' + tabName);
+      if (activeSection) {
+        activeSection.classList.remove('hidden');
+      }
+
+      // Beri warna hijau pada tombol aktif
+      const activeNavBtn = document.getElementById('nav-btn-' + tabName);
+      if (activeNavBtn) {
+        activeNavBtn.classList.remove('text-gray-400', 'font-medium');
+        activeNavBtn.classList.add('text-emerald-800', 'font-bold');
+      }
+
+      if (tabName === 'produk') {
         loadAdminProducts();
-      } else {
-        document.getElementById('login-error').classList.remove('hidden');
       }
     }
 
@@ -305,6 +349,11 @@
         alert('Gagal menghapus: ' + err.message);
       }
     }
+
+    // Deteksi tab dari URL query parameter (misal: admin.html?tab=ketentuan)
+    const urlParams = new URLSearchParams(window.location.search);
+    const tabParam = urlParams.get('tab') || 'ketentuan';
+    showTab(tabParam);
   </script>
 </body>
-      </html>
+              </html>
