@@ -178,7 +178,6 @@
         }
 
         container.innerHTML = cachedProducts.map(item => {
-          // Mendukung berbagai kemungkinan nama kolom di database
           const nama = item.name || item.nama_produk || item.nama || 'Produk';
           const harga = item.price !== undefined ? item.price : (item.harga !== undefined ? item.harga : 0);
           const status = item.status || 'disetujui';
@@ -282,12 +281,11 @@
       let waVal = document.getElementById('prod-wa').value.trim();
       const imgVal = document.getElementById('prod-img-url').value;
 
-      // Format nomor WhatsApp otomatis jika diawali angka 0 (08... jadi 628...)
       if (waVal.startsWith('0')) {
         waVal = '62' + waVal.slice(1);
       }
 
-      // Payload khusus disesuaikan dengan kolom Supabase Kakak (name, price, category, whatsapp, image_url, status)
+      // Menggunakan kolom 'name' dan 'price' persis sesuai struktur Supabase Kakak
       const payload = {
         name: nameVal,
         price: priceVal,
@@ -329,4 +327,4 @@
     }
   </script>
 </body>
-</html>
+  </html>
