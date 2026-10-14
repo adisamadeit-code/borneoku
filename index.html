@@ -257,7 +257,8 @@
     async function loadProducts() {
       const productList = document.getElementById('product-list');
       try {
-        const { data, error } = await supabaseClient.from('products').select('*');
+        // HANYA MENGAMBIL PRODUK YANG BERSTATUS 'disetujui'
+        const { data, error } = await supabaseClient.from('products').select('*').eq('status', 'disetujui');
         if (error) throw error;
         allProducts = data || [];
         renderProducts(allProducts);
@@ -273,7 +274,7 @@
         productList.innerHTML = `
           <div class="col-span-full text-center py-12 text-gray-500 bg-white rounded-2xl shadow-sm border border-gray-100">
             <i class="fa-solid fa-box-open text-4xl mb-3 text-amber-600"></i>
-            <p class="font-semibold text-gray-700">Tidak ada produk ditemukan.</p>
+            <p class="font-semibold text-gray-700">Belum ada produk yang disetujui untuk tampil.</p>
           </div>`;
         return;
       }
@@ -286,7 +287,7 @@
         const gambarProduk = product.image_url || product.gambar || 'https://images.unsplash.com/photo-1544816155-12df9643f363?auto=format&fit=crop&w=400&q=80';
         const noWa = product.whatsapp || product.no_hp || adminWA;
 
-        // Draf Pesan WA Langsung Produk Lengkap
+        // Draf Pesan WA Langsung
         const waTextDirect = `Halo Admin Borneoku, saya tertarik untuk memesan produk ini:%0A%0A📌 *Nama Produk*: ${encodeURIComponent(namaProduk)}%0A💰 *Harga*: Rp ${Number(hargaProduk).toLocaleString('id-ID')}%0A%0A*Form Pemesanan:*%0A- *Jumlah Pesanan*:%201%0A- *Nama Pemesan*:%20%0A- *Alamat Pengiriman*:%20%0A- *Pilihan Kurir/COD*:%20`;
 
         return `
@@ -330,4 +331,4 @@
     loadProducts();
   </script>
 </body>
-</html>
+  </html>
