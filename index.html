@@ -100,8 +100,8 @@
             <i class="fa-solid fa-cart-arrow-down"></i>
             <span>Mulai Belanja &rarr;</span>
           </a>
-          <!-- TOMBOL DAFTAR MITRA DIARAHKAN KE CHAT WHATSAPP / PENDAFTARAN -->
-          <a href="https://wa.me/628123456789?text=Halo%20Admin%20BorneoKU,%20saya%20ingin%20mendaftar%20sebagai%20Mitra%20Penjual%20UMKM." target="_blank" class="bg-amber-500 hover:bg-amber-600 text-white font-bold py-2.5 px-5 rounded-xl shadow-lg transition text-xs flex items-center space-x-2">
+          <!-- TOMBOL DAFTAR MITRA MENGARAH KE WHATSAPP ADMIN -->
+          <a href="https://wa.me/6281241170658?text=Halo%20Admin%20BorneoKU,%20saya%20ingin%20mendaftar%20sebagai%20Mitra%20Penjual%20UMKM." target="_blank" class="bg-amber-500 hover:bg-amber-600 text-white font-bold py-2.5 px-5 rounded-xl shadow-lg transition text-xs flex items-center space-x-2">
             <i class="fa-solid fa-user-plus"></i>
             <span>Daftar Jadi Mitra Penjual &rarr;</span>
           </a>
@@ -181,6 +181,8 @@
   <script>
     const SUPABASE_URL = 'https://iegqvegvoqjqjjyucpss.supabase.co';
     const SUPABASE_ANON_KEY = 'sb_publishable_7o0SP7VYOFhYJ0qyDrPtzw_2VvkuiMy';
+    const adminWA = '6281241170658';
+    
     const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
     let cart = [];
@@ -232,12 +234,12 @@
         alert('Keranjang belanja masih kosong!');
         return;
       }
-      const waNumber = cart[0].whatsapp || '628123456789';
+      const targetWA = cart[0].whatsapp || adminWA;
       let message = `Halo, saya ingin memesan beberapa produk dari BorneoKU:\n\n`;
       cart.forEach((item, i) => {
         message += `${i + 1}. ${item.name} - Rp ${Number(item.price).toLocaleString('id-ID')}\n`;
       });
-      window.open(`https://wa.me/${waNumber}?text=${encodeURIComponent(message)}`, '_blank');
+      window.open(`https://wa.me/${targetWA}?text=${encodeURIComponent(message)}`, '_blank');
     }
 
     async function loadProducts() {
@@ -261,7 +263,7 @@
           const kategoriProduk = product.kategori || product.category || 'Kerajinan';
           const hargaProduk = product.harga || product.price || 0;
           const gambarProduk = product.image_url || product.gambar || 'https://images.unsplash.com/photo-1544816155-12df9643f363?auto=format&fit=crop&w=400&q=80';
-          const noWa = product.whatsapp || product.no_hp || product.phone || '628123456789';
+          const noWa = product.whatsapp || product.no_hp || product.phone || adminWA;
 
           return `
             <div class="bg-white rounded-2xl shadow-md overflow-hidden border border-gray-100 hover:shadow-xl transition flex flex-col">
