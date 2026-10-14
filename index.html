@@ -12,70 +12,95 @@
   <style>
     .bg-borneo-dark { background-color: #064e3b; }
     .text-gold { color: #d4af37; }
-    .bg-gold-btn { background-color: #f39c12; }
-    .bg-gold-btn:hover { background-color: #d35400; }
   </style>
 </head>
 <body class="bg-gray-50 text-gray-800 font-sans">
 
   <!-- HEADER / NAVBAR -->
-  <header class="bg-borneo-dark text-white sticky top-0 z-50 shadow-md">
+  <header class="bg-borneo-dark text-white shadow-md">
+    <!-- BARIS ATAS KHUSUS LINK ADMIN KECIL DI POJOK KIRI -->
+    <div class="max-w-7xl mx-auto px-4 pt-2 flex justify-between items-center text-[11px] text-emerald-200 border-b border-emerald-800/40 pb-1">
+      <a href="admin.html" class="hover:text-amber-300 transition flex items-center gap-1">
+        <i class="fa-solid fa-user-gear text-[10px]"></i>
+        <span>Admin</span>
+      </a>
+      <span class="text-[10px] text-emerald-300 opacity-80">Pasar Digital UMKM</span>
+    </div>
+
+    <!-- UTAMA HEADER -->
     <div class="max-w-7xl mx-auto px-4 py-3 flex flex-wrap items-center justify-between gap-3">
       
       <!-- LOGO -->
-      <div class="flex items-center space-x-3">
+      <div class="flex items-center space-x-2.5">
         <div class="bg-white p-2 rounded-xl text-emerald-900 shadow-sm">
-          <i class="fa-solid fa-store text-2xl"></i>
+          <i class="fa-solid fa-store text-xl"></i>
         </div>
         <div>
-          <h1 class="text-2xl font-extrabold tracking-tight text-white leading-none">Borneo<span class="text-gold">Ku</span></h1>
-          <p class="text-[10px] tracking-widest text-emerald-200 uppercase font-medium mt-0.5">Karya Nusantara, Pasar Dunia</p>
+          <h1 class="text-xl font-extrabold tracking-tight text-white leading-none">Borneo<span class="text-gold">Ku</span></h1>
+          <p class="text-[9px] tracking-widest text-emerald-200 uppercase font-medium mt-0.5">Karya Nusantara, Pasar Dunia</p>
         </div>
       </div>
 
-      <!-- SEARCH BAR -->
-      <div class="w-full md:w-1/2 relative">
-        <input type="text" placeholder="Cari produk, kategori, atau toko..." 
-               class="w-full pl-10 pr-4 py-2 rounded-xl text-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-amber-400 border border-emerald-800 shadow-inner">
-        <i class="fa-solid fa-magnifying-glass absolute left-3 top-3 text-gray-400 text-sm"></i>
-      </div>
+      <!-- BUTTON KERANJANG DI ATAS -->
+      <button onclick="toggleCart()" class="bg-emerald-900 hover:bg-emerald-950 text-white px-3 py-1.5 rounded-xl text-xs font-bold transition flex items-center space-x-1.5 border border-emerald-700 cursor-pointer shadow-sm">
+        <i class="fa-solid fa-cart-shopping text-xs"></i>
+        <span>Keranjang</span>
+        <span id="cart-count" class="bg-amber-400 text-emerald-950 text-[10px] px-1.5 py-0.2 rounded-full font-black">0</span>
+      </button>
 
-      <!-- BUTTONS AKSI -->
-      <div class="flex items-center space-x-2 w-full md:w-auto justify-end">
-        <a href="/admin.html" class="bg-amber-500 hover:bg-amber-600 text-white px-3 py-2 rounded-xl text-xs font-bold transition flex items-center space-x-1.5 shadow-sm">
-          <i class="fa-solid fa-right-to-bracket"></i>
-          <span>Masuk Admin</span>
-        </a>
-        <a href="#keranjang" class="bg-emerald-900 hover:bg-emerald-950 text-white px-3 py-2 rounded-xl text-xs font-bold transition flex items-center space-x-1.5 border border-emerald-700">
-          <i class="fa-solid fa-cart-shopping"></i>
-          <span>Keranjang</span>
-          <span class="bg-amber-400 text-emerald-950 text-[10px] px-1.5 py-0.2 rounded-full font-black">0</span>
-        </a>
+      <!-- SEARCH BAR -->
+      <div class="w-full relative">
+        <input type="text" placeholder="Cari produk, kategori, atau toko..." 
+               class="w-full pl-10 pr-4 py-2 rounded-xl text-gray-800 text-xs focus:outline-none focus:ring-2 focus:ring-amber-400 border border-emerald-800 shadow-inner">
+        <i class="fa-solid fa-magnifying-glass absolute left-3 top-2.5 text-gray-400 text-xs"></i>
       </div>
 
     </div>
   </header>
 
+  <!-- MODAL / TAMPILAN KERANJANG -->
+  <div id="cart-modal" class="fixed inset-0 bg-black/50 z-50 hidden flex items-center justify-center p-4">
+    <div class="bg-white w-full max-w-md rounded-2xl shadow-2xl overflow-hidden p-6 space-y-4">
+      <div class="flex justify-between items-center border-b pb-3">
+        <h3 class="font-bold text-lg text-gray-900 flex items-center gap-2">
+          <i class="fa-solid fa-cart-shopping text-emerald-800"></i> Keranjang Belanja Anda
+        </h3>
+        <button onclick="toggleCart()" class="text-gray-400 hover:text-gray-600 font-bold text-lg">✕</button>
+      </div>
+      <div id="cart-items" class="space-y-3 max-h-60 overflow-y-auto text-sm text-gray-600">
+        <p class="text-center py-6 text-gray-400">Keranjang belanja masih kosong.</p>
+      </div>
+      <div class="border-t pt-3 flex justify-between items-center font-bold text-gray-900">
+        <span>Total:</span>
+        <span id="cart-total" class="text-emerald-900 text-base">Rp 0</span>
+      </div>
+      <button onclick="checkoutWhatsApp()" class="w-full bg-emerald-900 hover:bg-emerald-950 text-white py-3 rounded-xl text-xs font-bold transition flex items-center justify-center space-x-2">
+        <i class="fa-brands fa-whatsapp text-base"></i>
+        <span>Pesan Semua via WhatsApp</span>
+      </button>
+    </div>
+  </div>
+
   <!-- HERO BANNER SECTION -->
-  <section class="relative bg-gradient-to-r from-emerald-900 to-emerald-950 text-white py-12 px-4 overflow-hidden">
-    <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-8">
+  <section class="relative bg-gradient-to-r from-emerald-900 to-emerald-950 text-white py-10 px-4 overflow-hidden">
+    <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
       
       <!-- KONTEN TEKS BANNER -->
-      <div class="w-full md:w-3/5 space-y-4 text-center md:text-left z-10">
-        <h2 class="text-3xl md:text-5xl font-black leading-tight">
+      <div class="w-full md:w-3/5 space-y-3 text-center md:text-left z-10">
+        <h2 class="text-2xl md:text-4xl font-black leading-tight">
           Satu Marketplace,<br>
           <span class="text-gold">Berjuta Produk Unggulan Indonesia</span>
         </h2>
-        <p class="text-gray-200 text-sm md:text-base max-w-2xl leading-relaxed">
+        <p class="text-gray-200 text-xs md:text-sm max-w-2xl leading-relaxed">
           Temukan beragam produk berkualitas dari UMKM, pengrajin, dan pelaku usaha lokal dari seluruh penjuru Indonesia. 
-          Dukung karya anak bangsa, jelajahi keunikan setiap daerah, dan temukan produk favoritmu dalam satu marketplace.
+          Dukung karya anak bangsa dan temukan produk favoritmu dalam satu marketplace.
         </p>
-        <div class="flex flex-wrap gap-4 pt-2 justify-center md:justify-start">
-          <a href="#katalog" class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-3 px-6 rounded-xl shadow-lg transition text-sm flex items-center space-x-2">
+        <div class="flex flex-wrap gap-3 pt-2 justify-center md:justify-start">
+          <a href="#katalog" class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-2.5 px-5 rounded-xl shadow-lg transition text-xs flex items-center space-x-2">
             <i class="fa-solid fa-cart-arrow-down"></i>
             <span>Mulai Belanja &rarr;</span>
           </a>
-          <a href="#daftar-mitra" class="bg-amber-500 hover:bg-amber-600 text-white font-bold py-3 px-6 rounded-xl shadow-lg transition text-sm flex items-center space-x-2">
+          <a href="admin.html" class="bg-amber-500 hover:bg-amber-600 text-white font-bold py-2.5 px-5 rounded-xl shadow-lg transition text-xs flex items-center space-x-2">
             <i class="fa-solid fa-user-plus"></i>
             <span>Daftar Jadi Mitra Penjual &rarr;</span>
           </a>
@@ -84,10 +109,10 @@
 
       <!-- GAMBAR DEKORATIF BANNER -->
       <div class="w-full md:w-2/5 flex justify-center z-10">
-        <div class="relative w-full max-w-sm bg-emerald-800/50 p-4 rounded-3xl border border-emerald-700/50 backdrop-blur-sm">
+        <div class="relative w-full max-w-xs bg-emerald-800/50 p-3 rounded-2xl border border-emerald-700/50 backdrop-blur-sm">
           <img src="https://images.unsplash.com/photo-1544816155-12df9643f363?auto=format&fit=crop&w=600&q=80" 
-               alt="Produk Kerajinan Indonesia" class="rounded-2xl shadow-2xl object-cover h-64 w-full">
-          <p class="text-xs text-amber-200 text-center mt-3 font-semibold">✨ Karya Seni & Kerajinan Tangan Asli UMKM Nusantara</p>
+               alt="Produk Kerajinan Indonesia" class="rounded-xl shadow-2xl object-cover h-48 w-full">
+          <p class="text-[11px] text-amber-200 text-center mt-2 font-semibold">✨ Karya Seni & Kerajinan Tangan Asli UMKM</p>
         </div>
       </div>
 
@@ -95,76 +120,125 @@
   </section>
 
   <!-- VALUE PROPOSITION / BAR KEUNGGULAN -->
-  <section class="bg-amber-50 border-b border-amber-200 py-6 px-4">
-    <div class="max-w-7xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-4 text-gray-700">
-      
-      <div class="flex items-start space-x-3">
-        <div class="text-amber-600 text-2xl mt-1"><i class="fa-solid fa-shield-halved"></i></div>
+  <section class="bg-amber-50 border-b border-amber-200 py-4 px-4">
+    <div class="max-w-7xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-3 text-gray-700">
+      <div class="flex items-start space-x-2.5">
+        <div class="text-amber-600 text-xl mt-0.5"><i class="fa-solid fa-shield-halved"></i></div>
         <div>
-          <h4 class="font-bold text-xs md:text-sm text-gray-900">Produk Berkualitas</h4>
-          <p class="text-[11px] text-gray-600">Langsung dari UMKM terpercaya</p>
+          <h4 class="font-bold text-xs text-gray-900">Produk Berkualitas</h4>
+          <p class="text-[10px] text-gray-600">Langsung dari UMKM terpercaya</p>
         </div>
       </div>
-
-      <div class="flex items-start space-x-3">
-        <div class="text-amber-600 text-2xl mt-1"><i class="fa-solid fa-truck-fast"></i></div>
+      <div class="flex items-start space-x-2.5">
+        <div class="text-amber-600 text-xl mt-0.5"><i class="fa-solid fa-truck-fast"></i></div>
         <div>
-          <h4 class="font-bold text-xs md:text-sm text-gray-900">Dari Seluruh Indonesia</h4>
-          <p class="text-[11px] text-gray-600">Produk unik dari setiap daerah</p>
+          <h4 class="font-bold text-xs text-gray-900">Dari Seluruh Indonesia</h4>
+          <p class="text-[10px] text-gray-600">Produk unik dari setiap daerah</p>
         </div>
       </div>
-
-      <div class="flex items-start space-x-3">
-        <div class="text-amber-600 text-2xl mt-1"><i class="fa-solid fa-hand-holding-heart"></i></div>
+      <div class="flex items-start space-x-2.5">
+        <div class="text-amber-600 text-xl mt-0.5"><i class="fa-solid fa-hand-holding-heart"></i></div>
         <div>
-          <h4 class="font-bold text-xs md:text-sm text-gray-900">Dukung Usaha Lokal</h4>
-          <p class="text-[11px] text-gray-600">Bantu pertumbuhan UMKM Indonesia</p>
+          <h4 class="font-bold text-xs text-gray-900">Dukung Usaha Lokal</h4>
+          <p class="text-[10px] text-gray-600">Bantu pertumbuhan UMKM</p>
         </div>
       </div>
-
-      <div class="flex items-start space-x-3">
-        <div class="text-amber-600 text-2xl mt-1"><i class="fa-solid fa-earth-asia"></i></div>
+      <div class="flex items-start space-x-2.5">
+        <div class="text-amber-600 text-xl mt-0.5"><i class="fa-solid fa-earth-asia"></i></div>
         <div>
-          <h4 class="font-bold text-xs md:text-sm text-gray-900">Menuju Pasar Dunia</h4>
-          <p class="text-[11px] text-gray-600">Karya Indonesia untuk dunia</p>
+          <h4 class="font-bold text-xs text-gray-900">Menuju Pasar Dunia</h4>
+          <p class="text-[10px] text-gray-600">Karya Indonesia untuk dunia</p>
         </div>
       </div>
-
     </div>
   </section>
 
   <!-- KATALOG PRODUK DINAMIS (SUPABASE) -->
-  <section id="katalog" class="max-w-7xl mx-auto px-4 py-12">
-    <h3 class="text-xl md:text-2xl font-bold text-gray-900 mb-6 flex items-center gap-2">
+  <section id="katalog" class="max-w-7xl mx-auto px-4 py-8">
+    <h3 class="text-lg md:text-xl font-bold text-gray-900 mb-4 flex items-center gap-2">
       <span>🛍️</span> Produk Unggulan UMKM Nusantara
     </h3>
 
-    <div id="product-list" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
-      <div class="col-span-full text-center py-12 text-gray-500">
-        <i class="fa-solid fa-spinner fa-spin text-3xl mb-3 text-emerald-800"></i>
-        <p class="text-sm">Memuat produk UMKM...</p>
+    <div id="product-list" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-5">
+      <div class="col-span-full text-center py-10 text-gray-500">
+        <i class="fa-solid fa-spinner fa-spin text-2xl mb-2 text-emerald-800"></i>
+        <p class="text-xs">Memuat produk UMKM...</p>
       </div>
     </div>
   </section>
 
   <!-- FOOTER -->
-  <footer class="bg-gray-900 text-gray-400 text-xs py-8 px-4 border-t border-gray-800 mt-12">
-    <div class="max-w-7xl mx-auto text-center space-y-2">
+  <footer class="bg-gray-900 text-gray-400 text-xs py-6 px-4 border-t border-gray-800 mt-8">
+    <div class="max-w-7xl mx-auto text-center space-y-1">
       <p class="font-bold text-gray-300">&copy; 2026 BorneoKU. Seluruh hak cipta dilindungi.</p>
-      <p class="text-gray-500">Platform Pemberdayaan UMKM & Pasar Digital Nusantara</p>
+      <p class="text-gray-500 text-[11px]">Platform Pemberdayaan UMKM & Pasar Digital Nusantara</p>
     </div>
   </footer>
 
-  <!-- SUPABASE SCRIPT & INTEGRASI KATALOG -->
+  <!-- SUPABASE SCRIPT & INTERAKSI KERANJANG -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script>
-    // Konfigurasi Koneksi Supabase BorneoKU
     const SUPABASE_URL = 'https://iegqvegvoqjqjjyucpss.supabase.co';
     const SUPABASE_ANON_KEY = 'sb_publishable_7o0SP7VYOFhYJ0qyDrPtzw_2VvkuiMy';
-    
     const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-    // Fungsi untuk memuat produk dari database
+    let cart = [];
+
+    function toggleCart() {
+      const modal = document.getElementById('cart-modal');
+      modal.classList.toggle('hidden');
+    }
+
+    function addToCart(name, price, whatsapp) {
+      cart.push({ name, price, whatsapp });
+      document.getElementById('cart-count').innerText = cart.length;
+      updateCartUI();
+      alert(`Berhasil menambahkan "${name}" ke keranjang!`);
+    }
+
+    function updateCartUI() {
+      const container = document.getElementById('cart-items');
+      const totalContainer = document.getElementById('cart-total');
+      if (cart.length === 0) {
+        container.innerHTML = `<p class="text-center py-6 text-gray-400">Keranjang belanja masih kosong.</p>`;
+        totalContainer.innerText = `Rp 0`;
+        return;
+      }
+      let total = 0;
+      container.innerHTML = cart.map((item, index) => {
+        total += Number(item.price);
+        return `
+          <div class="flex justify-between items-center bg-gray-50 p-2.5 rounded-xl border">
+            <div>
+              <p class="font-bold text-gray-800 text-xs">${item.name}</p>
+              <p class="text-emerald-900 font-semibold text-xs">Rp ${Number(item.price).toLocaleString('id-ID')}</p>
+            </div>
+            <button onclick="removeFromCart(${index})" class="text-red-500 hover:text-red-700 text-xs font-bold px-2 py-1">Hapus</button>
+          </div>
+        `;
+      }).join('');
+      totalContainer.innerText = `Rp ${total.toLocaleString('id-ID')}`;
+    }
+
+    function removeFromCart(index) {
+      cart.splice(index, 1);
+      document.getElementById('cart-count').innerText = cart.length;
+      updateCartUI();
+    }
+
+    function checkoutWhatsApp() {
+      if (cart.length === 0) {
+        alert('Keranjang belanja masih kosong!');
+        return;
+      }
+      const waNumber = cart[0].whatsapp || '628123456789';
+      let message = `Halo, saya ingin memesan beberapa produk dari BorneoKU:\n\n`;
+      cart.forEach((item, i) => {
+        message += `${i + 1}. ${item.name} - Rp ${Number(item.price).toLocaleString('id-ID')}\n`;
+      });
+      window.open(`https://wa.me/${waNumber}?text=${encodeURIComponent(message)}`, '_blank');
+    }
+
     async function loadProducts() {
       const productList = document.getElementById('product-list');
       try {
@@ -181,22 +255,36 @@
           return;
         }
 
-        productList.innerHTML = data.map(product => `
-          <div class="bg-white rounded-2xl shadow-md overflow-hidden border border-gray-100 hover:shadow-xl transition flex flex-col">
-            <img src="${product.image_url || 'https://images.unsplash.com/photo-1544816155-12df9643f363?auto=format&fit=crop&w=400&q=80'}" 
-                 alt="${product.name}" class="w-full h-48 object-cover">
-            <div class="p-4 flex flex-col flex-grow">
-              <span class="text-[10px] bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded-full font-bold uppercase tracking-wider w-max mb-2">${product.category || 'UMKM'}</span>
-              <h4 class="font-bold text-gray-900 text-sm mb-1 line-clamp-1">${product.name}</h4>
-              <p class="text-emerald-900 font-extrabold text-base mb-3">Rp ${Number(product.price).toLocaleString('id-ID')}</p>
-              <a href="https://wa.me/${product.whatsapp}?text=Halo,%20saya%20tertarik%20dengan%20produk%20${encodeURIComponent(product.name)}%20di%20BorneoKU" 
-                 target="_blank" class="mt-auto bg-emerald-900 hover:bg-emerald-950 text-white text-center py-2 rounded-xl text-xs font-bold transition flex items-center justify-center space-x-1.5">
-                <i class="fa-brands fa-whatsapp text-sm"></i>
-                <span>Pesan via WhatsApp</span>
-              </a>
+        productList.innerHTML = data.map(product => {
+          const namaProduk = product.nama_produk || product.nama || product.name || 'Produk UMKM';
+          const kategoriProduk = product.kategori || product.category || 'Kerajinan';
+          const hargaProduk = product.harga || product.price || 0;
+          const gambarProduk = product.image_url || product.gambar || 'https://images.unsplash.com/photo-1544816155-12df9643f363?auto=format&fit=crop&w=400&q=80';
+          const noWa = product.whatsapp || product.no_hp || product.phone || '628123456789';
+
+          return `
+            <div class="bg-white rounded-2xl shadow-md overflow-hidden border border-gray-100 hover:shadow-xl transition flex flex-col">
+              <img src="${gambarProduk}" alt="${namaProduk}" class="w-full h-40 object-cover">
+              <div class="p-3 flex flex-col flex-grow">
+                <span class="text-[9px] bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded-full font-bold uppercase tracking-wider w-max mb-1.5">${kategoriProduk}</span>
+                <h4 class="font-bold text-gray-900 text-xs mb-1 line-clamp-1">${namaProduk}</h4>
+                <p class="text-emerald-900 font-extrabold text-sm mb-2">Rp ${Number(hargaProduk).toLocaleString('id-ID')}</p>
+                <div class="mt-auto space-y-1.5">
+                  <button onclick="addToCart('${namaProduk.replace(/'/g, "\\'")}', ${hargaProduk}, '${noWa}')" 
+                          class="w-full bg-amber-500 hover:bg-amber-600 text-white text-center py-1.5 rounded-lg text-[11px] font-bold transition flex items-center justify-center space-x-1 cursor-pointer shadow-sm">
+                    <i class="fa-solid fa-cart-plus text-[10px]"></i>
+                    <span>+ Keranjang</span>
+                  </button>
+                  <a href="https://wa.me/${noWa}?text=Halo,%20saya%20tertarik%20dengan%20produk%20${encodeURIComponent(namaProduk)}%20di%20BorneoKU" 
+                     target="_blank" class="w-full bg-emerald-900 hover:bg-emerald-950 text-white text-center py-1.5 rounded-lg text-[11px] font-bold transition flex items-center justify-center space-x-1">
+                    <i class="fa-brands fa-whatsapp text-xs"></i>
+                    <span>Pesan WA</span>
+                  </a>
+                </div>
+              </div>
             </div>
-          </div>
-        `).join('');
+          `;
+        }).join('');
       } catch (err) {
         console.error('Gagal memuat produk:', err);
         productList.innerHTML = `<div class="col-span-full text-center py-8 text-red-500 text-sm">Gagal menyambungkan ke database Supabase.</div>`;
