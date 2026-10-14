@@ -55,10 +55,72 @@
   <!-- DASHBOARD PANEL -->
   <div id="dashboard-section" class="max-w-4xl mx-auto my-8 p-4 md:p-6 space-y-6 hidden">
     
-    <!-- KONTROL KURASI & VERIFIKASI PRODUK -->
+    <!-- BAGIAN 1: FORM TAMBAH / EDIT PRODUK -->
+    <div class="bg-white p-6 rounded-2xl shadow-md border border-gray-100 space-y-4">
+      <h3 id="form-title" class="text-lg font-bold text-gray-900 border-b pb-3 flex items-center gap-2">
+        <i class="fa-solid fa-square-plus text-emerald-800"></i> <span id="form-mode-text">Tambah Produk & Kelola Stok</span>
+      </h3>
+
+      <form onsubmit="handleSaveProduct(event)" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <input type="hidden" id="edit-prod-id">
+
+        <div>
+          <label class="block text-xs font-bold text-gray-700 mb-1">Nama Produk</label>
+          <input type="text" id="prod-name" placeholder="Contoh: Tas Anjat Kalimantan" required
+                 class="w-full px-3 py-2 rounded-xl border border-gray-300 text-xs focus:ring-2 focus:ring-emerald-600">
+        </div>
+
+        <div>
+          <label class="block text-xs font-bold text-gray-700 mb-1">Harga (Rp)</label>
+          <input type="number" id="prod-price" placeholder="Contoh: 150000" required
+                 class="w-full px-3 py-2 rounded-xl border border-gray-300 text-xs focus:ring-2 focus:ring-emerald-600">
+        </div>
+
+        <div>
+          <label class="block text-xs font-bold text-gray-700 mb-1">Jumlah Stok Produk</label>
+          <input type="text" id="prod-stock" placeholder="Contoh: 10 atau Tersedia" 
+                 class="w-full px-3 py-2 rounded-xl border border-gray-300 text-xs focus:ring-2 focus:ring-emerald-600">
+        </div>
+
+        <div>
+          <label class="block text-xs font-bold text-gray-700 mb-1">Kategori Produk</label>
+          <select id="prod-category" class="w-full px-3 py-2 rounded-xl border border-gray-300 text-xs focus:ring-2 focus:ring-emerald-600">
+            <option value="Kerajinan">Kerajinan Tangan</option>
+            <option value="Tekstil & Pakaian">Tekstil & Pakaian</option>
+            <option value="Makanan & Minuman">Makanan & Minuman Khas</option>
+            <option value="Aksesoris">Aksesoris & Perhiasan</option>
+            <option value="Lainnya">Lainnya</option>
+          </select>
+        </div>
+
+        <div>
+          <label class="block text-xs font-bold text-gray-700 mb-1">No. WhatsApp Penjual (Gunakan 62)</label>
+          <input type="text" id="prod-wa" placeholder="Contoh: 6281241170658" required
+                 class="w-full px-3 py-2 rounded-xl border border-gray-300 text-xs focus:ring-2 focus:ring-emerald-600">
+        </div>
+
+        <div class="md:col-span-2">
+          <label class="block text-xs font-bold text-gray-700 mb-1">URL Gambar / Foto Produk</label>
+          <input type="url" id="prod-img" placeholder="https://..." 
+                 class="w-full px-3 py-2 rounded-xl border border-gray-300 text-xs focus:ring-2 focus:ring-emerald-600">
+        </div>
+
+        <div class="md:col-span-2 pt-2 flex gap-2">
+          <button type="submit" id="btn-save" class="flex-1 bg-emerald-800 hover:bg-emerald-900 text-white font-bold py-3 rounded-xl text-xs transition shadow-md flex justify-center items-center gap-2">
+            <i class="fa-solid fa-cloud-arrow-up"></i>
+            <span id="btn-save-text">Simpan Produk ke Database</span>
+          </button>
+          <button type="button" id="btn-cancel" onclick="resetForm()" class="hidden bg-gray-400 hover:bg-gray-500 text-white font-bold px-4 py-3 rounded-xl text-xs transition">
+            Batal
+          </button>
+        </div>
+      </form>
+    </div>
+
+    <!-- BAGIAN 2: KURASI, VERIFIKASI, & BLOKIR PRODUK -->
     <div class="bg-white p-6 rounded-2xl shadow-md border border-gray-100 space-y-4">
       <h3 class="text-lg font-bold text-gray-900 border-b pb-3 flex items-center gap-2">
-        <i class="fa-solid fa-shield-halved text-emerald-800"></i> Kurir & Verifikasi Produk UMKM (Halal/Layak Jual)
+        <i class="fa-solid fa-shield-halved text-emerald-800"></i> Kurasi & Verifikasi Produk UMKM (Halal/Layak Jual)
       </h3>
       <p class="text-xs text-gray-500">Periksa daftar produk dari mitra di bawah ini. Setujui produk yang layak atau blokir/hapus produk yang tidak sesuai ketentuan.</p>
       
@@ -76,6 +138,8 @@
     const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
     const PASS_ADMIN = "admin123";
 
+    let cachedProducts = [];
+
     function handleLogin(e) {
       e.preventDefault();
       const inputPass = document.getElementById('admin-password').value;
@@ -84,7 +148,6 @@
         document.getElementById('dashboard-section').classList.remove('hidden');
         loadAdminProducts();
       } else {
-        document.getElementById('login-error').classList.add('hidden'); // placeholder
         document.getElementById('login-error').classList.remove('hidden');
       }
     }
@@ -94,16 +157,18 @@
       try {
         const { data, error } = await supabaseClient.from('products').select('*');
         if (error) throw error;
+        cachedProducts = data || [];
 
-        if (!data || data.length === 0) {
+        if (cachedProducts.length === 0) {
           container.innerHTML = `<p class="text-center text-xs text-gray-400 py-6">Belum ada produk yang masuk.</p>`;
           return;
         }
 
-        container.innerHTML = data.map(item => {
+        container.innerHTML = cachedProducts.map(item => {
           const nama = item.nama_produk || item.nama || 'Produk';
           const harga = item.harga || 0;
-          const status = item.status || 'pending';
+          const status = item.status || 'disetujui';
+          const stok = item.stok !== undefined ? item.stok : 'Tersedia';
           
           let statusBadge = '';
           if (status === 'disetujui') {
@@ -121,14 +186,17 @@
                   <p class="font-bold text-xs text-gray-900">${nama}</p>
                   ${statusBadge}
                 </div>
-                <p class="text-[11px] text-emerald-900 font-semibold">Rp ${Number(harga).toLocaleString('id-ID')} | WA: ${item.whatsapp || '-'}</p>
+                <p class="text-[11px] text-emerald-900 font-semibold">Rp ${Number(harga).toLocaleString('id-ID')} | Stok: ${stok} | WA: ${item.whatsapp || '-'}</p>
               </div>
-              <div class="flex items-center gap-2 w-full md:w-auto justify-end">
+              <div class="flex items-center gap-2 w-full md:w-auto justify-end flex-wrap">
                 <button onclick="updateStatus('${item.id}', 'disetujui')" class="text-emerald-700 hover:text-emerald-900 text-[11px] font-bold px-2.5 py-1 bg-emerald-50 rounded-lg border border-emerald-300">
                   <i class="fa-solid fa-check"></i> Setujui
                 </button>
                 <button onclick="updateStatus('${item.id}', 'diblokir')" class="text-amber-700 hover:text-amber-900 text-[11px] font-bold px-2.5 py-1 bg-amber-50 rounded-lg border border-amber-300">
                   <i class="fa-solid fa-ban"></i> Blokir
+                </button>
+                <button onclick="editProduct('${item.id}')" class="text-blue-600 hover:text-blue-800 text-[11px] font-bold px-2.5 py-1 bg-blue-50 rounded-lg border border-blue-200">
+                  <i class="fa-solid fa-pen-to-square"></i> Edit
                 </button>
                 <button onclick="deleteProduct('${item.id}')" class="text-red-500 hover:text-red-700 text-[11px] font-bold px-2.5 py-1 bg-red-50 rounded-lg border border-red-200">
                   <i class="fa-solid fa-trash-can"></i> Hapus
@@ -150,6 +218,80 @@
         loadAdminProducts();
       } catch (err) {
         alert('Gagal mengubah status: ' + err.message);
+      }
+    }
+
+    function editProduct(id) {
+      const prod = cachedProducts.find(p => p.id == id);
+      if (!prod) return;
+
+      document.getElementById('edit-prod-id').value = prod.id;
+      document.getElementById('prod-name').value = prod.nama_produk || prod.nama || '';
+      document.getElementById('prod-price').value = prod.harga || 0;
+      document.getElementById('prod-stock').value = prod.stok || 'Tersedia';
+      document.getElementById('prod-category').value = prod.kategori || 'Kerajinan';
+      document.getElementById('prod-wa').value = prod.whatsapp || '6281241170658';
+      document.getElementById('prod-img').value = prod.image_url || '';
+
+      document.getElementById('form-mode-text').innerText = 'Edit Produk';
+      document.getElementById('btn-save-text').innerText = 'Perbarui Produk';
+      document.getElementById('btn-cancel').classList.remove('hidden');
+
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function resetForm() {
+      document.getElementById('edit-prod-id').value = '';
+      document.getElementById('prod-name').value = '';
+      document.getElementById('prod-price').value = '';
+      document.getElementById('prod-stock').value = '';
+      document.getElementById('prod-wa').value = '';
+      document.getElementById('prod-img').value = '';
+
+      document.getElementById('form-mode-text').innerText = 'Tambah Produk & Kelola Stok';
+      document.getElementById('btn-save-text').innerText = 'Simpan Produk ke Database';
+      document.getElementById('btn-cancel').classList.add('hidden');
+    }
+
+    async function handleSaveProduct(e) {
+      e.preventDefault();
+      const saveBtn = document.getElementById('btn-save');
+      saveBtn.disabled = true;
+
+      const editId = document.getElementById('edit-prod-id').value;
+      const name = document.getElementById('prod-name').value;
+      const price = document.getElementById('prod-price').value;
+      const stock = document.getElementById('prod-stock').value || 'Tersedia';
+      const category = document.getElementById('prod-category').value;
+      const wa = document.getElementById('prod-wa').value;
+      const img = document.getElementById('prod-img').value;
+
+      const payload = {
+        nama_produk: name,
+        harga: price,
+        stok: stock,
+        kategori: category,
+        whatsapp: wa,
+        image_url: img || 'https://images.unsplash.com/photo-1544816155-12df9643f363?auto=format&fit=crop&w=400&q=80'
+      };
+
+      try {
+        if (editId) {
+          const { error } = await supabaseClient.from('products').update(payload).eq('id', editId);
+          if (error) throw error;
+          alert('Produk berhasil diperbarui!');
+        } else {
+          payload.status = 'disetujui'; // Otomatis disetujui jika admin yang input langsung
+          const { error } = await supabaseClient.from('products').insert([payload]);
+          if (error) throw error;
+          alert('Produk berhasil ditambahkan!');
+        }
+        resetForm();
+        loadAdminProducts();
+      } catch (err) {
+        alert('Gagal menyimpan produk: ' + err.message);
+      } finally {
+        saveBtn.disabled = false;
       }
     }
 
