@@ -16,7 +16,8 @@
   <style>
     .bg-borneo-dark { background-color: #064e3b; }
     .text-gold { color: #d4af37; }
-    body { padding-bottom: 110px; background-color: #f8fafc; }
+    /* Padding bawah diperbesar agar tidak menggantung di layar HP */
+    body { padding-bottom: 130px; background-color: #f8fafc; }
   </style>
 </head>
 <body class="font-sans text-gray-800">
@@ -25,8 +26,8 @@
   <header class="bg-borneo-dark text-white p-3 shadow-md sticky top-0 z-50">
     <div class="max-w-6xl mx-auto flex justify-between items-center">
       <div class="flex items-center space-x-2.5">
-        <!-- LOGO UTAMA ASLI DI POJOK KIRI ATAS -->
-        <div class="w-9 h-9 rounded-full bg-amber-300 p-0.5 shadow-md shrink-0 flex items-center justify-center overflow-hidden border border-amber-400">
+        <!-- LOGO UTAMA ASLI MILIK KAKAK (YANG DITUNJUK PANAH) -->
+        <div class="w-10 h-10 rounded-full bg-amber-300 p-0.5 shadow-md shrink-0 flex items-center justify-center overflow-hidden border border-amber-400">
           <img src="1783598364926.jpg" alt="Logo Borneoku" class="w-full h-full object-cover rounded-full">
         </div>
         <div>
@@ -100,7 +101,7 @@
     </section>
 
     <!-- ETALASE PRODUK GABUNGAN -->
-    <main class="max-w-6xl mx-auto px-4 space-y-3 pb-6">
+    <main class="max-w-6xl mx-auto px-4 space-y-3 pb-8">
       <div class="flex justify-between items-center border-b border-gray-200 pb-2">
         <h3 onclick="resetFilter()" title="Tampilkan semua produk" class="font-bold text-gray-900 text-xs flex items-center gap-1.5 cursor-pointer hover:text-emerald-800 transition">
           <i class="fa-solid fa-bag-shopping text-emerald-800"></i> Etalase Produk UMKM Nusantara
@@ -115,7 +116,7 @@
   </div>
 
   <!-- NAVIGATION BAR BAWAH -->
-  <nav class="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 py-2 px-3 flex justify-around items-center z-50 shadow-lg">
+  <nav class="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 py-2.5 px-3 flex justify-around items-center z-50 shadow-lg">
     <button onclick="switchTab('beranda')" class="flex flex-col items-center text-emerald-800 focus:outline-none">
       <i class="fa-solid fa-house text-sm"></i>
       <span class="text-[9px] font-bold mt-1">Beranda</span>
