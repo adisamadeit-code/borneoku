@@ -8,6 +8,7 @@
   <!-- PWA Manifest & Meta -->
   <link rel="manifest" href="manifest.json">
   <meta name="theme-color" content="#064e3b">
+  <meta name="apple-mobile-web-app-capable" content="yes">
   
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -34,14 +35,15 @@
       </div>
       
       <div class="flex items-center gap-2">
-        <!-- Tombol Bagikan / Share -->
-        <button onclick="shareApp()" title="Bagikan Borneoku" class="bg-emerald-800 hover:bg-emerald-900 text-white p-2 rounded-xl text-xs border border-emerald-600 transition shadow-sm">
-          <i class="fa-solid fa-share-nodes text-amber-300"></i>
+        <!-- TOMBOL SHARE / BAGIKAN PROMOSI -->
+        <button onclick="shareApp()" title="Bagikan Tautan Borneoku" class="bg-emerald-800 hover:bg-emerald-900 text-amber-300 px-3 py-1.5 rounded-xl text-xs border border-emerald-600 transition shadow-sm flex items-center gap-1.5 font-bold">
+          <i class="fa-solid fa-share-nodes text-xs"></i>
+          <span>Bagikan</span>
         </button>
-        <!-- Keranjang -->
+        <!-- KERANJANG BELANJA -->
         <button onclick="viewCart()" class="bg-emerald-800 hover:bg-emerald-900 text-xs px-2.5 py-1.5 rounded-xl border border-emerald-600 transition flex items-center gap-1 font-semibold shadow-sm text-white">
           <i class="fa-solid fa-cart-shopping text-amber-300 text-xs"></i>
-          <span class="text-[11px]">Keranjang <span id="cart-count" class="bg-amber-400 text-emerald-950 px-1.5 py-0.2 rounded-full text-[9px] font-bold">0</span></span>
+          <span class="text-[11px]"><span id="cart-count" class="bg-amber-400 text-emerald-950 px-1.5 py-0.2 rounded-full text-[9px] font-bold">0</span></span>
         </button>
       </div>
     </div>
@@ -49,7 +51,7 @@
 
   <!-- KONTEN BERANDA -->
   <div id="section-beranda" class="space-y-3">
-    <!-- BANNER HERO -->
+    <!-- BANNER HERO RINGKAS PAS LAYAR -->
     <section class="bg-borneo-dark text-white py-4 px-4 text-center">
       <div class="max-w-2xl mx-auto space-y-2">
         <h2 class="text-sm sm:text-base md:text-xl font-extrabold leading-tight">Satu Marketplace, <span class="text-gold">Berjuta Produk Unggulan</span> Indonesia</h2>
@@ -78,36 +80,25 @@
       </div>
     </section>
 
-    <!-- PINTASAN KELOLA & DAFTAR MITRA -->
-    <section class="max-w-4xl mx-auto px-4 grid grid-cols-1 sm:grid-cols-2 gap-2">
-      <div onclick="switchTab('produk')" class="bg-white p-3 rounded-2xl shadow-sm border border-gray-100 flex items-center justify-between gap-2 cursor-pointer hover:border-emerald-300 transition">
-        <div class="flex items-center gap-2.5 min-w-0">
-          <div class="bg-emerald-50 text-emerald-800 p-2.5 rounded-xl text-xs font-bold shrink-0">
-            <i class="fa-solid fa-circle-plus"></i>
-          </div>
-          <div class="min-w-0">
-            <h4 class="font-bold text-xs text-gray-900 truncate">Kelola Produk & Etalase</h4>
-            <p class="text-[9.5px] text-gray-500 truncate">Tambah barang & verifikasi halal</p>
-          </div>
-        </div>
-        <button class="bg-emerald-800 text-white font-bold px-2.5 py-1.5 rounded-xl text-[10px]">Panel</button>
-      </div>
-
-      <div onclick="registerMitra()" class="bg-emerald-50 p-3 rounded-2xl shadow-sm border border-emerald-200 flex items-center justify-between gap-2 cursor-pointer hover:bg-emerald-100 transition">
+    <!-- PINTASAN DAFTAR PRODUK MITRA UMKM -->
+    <section class="max-w-4xl mx-auto px-4">
+      <div onclick="switchTab('produk')" class="bg-emerald-50 p-3 rounded-2xl shadow-sm border border-emerald-200 flex items-center justify-between gap-2 cursor-pointer hover:bg-emerald-100 transition">
         <div class="flex items-center gap-2.5 min-w-0">
           <div class="bg-emerald-800 text-white p-2.5 rounded-xl text-xs font-bold shrink-0">
             <i class="fa-solid fa-handshake"></i>
           </div>
           <div class="min-w-0">
-            <h4 class="font-bold text-xs text-emerald-950 truncate">Daftar Jadi Mitra UMKM</h4>
-            <p class="text-[9.5px] text-emerald-800 truncate">Gabung & pasarkan produkmu di sini</p>
+            <h4 class="font-bold text-xs text-emerald-950 truncate">Daftarkan Produk UMKM Anda</h4>
+            <p class="text-[9.5px] text-emerald-800 truncate">Isi form barang untuk diperiksa & disetujui Admin</p>
           </div>
         </div>
-        <span class="text-emerald-900 font-bold text-xs">&rarr;</span>
+        <button class="bg-emerald-800 text-white font-bold px-3 py-1.5 rounded-xl text-[10px] shadow-sm flex items-center gap-1 shrink-0">
+          <span>Tambah</span> &rarr;
+        </button>
       </div>
     </section>
 
-    <!-- ETALASE PRODUK GABUNGAN SEMUA TOKO -->
+    <!-- ETALASE PRODUK GABUNGAN (Hanya Menampilkan Produk yang Sudah Disetujui Admin) -->
     <main class="max-w-6xl mx-auto px-4 space-y-3">
       <div class="flex justify-between items-center border-b border-gray-200 pb-2">
         <h3 onclick="resetFilter()" title="Tampilkan semua produk" class="font-bold text-gray-900 text-xs flex items-center gap-1.5 cursor-pointer hover:text-emerald-800 transition">
@@ -130,7 +121,7 @@
     </button>
     <button onclick="switchTab('produk')" class="flex flex-col items-center text-gray-400 hover:text-emerald-800 focus:outline-none">
       <i class="fa-solid fa-boxes-stacked text-sm"></i>
-      <span class="text-[9px] font-medium mt-1">Produk</span>
+      <span class="text-[9px] font-medium mt-1">Tambah Produk</span>
     </button>
     <button onclick="switchTab('pesanan')" class="flex flex-col items-center text-gray-400 hover:text-emerald-800 focus:outline-none">
       <i class="fa-solid fa-receipt text-sm"></i>
@@ -146,8 +137,8 @@
       <span class="text-[9px] font-medium mt-1">Syarat & Pajak</span>
     </button>
     <button onclick="switchTab('pengaturan')" class="flex flex-col items-center text-gray-400 hover:text-emerald-800 focus:outline-none">
-      <i class="fa-solid fa-gear text-sm"></i>
-      <span class="text-[9px] font-medium mt-1">Pengaturan</span>
+      <i class="fa-solid fa-lock text-sm"></i>
+      <span class="text-[9px] font-medium mt-1">Pengaturan Admin</span>
     </button>
   </nav>
 
@@ -163,12 +154,13 @@
     async function fetchProducts() {
       const grid = document.getElementById('product-grid');
       try {
-        const { data, error } = await supabaseClient.from('products').select('*');
+        // Ambil produk yang berstatus 'disetujui'
+        const { data, error } = await supabaseClient.from('products').select('*').eq('status', 'disetujui');
         if (error) throw error;
         allProducts = data || [];
         renderProducts(allProducts);
       } catch (err) {
-        grid.innerHTML = `<p class="col-span-full text-center text-xs text-red-500 py-6">Gagal memuat katalog.</p>`;
+        grid.innerHTML = `<p class="col-span-full text-center text-xs text-red-500 py-6">Gagal memuat etalase.</p>`;
       }
     }
 
@@ -177,7 +169,7 @@
       document.getElementById('product-count').innerText = `${products.length} Produk Tersedia`;
 
       if (products.length === 0) {
-        grid.innerHTML = `<p class="col-span-full text-center text-xs text-gray-400 py-8">Tidak ada produk ditemukan.</p>`;
+        grid.innerHTML = `<p class="col-span-full text-center text-xs text-gray-400 py-8">Belum ada produk aktif yang disetujui.</p>`;
         return;
       }
 
@@ -230,17 +222,12 @@
       if (navigator.share) {
         navigator.share({
           title: 'Borneoku - Pasar Digital Nusantara',
-          text: 'Temukan berbagai produk unggulan UMKM & pengrajin lokal di Borneoku!',
+          text: 'Mari dukung UMKM lokal! Belanja produk Nusantara di Borneoku:',
           url: window.location.href,
         }).catch(() => {});
       } else {
-        prompt("Salin tautan promosi Borneoku:", window.location.href);
+        prompt("Salin tautan promosi Borneoku berikut untuk dibagikan:", window.location.href);
       }
-    }
-
-    function registerMitra() {
-      alert('Silakan login ke Admin Panel / Menu Produk untuk menambahkan produk toko Anda ke etalase Borneoku.');
-      window.location.href = 'admin.html';
     }
 
     function filterProducts() {
@@ -280,4 +267,4 @@
     fetchProducts();
   </script>
 </body>
-</html>
+        </html>
