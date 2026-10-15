@@ -8,15 +8,15 @@
   "theme_color": "#064e3b",
   "icons": [
     {
-      "src": "https://images.unsplash.com/photo-1607082348824-0a96f2a4b9da?auto=format&fit=crop&w=192&q=80",
+      "src": "https://img.icons8.com/isometric/512/shopping-bag.png",
       "sizes": "192x192",
-      "type": "image/jpeg",
+      "type": "image/png",
       "purpose": "any maskable"
     },
     {
-      "src": "https://images.unsplash.com/photo-1607082348824-0a96f2a4b9da?auto=format&fit=crop&w=512&q=80",
+      "src": "https://img.icons8.com/isometric/512/shopping-bag.png",
       "sizes": "512x512",
-      "type": "image/jpeg",
+      "type": "image/png",
       "purpose": "any maskable"
     }
   ]
