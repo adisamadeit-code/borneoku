@@ -8,7 +8,13 @@
   "theme_color": "#064e3b",
   "icons": [
     {
-      "src": "https://img.icons8.com/color/512/online-store.png",
+      "src": "borneoku-icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "borneoku-icon-512.png",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "any maskable"
