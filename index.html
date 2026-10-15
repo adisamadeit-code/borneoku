@@ -18,15 +18,17 @@
   <style>
     .bg-borneo-dark { background-color: #064e3b; }
     .text-gold { color: #d4af37; }
-    /* Memastikan body bisa digulir sempurna dan tidak menggantung */
-    html, body { min-height: 100%; margin: 0; padding: 0; background-color: #f8fafc; }
-    body { padding-bottom: 120px; overflow-y: auto; }
+    /* Padding bawah aman dan halaman bisa digulir normal */
+    body { 
+      background-color: #f8fafc; 
+      padding-bottom: 180px !important; 
+    }
   </style>
 </head>
 <body class="font-sans text-gray-800">
 
-  <!-- HEADER UTAMA -->
-  <header class="bg-borneo-dark text-white p-3 shadow-md sticky top-0 z-50">
+  <!-- HEADER UTAMA (TIDAK LAGI STICKY, AKAN IKUT NAIK SAAT DIGULIR) -->
+  <header class="bg-borneo-dark text-white p-3 shadow-md">
     <div class="max-w-6xl mx-auto flex justify-between items-center">
       <div class="flex items-center space-x-2.5">
         <!-- LOGO UTAMA BORNEOKU -->
@@ -104,7 +106,7 @@
     </section>
 
     <!-- ETALASE PRODUK GABUNGAN -->
-    <main class="max-w-6xl mx-auto px-4 space-y-3 pb-8">
+    <main class="max-w-6xl mx-auto px-4 space-y-3 pb-12">
       <div class="flex justify-between items-center border-b border-gray-200 pb-2">
         <h3 onclick="resetFilter()" title="Tampilkan semua produk" class="font-bold text-gray-900 text-xs flex items-center gap-1.5 cursor-pointer hover:text-emerald-800 transition">
           <i class="fa-solid fa-bag-shopping text-emerald-800"></i> Etalase Produk UMKM Nusantara
@@ -236,7 +238,7 @@
 
     function filterProducts() {
       const keyword = document.getElementById('search-input').value.toLowerCase();
-      const filtered = allproducts.filter(item => {
+      const filtered = allProducts.filter(item => {
         const title = (item.title || '').toLowerCase();
         const category = (item.category || '').toLowerCase();
         return title.includes(keyword) || category.includes(keyword);
@@ -271,4 +273,4 @@
     fetchProducts();
   </script>
 </body>
-          </html>
+</html>
