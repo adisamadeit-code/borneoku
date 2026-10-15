@@ -5,10 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Borneoku - Karya Nusantara, Pasar Dunia</title>
   
-  <!-- PWA Manifest & Favicon -->
   <link rel="manifest" href="manifest.json">
   <link rel="icon" type="image/x-icon" href="favicon.ico">
-  <link rel="apple-touch-icon" href="borneoku-icon-192.png">
   <meta name="theme-color" content="#064e3b">
   <meta name="apple-mobile-web-app-capable" content="yes">
   
@@ -18,22 +16,20 @@
   <style>
     .bg-borneo-dark { background-color: #064e3b; }
     .text-gold { color: #d4af37; }
-    /* Padding bawah aman dan halaman bisa digulir normal */
     body { 
       background-color: #f8fafc; 
-      padding-bottom: 180px !important; 
+      padding-bottom: 160px; 
     }
   </style>
 </head>
 <body class="font-sans text-gray-800">
 
-  <!-- HEADER UTAMA (TIDAK LAGI STICKY, AKAN IKUT NAIK SAAT DIGULIR) -->
+  <!-- HEADER UTAMA (NORMAL IKUT BERGERAK NAIK) -->
   <header class="bg-borneo-dark text-white p-3 shadow-md">
     <div class="max-w-6xl mx-auto flex justify-between items-center">
       <div class="flex items-center space-x-2.5">
-        <!-- LOGO UTAMA BORNEOKU -->
         <div class="w-10 h-10 rounded-full bg-amber-300 p-0.5 shadow-md shrink-0 flex items-center justify-center overflow-hidden border border-amber-400">
-          <img src="borneoku-logo.png" alt="Logo Borneoku" class="w-full h-full object-cover rounded-full">
+          <img src="file_000000002854821187aec49ee7aa4b2d.png" alt="Logo Borneoku" class="w-full h-full object-cover rounded-full">
         </div>
         <div>
           <h1 class="font-extrabold text-sm tracking-wide leading-tight text-white">BORNEOKU</h1>
@@ -42,12 +38,10 @@
       </div>
       
       <div class="flex items-center gap-2">
-        <!-- TOMBOL SHARE / BAGIKAN -->
         <button onclick="shareApp()" title="Bagikan Tautan Borneoku" class="bg-emerald-800 hover:bg-emerald-900 text-amber-300 px-3 py-1.5 rounded-xl text-xs border border-emerald-600 transition shadow-sm flex items-center gap-1.5 font-bold">
           <i class="fa-solid fa-share-nodes text-xs"></i>
           <span>Bagikan</span>
         </button>
-        <!-- KERANJANG BELANJA -->
         <button onclick="viewCart()" class="bg-emerald-800 hover:bg-emerald-900 text-xs px-2.5 py-1.5 rounded-xl border border-emerald-600 transition flex items-center gap-1 font-semibold shadow-sm text-white">
           <i class="fa-solid fa-cart-shopping text-amber-300 text-xs"></i>
           <span class="text-[11px]"><span id="cart-count" class="bg-amber-400 text-emerald-950 px-1.5 py-0.2 rounded-full text-[9px] font-bold">0</span></span>
@@ -56,15 +50,12 @@
     </div>
   </header>
 
-  <!-- KONTEN BERANDA -->
   <div id="section-beranda" class="space-y-3.5">
-    <!-- BANNER HERO -->
     <section class="bg-borneo-dark text-white py-4 px-4 text-center">
       <div class="max-w-2xl mx-auto space-y-2">
         <h2 class="text-sm sm:text-base md:text-xl font-extrabold leading-tight">Satu Marketplace, <span class="text-gold">Berjuta Produk Unggulan</span> Indonesia</h2>
         <p class="text-[9.5px] sm:text-xs text-emerald-100 leading-tight max-w-xl mx-auto">Dukung UMKM & Pengrajin lokal Nusantara. Temukan berbagai produk unik & kerajinan pilihan.</p>
         
-        <!-- Kolom Pencarian -->
         <div class="relative max-w-lg mx-auto pt-1">
           <span class="absolute inset-y-0 left-0 flex items-center pl-3 pt-1 pointer-events-none text-gray-400">
             <i class="fa-solid fa-magnifying-glass text-xs"></i>
@@ -87,7 +78,6 @@
       </div>
     </section>
 
-    <!-- PINTASAN DAFTAR PRODUK MITRA UMKM -->
     <section class="max-w-4xl mx-auto px-4">
       <div onclick="switchTab('produk')" class="bg-emerald-50 p-3 rounded-2xl shadow-sm border border-emerald-200 flex items-center justify-between gap-2 cursor-pointer hover:bg-emerald-100 transition">
         <div class="flex items-center gap-2.5 min-w-0">
@@ -105,8 +95,7 @@
       </div>
     </section>
 
-    <!-- ETALASE PRODUK GABUNGAN -->
-    <main class="max-w-6xl mx-auto px-4 space-y-3 pb-12">
+    <main class="max-w-6xl mx-auto px-4 space-y-3 pb-8">
       <div class="flex justify-between items-center border-b border-gray-200 pb-2">
         <h3 onclick="resetFilter()" title="Tampilkan semua produk" class="font-bold text-gray-900 text-xs flex items-center gap-1.5 cursor-pointer hover:text-emerald-800 transition">
           <i class="fa-solid fa-bag-shopping text-emerald-800"></i> Etalase Produk UMKM Nusantara
@@ -120,7 +109,6 @@
     </main>
   </div>
 
-  <!-- NAVIGATION BAR BAWAH -->
   <nav class="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 py-2.5 px-3 flex justify-around items-center z-50 shadow-lg">
     <button onclick="switchTab('beranda')" class="flex flex-col items-center text-emerald-800 focus:outline-none">
       <i class="fa-solid fa-house text-sm"></i>
