@@ -24,7 +24,7 @@
 </head>
 <body class="font-sans text-gray-800">
 
-  <!-- HEADER UTAMA (NORMAL IKUT BERGERAK NAIK) -->
+  <!-- HEADER UTAMA -->
   <header class="bg-borneo-dark text-white p-3 shadow-md">
     <div class="max-w-6xl mx-auto flex justify-between items-center">
       <div class="flex items-center space-x-2.5">
@@ -205,7 +205,7 @@
     function addToCart(productTitle) {
       cartItemCount++;
       document.getElementById('cart-count').innerText = cartItemCount;
-      alert(`"${productTitle}" berhasil ditambahkan ke keranjang!`);
+      // Pop-up alert sudah dibuang total, jadi angka keranjang langsung bertambah bersih tanpa hambatan!
     }
 
     function viewCart() {
