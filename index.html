@@ -18,8 +18,9 @@
   <style>
     .bg-borneo-dark { background-color: #064e3b; }
     .text-gold { color: #d4af37; }
-    /* Jarak aman bagian bawah agar tampilan tidak menggantung di HP */
-    body { padding-bottom: 130px; background-color: #f8fafc; }
+    /* Memastikan body bisa digulir sempurna dan tidak menggantung */
+    html, body { min-height: 100%; margin: 0; padding: 0; background-color: #f8fafc; }
+    body { padding-bottom: 120px; overflow-y: auto; }
   </style>
 </head>
 <body class="font-sans text-gray-800">
@@ -28,9 +29,9 @@
   <header class="bg-borneo-dark text-white p-3 shadow-md sticky top-0 z-50">
     <div class="max-w-6xl mx-auto flex justify-between items-center">
       <div class="flex items-center space-x-2.5">
-        <!-- LOGO UTAMA BORNEOKU (BUATAN KAKAK) -->
+        <!-- LOGO UTAMA BORNEOKU -->
         <div class="w-10 h-10 rounded-full bg-amber-300 p-0.5 shadow-md shrink-0 flex items-center justify-center overflow-hidden border border-amber-400">
-          <img src="borneoku-logo.png" alt="Logo Borneoku" class="w-full h-full object-cover rounded-full" onerror="this.onerror=null; this.src='file_000000002854821187aec49ee7aa4b2d.png';">
+          <img src="borneoku-logo.png" alt="Logo Borneoku" class="w-full h-full object-cover rounded-full">
         </div>
         <div>
           <h1 class="font-extrabold text-sm tracking-wide leading-tight text-white">BORNEOKU</h1>
@@ -235,7 +236,7 @@
 
     function filterProducts() {
       const keyword = document.getElementById('search-input').value.toLowerCase();
-      const filtered = allProducts.filter(item => {
+      const filtered = allproducts.filter(item => {
         const title = (item.title || '').toLowerCase();
         const category = (item.category || '').toLowerCase();
         return title.includes(keyword) || category.includes(keyword);
@@ -270,4 +271,4 @@
     fetchProducts();
   </script>
 </body>
-</html>
+          </html>
