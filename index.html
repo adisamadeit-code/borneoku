@@ -16,26 +16,28 @@
   <style>
     .bg-borneo-dark { background-color: #064e3b; }
     .text-gold { color: #d4af37; }
-    body { padding-bottom: 85px; background-color: #f8fafc; }
+    /* Padding bawah pas layar agar tidak menggantung */
+    body { padding-bottom: 110px; background-color: #f8fafc; }
   </style>
 </head>
 <body class="font-sans text-gray-800">
 
   <!-- HEADER UTAMA -->
-  <header class="bg-borneo-dark text-white p-3.5 shadow-md sticky top-0 z-50">
+  <header class="bg-borneo-dark text-white p-3 shadow-md sticky top-0 z-50">
     <div class="max-w-6xl mx-auto flex justify-between items-center">
       <div class="flex items-center space-x-2.5">
-        <div class="bg-white text-emerald-900 p-1.5 rounded-xl shadow-sm">
-          <i class="fa-solid fa-store text-base"></i>
+        <!-- LOGO BULAT ELEGANT BORNEOKU (DENGAN BACKGROUND EMAS) -->
+        <div class="w-9 h-9 rounded-full bg-gradient-to-tr from-amber-400 to-amber-200 p-0.5 shadow-md shrink-0 flex items-center justify-center overflow-hidden">
+          <img src="https://img.icons8.com/color/512/online-store.png" alt="Logo Borneoku" class="w-full h-full object-cover rounded-full">
         </div>
         <div>
-          <h1 class="font-extrabold text-sm tracking-wide leading-tight">BORNEOKU</h1>
-          <p class="text-[8.5px] text-amber-300 font-medium tracking-wider">KARYA NUSANTARA, PASAR DUNIA</p>
+          <h1 class="font-extrabold text-sm tracking-wide leading-tight text-white">BORNEOKU</h1>
+          <p class="text-[8px] text-amber-300 font-bold tracking-wider">KARYA NUSANTARA, PASAR DUNIA</p>
         </div>
       </div>
       
       <div class="flex items-center gap-2">
-        <!-- TOMBOL SHARE / BAGIKAN PROMOSI -->
+        <!-- TOMBOL SHARE / BAGIKAN -->
         <button onclick="shareApp()" title="Bagikan Tautan Borneoku" class="bg-emerald-800 hover:bg-emerald-900 text-amber-300 px-3 py-1.5 rounded-xl text-xs border border-emerald-600 transition shadow-sm flex items-center gap-1.5 font-bold">
           <i class="fa-solid fa-share-nodes text-xs"></i>
           <span>Bagikan</span>
@@ -50,8 +52,8 @@
   </header>
 
   <!-- KONTEN BERANDA -->
-  <div id="section-beranda" class="space-y-3">
-    <!-- BANNER HERO RINGKAS PAS LAYAR -->
+  <div id="section-beranda" class="space-y-3.5">
+    <!-- BANNER HERO -->
     <section class="bg-borneo-dark text-white py-4 px-4 text-center">
       <div class="max-w-2xl mx-auto space-y-2">
         <h2 class="text-sm sm:text-base md:text-xl font-extrabold leading-tight">Satu Marketplace, <span class="text-gold">Berjuta Produk Unggulan</span> Indonesia</h2>
@@ -98,8 +100,8 @@
       </div>
     </section>
 
-    <!-- ETALASE PRODUK GABUNGAN (Hanya Menampilkan Produk yang Sudah Disetujui Admin) -->
-    <main class="max-w-6xl mx-auto px-4 space-y-3">
+    <!-- ETALASE PRODUK GABUNGAN -->
+    <main class="max-w-6xl mx-auto px-4 space-y-3 pb-6">
       <div class="flex justify-between items-center border-b border-gray-200 pb-2">
         <h3 onclick="resetFilter()" title="Tampilkan semua produk" class="font-bold text-gray-900 text-xs flex items-center gap-1.5 cursor-pointer hover:text-emerald-800 transition">
           <i class="fa-solid fa-bag-shopping text-emerald-800"></i> Etalase Produk UMKM Nusantara
@@ -154,7 +156,6 @@
     async function fetchProducts() {
       const grid = document.getElementById('product-grid');
       try {
-        // Ambil produk yang berstatus 'disetujui'
         const { data, error } = await supabaseClient.from('products').select('*').eq('status', 'disetujui');
         if (error) throw error;
         allProducts = data || [];
@@ -267,4 +268,4 @@
     fetchProducts();
   </script>
 </body>
-        </html>
+  </html>
