@@ -5,8 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Borneoku - Karya Nusantara, Pasar Dunia</title>
   
-  <!-- PWA Manifest & Meta -->
+  <!-- PWA Manifest & Favicon -->
   <link rel="manifest" href="manifest.json">
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <link rel="apple-touch-icon" href="borneoku-icon-192.png">
   <meta name="theme-color" content="#064e3b">
   <meta name="apple-mobile-web-app-capable" content="yes">
   
@@ -16,7 +18,7 @@
   <style>
     .bg-borneo-dark { background-color: #064e3b; }
     .text-gold { color: #d4af37; }
-    /* Padding bawah dirapikan agar tidak menggantung */
+    /* Jarak aman bagian bawah agar tampilan tidak menggantung di HP */
     body { padding-bottom: 130px; background-color: #f8fafc; }
   </style>
 </head>
@@ -26,9 +28,9 @@
   <header class="bg-borneo-dark text-white p-3 shadow-md sticky top-0 z-50">
     <div class="max-w-6xl mx-auto flex justify-between items-center">
       <div class="flex items-center space-x-2.5">
-        <!-- LOGO BULAT UTAMA BORNEOKU -->
+        <!-- LOGO UTAMA BORNEOKU (BUATAN KAKAK) -->
         <div class="w-10 h-10 rounded-full bg-amber-300 p-0.5 shadow-md shrink-0 flex items-center justify-center overflow-hidden border border-amber-400">
-          <img src="borneoku-logo.png" alt="Logo Borneoku" class="w-full h-full object-cover rounded-full">
+          <img src="borneoku-logo.png" alt="Logo Borneoku" class="w-full h-full object-cover rounded-full" onerror="this.onerror=null; this.src='file_000000002854821187aec49ee7aa4b2d.png';">
         </div>
         <div>
           <h1 class="font-extrabold text-sm tracking-wide leading-tight text-white">BORNEOKU</h1>
