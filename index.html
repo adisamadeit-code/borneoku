@@ -1,81 +1,83 @@
--- 1. Hapus tabel lama jika ada
-DROP TABLE IF EXISTS payouts CASCADE;
-DROP TABLE IF EXISTS order_items CASCADE;
-DROP TABLE IF EXISTS products CASCADE;
-DROP TABLE IF EXISTS stores CASCADE;
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Borneoku - Karya Nusantara, Pasar Dunia</title>
+    <link rel="manifest" href="manifest.json">
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <meta name="theme-color" content="#064e3b">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .bg-borneo-dark { background-color: #064e3b; }
+        .text-gold { color: #d4af37; }
+        body { background-color: #f8fafc; padding-bottom: 80px; }
+    </style>
+</head>
+<body class="font-sans text-gray-800">
 
--- 2. Buat tabel stores
-CREATE TABLE stores (
-    id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
-    owner_id UUID REFERENCES auth.users(id) ON DELETE CASCADE,
-    name VARCHAR(255),
-    slug VARCHAR(255),
-    category VARCHAR(100),
-    description TEXT,
-    logo_url TEXT,
-    banner_url TEXT,
-    phone_number VARCHAR(20),
-    address TEXT,
-    status VARCHAR(20) DEFAULT 'approved',
-    commission_rate NUMERIC(5,2) DEFAULT 5.00,
-    bank_name VARCHAR(100),
-    account_number VARCHAR(50),
-    account_holder_name VARCHAR(255),
-    created_at TIMESTAMPTZ DEFAULT NOW(),
-    updated_at TIMESTAMPTZ DEFAULT NOW()
-);
+    <!-- HEADER UTAMA -->
+    <header class="bg-borneo-dark text-white p-3 shadow-md sticky top-0 z-50">
+        <div class="max-w-6xl mx-auto flex justify-between items-center">
+            <div class="flex items-center space-x-2.5">
+                <div class="w-10 h-10 rounded-full bg-amber-300 flex items-center justify-center overflow-hidden border border-amber-400">
+                    <img src="borneoku-logo-github-file...png" alt="Logo" class="w-full h-full object-cover">
+                </div>
+                <div>
+                    <h1 class="font-extrabold text-sm tracking-wide text-amber-300">Borneoku</h1>
+                    <p class="text-[9px] text-amber-100 font-medium">Karya Nusantara, Pasar Dunia</p>
+                </div>
+            </div>
+            <a href="admin.html" class="text-xs bg-amber-500 hover:bg-amber-600 text-white px-3 py-1.5 rounded-lg font-semibold shadow">
+                <i class="fa-solid fa-lock text-[10px] mr-1"></i> Admin
+            </a>
+        </div>
+    </header>
 
--- 3. Buat tabel products (dengan penambahan kolom status & title agar kompatibel)
-CREATE TABLE products (
-    id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
-    store_id UUID REFERENCES stores(id) ON DELETE SET NULL,
-    name VARCHAR(255),
-    title VARCHAR(255),
-    slug VARCHAR(255),
-    description TEXT,
-    price NUMERIC(12,2),
-    stock INT DEFAULT 0,
-    unit VARCHAR(50) DEFAULT 'pcs',
-    product_type VARCHAR(50) DEFAULT 'physical',
-    image_url TEXT,
-    status VARCHAR(20) DEFAULT 'approved',
-    is_available BOOLEAN DEFAULT true,
-    created_at TIMESTAMPTZ DEFAULT NOW(),
-    updated_at TIMESTAMPTZ DEFAULT NOW()
-);
+    <!-- KONTEN UTAMA -->
+    <main class="max-w-6xl mx-auto p-4">
+        <div class="bg-white p-6 rounded-2xl shadow-sm border border-emerald-100 text-center mb-6">
+            <h2 class="text-lg font-bold text-emerald-900 mb-1">Etalase UMKM Nusantara</h2>
+            <p class="text-xs text-gray-500">Temukan produk unggulan dari mitra terpercaya kami.</p>
+        </div>
 
--- 4. Buat tabel order_items
-CREATE TABLE order_items (
-    id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
-    order_id UUID,
-    store_id UUID REFERENCES stores(id) ON DELETE SET NULL,
-    product_id UUID REFERENCES products(id) ON DELETE SET NULL,
-    quantity INT NOT NULL DEFAULT 1,
-    unit_price NUMERIC(12,2),
-    gross_amount NUMERIC(12,2),
-    commission_rate_applied NUMERIC(5,2),
-    platform_fee NUMERIC(12,2),
-    merchant_net_amount NUMERIC(12,2),
-    created_at TIMESTAMPTZ DEFAULT NOW()
-);
+        <!-- DAFTAR PRODUK (ETALASE) -->
+        <div id="product-list" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
+            <!-- Produk akan dimuat otomatis di sini -->
+            <div class="bg-white p-3 rounded-xl shadow-sm border border-gray-100 flex flex-col justify-between">
+                <div>
+                    <div class="w-full h-32 bg-gray-100 rounded-lg mb-2 overflow-hidden flex items-center justify-center">
+                        <i class="fa-solid fa-image text-gray-300 text-2xl"></i>
+                    </div>
+                    <h3 class="font-semibold text-xs text-gray-800 line-clamp-2">Baju batik seragam korpri</h3>
+                    <p class="text-emerald-700 font-bold text-xs mt-1">Rp 350.000</p>
+                </div>
+                <span class="text-[10px] bg-emerald-50 text-emerald-700 px-2 py-0.5 rounded mt-2 inline-block text-center font-medium">Tersedia</span>
+            </div>
+        </div>
+    </main>
 
--- 5. Buat tabel payouts
-CREATE TABLE payouts (
-    id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
-    store_id UUID REFERENCES stores(id) ON DELETE CASCADE,
-    amount NUMERIC(12,2),
-    status VARCHAR(20) DEFAULT 'pending',
-    payout_date TIMESTAMPTZ,
-    proof_url TEXT,
-    notes TEXT,
-    created_at TIMESTAMPTZ DEFAULT NOW()
-);
+    <!-- NAVBAR BAWAH -->
+    <nav class="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 py-2 px-4 shadow-lg z-50">
+        <div class="max-w-md mx-auto flex justify-around items-center text-center">
+            <a href="index.html" class="text-emerald-700 flex flex-col items-center">
+                <i class="fa-solid fa-house text-base"></i>
+                <span class="text-[10px] mt-0.5 font-semibold">Beranda</span>
+            </a>
+            <a href="admin.html" class="text-gray-400 hover:text-emerald-700 flex flex-col items-center">
+                <i class="fa-solid fa-lock text-base"></i>
+                <span class="text-[10px] mt-0.5">Admin</span>
+            </a>
+        </div>
+    </nav>
 
--- 6. Matikan RLS agar frontend bisa membaca & menulis tanpa kendala izin
-ALTER TABLE stores DISABLE ROW LEVEL SECURITY;
-ALTER TABLE products DISABLE ROW LEVEL SECURITY;
-ALTER TABLE order_items DISABLE ROW LEVEL SECURITY;
-ALTER TABLE payouts DISABLE ROW LEVEL SECURITY;
-
--- 7. Segarkan Schema
-NOTIFY pgrst, 'reload schema';
+    <!-- SCRIPT SUPABASE CONNECTOR -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script>
+        // Logika tampilan beranda aktif
+        console.log("BorneoKu Etalase Siap");
+    </script>
+</body>
+</html>
