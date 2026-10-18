@@ -29,11 +29,16 @@
   <main class="max-w-4xl mx-auto p-4 space-y-6">
     <!-- PANEL VERIFIKASI ADMIN -->
     <div class="bg-white p-5 rounded-2xl shadow-sm border border-gray-100 space-y-4">
-      <div class="border-b border-gray-100 pb-3">
-        <h2 class="font-extrabold text-gray-900 text-sm flex items-center gap-2">
-          <i class="fa-solid fa-lock text-emerald-800"></i> Panel Verifikasi Admin Borneoku
-        </h2>
-        <p class="text-[11px] text-gray-500 mt-0.5">Daftar produk masuk yang menunggu persetujuan admin:</p>
+      <div class="flex justify-between items-center border-b border-gray-100 pb-3">
+        <div>
+          <h2 class="font-extrabold text-gray-900 text-sm flex items-center gap-2">
+            <i class="fa-solid fa-lock text-emerald-800"></i> Panel Verifikasi Admin Borneoku
+          </h2>
+          <p class="text-[11px] text-gray-500 mt-0.5">Daftar produk masuk yang menunggu persetujuan admin:</p>
+        </div>
+        <button onclick="loadAdminProducts()" class="bg-gray-100 hover:bg-gray-200 text-gray-700 px-2.5 py-1 rounded-lg text-xs font-bold">
+          <i class="fa-solid fa-rotate-right mr-1"></i> Refresh
+        </button>
       </div>
 
       <div id="admin-product-list" class="space-y-3">
@@ -58,20 +63,34 @@
     </a>
   </nav>
 
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <!-- SCRIPT SUPABASE VIA CDN RESMI -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
   <script>
     const SUPABASE_URL = 'https://iegqvegvoqjqjjyucpss.supabase.co';
     const SUPABASE_ANON_KEY = 'sb_publishable_7o0SP7VYOFhYJ0qyDrPtzw_2VvkuiMy';
-    const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+    
+    // Inisialisasi aman client
+    let supabaseClient;
+    try {
+      supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+    } catch (e) {
+      console.error("Gagal inisialisasi Supabase:", e);
+    }
 
     async function loadAdminProducts() {
       const container = document.getElementById('admin-product-list');
+      container.innerHTML = `<p class="text-center text-xs text-gray-400 py-6"><i class="fa-solid fa-spinner fa-spin mr-1"></i> Memuat daftar produk...</p>`;
+      
       try {
-        const { data, error } = await supabaseClient.from('products').select('*').order('created_at', { ascending: false });
+        const { data, error } = await supabaseClient
+          .from('products')
+          .select('*')
+          .order('created_at', { ascending: false });
+
         if (error) throw error;
 
         if (!data || data.length === 0) {
-          container.innerHTML = `<p class="text-center text-xs text-gray-400 py-6">Tidak ada produk ditemukan.</p>`;
+          container.innerHTML = `<p class="text-center text-xs text-gray-400 py-6">Tidak ada produk ditemukan di database.</p>`;
           return;
         }
 
@@ -83,62 +102,74 @@
           const status = item.status || 'pending';
           const img = item.image_url || '1000387731.png';
 
-          const statusBadge = (status === 'approved' || status === 'disetujui') 
-            ? `<span class="bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded text-[10px] font-bold">Disetujui</span>`
+          const isApproved = (status === 'approved' || status === 'disetujui');
+          const statusBadge = isApproved 
+            ? `<span class="bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded text-[10px] font-bold">Approved</span>`
             : `<span class="bg-amber-100 text-amber-800 px-2 py-0.5 rounded text-[10px] font-bold">Pending</span>`;
 
           return `
-            <div class="p-3 border border-gray-100 rounded-xl flex items-center justify-between gap-3 bg-gray-50/50">
+            <div class="p-3 border border-gray-200 rounded-xl flex items-center justify-between gap-3 bg-white shadow-sm">
               <div class="flex items-center gap-3 min-w-0">
-                <img src="${img}" alt="${title}" class="w-12 h-12 rounded-lg object-cover bg-gray-200 shrink-0">
+                <img src="${img}" alt="${title}" class="w-12 h-12 rounded-lg object-cover bg-gray-100 shrink-0" onerror="this.src='https://images.unsplash.com/photo-1544816155-12df9643f363?auto=format&fit=crop&w=100&q=80'">
                 <div class="min-w-0">
                   <h4 class="font-bold text-xs text-gray-900 truncate">${title}</h4>
-                  <p class="text-[11px] text-gray-500">Rp ${price} | WA: ${wa}</p>
+                  <p class="text-[11px] text-gray-600 font-medium">Rp ${price} | WA: ${wa}</p>
                   <p class="text-[10px] text-gray-400 truncate">Alamat: ${address}</p>
                   <div class="mt-1">${statusBadge}</div>
                 </div>
               </div>
               <div class="flex gap-1.5 shrink-0">
-                <button onclick="approveProduct('${item.id}')" class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold px-3 py-1.5 rounded-lg text-xs shadow-sm active:scale-95 transition">
-                  Setuju
+                <button onclick="approveProduct('${item.id}')" class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold px-3 py-1.5 rounded-lg text-xs shadow-sm active:scale-95 transition flex items-center gap-1">
+                  <i class="fa-solid fa-check"></i> Setuju
                 </button>
-                <button onclick="deleteProduct('${item.id}')" class="bg-red-500 hover:bg-red-600 text-white font-bold px-3 py-1.5 rounded-lg text-xs shadow-sm active:scale-95 transition">
-                  Hapus
+                <button onclick="deleteProduct('${item.id}')" class="bg-red-500 hover:bg-red-600 text-white font-bold px-3 py-1.5 rounded-lg text-xs shadow-sm active:scale-95 transition flex items-center gap-1">
+                  <i class="fa-solid fa-trash"></i> Hapus
                 </button>
               </div>
             </div>
           `;
         }).join('');
       } catch (err) {
-        container.innerHTML = `<p class="text-center text-xs text-red-500 py-6">Gagal memuat produk admin.</p>`;
+        console.error(err);
+        container.innerHTML = `<p class="text-center text-xs text-red-500 py-6">Gagal memuat produk: ${err.message}</p>`;
       }
     }
 
-    async function approveProduct(id) {
+    // Fungsi Tombol Setuju
+    window.approveProduct = async function(id) {
       try {
-        // Mengubah status menjadi 'approved' agar langsung muncul di beranda
-        const { error } = await supabaseClient.from('products').update({ status: 'approved' }).eq('id', id);
+        const { error } = await supabaseClient
+          .from('products')
+          .update({ status: 'approved', is_available: true })
+          .eq('id', id);
+
         if (error) throw error;
-        alert('Produk berhasil disetujui!');
+        alert('✅ Produk BERHASIL disetujui! Produk sekarang tayang di Beranda.');
         loadAdminProducts();
       } catch (err) {
-        alert('Gagal menyetujui produk: ' + err.message);
+        alert('❌ Gagal menyetujui produk: ' + err.message);
       }
-    }
+    };
 
-    async function deleteProduct(id) {
-      if (!confirm('Yakin ingin menghapus produk ini?')) return;
+    // Fungsi Tombol Hapus
+    window.deleteProduct = async function(id) {
+      if (!confirm('Apakah Anda yakin ingin menghapus produk ini?')) return;
       try {
-        const { error } = await supabaseClient.from('products').delete().eq('id', id);
+        const { error } = await supabaseClient
+          .from('products')
+          .delete()
+          .eq('id', id);
+
         if (error) throw error;
-        alert('Produk berhasil dihapus!');
+        alert('🗑️ Produk berhasil dihapus dari database!');
         loadAdminProducts();
       } catch (err) {
-        alert('Gagal menghapus produk: ' + err.message);
+        alert('❌ Gagal menghapus produk: ' + err.message);
       }
-    }
+    };
 
-    loadAdminProducts();
+    // Muat data otomatis
+    document.addEventListener('DOMContentLoaded', loadAdminProducts);
   </script>
 </body>
 </html>
