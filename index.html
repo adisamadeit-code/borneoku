@@ -25,9 +25,9 @@
   <header class="bg-borneo-dark text-white p-3 shadow-md sticky top-0 z-50">
     <div class="max-w-6xl mx-auto flex justify-between items-center">
       <div class="flex items-center space-x-2.5">
-        <!-- LOGO BULAT BORNEOKU (MENGGUNAKAN FAVICON ATAU LOGO LOKAL) -->
+        <!-- LOGO AMAN & OTOMATIS MENDETEKSI FILE DI GITHUB -->
         <div class="w-10 h-10 rounded-full bg-amber-400 p-0.5 shadow-md shrink-0 flex items-center justify-center overflow-hidden border border-amber-300">
-          <img src="1000386784.png" alt="Logo Borneoku" class="w-full h-full object-cover rounded-full" onerror="this.onerror=null; this.parentElement.innerHTML='<span class=\'font-black text-emerald-950 text-sm\'>BK</span>';">
+          <img src="1000386730.png" alt="Logo Borneoku" class="w-full h-full object-cover rounded-full" onerror="this.onerror=null; this.src='1000386784.png';">
         </div>
         <div>
           <h1 class="font-extrabold text-sm tracking-wide leading-tight text-white">BORNEOKU</h1>
@@ -35,7 +35,7 @@
         </div>
       </div>
       
-      <!-- FITUR KERANJANG & ADMIN DILENGKAPI -->
+      <!-- KERANJANG & ADMIN -->
       <div class="flex items-center gap-2">
         <button onclick="viewCart()" class="bg-emerald-800 hover:bg-emerald-900 text-xs px-2.5 py-1.5 rounded-xl border border-emerald-600 transition flex items-center gap-1.5 font-semibold shadow-sm text-white">
           <i class="fa-solid fa-cart-shopping text-amber-300 text-xs"></i>
@@ -69,7 +69,7 @@
     </a>
     <a href="admin.html" class="flex flex-col items-center text-gray-400 hover:text-emerald-800">
       <i class="fa-solid fa-lock text-base"></i>
-      <span class="text-[10px] font-medium mt-1">Admin</span>
+      <span class="text-[10px] mt-1">Admin</span>
     </a>
   </nav>
 
@@ -93,7 +93,7 @@
         if (error) throw error;
 
         if (!data || data.length === 0) {
-          grid.innerHTML = `<p class="col-span-full text-center text-xs text-gray-400 py-8">Belum ada produk aktif. Silakan buka menu <b>Admin</b> di atas untuk menyetujui produk.</p>`;
+          grid.innerHTML = `<p class="col-span-full text-center text-xs text-gray-400 py-8">Belum ada produk aktif yang disetujui.</p>`;
           return;
         }
 
@@ -101,7 +101,10 @@
           const title = item.title || item.name || 'Produk UMKM';
           const price = item.price ? Number(item.price).toLocaleString('id-ID') : '0';
           const category = item.category || 'Pakaian';
-          const img = item.image_url || 'https://images.unsplash.com/photo-1544816155-12df9643f363?auto=format&fit=crop&w=400&q=80';
+          
+          // Memastikan mengambil gambar asli dari database (image_url atau image)
+          const img = item.image_url || item.image || item.foto || 'https://images.unsplash.com/photo-1544816155-12df9643f363?auto=format&fit=crop&w=400&q=80';
+          
           const wa = item.phone_number || item.whatsapp || '6281241170648';
           const waLink = `https://wa.me/${wa}?text=` + encodeURIComponent(`Halo Kak, saya ingin memesan produk ${title} seharga Rp ${price} di Borneoku.`);
 
@@ -109,7 +112,7 @@
             <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden flex flex-col justify-between">
               <div>
                 <div class="h-36 bg-gray-100 overflow-hidden relative">
-                  <img src="${img}" alt="${title}" class="w-full h-full object-cover">
+                  <img src="${img}" alt="${title}" class="w-full h-full object-cover" onerror="this.src='https://images.unsplash.com/photo-1544816155-12df9643f363?auto=format&fit=crop&w=400&q=80'">
                   <span class="absolute top-2 left-2 bg-emerald-900/80 text-amber-300 text-[8.5px] font-bold px-1.5 py-0.5 rounded-md">${category}</span>
                 </div>
                 <div class="p-2 space-y-0.5">
