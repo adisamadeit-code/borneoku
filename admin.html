@@ -14,7 +14,7 @@
 <body class="font-sans text-gray-800">
 
   <!-- HEADER ADMIN -->
-  <header class="bg-borneo-dark text-white p-3 shadow-md sticky top-0 z-50">
+  <header class="bg-borneo-dark text-white p-3.5 shadow-md sticky top-0 z-50">
     <div class="max-w-6xl mx-auto flex justify-between items-center">
       <div class="flex items-center space-x-2">
         <i class="fa-solid fa-store text-amber-300 text-base"></i>
@@ -33,10 +33,10 @@
           <h2 class="font-extrabold text-gray-900 text-sm flex items-center gap-2">
             <i class="fa-solid fa-lock text-emerald-800"></i> Verifikasi Produk Masuk
           </h2>
-          <p class="text-xs text-gray-500 mt-0.5">Klik tombol Setuju untuk menayangkan produk di Beranda:</p>
+          <p class="text-xs text-gray-500 mt-0.5">Kelola status dan persetujuan produk mitra:</p>
         </div>
-        <button onclick="loadAdminProducts()" class="bg-gray-100 hover:bg-gray-200 text-gray-700 px-3 py-1.5 rounded-lg text-xs font-bold">
-          <i class="fa-solid fa-rotate-right mr-1"></i> Refresh
+        <button onclick="loadAdminProducts()" class="bg-gray-100 hover:bg-gray-200 text-gray-700 px-3 py-1.5 rounded-lg text-xs font-bold active:scale-95 transition shadow-sm flex items-center gap-1">
+          <i class="fa-solid fa-rotate-right text-emerald-800"></i> Refresh
         </button>
       </div>
 
@@ -46,15 +46,27 @@
     </div>
   </main>
 
-  <!-- NAVBAR BAWAH -->
-  <nav class="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 py-2.5 px-3 flex justify-around items-center z-50 shadow-lg">
+  <!-- NAVBAR BAWAH ADMIN -->
+  <nav class="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 py-2 px-2 flex justify-around items-center z-50 shadow-lg text-[10px]">
     <a href="index.html" class="flex flex-col items-center text-gray-400 hover:text-emerald-800">
       <i class="fa-solid fa-house text-base"></i>
-      <span class="text-[10px] mt-1">Beranda</span>
+      <span class="mt-0.5">Beranda</span>
+    </a>
+    <a href="index.html" class="flex flex-col items-center text-gray-400 hover:text-emerald-800">
+      <i class="fa-solid fa-boxes-stacked text-base"></i>
+      <span class="mt-0.5">Tambah Produk</span>
+    </a>
+    <a href="index.html" class="flex flex-col items-center text-gray-400 hover:text-emerald-800">
+      <i class="fa-solid fa-receipt text-base"></i>
+      <span class="mt-0.5">Pesanan</span>
+    </a>
+    <a href="index.html" class="flex flex-col items-center text-gray-400 hover:text-emerald-800">
+      <i class="fa-solid fa-bell text-base"></i>
+      <span class="mt-0.5">Notif</span>
     </a>
     <a href="admin.html" class="flex flex-col items-center text-emerald-800 font-bold">
       <i class="fa-solid fa-lock text-base"></i>
-      <span class="text-[10px] mt-1">Admin</span>
+      <span class="mt-0.5">Admin</span>
     </a>
   </nav>
 
@@ -67,18 +79,13 @@
 
     async function loadAdminProducts() {
       const container = document.getElementById('admin-product-list');
-      container.innerHTML = `<p class="text-center text-xs text-gray-400 py-6"><i class="fa-solid fa-spinner fa-spin mr-1"></i> Memuat...</p>`;
+      container.innerHTML = `<p class="text-center text-xs text-gray-400 py-6"><i class="fa-solid fa-spinner fa-spin mr-1"></i> Memuat data...</p>`;
       
       try {
-        const { data, error } = await supabaseClient
-          .from('products')
-          .select('*')
-          .order('created_at', { ascending: false });
-
+        const { data, error } = await supabaseClient.from('products').select('*').order('created_at', { ascending: false });
         if (error) throw error;
-
         if (!data || data.length === 0) {
-          container.innerHTML = `<p class="text-center text-xs text-gray-400 py-6">Tidak ada produk di database.</p>`;
+          container.innerHTML = `<p class="text-center text-xs text-gray-400 py-6">Tidak ada produk ditemukan di database.</p>`;
           return;
         }
 
@@ -88,12 +95,15 @@
           const wa = item.phone_number || item.whatsapp || '-';
           const address = item.address || '-';
           const status = item.status || 'pending';
-          const img = item.image_url || 'https://images.unsplash.com/photo-1544816155-12df9643f363?auto=format&fit=crop&w=100&q=80';
-
+          const img = item.image_url || item.image || item.foto || 'https://images.unsplash.com/photo-1544816155-12df9643f363?auto=format&fit=crop&w=100&q=80';
           const isApproved = (status === 'approved' || status === 'disetujui');
           const statusBadge = isApproved 
             ? `<span class="bg-emerald-100 text-emerald-800 px-2.5 py-0.5 rounded text-[10px] font-bold">Approved</span>`
             : `<span class="bg-amber-100 text-amber-800 px-2.5 py-0.5 rounded text-[10px] font-bold">Pending</span>`;
+
+          const actionBtn = isApproved
+            ? `<button onclick="ubahStatus('${item.id}', 'pending')" class="bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold px-3 py-1.5 rounded-lg text-xs shadow-sm transition">Batal</button>`
+            : `<button onclick="ubahStatus('${item.id}', 'approved')" class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold px-3 py-1.5 rounded-lg text-xs shadow-sm transition">Setuju</button>`;
 
           return `
             <div class="p-3.5 border border-gray-200 rounded-xl flex items-center justify-between gap-3 bg-white shadow-sm">
@@ -107,11 +117,8 @@
                 </div>
               </div>
               <div class="flex gap-2 shrink-0">
-                ${isApproved 
-                  ? `<button onclick="updateStatus('${item.id}', 'pending')" class="bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold px-3 py-1.5 rounded-lg text-xs shadow-sm transition">Batal</button>` 
-                  : `<button onclick="updateStatus('${item.id}', 'approved')" class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold px-3 py-1.5 rounded-lg text-xs shadow-sm transition">Setuju</button>`
-                }
-                <button onclick="removeProduct('${item.id}')" class="bg-red-500 hover:bg-red-600 text-white font-bold px-3 py-1.5 rounded-lg text-xs shadow-sm transition">Hapus</button>
+                ${actionBtn}
+                <button onclick="hapusProduk('${item.id}')" class="bg-red-500 hover:bg-red-600 text-white font-bold px-3 py-1.5 rounded-lg text-xs shadow-sm transition">Hapus</button>
               </div>
             </div>
           `;
@@ -121,36 +128,24 @@
       }
     }
 
-    window.updateStatus = async function(id, newStatus) {
+    async function ubahStatus(id, statusBaru) {
       try {
-        const { error } = await supabaseClient
-          .from('products')
-          .update({ status: newStatus })
-          .eq('id', id);
-
+        const { error } = await supabaseClient.from('products').update({ status: statusBaru }).eq('id', id);
         if (error) throw error;
         loadAdminProducts();
-      } catch (err) {
-        alert('Gagal mengubah status: ' + err.message);
-      }
-    };
+      } catch (err) { alert('Gagal mengubah status: ' + err.message); }
+    }
 
-    window.removeProduct = async function(id) {
+    async function hapusProduk(id) {
       if (!confirm('Yakin ingin menghapus produk ini?')) return;
       try {
-        const { error } = await supabaseClient
-          .from('products')
-          .delete()
-          .eq('id', id);
-
+        const { error } = await supabaseClient.from('products').delete().eq('id', id);
         if (error) throw error;
         loadAdminProducts();
-      } catch (err) {
-        alert('Gagal menghapus: ' + err.message);
-      }
-    };
+      } catch (err) { alert('Gagal menghapus: ' + err.message); }
+    }
 
     document.addEventListener('DOMContentLoaded', loadAdminProducts);
   </script>
 </body>
-  </html>
+</html>
