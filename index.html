@@ -3,179 +3,128 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Pusat Layanan Mitra Borneoku</title>
+  <title>Borneoku - Karya Nusantara, Pasar Dunia</title>
+  
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <meta name="theme-color" content="#064e3b">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
   <style>
     .bg-borneo-dark { background-color: #064e3b; }
+    .text-gold { color: #d4af37; }
     body { background-color: #f8fafc; padding-bottom: 120px; }
   </style>
 </head>
 <body class="font-sans text-gray-800">
 
-  <!-- HEADER ADMIN -->
+  <!-- HEADER UTAMA -->
   <header class="bg-borneo-dark text-white p-3 shadow-md sticky top-0 z-50">
     <div class="max-w-6xl mx-auto flex justify-between items-center">
-      <div class="flex items-center space-x-2">
-        <i class="fa-solid fa-store text-amber-300 text-base"></i>
-        <h1 class="font-bold text-xs sm:text-sm">Pusat Layanan Mitra <span class="text-amber-300">Borneoku</span></h1>
+      <div class="flex items-center space-x-2.5">
+        <div class="w-10 h-10 rounded-full bg-amber-300 p-0.5 shadow-md shrink-0 flex items-center justify-center overflow-hidden border border-amber-400">
+          <img src="1000386730.png" alt="Logo Borneoku" class="w-full h-full object-cover rounded-full">
+        </div>
+        <div>
+          <h1 class="font-extrabold text-sm tracking-wide leading-tight text-white">BORNEOKU</h1>
+          <p class="text-[8px] text-amber-300 font-bold tracking-wider">KARYA NUSANTARA, PASAR DUNIA</p>
+        </div>
       </div>
-      <!-- Tombol Kembali ke Beranda (Murni HTML, dijamin tidak nyangkut) -->
-      <a href="index.html" class="bg-emerald-800 hover:bg-emerald-900 text-amber-300 px-3 py-1.5 rounded-xl text-xs font-bold border border-emerald-600 shadow-sm flex items-center gap-1.5">
-        <i class="fa-solid fa-house text-xs"></i> Ke Beranda
-      </a>
+      
+      <div class="flex items-center gap-2">
+        <a href="admin.html" class="bg-amber-500 hover:bg-amber-600 text-white px-3 py-1.5 rounded-xl text-xs font-bold shadow-sm flex items-center gap-1.5">
+          <i class="fa-solid fa-lock text-xs"></i> Admin
+        </a>
+      </div>
     </div>
   </header>
 
-  <main class="max-w-4xl mx-auto p-4 space-y-6">
-    <!-- PANEL VERIFIKASI ADMIN -->
-    <div class="bg-white p-5 rounded-2xl shadow-sm border border-gray-100 space-y-4">
-      <div class="flex justify-between items-center border-b border-gray-100 pb-3">
-        <div>
-          <h2 class="font-extrabold text-gray-900 text-sm flex items-center gap-2">
-            <i class="fa-solid fa-lock text-emerald-800"></i> Panel Verifikasi Admin Borneoku
-          </h2>
-          <p class="text-[11px] text-gray-500 mt-0.5">Daftar produk masuk yang menunggu persetujuan admin:</p>
-        </div>
-        <button onclick="loadAdminProducts()" class="bg-gray-100 hover:bg-gray-200 text-gray-700 px-2.5 py-1 rounded-lg text-xs font-bold">
-          <i class="fa-solid fa-rotate-right mr-1"></i> Refresh
-        </button>
-      </div>
+  <!-- KONTEN UTAMA BERANDA -->
+  <main class="max-w-6xl mx-auto p-4 space-y-4">
+    <div class="bg-white p-5 rounded-2xl shadow-sm border border-emerald-100 text-center">
+      <h2 class="text-base font-bold text-emerald-900 mb-1">Etalase Produk UMKM Nusantara</h2>
+      <p class="text-xs text-gray-500">Temukan produk unggulan dan kerajinan pilihan dari mitra terpercaya kami.</p>
+    </div>
 
-      <div id="admin-product-list" class="space-y-3">
-        <p class="text-center text-xs text-gray-400 py-6">Memuat daftar produk...</p>
-      </div>
+    <!-- DAFTAR PRODUK YANG DISETUJUI -->
+    <div id="product-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
+      <p class="col-span-full text-center text-xs text-gray-400 py-8">Memuat etalase produk...</p>
     </div>
   </main>
 
-  <!-- NAVBAR BAWAH (Murni Link Standar) -->
+  <!-- NAVBAR BAWAH -->
   <nav class="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 py-2.5 px-3 flex justify-around items-center z-50 shadow-lg">
-    <a href="index.html" class="flex flex-col items-center text-gray-400 hover:text-emerald-800">
+    <a href="index.html" class="flex flex-col items-center text-emerald-800 font-bold">
       <i class="fa-solid fa-house text-sm"></i>
-      <span class="text-[9px] font-medium mt-1">Beranda</span>
+      <span class="text-[9px] mt-1">Beranda</span>
     </a>
-    <a href="index.html" class="flex flex-col items-center text-gray-400 hover:text-emerald-800">
-      <i class="fa-solid fa-boxes-stacked text-sm"></i>
-      <span class="text-[9px] font-medium mt-1">Tambah Produk</span>
-    </a>
-    <a href="admin.html" class="flex flex-col items-center text-emerald-800 font-bold">
+    <a href="admin.html" class="flex flex-col items-center text-gray-400 hover:text-emerald-800">
       <i class="fa-solid fa-lock text-sm"></i>
-      <span class="text-[9px] mt-1">Pengaturan Admin</span>
+      <span class="text-[9px] font-medium mt-1">Admin</span>
     </a>
   </nav>
 
-  <!-- SCRIPT SUPABASE VIA CDN RESMI -->
+  <!-- SCRIPT SUPABASE -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
   <script>
     const SUPABASE_URL = 'https://iegqvegvoqjqjjyucpss.supabase.co';
     const SUPABASE_ANON_KEY = 'sb_publishable_7o0SP7VYOFhYJ0qyDrPtzw_2VvkuiMy';
-    
-    let supabaseClient;
-    try {
-      supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-    } catch (e) {
-      console.error("Gagal inisialisasi Supabase:", e);
-    }
+    const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-    async function loadAdminProducts() {
-      const container = document.getElementById('admin-product-list');
-      container.innerHTML = `<p class="text-center text-xs text-gray-400 py-6"><i class="fa-solid fa-spinner fa-spin mr-1"></i> Memuat daftar produk...</p>`;
-      
+    async function fetchProducts() {
+      const grid = document.getElementById('product-grid');
       try {
         const { data, error } = await supabaseClient
           .from('products')
           .select('*')
-          .order('created_at', { ascending: false });
+          .or('status.eq.approved,status.eq.disetujui');
 
         if (error) throw error;
 
         if (!data || data.length === 0) {
-          container.innerHTML = `<p class="text-center text-xs text-gray-400 py-6">Tidak ada produk ditemukan di database.</p>`;
+          grid.innerHTML = `<p class="col-span-full text-center text-xs text-gray-400 py-8">Belum ada produk aktif yang disetujui.</p>`;
           return;
         }
 
-        container.innerHTML = data.map(item => {
-          const title = item.title || item.name || 'Produk Tanpa Nama';
+        grid.innerHTML = data.map(item => {
+          const title = item.title || item.name || 'Produk UMKM';
           const price = item.price ? Number(item.price).toLocaleString('id-ID') : '0';
-          const wa = item.phone_number || item.whatsapp || '-';
-          const address = item.address || '-';
-          const status = item.status || 'pending';
+          const category = item.category || 'Pakaian';
           const img = item.image_url || '1000387731.png';
+          const wa = item.phone_number || item.whatsapp || '6281241170648';
 
-          const isApproved = (status === 'approved' || status === 'disetujui');
-
-          const actionButton = isApproved 
-            ? `<button onclick="toggleProductStatus('${item.id}', 'pending')" class="bg-gray-100 hover:bg-gray-200 text-gray-700 font-bold px-3 py-1.5 rounded-lg text-xs shadow-sm active:scale-95 transition flex items-center gap-1 border border-gray-300">
-                <i class="fa-solid fa-rotate-left text-amber-600"></i> Batal Setuju
-               </button>`
-            : `<button onclick="toggleProductStatus('${item.id}', 'approved')" class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold px-3 py-1.5 rounded-lg text-xs shadow-sm active:scale-95 transition flex items-center gap-1">
-                <i class="fa-solid fa-check"></i> Setuju
-               </button>`;
-
-          const statusBadge = isApproved 
-            ? `<span class="bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded text-[10px] font-bold">Approved</span>`
-            : `<span class="bg-amber-100 text-amber-800 px-2 py-0.5 rounded text-[10px] font-bold">Pending</span>`;
+          const waMessage = encodeURIComponent(`Halo Kak, saya ingin memesan produk ${title} seharga Rp ${price} di Borneoku.`);
+          const waLink = `https://wa.me/${wa}?text=${waMessage}`;
 
           return `
-            <div class="p-3 border border-gray-200 rounded-xl flex items-center justify-between gap-3 bg-white shadow-sm">
-              <div class="flex items-center gap-3 min-w-0">
-                <img src="${img}" alt="${title}" class="w-12 h-12 rounded-lg object-cover bg-gray-100 shrink-0" onerror="this.src='https://images.unsplash.com/photo-1544816155-12df9643f363?auto=format&fit=crop&w=100&q=80'">
-                <div class="min-w-0">
-                  <h4 class="font-bold text-xs text-gray-900 truncate">${title}</h4>
-                  <p class="text-[11px] text-gray-600 font-medium">Rp ${price} | WA: ${wa}</p>
-                  <p class="text-[10px] text-gray-400 truncate">Alamat: ${address}</p>
-                  <div class="mt-1">${statusBadge}</div>
+            <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden flex flex-col justify-between">
+              <div>
+                <div class="h-36 bg-gray-100 overflow-hidden relative">
+                  <img src="${img}" alt="${title}" class="w-full h-full object-cover">
+                  <span class="absolute top-2 left-2 bg-emerald-900/80 text-amber-300 text-[8.5px] font-bold px-1.5 py-0.5 rounded-md">${category}</span>
+                </div>
+                <div class="p-2 space-y-0.5">
+                  <h4 class="font-bold text-xs text-gray-900 line-clamp-1">${title}</h4>
+                  <p class="text-xs text-emerald-800 font-extrabold">Rp ${price}</p>
                 </div>
               </div>
-              <div class="flex gap-1.5 shrink-0">
-                ${actionButton}
-                <button onclick="deleteProduct('${item.id}')" class="bg-red-500 hover:bg-red-600 text-white font-bold px-3 py-1.5 rounded-lg text-xs shadow-sm active:scale-95 transition flex items-center gap-1">
-                  <i class="fa-solid fa-trash"></i> Hapus
-                </button>
+              <div class="p-2 pt-0">
+                <a href="${waLink}" target="_blank" class="w-full bg-emerald-800 hover:bg-emerald-900 text-white font-bold py-1.5 rounded-lg text-[9.5px] transition text-center flex items-center justify-center gap-1 shadow-sm block">
+                  <i class="fa-brands fa-whatsapp text-xs"></i> Pesan WhatsApp
+                </a>
               </div>
             </div>
           `;
         }).join('');
       } catch (err) {
-        console.error(err);
-        container.innerHTML = `<p class="text-center text-xs text-red-500 py-6">Gagal memuat produk: ${err.message}</p>`;
+        grid.innerHTML = `<p class="col-span-full text-center text-xs text-red-500 py-6">Gagal memuat etalase.</p>`;
       }
     }
 
-    // Fungsi Update Status (Hanya mengubah data tanpa memaksa pindah halaman otomatis agar tidak macet)
-    window.toggleProductStatus = async function(id, newStatus) {
-      try {
-        const { error } = await supabaseClient
-          .from('products')
-          .update({ status: newStatus, is_available: (newStatus === 'approved') })
-          .eq('id', id);
-
-        if (error) throw error;
-
-        // Muat ulang daftar produk agar tombol berubah jadi 'Batal Setuju' dengan mulus
-        loadAdminProducts();
-      } catch (err) {
-        alert('❌ Gagal mengubah status produk: ' + err.message);
-      }
-    };
-
-    // Fungsi Tombol Hapus
-    window.deleteProduct = async function(id) {
-      if (!confirm('Apakah Anda yakin ingin menghapus produk ini?')) return;
-      try {
-        const { error } = await supabaseClient
-          .from('products')
-          .delete()
-          .eq('id', id);
-
-        if (error) throw error;
-        loadAdminProducts();
-      } catch (err) {
-        alert('❌ Gagal menghapus produk: ' + err.message);
-      }
-    };
-
-    document.addEventListener('DOMContentLoaded', loadAdminProducts);
+    fetchProducts();
   </script>
 </body>
-</html>
+  </html>
