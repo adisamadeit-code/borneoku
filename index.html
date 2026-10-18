@@ -33,10 +33,9 @@
           <h2 class="font-extrabold text-gray-900 text-sm flex items-center gap-2">
             <i class="fa-solid fa-lock text-emerald-800"></i> Verifikasi Produk Masuk
           </h2>
-          <p class="text-xs text-gray-500 mt-0.5">Klik tombol Setuju untuk menayangkan produk di Beranda:</p>
+          <p class="text-xs text-gray-500 mt-0.5">Kelola status dan persetujuan produk mitra:</p>
         </div>
-        <!-- TOMBOL REFRESH DIAKTIFKAN KEMBALI -->
-        <button onclick="loadAdminProducts()" class="bg-gray-100 hover:bg-gray-200 text-gray-700 px-3 py-1.5 rounded-lg text-xs font-bold active:scale-95 transition">
+        <button onclick="loadAdminProducts()" class="bg-gray-100 hover:bg-gray-200 text-gray-700 px-3 py-1.5 rounded-lg text-xs font-bold active:scale-95 transition shadow-sm">
           <i class="fa-solid fa-rotate-right mr-1"></i> Refresh
         </button>
       </div>
@@ -68,7 +67,7 @@
 
     async function loadAdminProducts() {
       const container = document.getElementById('admin-product-list');
-      container.innerHTML = `<p class="text-center text-xs text-gray-400 py-6"><i class="fa-solid fa-spinner fa-spin mr-1"></i> Memuat...</p>`;
+      container.innerHTML = `<p class="text-center text-xs text-gray-400 py-6"><i class="fa-solid fa-spinner fa-spin mr-1"></i> Memuat data...</p>`;
       
       try {
         const { data, error } = await supabaseClient
@@ -79,7 +78,7 @@
         if (error) throw error;
 
         if (!data || data.length === 0) {
-          container.innerHTML = `<p class="text-center text-xs text-gray-400 py-6">Tidak ada produk di database.</p>`;
+          container.innerHTML = `<p class="text-center text-xs text-gray-400 py-6">Tidak ada produk ditemukan di database.</p>`;
           return;
         }
 
@@ -96,6 +95,10 @@
             ? `<span class="bg-emerald-100 text-emerald-800 px-2.5 py-0.5 rounded text-[10px] font-bold">Approved</span>`
             : `<span class="bg-amber-100 text-amber-800 px-2.5 py-0.5 rounded text-[10px] font-bold">Pending</span>`;
 
+          const actionBtn = isApproved
+            ? `<button onclick="ubahStatus('${item.id}', 'pending')" class="bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold px-3 py-1.5 rounded-lg text-xs shadow-sm transition">Batal</button>`
+            : `<button onclick="ubahStatus('${item.id}', 'approved')" class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold px-3 py-1.5 rounded-lg text-xs shadow-sm transition">Setuju</button>`;
+
           return `
             <div class="p-3.5 border border-gray-200 rounded-xl flex items-center justify-between gap-3 bg-white shadow-sm">
               <div class="flex items-center gap-3 min-w-0">
@@ -108,11 +111,8 @@
                 </div>
               </div>
               <div class="flex gap-2 shrink-0">
-                ${isApproved 
-                  ? `<button onclick="updateStatus('${item.id}', 'pending')" class="bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold px-3 py-1.5 rounded-lg text-xs shadow-sm transition">Batal</button>` 
-                  : `<button onclick="updateStatus('${item.id}', 'approved')" class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold px-3 py-1.5 rounded-lg text-xs shadow-sm transition">Setuju</button>`
-                }
-                <button onclick="removeProduct('${item.id}')" class="bg-red-500 hover:bg-red-600 text-white font-bold px-3 py-1.5 rounded-lg text-xs shadow-sm transition">Hapus</button>
+                ${actionBtn}
+                <button onclick="hapusProduk('${item.id}')" class="bg-red-500 hover:bg-red-600 text-white font-bold px-3 py-1.5 rounded-lg text-xs shadow-sm transition">Hapus</button>
               </div>
             </div>
           `;
@@ -122,11 +122,11 @@
       }
     }
 
-    async function updateStatus(id, newStatus) {
+    async function ubahStatus(id, statusBaru) {
       try {
         const { error } = await supabaseClient
           .from('products')
-          .update({ status: newStatus })
+          .update({ status: statusBaru })
           .eq('id', id);
 
         if (error) throw error;
@@ -136,7 +136,7 @@
       }
     }
 
-    async function removeProduct(id) {
+    async function hapusProduk(id) {
       if (!confirm('Yakin ingin menghapus produk ini?')) return;
       try {
         const { error } = await supabaseClient
@@ -151,6 +151,7 @@
       }
     }
 
+    // Jalankan saat halaman dibuka
     document.addEventListener('DOMContentLoaded', loadAdminProducts);
   </script>
 </body>
