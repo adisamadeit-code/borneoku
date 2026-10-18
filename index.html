@@ -69,7 +69,6 @@
     const SUPABASE_URL = 'https://iegqvegvoqjqjjyucpss.supabase.co';
     const SUPABASE_ANON_KEY = 'sb_publishable_7o0SP7VYOFhYJ0qyDrPtzw_2VvkuiMy';
     
-    // Inisialisasi aman client
     let supabaseClient;
     try {
       supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
@@ -103,6 +102,16 @@
           const img = item.image_url || '1000387731.png';
 
           const isApproved = (status === 'approved' || status === 'disetujui');
+
+          // Tombol aksi dinamis per produk
+          const actionButton = isApproved 
+            ? `<button onclick="toggleProductStatus('${item.id}', 'pending')" class="bg-gray-100 hover:bg-gray-200 text-gray-700 font-bold px-3 py-1.5 rounded-lg text-xs shadow-sm active:scale-95 transition flex items-center gap-1 border border-gray-300">
+                <i class="fa-solid fa-rotate-left text-amber-600"></i> Batal Setuju
+               </button>`
+            : `<button onclick="toggleProductStatus('${item.id}', 'approved')" class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold px-3 py-1.5 rounded-lg text-xs shadow-sm active:scale-95 transition flex items-center gap-1">
+                <i class="fa-solid fa-check"></i> Setuju
+               </button>`;
+
           const statusBadge = isApproved 
             ? `<span class="bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded text-[10px] font-bold">Approved</span>`
             : `<span class="bg-amber-100 text-amber-800 px-2 py-0.5 rounded text-[10px] font-bold">Pending</span>`;
@@ -119,9 +128,7 @@
                 </div>
               </div>
               <div class="flex gap-1.5 shrink-0">
-                <button onclick="approveProduct('${item.id}')" class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold px-3 py-1.5 rounded-lg text-xs shadow-sm active:scale-95 transition flex items-center gap-1">
-                  <i class="fa-solid fa-check"></i> Setuju
-                </button>
+                ${actionButton}
                 <button onclick="deleteProduct('${item.id}')" class="bg-red-500 hover:bg-red-600 text-white font-bold px-3 py-1.5 rounded-lg text-xs shadow-sm active:scale-95 transition flex items-center gap-1">
                   <i class="fa-solid fa-trash"></i> Hapus
                 </button>
@@ -135,19 +142,26 @@
       }
     }
 
-    // Fungsi Tombol Setuju
-    window.approveProduct = async function(id) {
+    // Fungsi Mengubah Status & Langsung Pindah ke Beranda jika Disetujui
+    window.toggleProductStatus = async function(id, newStatus) {
       try {
         const { error } = await supabaseClient
           .from('products')
-          .update({ status: 'approved', is_available: true })
+          .update({ status: newStatus, is_available: (newStatus === 'approved') })
           .eq('id', id);
 
         if (error) throw error;
-        alert('✅ Produk BERHASIL disetujui! Produk sekarang tayang di Beranda.');
-        loadAdminProducts();
+
+        if (newStatus === 'approved') {
+          alert('✅ Produk BERHASIL disetujui! Anda akan langsung diarahkan ke Beranda.');
+          // Pindah otomatis ke Beranda
+          window.location.href = 'index.html';
+        } else {
+          alert('🔄 Status produk dikembalikan ke Pending.');
+          loadAdminProducts();
+        }
       } catch (err) {
-        alert('❌ Gagal menyetujui produk: ' + err.message);
+        alert('❌ Gagal mengubah status produk: ' + err.message);
       }
     };
 
@@ -161,14 +175,13 @@
           .eq('id', id);
 
         if (error) throw error;
-        alert('🗑️ Produk berhasil dihapus dari database!');
+        alert('🗑️ Produk berhasil dihapus!');
         loadAdminProducts();
       } catch (err) {
         alert('❌ Gagal menghapus produk: ' + err.message);
       }
     };
 
-    // Muat data otomatis
     document.addEventListener('DOMContentLoaded', loadAdminProducts);
   </script>
 </body>
