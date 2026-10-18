@@ -16,7 +16,7 @@
   <style>
     .bg-borneo-dark { background-color: #064e3b; }
     .text-gold { color: #d4af37; }
-    body { background-color: #f8fafc; padding-bottom: 120px; }
+    body { background-color: #f8fafc; padding-bottom: 90px; }
   </style>
 </head>
 <body class="font-sans text-gray-800">
@@ -25,16 +25,16 @@
   <header class="bg-borneo-dark text-white p-3 shadow-md sticky top-0 z-50">
     <div class="max-w-6xl mx-auto flex justify-between items-center">
       <div class="flex items-center space-x-2.5">
-        <div class="w-10 h-10 rounded-full bg-amber-300 p-0.5 shadow-md shrink-0 flex items-center justify-center overflow-hidden border border-amber-400">
-          <img src="1000386730.png" alt="Logo Borneoku" class="w-full h-full object-cover rounded-full">
+        <div class="w-10 h-10 rounded-full bg-white shadow-md shrink-0 flex items-center justify-center overflow-hidden border border-amber-400">
+          <img src="1000386730.png" alt="Logo Borneoku" class="w-full h-full object-contain">
         </div>
         <div>
           <h1 class="font-extrabold text-sm tracking-wide leading-tight text-white">BORNEOKU</h1>
-          <p class="text-[8px] text-amber-300 font-bold tracking-wider">KARYA NUSANTARA, PASAR DUNIA</p>
+          <p class="text-[9px] text-amber-300 font-bold tracking-wider">KARYA NUSANTARA, PASAR DUNIA</p>
         </div>
       </div>
       
-      <div class="flex items-center gap-2">
+      <div>
         <a href="admin.html" class="bg-amber-500 hover:bg-amber-600 text-white px-3 py-1.5 rounded-xl text-xs font-bold shadow-sm flex items-center gap-1.5">
           <i class="fa-solid fa-lock text-xs"></i> Admin
         </a>
@@ -58,12 +58,12 @@
   <!-- NAVBAR BAWAH -->
   <nav class="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 py-2.5 px-3 flex justify-around items-center z-50 shadow-lg">
     <a href="index.html" class="flex flex-col items-center text-emerald-800 font-bold">
-      <i class="fa-solid fa-house text-sm"></i>
-      <span class="text-[9px] mt-1">Beranda</span>
+      <i class="fa-solid fa-house text-base"></i>
+      <span class="text-[10px] mt-1">Beranda</span>
     </a>
     <a href="admin.html" class="flex flex-col items-center text-gray-400 hover:text-emerald-800">
-      <i class="fa-solid fa-lock text-sm"></i>
-      <span class="text-[9px] font-medium mt-1">Admin</span>
+      <i class="fa-solid fa-lock text-base"></i>
+      <span class="text-[10px] font-medium mt-1">Admin</span>
     </a>
   </nav>
 
@@ -85,7 +85,7 @@
         if (error) throw error;
 
         if (!data || data.length === 0) {
-          grid.innerHTML = `<p class="col-span-full text-center text-xs text-gray-400 py-8">Belum ada produk aktif yang disetujui.</p>`;
+          grid.innerHTML = `<p class="col-span-full text-center text-xs text-gray-400 py-8">Belum ada produk aktif yang disetujui. Silakan setujui produk di menu Admin.</p>`;
           return;
         }
 
@@ -104,15 +104,15 @@
               <div>
                 <div class="h-36 bg-gray-100 overflow-hidden relative">
                   <img src="${img}" alt="${title}" class="w-full h-full object-cover">
-                  <span class="absolute top-2 left-2 bg-emerald-900/80 text-amber-300 text-[8.5px] font-bold px-1.5 py-0.5 rounded-md">${category}</span>
+                  <span class="absolute top-2 left-2 bg-emerald-900/80 text-amber-300 text-[9px] font-bold px-2 py-0.5 rounded-md">${category}</span>
                 </div>
-                <div class="p-2 space-y-0.5">
+                <div class="p-2.5 space-y-1">
                   <h4 class="font-bold text-xs text-gray-900 line-clamp-1">${title}</h4>
                   <p class="text-xs text-emerald-800 font-extrabold">Rp ${price}</p>
                 </div>
               </div>
-              <div class="p-2 pt-0">
-                <a href="${waLink}" target="_blank" class="w-full bg-emerald-800 hover:bg-emerald-900 text-white font-bold py-1.5 rounded-lg text-[9.5px] transition text-center flex items-center justify-center gap-1 shadow-sm block">
+              <div class="p-2.5 pt-0">
+                <a href="${waLink}" target="_blank" class="w-full bg-emerald-800 hover:bg-emerald-900 text-white font-bold py-2 rounded-lg text-[10px] transition text-center flex items-center justify-center gap-1.5 shadow-sm block">
                   <i class="fa-brands fa-whatsapp text-xs"></i> Pesan WhatsApp
                 </a>
               </div>
@@ -127,11 +127,4 @@
     fetchProducts();
   </script>
 </body>
-  </html>
-<div class="w-10 h-10 rounded-full bg-amber-300 p-0.5 shadow-md shrink-0 flex items-center justify-center overflow-hidden border border-amber-400">
-  <img src="1000386730.png" alt="Logo Borneoku" class="w-full h-full object-cover rounded-full">
-</div>
-<div class="w-10 h-10 rounded-full bg-white shadow-md shrink-0 flex items-center justify-center overflow-hidden border border-amber-400">
-  <img src="1000386730.png" alt="Logo Borneoku" class="w-full h-full object-contain">
-</div>
-
+</html>
