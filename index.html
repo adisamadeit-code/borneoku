@@ -4,10 +4,18 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Borneoku - Karya Nusantara, Pasar Dunia</title>
+  
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <meta name="theme-color" content="#064e3b">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
   <style>
     .bg-borneo-dark { background-color: #064e3b; }
+    .text-gold { color: #d4af37; }
     body { background-color: #f8fafc; padding-bottom: 90px; }
   </style>
 </head>
@@ -17,30 +25,38 @@
   <header class="bg-borneo-dark text-white p-3 shadow-md sticky top-0 z-50">
     <div class="max-w-6xl mx-auto flex justify-between items-center">
       <div class="flex items-center space-x-2.5">
-        <!-- LOGO ASLI BORNEOKU -->
-        <div class="w-10 h-10 rounded-full bg-white shadow-md shrink-0 flex items-center justify-center overflow-hidden border border-amber-400 p-0.5">
-          <img src="1000386730.png" alt="Logo Borneoku" class="w-full h-full object-cover rounded-full">
+        <!-- LOGO BULAT BORNEOKU (MENGGUNAKAN FAVICON ATAU LOGO LOKAL) -->
+        <div class="w-10 h-10 rounded-full bg-amber-400 p-0.5 shadow-md shrink-0 flex items-center justify-center overflow-hidden border border-amber-300">
+          <img src="1000386784.png" alt="Logo Borneoku" class="w-full h-full object-cover rounded-full" onerror="this.onerror=null; this.parentElement.innerHTML='<span class=\'font-black text-emerald-950 text-sm\'>BK</span>';">
         </div>
         <div>
-          <h1 class="font-extrabold text-sm tracking-wide text-amber-300">Borneoku</h1>
-          <p class="text-[9px] text-amber-100 font-medium">Karya Nusantara, Pasar Dunia</p>
+          <h1 class="font-extrabold text-sm tracking-wide leading-tight text-white">BORNEOKU</h1>
+          <p class="text-[8px] text-amber-300 font-bold tracking-wider">KARYA NUSANTARA, PASAR DUNIA</p>
         </div>
       </div>
-      <a href="admin.html" class="bg-amber-500 hover:bg-amber-600 text-white px-3 py-1.5 rounded-xl text-xs font-bold shadow flex items-center gap-1">
-        <i class="fa-solid fa-lock text-[10px]"></i> Admin
-      </a>
+      
+      <!-- FITUR KERANJANG & ADMIN DILENGKAPI -->
+      <div class="flex items-center gap-2">
+        <button onclick="viewCart()" class="bg-emerald-800 hover:bg-emerald-900 text-xs px-2.5 py-1.5 rounded-xl border border-emerald-600 transition flex items-center gap-1.5 font-semibold shadow-sm text-white">
+          <i class="fa-solid fa-cart-shopping text-amber-300 text-xs"></i>
+          <span class="text-[11px]"><span id="cart-count" class="bg-amber-400 text-emerald-950 px-1.5 py-0.2 rounded-full text-[9px] font-bold">0</span></span>
+        </button>
+        <a href="admin.html" class="bg-amber-500 hover:bg-amber-600 text-white px-3 py-1.5 rounded-xl text-xs font-bold shadow-sm flex items-center gap-1">
+          <i class="fa-solid fa-lock text-[10px]"></i> Admin
+        </a>
+      </div>
     </div>
   </header>
 
-  <!-- KONTEN UTAMA -->
+  <!-- KONTEN UTAMA BERANDA -->
   <main class="max-w-6xl mx-auto p-4 space-y-4">
     <div class="bg-white p-5 rounded-2xl shadow-sm border border-emerald-100 text-center">
       <h2 class="text-base font-bold text-emerald-900 mb-1">Etalase Produk UMKM Nusantara</h2>
       <p class="text-xs text-gray-500">Temukan produk unggulan dan kerajinan pilihan dari mitra terpercaya kami.</p>
     </div>
 
-    <!-- DAFTAR PRODUK -->
-    <div id="product-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
+    <!-- DAFTAR PRODUK ETALASE -->
+    <div id="product-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3.5">
       <p class="col-span-full text-center text-xs text-gray-400 py-8">Memuat etalase produk...</p>
     </div>
   </main>
@@ -53,16 +69,18 @@
     </a>
     <a href="admin.html" class="flex flex-col items-center text-gray-400 hover:text-emerald-800">
       <i class="fa-solid fa-lock text-base"></i>
-      <span class="text-[10px] mt-1">Admin</span>
+      <span class="text-[10px] font-medium mt-1">Admin</span>
     </a>
   </nav>
 
-  <!-- SCRIPT SUPABASE -->
+  <!-- SCRIPT SUPABASE & KERANJANG -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
   <script>
     const SUPABASE_URL = 'https://iegqvegvoqjqjjyucpss.supabase.co';
     const SUPABASE_ANON_KEY = 'sb_publishable_7o0SP7VYOFhYJ0qyDrPtzw_2VvkuiMy';
     const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+    let cartCount = 0;
 
     async function fetchProducts() {
       const grid = document.getElementById('product-grid');
@@ -92,16 +110,19 @@
               <div>
                 <div class="h-36 bg-gray-100 overflow-hidden relative">
                   <img src="${img}" alt="${title}" class="w-full h-full object-cover">
-                  <span class="absolute top-2 left-2 bg-emerald-900/80 text-amber-300 text-[9px] font-bold px-2 py-0.5 rounded-md">${category}</span>
+                  <span class="absolute top-2 left-2 bg-emerald-900/80 text-amber-300 text-[8.5px] font-bold px-1.5 py-0.5 rounded-md">${category}</span>
                 </div>
-                <div class="p-2.5 space-y-1">
+                <div class="p-2 space-y-0.5">
                   <h4 class="font-bold text-xs text-gray-900 line-clamp-1">${title}</h4>
                   <p class="text-xs text-emerald-800 font-extrabold">Rp ${price}</p>
                 </div>
               </div>
-              <div class="p-2.5 pt-0">
-                <a href="${waLink}" target="_blank" class="w-full bg-emerald-800 hover:bg-emerald-900 text-white font-bold py-2 rounded-lg text-[10px] transition text-center flex items-center justify-center gap-1.5 shadow-sm block">
-                  <i class="fa-brands fa-whatsapp text-xs"></i> Pesan WhatsApp
+              <div class="p-2 pt-0 grid grid-cols-2 gap-1">
+                <button onclick="addToCart('${title}')" class="bg-amber-500 hover:bg-amber-600 text-white font-bold py-1.5 rounded-lg text-[9.5px] transition shadow-sm active:scale-95">
+                  + Keranjang
+                </button>
+                <a href="${waLink}" target="_blank" class="bg-emerald-800 hover:bg-emerald-900 text-white font-bold py-1.5 rounded-lg text-[9.5px] transition text-center flex items-center justify-center gap-0.5 shadow-sm">
+                  <i class="fa-brands fa-whatsapp text-[10px]"></i> Pesan
                 </a>
               </div>
             </div>
@@ -112,7 +133,16 @@
       }
     }
 
+    function addToCart(productTitle) {
+      cartCount++;
+      document.getElementById('cart-count').innerText = cartCount;
+    }
+
+    function viewCart() {
+      alert(`Keranjang Belanja Anda saat ini berisi ${cartCount} item.`);
+    }
+
     fetchProducts();
   </script>
 </body>
-        </html>
+</html>
