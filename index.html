@@ -20,6 +20,7 @@
         <i class="fa-solid fa-store text-amber-300 text-base"></i>
         <h1 class="font-bold text-xs sm:text-sm">Pusat Layanan Mitra <span class="text-amber-300">Borneoku</span></h1>
       </div>
+      <!-- Tombol Ke Beranda Atas yang Dijamin Berfungsi -->
       <a href="index.html" class="bg-emerald-800 hover:bg-emerald-900 text-amber-300 px-3 py-1.5 rounded-xl text-xs font-bold border border-emerald-600 shadow-sm flex items-center gap-1.5">
         <i class="fa-solid fa-house text-xs"></i> Ke Beranda
       </a>
@@ -47,13 +48,13 @@
     </div>
   </main>
 
-  <!-- NAVBAR BAWAH -->
+  <!-- NAVBAR BAWAH (Diperbaiki agar langsung berpindah halaman) -->
   <nav class="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 py-2.5 px-3 flex justify-around items-center z-50 shadow-lg">
     <a href="index.html" class="flex flex-col items-center text-gray-400 hover:text-emerald-800">
       <i class="fa-solid fa-house text-sm"></i>
       <span class="text-[9px] font-medium mt-1">Beranda</span>
     </a>
-    <a href="admin.html?tab=produk" class="flex flex-col items-center text-gray-400 hover:text-emerald-800">
+    <a href="index.html" class="flex flex-col items-center text-gray-400 hover:text-emerald-800">
       <i class="fa-solid fa-boxes-stacked text-sm"></i>
       <span class="text-[9px] font-medium mt-1">Tambah Produk</span>
     </a>
@@ -103,7 +104,6 @@
 
           const isApproved = (status === 'approved' || status === 'disetujui');
 
-          // Tombol aksi dinamis per produk
           const actionButton = isApproved 
             ? `<button onclick="toggleProductStatus('${item.id}', 'pending')" class="bg-gray-100 hover:bg-gray-200 text-gray-700 font-bold px-3 py-1.5 rounded-lg text-xs shadow-sm active:scale-95 transition flex items-center gap-1 border border-gray-300">
                 <i class="fa-solid fa-rotate-left text-amber-600"></i> Batal Setuju
@@ -142,7 +142,7 @@
       }
     }
 
-    // Fungsi Mengubah Status & Langsung Pindah ke Beranda jika Disetujui
+    // Fungsi Update Status Tanpa Alert Mengganggu, Langsung Pindah ke Beranda
     window.toggleProductStatus = async function(id, newStatus) {
       try {
         const { error } = await supabaseClient
@@ -152,12 +152,10 @@
 
         if (error) throw error;
 
+        // Jika disetujui, langsung pindah ke halaman Beranda tanpa jeda alert
         if (newStatus === 'approved') {
-          alert('✅ Produk BERHASIL disetujui! Anda akan langsung diarahkan ke Beranda.');
-          // Pindah otomatis ke Beranda
           window.location.href = 'index.html';
         } else {
-          alert('🔄 Status produk dikembalikan ke Pending.');
           loadAdminProducts();
         }
       } catch (err) {
@@ -175,7 +173,6 @@
           .eq('id', id);
 
         if (error) throw error;
-        alert('🗑️ Produk berhasil dihapus!');
         loadAdminProducts();
       } catch (err) {
         alert('❌ Gagal menghapus produk: ' + err.message);
