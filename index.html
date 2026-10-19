@@ -21,7 +21,7 @@
 </head>
 <body class="font-sans text-gray-800">
 
-  <!-- HEADER UTAMA -->
+  <!-- HEADER UTAMA (SAMA DI SEMUA HALAMAN) -->
   <header class="bg-borneo-dark text-white p-3.5 shadow-md sticky top-0 z-50">
     <div class="max-w-6xl mx-auto flex justify-between items-center">
       <div class="flex items-center space-x-2.5">
@@ -46,7 +46,7 @@
     </div>
   </header>
 
-  <!-- SEKSI 1: BERANDA UTAMA -->
+  <!-- ================= HALAMAN 1: BERANDA ================= -->
   <main id="sec-beranda" class="max-w-6xl mx-auto p-4 space-y-4">
     <div class="bg-white p-5 rounded-2xl shadow-sm border border-emerald-100 text-center space-y-1">
       <h2 class="text-base font-extrabold text-emerald-900">Satu Marketplace, <span class="text-amber-600">Berjuta Produk Unggulan</span> Indonesia</h2>
@@ -107,120 +107,65 @@
     </div>
   </main>
 
-  <!-- SEKSI 2: HALAMAN NOTIFIKASI (GAYA SHOPEE) -->
-  <main id="sec-notif" class="max-w-2xl mx-auto p-4 space-y-3 hidden">
-    <div class="flex justify-between items-center bg-white p-3.5 rounded-2xl border shadow-sm">
-      <h3 class="font-bold text-sm text-emerald-900"><i class="fa-solid fa-bell text-amber-500 mr-1.5"></i> Notifikasi Saya</h3>
-      <span class="text-[10px] text-emerald-700 font-semibold cursor-pointer">Tandai Dibaca</span>
-    </div>
-
-    <div class="space-y-2">
-      <div class="bg-white p-3 rounded-2xl border border-gray-100 shadow-sm flex items-start gap-3">
-        <div class="bg-amber-100 text-amber-700 p-2.5 rounded-xl text-xs shrink-0"><i class="fa-solid fa-gift"></i></div>
-        <div class="min-w-0 flex-1">
-          <h4 class="font-bold text-xs text-gray-900">Selamat Datang di Borneoku!</h4>
-          <p class="text-[11px] text-gray-500 mt-0.5">Nikmati kemudahan belanja & mendaftarkan produk UMKM lokal Nusantara.</p>
-          <span class="text-[9px] text-gray-400 mt-1 block">Hari ini, 17:00</span>
-        </div>
-      </div>
-      <div class="bg-white p-3 rounded-2xl border border-gray-100 shadow-sm flex items-start gap-3">
-        <div class="bg-emerald-100 text-emerald-800 p-2.5 rounded-xl text-xs shrink-0"><i class="fa-solid fa-store"></i></div>
-        <div class="min-w-0 flex-1">
-          <h4 class="font-bold text-xs text-gray-900">Fitur Mitra Penjual Aktif</h4>
-          <p class="text-[11px] text-gray-500 mt-0.5">Daftarkan usaha Anda dan mulai unggah karya terbaik Anda hari ini.</p>
-          <span class="text-[9px] text-gray-400 mt-1 block">Kemarin, 10:15</span>
-        </div>
-      </div>
-    </div>
-  </main>
-
-  <!-- SEKSI 3: HALAMAN PROFIL & PESANAN SAYA (GAYA SHOPEE) -->
-  <main id="sec-profil" class="max-w-2xl mx-auto p-4 space-y-4 hidden">
-    <!-- ATAS: KARTU PROFIL -->
-    <div class="bg-emerald-900 text-white p-4 rounded-2xl shadow-md flex items-center justify-between">
-      <div class="flex items-center gap-3">
-        <div class="w-12 h-12 rounded-full bg-amber-400 text-emerald-950 font-bold flex items-center justify-center text-lg border-2 border-white shadow">
-          A
-        </div>
-        <div>
-          <h3 class="font-bold text-sm">Adisa Made It</h3>
-          <p class="text-[10px] text-amber-300">Mitra Resmi Borneoku</p>
-        </div>
-      </div>
-      <button onclick="bukaModalEditProfil()" class="bg-emerald-800 hover:bg-emerald-700 text-white px-3 py-1.5 rounded-xl text-[10px] font-bold border border-emerald-600">
-        Ubah Profil
-      </button>
-    </div>
-
-    <!-- PESANAN SAYA (GAYA SHOPEE) -->
+  <!-- ================= HALAMAN 2: PESANAN SAYA ================= -->
+  <main id="sec-pesanan" class="max-w-2xl mx-auto p-4 space-y-4 hidden">
     <div class="bg-white p-4 rounded-2xl border border-gray-100 shadow-sm space-y-3">
-      <div class="flex justify-between items-center border-b pb-2">
-        <h4 class="font-bold text-xs text-gray-900">Pesanan Saya</h4>
-        <span class="text-[10px] text-gray-400">Lihat Riwayat &rarr;</span>
-      </div>
-      <div class="grid grid-cols-4 gap-2 text-center text-[10px] text-gray-600">
-        <div class="flex flex-col items-center gap-1">
+      <h3 class="font-extrabold text-sm text-emerald-900 border-b pb-2">
+        <i class="fa-solid fa-receipt text-emerald-800 mr-1.5"></i> Pesanan Saya
+      </h3>
+      
+      <!-- STATUS TRANSAKSI -->
+      <div class="grid grid-cols-4 gap-2 text-center text-[10px] text-gray-600 pt-1">
+        <div class="flex flex-col items-center gap-1.5 p-2 bg-gray-50 rounded-xl">
           <i class="fa-solid fa-wallet text-base text-amber-600"></i>
           <span>Belum Bayar</span>
         </div>
-        <div class="flex flex-col items-center gap-1">
+        <div class="flex flex-col items-center gap-1.5 p-2 bg-gray-50 rounded-xl">
           <i class="fa-solid fa-box text-base text-amber-600"></i>
           <span>Dikemas</span>
         </div>
-        <div class="flex flex-col items-center gap-1">
+        <div class="flex flex-col items-center gap-1.5 p-2 bg-gray-50 rounded-xl">
           <i class="fa-solid fa-truck text-base text-amber-600"></i>
           <span>Dikirim</span>
         </div>
-        <div class="flex flex-col items-center gap-1">
+        <div class="flex flex-col items-center gap-1.5 p-2 bg-gray-50 rounded-xl">
           <i class="fa-solid fa-star text-base text-amber-600"></i>
-          <span>Penilaian</span>
+          <span>Selesai</span>
         </div>
       </div>
     </div>
 
-    <!-- DETAIL INFORMASI AKUN -->
-    <div class="bg-white rounded-2xl border border-gray-100 shadow-sm divide-y text-xs">
-      <div class="p-3.5 flex justify-between items-center">
-        <span class="text-gray-600">Nama</span>
-        <span class="font-bold text-gray-900">Adisa</span>
+    <!-- TAMPILAN KOSONG JIKA BELUM ADA PESANAN -->
+    <div class="bg-white p-8 rounded-2xl border border-gray-100 shadow-sm text-center space-y-2">
+      <div class="w-12 h-12 bg-emerald-50 text-emerald-800 rounded-full flex items-center justify-center mx-auto text-xl">
+        <i class="fa-solid fa-bag-shopping"></i>
       </div>
-      <div class="p-3.5 flex justify-between items-center">
-        <span class="text-gray-600">Bio</span>
-        <span class="text-gray-400">Penyedia Jahit & Kerajinan Custom</span>
-      </div>
-      <div class="p-3.5 flex justify-between items-center">
-        <span class="text-gray-600">No. Handphone</span>
-        <span class="font-bold text-gray-900">+62 812-****-****</span>
-      </div>
-      <div class="p-3.5 flex justify-between items-center">
-        <span class="text-gray-600">Email</span>
-        <span class="font-bold text-gray-900">a*********4@gmail.com</span>
-      </div>
+      <h4 class="font-bold text-xs text-gray-800">Belum Ada Pesanan</h4>
+      <p class="text-[11px] text-gray-400">Anda belum melakukan transaksi belanja apapun.</p>
+      <button onclick="pindahSeksi('beranda')" class="bg-emerald-800 text-white text-xs font-bold px-4 py-2 rounded-xl mt-2">
+        Belanja Sekarang
+      </button>
     </div>
   </main>
 
-  <!-- MODAL EDIT PROFIL -->
-  <div id="modal-edit-profil" class="fixed inset-0 bg-black/60 z-50 flex items-center justify-center p-4 hidden">
-    <div class="bg-white w-full max-w-sm rounded-2xl p-4 space-y-3 shadow-xl">
-      <div class="flex justify-between items-center border-b pb-2">
-        <h3 class="font-bold text-sm text-emerald-900"><i class="fa-solid fa-user-pen mr-1"></i> Ubah Profil</h3>
-        <button type="button" onclick="tutupModalEditProfil()" class="text-gray-400 text-sm font-bold px-2">✕</button>
-      </div>
-      <form onsubmit="simpanProfil(event)" class="space-y-2.5 text-xs">
-        <div>
-          <label class="block font-bold text-gray-700 mb-1">Nama Toko / Pengguna</label>
-          <input type="text" id="edit-nama" value="Adisa Made It" required class="w-full p-2 border rounded-xl">
-        </div>
-        <div>
-          <label class="block font-bold text-gray-700 mb-1">Bio / Deskripsi Ringkas</label>
-          <input type="text" id="edit-bio" value="Penyedia Jahit & Kerajinan Custom" class="w-full p-2 border rounded-xl">
-        </div>
-        <button type="submit" class="w-full bg-emerald-800 text-white font-bold py-2 rounded-xl mt-2">
-          Simpan Perubahan
-        </button>
-      </form>
+  <!-- ================= HALAMAN 3: NOTIFIKASI ================= -->
+  <main id="sec-notif" class="max-w-2xl mx-auto p-4 space-y-4 hidden">
+    <div class="flex justify-between items-center bg-white p-4 rounded-2xl border border-gray-100 shadow-sm">
+      <h3 class="font-extrabold text-sm text-emerald-900">
+        <i class="fa-solid fa-bell text-amber-500 mr-1.5"></i> Notifikasi
+      </h3>
+      <span class="text-[10px] text-gray-400 font-semibold">Update Terbaru</span>
     </div>
-  </div>
+
+    <!-- HALAMAN KOSONG SESUAI KEINGINAN IBU -->
+    <div class="bg-white p-12 rounded-2xl border border-gray-100 shadow-sm text-center space-y-2">
+      <div class="w-14 h-14 bg-amber-50 text-amber-500 rounded-full flex items-center justify-center mx-auto text-2xl">
+        <i class="fa-regular fa-bell-slash"></i>
+      </div>
+      <h4 class="font-bold text-xs text-gray-800">Belum Ada Notifikasi</h4>
+      <p class="text-[11px] text-gray-400">Pemberitahuan promo atau pesanan Anda akan muncul di sini.</p>
+    </div>
+  </main>
 
   <!-- MODAL DETAIL PRODUK -->
   <div id="modal-detail" class="fixed inset-0 bg-black/60 z-50 flex items-center justify-center p-4 hidden">
@@ -254,7 +199,7 @@
     </div>
   </div>
 
-  <!-- MODAL 1: FORMULIR TAMBAH PRODUK -->
+  <!-- MODAL FORM TAMBAH PRODUK -->
   <div id="modal-produk" class="fixed inset-0 bg-black/60 z-50 flex items-center justify-center p-4 hidden">
     <div class="bg-white w-full max-w-md rounded-2xl p-4 space-y-3 shadow-xl max-h-[90vh] overflow-y-auto">
       <div class="flex justify-between items-center border-b pb-2">
@@ -302,7 +247,7 @@
     </div>
   </div>
 
-  <!-- MODAL 2: FORMULIR PENDAFTARAN MITRA -->
+  <!-- MODAL FORM PENDAFTARAN MITRA -->
   <div id="modal-mitra" class="fixed inset-0 bg-black/60 z-50 flex items-center justify-center p-4 hidden">
     <div class="bg-white w-full max-w-md rounded-2xl p-4 space-y-3 shadow-xl max-h-[90vh] overflow-y-auto">
       <div class="flex justify-between items-center border-b pb-2">
@@ -329,7 +274,7 @@
     </div>
   </div>
 
-  <!-- NAVBAR BAWAH (NAVIGASI AKTIF SEPERTI SHOPEE) -->
+  <!-- NAVBAR BAWAH (NAVIGASI AKTIF PINDAH HALAMAN) -->
   <nav class="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 py-2 px-2 flex justify-around items-center z-50 shadow-lg text-[10px]">
     <button type="button" onclick="pindahSeksi('beranda')" id="nav-beranda" class="flex flex-col items-center text-emerald-800 font-bold">
       <i class="fa-solid fa-house text-base"></i>
@@ -339,13 +284,12 @@
       <i class="fa-solid fa-boxes-stacked text-base"></i>
       <span class="mt-0.5">Tambah Produk</span>
     </button>
-    <button type="button" onclick="pindahSeksi('profil')" id="nav-pesanan" class="flex flex-col items-center text-gray-400 hover:text-emerald-800">
+    <button type="button" onclick="pindahSeksi('pesanan')" id="nav-pesanan" class="flex flex-col items-center text-gray-400 hover:text-emerald-800">
       <i class="fa-solid fa-receipt text-base"></i>
       <span class="mt-0.5">Pesanan</span>
     </button>
-    <button type="button" onclick="pindahSeksi('notif')" id="nav-notif" class="flex flex-col items-center text-gray-400 hover:text-emerald-800 relative">
+    <button type="button" onclick="pindahSeksi('notif')" id="nav-notif" class="flex flex-col items-center text-gray-400 hover:text-emerald-800">
       <i class="fa-solid fa-bell text-base"></i>
-      <span class="absolute -top-1 -right-1 bg-red-500 text-white rounded-full px-1 text-[8px] font-bold">2</span>
       <span class="mt-0.5">Notif</span>
     </button>
     <a href="admin.html" class="flex flex-col items-center text-gray-400 hover:text-emerald-800">
@@ -363,24 +307,25 @@
 
     let cartCount = 0;
 
+    // FUNGSI PINDAH HALAMAN LANGSUNG
     function pindahSeksi(seksi) {
       document.getElementById('sec-beranda').classList.add('hidden');
+      document.getElementById('sec-pesanan').classList.add('hidden');
       document.getElementById('sec-notif').classList.add('hidden');
-      document.getElementById('sec-profil').classList.add('hidden');
 
       document.getElementById('nav-beranda').className = "flex flex-col items-center text-gray-400 hover:text-emerald-800";
       document.getElementById('nav-pesanan').className = "flex flex-col items-center text-gray-400 hover:text-emerald-800";
-      document.getElementById('nav-notif').className = "flex flex-col items-center text-gray-400 hover:text-emerald-800 relative";
+      document.getElementById('nav-notif').className = "flex flex-col items-center text-gray-400 hover:text-emerald-800";
 
       if (seksi === 'beranda') {
         document.getElementById('sec-beranda').classList.remove('hidden');
         document.getElementById('nav-beranda').className = "flex flex-col items-center text-emerald-800 font-bold";
+      } else if (seksi === 'pesanan') {
+        document.getElementById('sec-pesanan').classList.remove('hidden');
+        document.getElementById('nav-pesanan').className = "flex flex-col items-center text-emerald-800 font-bold";
       } else if (seksi === 'notif') {
         document.getElementById('sec-notif').classList.remove('hidden');
-        document.getElementById('nav-notif').className = "flex flex-col items-center text-emerald-800 font-bold relative";
-      } else if (seksi === 'profil') {
-        document.getElementById('sec-profil').classList.remove('hidden');
-        document.getElementById('nav-pesanan').className = "flex flex-col items-center text-emerald-800 font-bold";
+        document.getElementById('nav-notif').className = "flex flex-col items-center text-emerald-800 font-bold";
       }
     }
 
@@ -450,14 +395,6 @@
       e.preventDefault();
       alert('✅ Pendaftaran Mitra Penjual berhasil dikirim! Selamat bergabung di Borneoku.');
       tutupModalMitra();
-    }
-
-    function bukaModalEditProfil() { document.getElementById('modal-edit-profil').classList.remove('hidden'); }
-    function tutupModalEditProfil() { document.getElementById('modal-edit-profil').classList.add('hidden'); }
-    function simpanProfil(e) {
-      e.preventDefault();
-      alert('✅ Profil berhasil diperbarui!');
-      tutupModalEditProfil();
     }
 
     function bukaDetail(item) {
@@ -544,4 +481,4 @@
     fetchProducts();
   </script>
 </body>
-  </html>
+</html>
