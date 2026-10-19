@@ -21,12 +21,15 @@
 </head>
 <body class="font-sans text-gray-800">
 
-  <!-- HEADER UTAMA DENGAN LOGO ASLI (borneoku-icon-192.png) -->
+  <!-- HEADER UTAMA DENGAN LOGO EMAS VECTOR PERMANEN (DIJAMIN TANPA ERROR) -->
   <header class="bg-borneo-dark text-white p-3.5 shadow-md sticky top-0 z-50">
     <div class="max-w-6xl mx-auto flex justify-between items-center">
       <div class="flex items-center space-x-2.5">
-        <div class="w-11 h-11 rounded-full bg-amber-400 p-0.5 shadow-md shrink-0 flex items-center justify-center overflow-hidden border-2 border-amber-300">
-          <img src="borneoku-icon-192.png" alt="Logo Borneoku" class="w-full h-full object-cover rounded-full" onerror="this.onerror=null; this.src='1000386730.png';">
+        <div class="w-11 h-11 rounded-full bg-gradient-to-tr from-amber-400 via-amber-200 to-yellow-100 p-0.5 shadow-md shrink-0 flex items-center justify-center border-2 border-amber-300 overflow-hidden">
+          <div class="w-full h-full rounded-full bg-emerald-950 flex flex-col items-center justify-center text-center p-0.5 border border-amber-400">
+            <i class="fa-solid fa-store text-amber-300 text-xs"></i>
+            <span class="text-[7.5px] font-black text-amber-300 leading-tight tracking-tighter">BORNEO</span>
+          </div>
         </div>
         <div>
           <h1 class="font-extrabold text-sm tracking-wide leading-tight text-white">BORNEOKU</h1>
@@ -104,13 +107,12 @@
       <span id="product-counter" class="text-[11px] text-gray-400 font-medium">Memuat...</span>
     </div>
 
-    <!-- GRID PRODUK (BISA DIKLIK UNTUK LIHAT DETAIL LENGKAP) -->
     <div id="product-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3.5">
       <p class="col-span-full text-center text-xs text-gray-400 py-8">Memuat etalase produk...</p>
     </div>
   </main>
 
-  <!-- MODAL: DETAIL PRODUK (MUNCUL KETIKA GAMBAR/PRODUK DIKLIK) -->
+  <!-- MODAL DETAIL PRODUK -->
   <div id="modal-detail" class="fixed inset-0 bg-black/60 z-50 flex items-center justify-center p-4 hidden">
     <div class="bg-white w-full max-w-sm rounded-2xl p-4 space-y-3 shadow-xl max-h-[90vh] overflow-y-auto">
       <div class="flex justify-between items-center border-b pb-2">
@@ -278,7 +280,6 @@
           const address = item.address || 'Nunukan, Kaltara';
           const waLink = `https://wa.me/${wa}?text=` + encodeURIComponent(`Halo Kak, saya ingin memesan produk ${title} seharga Rp ${price} di Borneoku.`);
 
-          // Data string untuk dikirim ke fungsi detail
           const escapedItem = JSON.stringify({ title, price, category, img, wa, address, waLink }).replace(/"/g, '&quot;');
 
           return `
@@ -309,7 +310,6 @@
       }
     }
 
-    // Fungsi Buka Detail Produk Saat Gambar/Card Diklik
     function bukaModalProduk() { document.getElementById('modal-produk').classList.remove('hidden'); }
     function tutupModalProduk() { document.getElementById('modal-produk').classList.add('hidden'); }
 
@@ -386,7 +386,7 @@
       }
     }
 
-    function bukaPesanan() { alert('📦 Belum ada daftar pesanan baru yang masuk.'); }
+    function bukaPesanan() { alert('📦 Belum dafttar pesanan baru.'); }
     function bukaNotif() { alert('🔔 Anda memiliki 1 pemberitahuan baru dari sistem.'); }
 
     function addToCart(productTitle) {
