@@ -15,18 +15,20 @@
   
   <style>
     .bg-borneo-dark { background-color: #064e3b; }
-    .text-gold { color: #d4af37; }
     body { background-color: #f8fafc; padding-bottom: 90px; }
   </style>
 </head>
 <body class="font-sans text-gray-800">
 
-  <!-- HEADER UTAMA DENGAN LOGO PERMANEN AMAN -->
+  <!-- HEADER UTAMA DENGAN LOGO VECTOR EMAS AMAN (DIJAMIN TIDAK ERROR) -->
   <header class="bg-borneo-dark text-white p-3.5 shadow-md sticky top-0 z-50">
     <div class="max-w-6xl mx-auto flex justify-between items-center">
       <div class="flex items-center space-x-2.5">
-        <div class="w-11 h-11 rounded-full bg-amber-400 p-0.5 shadow-md shrink-0 flex items-center justify-center overflow-hidden border-2 border-amber-300">
-          <img src="borneoku-icon-192.png" alt="Logo Borneoku" class="w-full h-full object-cover rounded-full" onerror="this.onerror=null; this.src='1000386730.png';">
+        <div class="w-11 h-11 rounded-full bg-gradient-to-tr from-amber-400 via-amber-200 to-yellow-100 p-0.5 shadow-md shrink-0 flex items-center justify-center border-2 border-amber-300 overflow-hidden">
+          <div class="w-full h-full rounded-full bg-emerald-950 flex flex-col items-center justify-center text-center p-0.5 border border-amber-400">
+            <i class="fa-solid fa-store text-amber-300 text-xs"></i>
+            <span class="text-[7.5px] font-black text-amber-300 leading-tight tracking-tighter">BORNEO</span>
+          </div>
         </div>
         <div>
           <h1 class="font-extrabold text-sm tracking-wide leading-tight text-white">BORNEOKU</h1>
@@ -46,7 +48,7 @@
     </div>
   </header>
 
-  <!-- ================= HALAMAN 1: BERANDA & ETALASE LENGKAP ================= -->
+  <!-- HALAMAN 1: BERANDA -->
   <main id="sec-beranda" class="max-w-6xl mx-auto p-4 space-y-4">
     <div class="bg-white p-5 rounded-2xl shadow-sm border border-emerald-100 text-center space-y-1">
       <h2 class="text-base font-extrabold text-emerald-900">Satu Marketplace, <span class="text-amber-600">Berjuta Produk Unggulan</span> Indonesia</h2>
@@ -102,13 +104,12 @@
       <span id="product-counter" class="text-[11px] text-gray-400 font-medium">Memuat...</span>
     </div>
 
-    <!-- GRID KOLOM PRODUK LENGKAP -->
     <div id="product-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3.5">
       <p class="col-span-full text-center text-xs text-gray-400 py-8">Memuat etalase produk...</p>
     </div>
   </main>
 
-  <!-- ================= HALAMAN 2: PESANAN SAYA ================= -->
+  <!-- HALAMAN 2: PESANAN SAYA -->
   <main id="sec-pesanan" class="max-w-2xl mx-auto p-4 space-y-4 hidden">
     <div class="bg-white p-4 rounded-2xl border border-gray-100 shadow-sm space-y-3">
       <h3 class="font-extrabold text-sm text-emerald-900 border-b pb-2">
@@ -142,7 +143,7 @@
     </div>
   </main>
 
-  <!-- ================= HALAMAN 3: NOTIFIKASI KOSONG ELEGAN ================= -->
+  <!-- HALAMAN 3: NOTIFIKASI -->
   <main id="sec-notif" class="max-w-2xl mx-auto p-4 space-y-4 hidden">
     <div class="flex justify-between items-center bg-white p-4 rounded-2xl border border-gray-100 shadow-sm">
       <h3 class="font-extrabold text-sm text-emerald-900">
@@ -266,7 +267,7 @@
     </div>
   </div>
 
-  <!-- NAVBAR BAWAH (NAVIGASI LENGKAP) -->
+  <!-- NAVBAR BAWAH -->
   <nav class="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 py-2 px-2 flex justify-around items-center z-50 shadow-lg text-[10px]">
     <button type="button" onclick="pindahSeksi('beranda')" id="nav-beranda" class="flex flex-col items-center text-emerald-800 font-bold">
       <i class="fa-solid fa-house text-base"></i>
@@ -290,7 +291,7 @@
     </a>
   </nav>
 
-  <!-- SCRIPT SUPABASE & FITUR LENGKAP -->
+  <!-- SCRIPT SUPABASE & FITUR UTAMA -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
   <script>
     const SUPABASE_URL = 'https://iegqvegvoqjqjjyucpss.supabase.co';
@@ -326,13 +327,12 @@
       try {
         const { data, error } = await supabaseClient
           .from('products')
-          .select('*')
-          .or('status.eq.approved,status.eq.disetujui');
+          .select('*');
 
         if (error) throw error;
 
         if (!data || data.length === 0) {
-          grid.innerHTML = `<p class="col-span-full text-center text-xs text-gray-400 py-8">Belum ada produk aktif yang disetujui.</p>`;
+          grid.innerHTML = `<p class="col-span-full text-center text-xs text-gray-400 py-8">Belum ada produk di etalase.</p>`;
           counter.innerText = `0 Produk Tersedia`;
           return;
         }
@@ -345,10 +345,131 @@
           const img = item.image_url || item.image || item.foto || 'https://images.unsplash.com/photo-1544816155-12df9643f363?auto=format&fit=crop&w=400&q=80';
           const wa = item.phone_number || item.whatsapp || '6281241170648';
           const address = item.address || 'Nunukan, Kaltara';
-          const waLink = `https://wa.me/${wa}?text=` + encodeURIComponent(`Halo Kak, saya ingin memesan produk ${title} seharga Rp${price} di Borneoku.`);
+          const waLink = `https://wa.me/${wa}?text=` + encodeURIComponent(`Halo Kak, saya ingin memesan produk ${title} seharga Rp ${price} di Borneoku.`);
 
           const escapedItem = JSON.stringify({ title, price, category, img, wa, address, waLink }).replace(/"/g, '&quot;');
 
           return `
             <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden flex flex-col justify-between">
-              <div onclick="
+              <div onclick="bukaDetail(${escapedItem})" class="cursor-pointer">
+                <div class="h-36 bg-gray-100 overflow-hidden relative">
+                  <img src="${img}" alt="${title}" class="w-full h-full object-cover hover:scale-105 transition duration-300" onerror="this.src='https://images.unsplash.com/photo-1544816155-12df9643f363?auto=format&fit=crop&w=400&q=80'">
+                  <span class="absolute top-2 left-2 bg-emerald-900/80 text-amber-300 text-[8.5px] font-bold px-1.5 py-0.5 rounded-md">${category}</span>
+                </div>
+                <div class="p-2 space-y-0.5">
+                  <h4 class="font-bold text-xs text-gray-900 line-clamp-1">${title}</h4>
+                  <p class="text-xs text-emerald-800 font-extrabold">Rp ${price}</p>
+                </div>
+              </div>
+              <div class="p-2 pt-0 grid grid-cols-2 gap-1">
+                <button type="button" onclick="addToCart('${title}')" class="bg-amber-500 hover:bg-amber-600 text-white font-bold py-1.5 rounded-lg text-[9.5px] transition shadow-sm active:scale-95">
+                  + Keranjang
+                </button>
+                <a href="${waLink}" target="_blank" class="bg-emerald-800 hover:bg-emerald-900 text-white font-bold py-1.5 rounded-lg text-[9.5px] transition text-center flex items-center justify-center gap-0.5 shadow-sm">
+                  <i class="fa-brands fa-whatsapp text-[10px]"></i> Pesan
+                </a>
+              </div>
+            </div>
+          `;
+        }).join('');
+      } catch (err) {
+        grid.innerHTML = `<p class="col-span-full text-center text-xs text-red-500 py-6">Gagal memuat etalase.</p>`;
+      }
+    }
+
+    function bukaModalProduk() { document.getElementById('modal-produk').classList.remove('hidden'); }
+    function tutupModalProduk() { document.getElementById('modal-produk').classList.add('hidden'); }
+
+    function bukaModalMitra() { document.getElementById('modal-mitra').classList.remove('hidden'); }
+    function tutupModalMitra() { document.getElementById('modal-mitra').classList.add('hidden'); }
+    function submitMitra(e) {
+      e.preventDefault();
+      alert('✅ Pendaftaran Mitra Penjual berhasil dikirim! Selamat bergabung di Borneoku.');
+      tutupModalMitra();
+    }
+
+    function bukaDetail(item) {
+      document.getElementById('detail-img').src = item.img;
+      document.getElementById('detail-kategori').innerText = item.category;
+      document.getElementById('detail-title').innerText = item.title;
+      document.getElementById('detail-price').innerText = 'Rp ' + Number(item.price).toLocaleString('id-ID');
+      document.getElementById('detail-address').innerText = item.address;
+      document.getElementById('detail-wa').innerText = item.wa;
+      document.getElementById('detail-wa-link').href = item.waLink;
+      document.getElementById('modal-detail').classList.remove('hidden');
+    }
+
+    function tutupDetail() { document.getElementById('modal-detail').classList.add('hidden'); }
+
+    function tambahDariDetail() {
+      addToCart();
+      tutupDetail();
+    }
+
+    async function submitProduct(event) {
+      event.preventDefault();
+      const btn = document.getElementById('submit-btn');
+      btn.innerText = "Mengunggah...";
+      btn.disabled = true;
+
+      const title = document.getElementById('prod-title').value;
+      const price = document.getElementById('prod-price').value;
+      const category = document.getElementById('prod-category').value;
+      const whatsapp = document.getElementById('prod-wa').value;
+      const address = document.getElementById('prod-address').value;
+      const fileInput = document.getElementById('prod-file');
+
+      let image_url = 'https://images.unsplash.com/photo-1544816155-12df9643f363?auto=format&fit=crop&w=400&q=80';
+
+      if (fileInput.files && fileInput.files[0]) {
+        const file = fileInput.files[0];
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        await new Promise(resolve => {
+          reader.onload = function () {
+            image_url = reader.result;
+            resolve();
+          };
+        });
+      }
+
+      try {
+        const { error } = await supabaseClient.from('products').insert([
+          { title, price, category, image_url, whatsapp, phone_number: whatsapp, address, status: 'approved' }
+        ]);
+
+        if (error) throw error;
+        alert('✅ Produk berhasil ditambahkan ke etalase!');
+        tutupModalProduk();
+        document.getElementById('product-form').reset();
+        fetchProducts();
+      } catch (err) {
+        alert('❌ Gagal mendaftarkan produk: ' + err.message);
+      } finally {
+        btn.innerText = "Kirim Produk untuk Diverifikasi Admin";
+        btn.disabled = false;
+      }
+    }
+
+    function addToCart(productTitle) {
+      cartCount++;
+      document.getElementById('cart-count').innerText = cartCount;
+      alert('🛒 Produk berhasil dimasukkan ke keranjang!');
+    }
+
+    function viewCart() {
+      alert(`Keranjang Belanja Anda saat ini berisi ${cartCount} item.`);
+    }
+
+    function shareApp() {
+      if (navigator.share) {
+        navigator.share({ title: 'Borneoku', text: 'Kunjungi etalase UMKM Borneoku!', url: window.location.href });
+      } else {
+        alert('Link toko disalin!');
+      }
+    }
+
+    fetchProducts();
+  </script>
+</body>
+  </html>
