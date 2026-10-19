@@ -9,22 +9,19 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   
   <style>
-    .bg-borneo-teal { background-color: #008a7b; }
-    .text-borneo-teal { color: #008a7b; }
-    .border-borneo-teal { border-color: #008a7b; }
     body { background-color: #f4f5f7; padding-bottom: 80px; }
   </style>
 </head>
 <body class="font-sans text-gray-800">
 
-  <!-- HEADER ATAS -->
+  <!-- HEADER UTAMA ADMIN -->
   <header class="bg-white p-3.5 shadow-sm sticky top-0 z-40 flex justify-between items-center border-b">
     <div class="flex items-center gap-2">
       <div class="w-8 h-8 rounded-full bg-amber-100 flex items-center justify-center font-bold text-amber-700 text-xs border border-amber-300">
         A
       </div>
       <div>
-        <h1 class="font-bold text-xs text-gray-900 leading-tight">Adisa Made It</h1>
+        <h1 class="font-bold text-xs text-gray-900 leading-tight" id="header-nama-toko">Adisa Made It</h1>
         <p class="text-[9px] text-gray-400">Seller Center Borneoku</p>
       </div>
     </div>
@@ -48,7 +45,7 @@
       <button onclick="this.parentElement.remove()" class="text-amber-950 font-bold text-xs">✕</button>
     </div>
 
-    <!-- PERSAPKAN TOKO ANDA -->
+    <!-- PERSIAPKAN TOKO ANDA -->
     <div class="bg-white p-4 rounded-2xl shadow-sm border border-gray-100 space-y-3">
       <div class="flex justify-between items-center border-b pb-2">
         <div>
@@ -80,7 +77,7 @@
             <i class="fa-solid fa-link text-gray-400 text-sm"></i>
             <div>
               <h4 class="font-bold text-gray-800 text-[11px]">Tautkan ke Media Sosial</h4>
-              <p class="text-[9.5px] text-gray-400">Tautkan akun WhatsApp / Instagram usaha Anda</p>
+              <p class="text-[9.5px] text-gray-400">Tautkan akun WhatsApp / TikTok usaha Anda</p>
             </div>
           </div>
           <button onclick="pindahTab('pengaturan')" class="bg-emerald-800 text-white px-3 py-1 rounded-lg text-[10px] font-bold">Mulai</button>
@@ -91,7 +88,6 @@
 
   <!-- ================= 2. HALAMAN PRODUK ================= -->
   <main id="tab-produk" class="max-w-2xl mx-auto p-3.5 space-y-3 hidden">
-    <!-- SUB-TAB FILTER PRODUK -->
     <div class="flex justify-between items-center bg-white p-2 rounded-2xl border text-xs font-bold text-gray-500">
       <button onclick="filterProduk('semua')" id="subtab-semua" class="flex-1 py-1.5 text-center text-emerald-800 border-b-2 border-emerald-800 font-extrabold">Semua</button>
       <button onclick="filterProduk('aktif')" id="subtab-aktif" class="flex-1 py-1.5 text-center">Aktif</button>
@@ -102,7 +98,6 @@
       <i class="fa-solid fa-plus"></i> Tambah Produk Baru
     </button>
 
-    <!-- DAFTAR PRODUK (KARTU EDIT/HAPUS RAPI) -->
     <div id="seller-product-list" class="space-y-2">
       <p class="text-center text-xs text-gray-400 py-8">Memuat daftar produk...</p>
     </div>
@@ -135,7 +130,7 @@
     </div>
   </main>
 
-  <!-- ================= 5. HALAMAN OBROLAN (CHAT) ================= -->
+  <!-- ================= 5. HALAMAN OBROLAN ================= -->
   <main id="tab-obrolan" class="max-w-2xl mx-auto p-3.5 space-y-3 hidden">
     <div class="bg-white p-3 rounded-2xl border flex justify-between items-center text-xs">
       <span class="font-bold text-gray-800">Customer Service</span>
@@ -151,93 +146,365 @@
     </div>
   </main>
 
-  <!-- ================= 6. HALAMAN PENGATURAN SANGAT LENGKAP ================= -->
+  <!-- ================= 6. HALAMAN PENGATURAN ================= -->
   <main id="tab-pengaturan" class="max-w-2xl mx-auto p-3.5 space-y-3 hidden">
-    <div class="bg-white rounded-2xl border shadow-sm divide-y text-xs">
-      <div onclick="alert('Informasi Akun: Adisa Made It')" class="p-3.5 flex justify-between items-center cursor-pointer hover:bg-gray-50">
-        <div class="flex items-center gap-2.5">
-          <i class="fa-regular fa-user text-gray-500 text-sm"></i>
-          <span class="font-semibold text-gray-800">Informasi Akun</span>
+    
+    <!-- MENU UTAMA PENGATURAN -->
+    <div id="sub-pengaturan-utama" class="space-y-3">
+      <div class="bg-white rounded-2xl border shadow-sm divide-y text-xs">
+        
+        <!-- INFORMASI AKUN -->
+        <div onclick="bukaSubPengaturan('info-akun')" class="p-3.5 flex justify-between items-center cursor-pointer hover:bg-gray-50">
+          <div class="flex items-center gap-2.5">
+            <i class="fa-regular fa-user text-gray-500 text-sm"></i>
+            <span class="font-semibold text-gray-800">Informasi akun</span>
+          </div>
+          <i class="fa-solid fa-chevron-right text-gray-300 text-xs"></i>
         </div>
+
+        <!-- INFORMASI TOKO -->
+        <div onclick="bukaSubPengaturan('info-toko')" class="p-3.5 flex justify-between items-center cursor-pointer hover:bg-gray-50">
+          <div class="flex items-center gap-2.5">
+            <i class="fa-solid fa-store text-gray-500 text-sm"></i>
+            <span class="font-semibold text-gray-800">Informasi toko</span>
+          </div>
+          <i class="fa-solid fa-chevron-right text-gray-300 text-xs"></i>
+        </div>
+
+        <!-- INFORMASI BISNIS -->
+        <div onclick="alert('Informasi Bisnis: UMKM Nusantara')" class="p-3.5 flex justify-between items-center cursor-pointer hover:bg-gray-50">
+          <div class="flex items-center gap-2.5">
+            <i class="fa-solid fa-briefcase text-gray-500 text-sm"></i>
+            <span class="font-semibold text-gray-800">Informasi bisnis</span>
+          </div>
+          <i class="fa-solid fa-chevron-right text-gray-300 text-xs"></i>
+        </div>
+
+        <!-- INFORMASI PAJAK -->
+        <div onclick="bukaSubPengaturan('info-pajak')" class="p-3.5 flex justify-between items-center cursor-pointer hover:bg-gray-50">
+          <div class="flex items-center gap-2.5">
+            <i class="fa-solid fa-percent text-gray-500 text-sm"></i>
+            <span class="font-semibold text-gray-800">Informasi pajak</span>
+          </div>
+          <i class="fa-solid fa-chevron-right text-gray-300 text-xs"></i>
+        </div>
+
+        <!-- PENGIRIMAN (MENU AKTIF) -->
+        <div onclick="bukaSubPengaturan('pengiriman')" class="p-3.5 flex justify-between items-center cursor-pointer hover:bg-gray-50">
+          <div class="flex items-center gap-2.5">
+            <i class="fa-solid fa-truck-fast text-gray-500 text-sm"></i>
+            <span class="font-semibold text-gray-800">Pengiriman</span>
+          </div>
+          <i class="fa-solid fa-chevron-right text-gray-300 text-xs"></i>
+        </div>
+
+        <!-- PEMBAYARAN -->
+        <div onclick="alert('Pembayaran: Direct WhatsApp & Bank')" class="p-3.5 flex justify-between items-center cursor-pointer hover:bg-gray-50">
+          <div class="flex items-center gap-2.5">
+            <i class="fa-regular fa-credit-card text-gray-500 text-sm"></i>
+            <span class="font-semibold text-gray-800">Pembayaran</span>
+          </div>
+          <i class="fa-solid fa-chevron-right text-gray-300 text-xs"></i>
+        </div>
+      </div>
+
+      <div class="bg-white rounded-2xl border shadow-sm divide-y text-xs">
+        <div onclick="alert('Alamat Gudang: Nunukan, Kaltara')" class="p-3.5 flex justify-between items-center cursor-pointer hover:bg-gray-50">
+          <div class="flex items-center gap-2.5">
+            <i class="fa-solid fa-location-dot text-gray-500 text-sm"></i>
+            <span class="font-semibold text-gray-800">Alamat gudang</span>
+          </div>
+          <i class="fa-solid fa-chevron-right text-gray-300 text-xs"></i>
+        </div>
+
+        <div onclick="alert('Mode hari libur: Nonaktif')" class="p-3.5 flex justify-between items-center cursor-pointer hover:bg-gray-50">
+          <div class="flex items-center gap-2.5">
+            <i class="fa-solid fa-umbrella-beach text-gray-500 text-sm"></i>
+            <span class="font-semibold text-gray-800">Mode hari libur</span>
+          </div>
+          <i class="fa-solid fa-chevron-right text-gray-300 text-xs"></i>
+        </div>
+
+        <div onclick="alert('Akun TikTok: @Mamiku')" class="p-3.5 flex justify-between items-center cursor-pointer hover:bg-gray-50">
+          <div class="flex items-center gap-2.5">
+            <i class="fa-solid fa-link text-gray-500 text-sm"></i>
+            <span class="font-semibold text-gray-800">Akun TikTok yang ditautkan</span>
+          </div>
+          <i class="fa-solid fa-chevron-right text-gray-300 text-xs"></i>
+        </div>
+      </div>
+
+      <button onclick="window.location.href='index.html'" class="w-full bg-white text-gray-800 font-bold py-3 rounded-2xl border text-xs shadow-sm">
+        Keluar
+      </button>
+    </div>
+
+    <!-- SUB-HALAMAN 1: INFORMASI AKUN -->
+    <div id="sub-info-akun" class="space-y-3 hidden">
+      <div class="flex items-center gap-2 bg-white p-3 rounded-2xl border shadow-sm">
+        <button onclick="tutupSubPengaturan()" class="text-gray-600 hover:text-black font-bold p-1">
+          <i class="fa-solid fa-chevron-left text-sm"></i>
+        </button>
+        <h3 class="font-bold text-sm text-gray-900">Informasi akun</h3>
+      </div>
+
+      <div class="bg-white rounded-2xl border shadow-sm divide-y text-xs">
+        <div class="p-3.5 flex justify-between items-center">
+          <div>
+            <p class="text-[11px] text-gray-500">Email</p>
+            <p class="font-bold text-gray-800 text-xs mt-0.5" id="disp-email">a***4@gmail.com</p>
+          </div>
+          <button onclick="ubahField('Email')" class="text-emerald-700 font-bold text-xs hover:underline">Ubah</button>
+        </div>
+
+        <div class="p-3.5 flex justify-between items-center">
+          <div>
+            <p class="text-[11px] text-gray-500">Nomor telepon</p>
+            <p class="font-bold text-gray-800 text-xs mt-0.5" id="disp-phone">+62****8300</p>
+          </div>
+          <button onclick="ubahField('Nomor Telepon')" class="text-emerald-700 font-bold text-xs hover:underline">Ubah</button>
+        </div>
+
+        <div class="p-3.5 flex justify-between items-center">
+          <div>
+            <p class="text-[11px] text-gray-500 flex items-center gap-1">
+              Akun TikTok <i class="fa-regular fa-circle-question text-gray-400 text-[10px]"></i>
+            </p>
+            <p class="font-bold text-gray-800 text-xs mt-0.5 flex items-center gap-1.5">
+              <i class="fa-brands fa-tiktok text-sm text-black"></i> <span id="disp-tiktok">Mamiku</span>
+            </p>
+          </div>
+          <button onclick="hapusTautan()" class="text-emerald-700 font-bold text-xs hover:underline">Hapus tautan</button>
+        </div>
+      </div>
+
+      <div onclick="alert('Fitur Ubah Kata Sandi')" class="bg-white p-3.5 rounded-2xl border shadow-sm flex justify-between items-center cursor-pointer hover:bg-gray-50">
+        <span class="font-semibold text-gray-800 text-xs">Ubah kata sandi</span>
         <i class="fa-solid fa-chevron-right text-gray-300 text-xs"></i>
       </div>
 
-      <div onclick="alert('Informasi Toko: Rumah Jahit & Kerajinan Custom')" class="p-3.5 flex justify-between items-center cursor-pointer hover:bg-gray-50">
-        <div class="flex items-center gap-2.5">
-          <i class="fa-solid fa-store text-gray-500 text-sm"></i>
-          <span class="font-semibold text-gray-800">Informasi Toko</span>
-        </div>
-        <i class="fa-solid fa-chevron-right text-gray-300 text-xs"></i>
-      </div>
-
-      <div onclick="alert('Informasi Bisnis: UMKM Nusantara')" class="p-3.5 flex justify-between items-center cursor-pointer hover:bg-gray-50">
-        <div class="flex items-center gap-2.5">
-          <i class="fa-solid fa-briefcase text-gray-500 text-sm"></i>
-          <span class="font-semibold text-gray-800">Informasi Bisnis</span>
-        </div>
-        <i class="fa-solid fa-chevron-right text-gray-300 text-xs"></i>
-      </div>
-
-      <div onclick="alert('Pengiriman: J&T, JNE, POS')" class="p-3.5 flex justify-between items-center cursor-pointer hover:bg-gray-50">
-        <div class="flex items-center gap-2.5">
-          <i class="fa-solid fa-truck-fast text-gray-500 text-sm"></i>
-          <span class="font-semibold text-gray-800">Pengiriman</span>
-        </div>
-        <i class="fa-solid fa-chevron-right text-gray-300 text-xs"></i>
-      </div>
-
-      <div onclick="alert('Pembayaran: Transfer Bank & WhatsApp Direct')" class="p-3.5 flex justify-between items-center cursor-pointer hover:bg-gray-50">
-        <div class="flex items-center gap-2.5">
-          <i class="fa-regular fa-credit-card text-gray-500 text-sm"></i>
-          <span class="font-semibold text-gray-800">Pembayaran</span>
-        </div>
-        <i class="fa-solid fa-chevron-right text-gray-300 text-xs"></i>
-      </div>
-
-      <div onclick="alert('Alamat Gudang: Nunukan, Kalimantan Utara')" class="p-3.5 flex justify-between items-center cursor-pointer hover:bg-gray-50">
-        <div class="flex items-center gap-2.5">
-          <i class="fa-solid fa-location-dot text-gray-500 text-sm"></i>
-          <span class="font-semibold text-gray-800">Alamat Gudang / Toko</span>
-        </div>
-        <i class="fa-solid fa-chevron-right text-gray-300 text-xs"></i>
-      </div>
-
-      <div onclick="alert('Mode Hari Libur: Nonaktif')" class="p-3.5 flex justify-between items-center cursor-pointer hover:bg-gray-50">
-        <div class="flex items-center gap-2.5">
-          <i class="fa-solid fa-umbrella-beach text-gray-500 text-sm"></i>
-          <span class="font-semibold text-gray-800">Mode Hari Libur</span>
-        </div>
-        <i class="fa-solid fa-chevron-right text-gray-300 text-xs"></i>
-      </div>
-
-      <div onclick="alert('Pengaturan Chat CS Aktif')" class="p-3.5 flex justify-between items-center cursor-pointer hover:bg-gray-50">
-        <div class="flex items-center gap-2.5">
-          <i class="fa-regular fa-comment-dots text-gray-500 text-sm"></i>
-          <span class="font-semibold text-gray-800">Pengaturan Chat</span>
-        </div>
-        <i class="fa-solid fa-chevron-right text-gray-300 text-xs"></i>
-      </div>
-
-      <div onclick="alert('Bahasa: Bahasa Indonesia')" class="p-3.5 flex justify-between items-center cursor-pointer hover:bg-gray-50">
-        <div class="flex items-center gap-2.5">
-          <i class="fa-solid fa-globe text-gray-500 text-sm"></i>
-          <span class="font-semibold text-gray-800">Bahasa</span>
-        </div>
-        <i class="fa-solid fa-chevron-right text-gray-300 text-xs"></i>
-      </div>
-
-      <div onclick="alert('Zona Waktu: WITA (Kalimantan Utara)')" class="p-3.5 flex justify-between items-center cursor-pointer hover:bg-gray-50">
-        <div class="flex items-center gap-2.5">
-          <i class="fa-regular fa-clock text-gray-500 text-sm"></i>
-          <span class="font-semibold text-gray-800">Zona Waktu</span>
-        </div>
+      <div onclick="alert('Fitur Verifikasi Dua Langkah')" class="bg-white p-3.5 rounded-2xl border shadow-sm flex justify-between items-center cursor-pointer hover:bg-gray-50">
+        <span class="font-semibold text-gray-800 text-xs">Verifikasi dua langkah</span>
         <i class="fa-solid fa-chevron-right text-gray-300 text-xs"></i>
       </div>
     </div>
 
-    <button onclick="window.location.href='index.html'" class="w-full bg-white text-red-600 font-bold py-3 rounded-2xl border text-xs shadow-sm mt-2">
-      Keluar ke Halaman Utama
-    </button>
+    <!-- SUB-HALAMAN 2: INFORMASI TOKO -->
+    <div id="sub-info-toko" class="space-y-3 hidden">
+      <div class="flex items-center gap-2 bg-white p-3 rounded-2xl border shadow-sm">
+        <button onclick="tutupSubPengaturan()" class="text-gray-600 hover:text-black font-bold p-1">
+          <i class="fa-solid fa-chevron-left text-sm"></i>
+        </button>
+        <h3 class="font-bold text-sm text-gray-900">Informasi toko</h3>
+      </div>
+
+      <div class="bg-white rounded-2xl border shadow-sm divide-y text-xs">
+        <div onclick="gantiLogoToko()" class="p-3.5 flex justify-between items-center cursor-pointer hover:bg-gray-50">
+          <div>
+            <p class="font-bold text-gray-800 text-xs">Logo toko</p>
+            <div class="w-12 h-12 rounded-xl bg-amber-50 border border-amber-200 mt-2 p-1 overflow-hidden flex items-center justify-center">
+              <span class="text-[8px] font-bold text-amber-800 text-center leading-tight">Adisa Made It</span>
+            </div>
+          </div>
+          <i class="fa-solid fa-chevron-right text-gray-300 text-xs"></i>
+        </div>
+
+        <div onclick="ubahNamaToko()" class="p-3.5 flex justify-between items-center cursor-pointer hover:bg-gray-50">
+          <div>
+            <p class="font-bold text-gray-800 text-xs flex items-center gap-1">
+              Nama toko <i class="fa-regular fa-circle-question text-gray-400 text-[10px]"></i>
+            </p>
+            <p class="text-gray-500 text-xs mt-1" id="disp-nama-toko">Adisa Made It</p>
+          </div>
+          <i class="fa-solid fa-chevron-right text-gray-300 text-xs"></i>
+        </div>
+
+        <div class="p-3.5">
+          <p class="font-bold text-gray-800 text-xs">Kode toko</p>
+          <div class="flex items-center gap-2 mt-1">
+            <span class="text-gray-500 text-xs tracking-wider" id="disp-kode-toko">IDLCG7L2PW</span>
+            <button onclick="salinKodeToko()" class="text-gray-400 hover:text-gray-700">
+              <i class="fa-regular fa-copy text-xs"></i>
+            </button>
+          </div>
+        </div>
+
+        <div class="p-3.5">
+          <p class="font-bold text-gray-800 text-xs">Jenis bisnis</p>
+          <p class="text-gray-500 text-xs mt-1">Bisnis perorangan</p>
+        </div>
+
+        <div class="p-3.5">
+          <p class="font-bold text-gray-800 text-xs">Jenis penjual</p>
+          <p class="text-gray-500 text-xs mt-1">Penjual lokal</p>
+        </div>
+
+        <div class="p-3.5 flex justify-between items-center">
+          <div>
+            <p class="font-bold text-gray-800 text-xs flex items-center gap-1">
+              No. telepon <i class="fa-regular fa-circle-question text-gray-400 text-[10px]"></i>
+            </p>
+            <p class="text-gray-400 text-xs mt-1" id="disp-toko-phone">--</p>
+          </div>
+          <button onclick="tambahTokoPhone()" class="text-emerald-700 font-bold text-xs hover:underline">Tambahkan</button>
+        </div>
+
+        <div class="p-3.5 flex justify-between items-center">
+          <div>
+            <p class="font-bold text-gray-800 text-xs flex items-center gap-1">
+              Email <i class="fa-regular fa-circle-question text-gray-400 text-[10px]"></i>
+            </p>
+            <p class="text-gray-400 text-xs mt-1" id="disp-toko-email">--</p>
+          </div>
+          <button onclick="tambahTokoEmail()" class="text-emerald-700 font-bold text-xs hover:underline">Tambahkan</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- SUB-HALAMAN 3: INFORMASI PAJAK -->
+    <div id="sub-info-pajak" class="space-y-3 hidden">
+      <div class="flex items-center gap-2 bg-white p-3 rounded-2xl border shadow-sm">
+        <button onclick="tutupSubPengaturan()" class="text-gray-600 hover:text-black font-bold p-1">
+          <i class="fa-solid fa-chevron-left text-sm"></i>
+        </button>
+        <h3 class="font-bold text-sm text-gray-900">Informasi pajak & Peraturan</h3>
+      </div>
+
+      <div class="bg-white rounded-2xl border shadow-sm divide-y text-xs">
+        <div class="p-3.5 flex justify-between items-center">
+          <div>
+            <p class="font-bold text-gray-800 text-xs">Status identitas pajak</p>
+            <p class="text-emerald-700 font-bold text-[11px] mt-0.5">Perorangan (UMKM Laporan Mandiri)</p>
+          </div>
+          <span class="bg-emerald-100 text-emerald-800 text-[9px] font-bold px-2 py-0.5 rounded-md">Terverifikasi</span>
+        </div>
+
+        <div class="p-3.5 flex justify-between items-center">
+          <div>
+            <p class="font-bold text-gray-800 text-xs">Nomor Pokok Wajib Pajak (NPWP / NIK)</p>
+            <p class="text-gray-500 text-xs mt-0.5" id="disp-npwp">6408************</p>
+          </div>
+          <button onclick="ubahNPWP()" class="text-emerald-700 font-bold text-xs hover:underline">Ubah</button>
+        </div>
+
+        <div class="p-3.5 flex justify-between items-center">
+          <div>
+            <p class="font-bold text-gray-800 text-xs">Nama Wajib Pajak / Pemilik Usaha</p>
+            <p class="text-gray-500 text-xs mt-0.5">Adisa Made It</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="bg-white p-4 rounded-2xl border shadow-sm space-y-2.5 text-xs">
+        <h4 class="font-bold text-gray-900 border-b pb-1.5 flex items-center gap-1.5">
+          <i class="fa-solid fa-file-contract text-emerald-800"></i> Syarat & Ketentuan Perpajakan Toko
+        </h4>
+        <div class="text-[10.5px] text-gray-600 space-y-2 leading-relaxed">
+          <p>
+            <strong>1. Ketentuan Penjual UMKM:</strong> Sesuai PP No. 55 Tahun 2022, Penjual dengan omzet perorangan sampai dengan Rp 500.000.000 per tahun bebas dari PPh Final UMKM 0,5%.
+          </p>
+          <p>
+            <strong>2. Pelaporan Transaksi PMSE:</strong> Selaku platform marketplace lokal, Borneoku mematuhi ketentuan PMSE dalam memfasilitasi transaksi secara transparan.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- SUB-HALAMAN 4: PENGIRIMAN (PERSIS SESUAI FOTO IBU) -->
+    <div id="sub-pengiriman" class="space-y-3 hidden">
+      <div class="flex items-center gap-2 bg-white p-3 rounded-2xl border shadow-sm">
+        <button onclick="tutupSubPengaturan()" class="text-gray-600 hover:text-black font-bold p-1">
+          <i class="fa-solid fa-chevron-left text-sm"></i>
+        </button>
+        <h3 class="font-bold text-sm text-gray-900">Pengiriman</h3>
+      </div>
+
+      <!-- BAGIAN 1: DIKIRIM OLEH PLATFORM -->
+      <div class="bg-white rounded-2xl border shadow-sm p-3.5 space-y-3 text-xs">
+        <div class="flex items-center gap-1 font-bold text-gray-900 border-b pb-2">
+          <span>Dikirim oleh Platform</span>
+          <i class="fa-regular fa-circle-question text-gray-400 text-[11px]"></i>
+        </div>
+
+        <div class="space-y-2.5 text-xs">
+          <div class="flex justify-between items-center">
+            <span class="font-medium text-gray-700">Pengiriman standar</span>
+            <button onclick="toggleDelivery(this)" class="bg-gray-200 text-gray-600 px-2 py-0.5 rounded text-[10px] font-bold">Inactive</button>
+          </div>
+          <div class="flex justify-between items-center">
+            <span class="font-medium text-gray-700">Tiba di hari yang sama</span>
+            <button onclick="toggleDelivery(this)" class="bg-gray-200 text-gray-600 px-2 py-0.5 rounded text-[10px] font-bold">Inactive</button>
+          </div>
+          <div class="flex justify-between items-center">
+            <span class="font-medium text-gray-700">Instan</span>
+            <button onclick="toggleDelivery(this)" class="bg-gray-200 text-gray-600 px-2 py-0.5 rounded text-[10px] font-bold">Inactive</button>
+          </div>
+          <div class="flex justify-between items-center">
+            <span class="font-medium text-gray-700">Hemat</span>
+            <button onclick="toggleDelivery(this)" class="bg-gray-200 text-gray-600 px-2 py-0.5 rounded text-[10px] font-bold">Inactive</button>
+          </div>
+          <div class="flex justify-between items-center">
+            <span class="font-medium text-gray-700">Kargo</span>
+            <button onclick="toggleDelivery(this)" class="bg-gray-200 text-gray-600 px-2 py-0.5 rounded text-[10px] font-bold">Inactive</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- BAGIAN 2: DIKIRIM OLEH KURIR PILIHAN -->
+      <div class="bg-white rounded-2xl border shadow-sm p-3.5 space-y-3 text-xs">
+        <div class="border-b pb-2">
+          <div class="flex items-center gap-1 font-bold text-gray-900">
+            <span>Dikirim oleh kurir pilihan</span>
+            <i class="fa-regular fa-circle-question text-gray-400 text-[11px]"></i>
+          </div>
+          <p class="text-[9.5px] text-gray-400 mt-0.5">Khusus pembeli Tokopedia & Borneoku</p>
+        </div>
+
+        <div class="space-y-2.5 text-xs">
+          <div class="flex justify-between items-center">
+            <span class="font-medium text-gray-700">JNE</span>
+            <button onclick="toggleDelivery(this)" class="bg-gray-200 text-gray-600 px-2 py-0.5 rounded text-[10px] font-bold">Inactive</button>
+          </div>
+          <div class="flex justify-between items-center">
+            <span class="font-medium text-gray-700">SiCepat</span>
+            <button onclick="toggleDelivery(this)" class="bg-gray-200 text-gray-600 px-2 py-0.5 rounded text-[10px] font-bold">Inactive</button>
+          </div>
+          <div class="flex justify-between items-center">
+            <span class="font-medium text-gray-700">AnterAja</span>
+            <button onclick="toggleDelivery(this)" class="bg-gray-200 text-gray-600 px-2 py-0.5 rounded text-[10px] font-bold">Inactive</button>
+          </div>
+          <div class="flex justify-between items-center">
+            <span class="font-medium text-gray-700">Pos Indonesia</span>
+            <button onclick="toggleDelivery(this)" class="bg-emerald-800 text-white px-2 py-0.5 rounded text-[10px] font-bold">Active</button>
+          </div>
+          <div class="flex justify-between items-center">
+            <span class="font-medium text-gray-700">J&T</span>
+            <button onclick="toggleDelivery(this)" class="bg-emerald-800 text-white px-2 py-0.5 rounded text-[10px] font-bold">Active</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- BAGIAN 3: METODE PEMBUATAN RESI -->
+      <div class="bg-white rounded-2xl border shadow-sm p-3.5 space-y-3 text-xs">
+        <h4 class="font-bold text-gray-900 border-b pb-2">Metode pembuatan resi</h4>
+        
+        <div class="space-y-2.5">
+          <label class="flex items-center gap-2.5 cursor-pointer">
+            <input type="radio" name="resi_type" value="berurutan" class="text-emerald-700 focus:ring-emerald-700">
+            <span class="text-gray-700 font-medium">Gunakan angka berurutan</span>
+          </label>
+          <label class="flex items-center gap-2.5 cursor-pointer">
+            <input type="radio" name="resi_type" value="id_paket" class="text-emerald-700 focus:ring-emerald-700">
+            <span class="text-gray-700 font-medium">Gunakan ID paket</span>
+          </label>
+          <label class="flex items-center gap-2.5 cursor-pointer">
+            <input type="radio" name="resi_type" value="manual" checked class="text-emerald-700 focus:ring-emerald-700">
+            <span class="text-gray-800 font-bold">Masukkan angka secara manual</span>
+          </label>
+        </div>
+      </div>
+    </div>
+
   </main>
 
   <!-- MODAL EDIT PRODUK -->
@@ -279,7 +546,7 @@
     </div>
   </div>
 
-  <!-- NAVBAR BAWAH PERSIS TIKTOK SHOP SELLER CENTER (6 TOMBOL) -->
+  <!-- NAVBAR BAWAH (6 TOMBOL AKTIF) -->
   <nav class="fixed bottom-0 left-0 right-0 bg-white border-t py-1.5 px-1 flex justify-around items-center z-50 text-[9.5px]">
     <button onclick="pindahTab('beranda')" id="nav-beranda" class="flex flex-col items-center text-emerald-800 font-bold">
       <i class="fa-solid fa-house text-base"></i>
@@ -334,6 +601,94 @@
 
       if (tab === 'produk') {
         loadSellerProducts();
+      }
+    }
+
+    function bukaSubPengaturan(sub) {
+      document.getElementById('sub-pengaturan-utama').classList.add('hidden');
+      if (sub === 'info-akun') {
+        document.getElementById('sub-info-akun').classList.remove('hidden');
+      } else if (sub === 'info-toko') {
+        document.getElementById('sub-info-toko').classList.remove('hidden');
+      } else if (sub === 'info-pajak') {
+        document.getElementById('sub-info-pajak').classList.remove('hidden');
+      } else if (sub === 'pengiriman') {
+        document.getElementById('sub-pengiriman').classList.remove('hidden');
+      }
+    }
+
+    function tutupSubPengaturan() {
+      document.getElementById('sub-info-akun').classList.add('hidden');
+      document.getElementById('sub-info-toko').classList.add('hidden');
+      document.getElementById('sub-info-pajak').classList.add('hidden');
+      document.getElementById('sub-pengiriman').classList.add('hidden');
+      document.getElementById('sub-pengaturan-utama').classList.remove('hidden');
+    }
+
+    function toggleDelivery(btn) {
+      if (btn.innerText === "Inactive") {
+        btn.innerText = "Active";
+        btn.className = "bg-emerald-800 text-white px-2 py-0.5 rounded text-[10px] font-bold";
+      } else {
+        btn.innerText = "Inactive";
+        btn.className = "bg-gray-200 text-gray-600 px-2 py-0.5 rounded text-[10px] font-bold";
+      }
+    }
+
+    function ubahNPWP() {
+      const npwp = prompt("Masukkan NPWP / NIK Anda:");
+      if (npwp) {
+        document.getElementById('disp-npwp').innerText = npwp;
+        alert("✅ Nomor NPWP / NIK berhasil diperbarui!");
+      }
+    }
+
+    function ubahNamaToko() {
+      const nama = prompt("Masukkan Nama Toko baru:", "Adisa Made It");
+      if (nama) {
+        document.getElementById('disp-nama-toko').innerText = nama;
+        document.getElementById('header-nama-toko').innerText = nama;
+        alert("✅ Nama toko berhasil diubah!");
+      }
+    }
+
+    function salinKodeToko() {
+      const kode = document.getElementById('disp-kode-toko').innerText;
+      navigator.clipboard.writeText(kode);
+      alert("📋 Kode toko " + kode + " telah disalin!");
+    }
+
+    function tambahTokoPhone() {
+      const tel = prompt("Masukkan No. Telepon toko:");
+      if (tel) {
+        document.getElementById('disp-toko-phone').innerText = tel;
+        document.getElementById('disp-toko-phone').className = "text-gray-800 font-bold text-xs mt-1";
+      }
+    }
+
+    function tambahTokoEmail() {
+      const email = prompt("Masukkan Email toko:");
+      if (email) {
+        document.getElementById('disp-toko-email').innerText = email;
+        document.getElementById('disp-toko-email').className = "text-gray-800 font-bold text-xs mt-1";
+      }
+    }
+
+    function gantiLogoToko() {
+      alert("Fitur ganti logo toko aktif.");
+    }
+
+    function ubahField(tipe) {
+      const val = prompt(`Masukkan ${tipe} baru Anda:`);
+      if (val) {
+        alert(`✅ ${tipe} berhasil diperbarui.`);
+      }
+    }
+
+    function hapusTautan() {
+      if (confirm('Apakah Anda yakin ingin menghapus tautan akun TikTok?')) {
+        document.getElementById('disp-tiktok').innerText = "Belum ditautkan";
+        alert('Tautan akun TikTok berhasil dihapus.');
       }
     }
 
@@ -458,4 +813,4 @@
     loadSellerProducts();
   </script>
 </body>
-          </html>
+  </html>
