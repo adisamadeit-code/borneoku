@@ -21,12 +21,16 @@
 </head>
 <body class="font-sans text-gray-800">
 
-  <!-- HEADER UTAMA (MENGGUNAKAN LOGO ASLI IBU: 1000386784.png) -->
+  <!-- HEADER UTAMA DENGAN LOGO ELEGAN EMAS BORNEOKU -->
   <header class="bg-borneo-dark text-white p-3.5 shadow-md sticky top-0 z-50">
     <div class="max-w-6xl mx-auto flex justify-between items-center">
       <div class="flex items-center space-x-2.5">
-        <div class="w-11 h-11 rounded-full bg-amber-400 p-0.5 shadow-md shrink-0 flex items-center justify-center overflow-hidden border-2 border-amber-300">
-          <img src="1000386784.png" alt="Logo Borneoku" class="w-full h-full object-cover rounded-full" onerror="this.onerror=null; this.src='1000386730.png';">
+        <!-- LOGO EMAS BULAT AMAN MENGGUNAKAN UNIKODE/SVG VECTOR AGAR PASTINYA TIDAK PERNAH PATAH/RUSAK -->
+        <div class="w-11 h-11 rounded-full bg-gradient-to-tr from-amber-500 via-amber-300 to-yellow-100 p-0.5 shadow-md shrink-0 flex items-center justify-center border-2 border-amber-300 relative overflow-hidden">
+          <div class="w-full h-full rounded-full bg-emerald-950 flex flex-col items-center justify-center text-center p-0.5">
+            <i class="fa-solid fa-basket-shopping text-amber-300 text-xs"></i>
+            <span class="text-[7.5px] font-black text-amber-300 leading-tight tracking-tighter">BORNEO</span>
+          </div>
         </div>
         <div>
           <h1 class="font-extrabold text-sm tracking-wide leading-tight text-white">BORNEOKU</h1>
@@ -272,11 +276,9 @@
       }
     }
 
-    // Modal Tambah Produk
     function bukaModalProduk() { document.getElementById('modal-produk').classList.remove('hidden'); }
     function tutupModalProduk() { document.getElementById('modal-produk').classList.add('hidden'); }
 
-    // Modal Mitra
     function bukaModalMitra() { document.getElementById('modal-mitra').classList.remove('hidden'); }
     function tutupModalMitra() { document.getElementById('modal-mitra').classList.add('hidden'); }
     function submitMitra(e) {
@@ -353,4 +355,4 @@
     fetchProducts();
   </script>
 </body>
-</html>
+      </html>
