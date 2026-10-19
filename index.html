@@ -21,12 +21,12 @@
 </head>
 <body class="font-sans text-gray-800">
 
-  <!-- HEADER UTAMA (LOGO CANTIK ASLI) -->
+  <!-- HEADER UTAMA (MENGGUNAKAN LOGO ASLI IBU: 1000386784.png) -->
   <header class="bg-borneo-dark text-white p-3.5 shadow-md sticky top-0 z-50">
     <div class="max-w-6xl mx-auto flex justify-between items-center">
       <div class="flex items-center space-x-2.5">
         <div class="w-11 h-11 rounded-full bg-amber-400 p-0.5 shadow-md shrink-0 flex items-center justify-center overflow-hidden border-2 border-amber-300">
-          <img src="1000386730.png" alt="Logo Borneoku" class="w-full h-full object-cover rounded-full">
+          <img src="1000386784.png" alt="Logo Borneoku" class="w-full h-full object-cover rounded-full" onerror="this.onerror=null; this.src='1000386730.png';">
         </div>
         <div>
           <h1 class="font-extrabold text-sm tracking-wide leading-tight text-white">BORNEOKU</h1>
@@ -61,32 +61,38 @@
       </div>
     </div>
 
-    <!-- TOMBOL BANNER: TAMBAH PRODUK & MITRA -->
-    <section class="max-w-4xl mx-auto grid grid-cols-1 sm:grid-cols-2 gap-3">
-      <div onclick="bukaModalProduk()" class="bg-emerald-50 p-3.5 rounded-2xl shadow-sm border border-emerald-200 flex items-center justify-between gap-2 cursor-pointer hover:bg-emerald-100 transition">
-        <div class="flex items-center gap-2.5 min-w-0">
-          <div class="bg-emerald-800 text-white p-2.5 rounded-xl text-xs font-bold shrink-0">
+    <!-- 2 TOMBOL SEJAJAR KE SAMPING (KIRI: TAMBAH PRODUK, KANAN: GABUNG MITRA) -->
+    <section class="max-w-4xl mx-auto grid grid-cols-2 gap-2.5">
+      <!-- Tombol Tambah Produk -->
+      <div onclick="bukaModalProduk()" class="bg-emerald-50 p-3 rounded-2xl shadow-sm border border-emerald-200 flex flex-col justify-between cursor-pointer hover:bg-emerald-100 transition">
+        <div class="flex items-center gap-2 mb-2">
+          <div class="bg-emerald-800 text-white p-2 rounded-xl text-xs font-bold shrink-0">
             <i class="fa-solid fa-boxes-stacked"></i>
           </div>
           <div class="min-w-0">
-            <h4 class="font-bold text-xs text-emerald-950 truncate">Tambah Produk Baru</h4>
-            <p class="text-[9.5px] text-emerald-800 truncate">Upload produk & foto dari galeri</p>
+            <h4 class="font-bold text-[11px] text-emerald-950 truncate">Tambah Produk</h4>
+            <p class="text-[8.5px] text-emerald-800 truncate">Upload foto</p>
           </div>
         </div>
-        <span class="bg-emerald-800 text-white font-bold px-3 py-1.5 rounded-xl text-[10px] shrink-0">Tambah</span>
+        <button type="button" class="w-full bg-emerald-800 hover:bg-emerald-900 text-white font-bold py-1.5 rounded-xl text-[10px] shadow-sm">
+          + Tambah
+        </button>
       </div>
 
-      <div onclick="bukaModalMitra()" class="bg-amber-50 p-3.5 rounded-2xl shadow-sm border border-amber-200 flex items-center justify-between gap-2 cursor-pointer hover:bg-amber-100 transition">
-        <div class="flex items-center gap-2.5 min-w-0">
-          <div class="bg-amber-600 text-white p-2.5 rounded-xl text-xs font-bold shrink-0">
+      <!-- Tombol Gabung Mitra -->
+      <div onclick="bukaModalMitra()" class="bg-amber-50 p-3 rounded-2xl shadow-sm border border-amber-200 flex flex-col justify-between cursor-pointer hover:bg-amber-100 transition">
+        <div class="flex items-center gap-2 mb-2">
+          <div class="bg-amber-600 text-white p-2 rounded-xl text-xs font-bold shrink-0">
             <i class="fa-solid fa-handshake"></i>
           </div>
           <div class="min-w-0">
-            <h4 class="font-bold text-xs text-amber-950 truncate">Pendaftaran Mitra Penjual</h4>
-            <p class="text-[9.5px] text-amber-800 truncate">Daftar sebagai mitra resmi UMKM</p>
+            <h4 class="font-bold text-[11px] text-amber-950 truncate">Mitra Penjual</h4>
+            <p class="text-[8.5px] text-amber-800 truncate">Daftar resmi</p>
           </div>
         </div>
-        <span class="bg-amber-600 text-white font-bold px-3 py-1.5 rounded-xl text-[10px] shrink-0">Gabung</span>
+        <button type="button" class="w-full bg-amber-600 hover:bg-amber-700 text-white font-bold py-1.5 rounded-xl text-[10px] shadow-sm">
+          Gabung
+        </button>
       </div>
     </section>
 
