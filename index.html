@@ -21,17 +21,12 @@
 </head>
 <body class="font-sans text-gray-800">
 
-  <!-- HEADER UTAMA DENGAN LOGO EMAS BORNEOKU YANG DIJAMIN TAMPIL -->
+  <!-- HEADER UTAMA DENGAN LOGO ASLI (borneoku-icon-192.png) -->
   <header class="bg-borneo-dark text-white p-3.5 shadow-md sticky top-0 z-50">
     <div class="max-w-6xl mx-auto flex justify-between items-center">
       <div class="flex items-center space-x-2.5">
-        <!-- LOGO EMAS BULAT BERDAUN HIJAU AMAN & LANGSUNG TAMPIL -->
-        <div class="w-11 h-11 rounded-full bg-gradient-to-tr from-amber-500 via-amber-300 to-yellow-100 p-0.5 shadow-md shrink-0 flex items-center justify-center border-2 border-amber-300 overflow-hidden">
-          <div class="w-full h-full rounded-full bg-emerald-900 flex flex-col items-center justify-center text-center p-0.5 relative">
-            <div class="absolute inset-0 flex items-center justify-center bg-emerald-950 rounded-full border border-amber-400">
-              <span class="text-[9px] font-black text-amber-300 tracking-tighter">BORNEO</span>
-            </div>
-          </div>
+        <div class="w-11 h-11 rounded-full bg-amber-400 p-0.5 shadow-md shrink-0 flex items-center justify-center overflow-hidden border-2 border-amber-300">
+          <img src="borneoku-icon-192.png" alt="Logo Borneoku" class="w-full h-full object-cover rounded-full" onerror="this.onerror=null; this.src='1000386730.png';">
         </div>
         <div>
           <h1 class="font-extrabold text-sm tracking-wide leading-tight text-white">BORNEOKU</h1>
@@ -109,10 +104,43 @@
       <span id="product-counter" class="text-[11px] text-gray-400 font-medium">Memuat...</span>
     </div>
 
+    <!-- GRID PRODUK (BISA DIKLIK UNTUK LIHAT DETAIL LENGKAP) -->
     <div id="product-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3.5">
       <p class="col-span-full text-center text-xs text-gray-400 py-8">Memuat etalase produk...</p>
     </div>
   </main>
+
+  <!-- MODAL: DETAIL PRODUK (MUNCUL KETIKA GAMBAR/PRODUK DIKLIK) -->
+  <div id="modal-detail" class="fixed inset-0 bg-black/60 z-50 flex items-center justify-center p-4 hidden">
+    <div class="bg-white w-full max-w-sm rounded-2xl p-4 space-y-3 shadow-xl max-h-[90vh] overflow-y-auto">
+      <div class="flex justify-between items-center border-b pb-2">
+        <h3 class="font-bold text-sm text-emerald-900"><i class="fa-solid fa-circle-info mr-1"></i> Detail Produk</h3>
+        <button type="button" onclick="tutupDetail()" class="text-gray-400 hover:text-gray-700 text-sm font-bold px-2 py-1">✕</button>
+      </div>
+      <div class="space-y-3">
+        <div class="h-48 bg-gray-100 rounded-xl overflow-hidden">
+          <img id="detail-img" src="" alt="Foto Produk" class="w-full h-full object-cover">
+        </div>
+        <div>
+          <span id="detail-kategori" class="bg-emerald-100 text-emerald-800 text-[9px] font-bold px-2 py-0.5 rounded-md">Kategori</span>
+          <h4 id="detail-title" class="font-extrabold text-sm text-gray-900 mt-1">Nama Produk</h4>
+          <p id="detail-price" class="text-emerald-800 font-extrabold text-sm mt-0.5">Rp 0</p>
+        </div>
+        <div class="bg-gray-50 p-2.5 rounded-xl space-y-1 text-xs text-gray-600">
+          <p><strong>Alamat UMKM:</strong> <span id="detail-address">-</span></p>
+          <p><strong>No. WhatsApp:</strong> <span id="detail-wa">-</span></p>
+        </div>
+        <div class="grid grid-cols-2 gap-2 pt-1">
+          <button type="button" onclick="tambahDariDetail()" class="bg-amber-500 hover:bg-amber-600 text-white font-bold py-2 rounded-xl text-xs transition shadow-sm">
+            + Keranjang
+          </button>
+          <a id="detail-wa-link" href="#" target="_blank" class="bg-emerald-800 hover:bg-emerald-900 text-white font-bold py-2 rounded-xl text-xs transition text-center flex items-center justify-center gap-1 shadow-sm">
+            <i class="fa-brands fa-whatsapp"></i> Pesan WA
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <!-- MODAL 1: FORMULIR TAMBAH PRODUK -->
   <div id="modal-produk" class="fixed inset-0 bg-black/60 z-50 flex items-center justify-center p-4 hidden">
@@ -247,13 +275,17 @@
           const category = item.category || 'Pakaian';
           const img = item.image_url || item.image || item.foto || 'https://images.unsplash.com/photo-1544816155-12df9643f363?auto=format&fit=crop&w=400&q=80';
           const wa = item.phone_number || item.whatsapp || '6281241170648';
+          const address = item.address || 'Nunukan, Kaltara';
           const waLink = `https://wa.me/${wa}?text=` + encodeURIComponent(`Halo Kak, saya ingin memesan produk ${title} seharga Rp ${price} di Borneoku.`);
+
+          // Data string untuk dikirim ke fungsi detail
+          const escapedItem = JSON.stringify({ title, price, category, img, wa, address, waLink }).replace(/"/g, '&quot;');
 
           return `
             <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden flex flex-col justify-between">
-              <div>
+              <div onclick="bukaDetail(${escapedItem})" class="cursor-pointer">
                 <div class="h-36 bg-gray-100 overflow-hidden relative">
-                  <img src="${img}" alt="${title}" class="w-full h-full object-cover" onerror="this.src='https://images.unsplash.com/photo-1544816155-12df9643f363?auto=format&fit=crop&w=400&q=80'">
+                  <img src="${img}" alt="${title}" class="w-full h-full object-cover hover:scale-105 transition duration-300" onerror="this.src='https://images.unsplash.com/photo-1544816155-12df9643f363?auto=format&fit=crop&w=400&q=80'">
                   <span class="absolute top-2 left-2 bg-emerald-900/80 text-amber-300 text-[8.5px] font-bold px-1.5 py-0.5 rounded-md">${category}</span>
                 </div>
                 <div class="p-2 space-y-0.5">
@@ -277,6 +309,7 @@
       }
     }
 
+    // Fungsi Buka Detail Produk Saat Gambar/Card Diklik
     function bukaModalProduk() { document.getElementById('modal-produk').classList.remove('hidden'); }
     function tutupModalProduk() { document.getElementById('modal-produk').classList.add('hidden'); }
 
@@ -286,6 +319,26 @@
       e.preventDefault();
       alert('✅ Pendaftaran Mitra Penjual berhasil dikirim! Selamat bergabung di Borneoku.');
       tutupModalMitra();
+    }
+
+    function bukaDetail(item) {
+      document.getElementById('detail-img').src = item.img;
+      document.getElementById('detail-kategori').innerText = item.category;
+      document.getElementById('detail-title').innerText = item.title;
+      document.getElementById('detail-price').innerText = 'Rp ' + Number(item.price).toLocaleString('id-ID');
+      document.getElementById('detail-address').innerText = item.address;
+      document.getElementById('detail-wa').innerText = item.wa;
+      document.getElementById('detail-wa-link').href = item.waLink;
+      document.getElementById('modal-detail').classList.remove('hidden');
+    }
+
+    function tutupDetail() {
+      document.getElementById('modal-detail').classList.add('hidden');
+    }
+
+    function tambahDariDetail() {
+      addToCart();
+      tutupDetail();
     }
 
     async function submitProduct(event) {
@@ -339,6 +392,7 @@
     function addToCart(productTitle) {
       cartCount++;
       document.getElementById('cart-count').innerText = cartCount;
+      alert('🛒 Produk berhasil dimasukkan ke keranjang!');
     }
 
     function viewCart() {
