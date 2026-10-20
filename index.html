@@ -25,11 +25,11 @@
       </div>
     </div>
     <div class="flex items-center gap-2">
-      <!-- TOMBOL BAGIKAN TOKO (TERHUBUNG KE FITUR NATIVE SHARE HP) -->
+      <!-- TOMBOL BAGIKAN TOKO -->
       <button onclick="bagikanToko()" class="bg-emerald-800 hover:bg-emerald-700 text-white text-[10px] px-3 py-1.5 rounded-xl font-bold flex items-center gap-1.5 border border-emerald-700 shadow-sm cursor-pointer">
         <i class="fa-solid fa-share-nodes"></i> Bagikan
       </button>
-      <!-- IKON KERANJANG DENGAN ID AGAR ANGKANYA BISA BERUBAH -->
+      <!-- IKON KERANJANG -->
       <div class="bg-amber-400 text-emerald-950 text-[10px] px-3 py-1.5 rounded-xl font-extrabold flex items-center gap-1.5 shadow">
         <i class="fa-solid fa-cart-shopping"></i> <span id="cart-count">0</span>
       </div>
@@ -128,10 +128,8 @@
     const SUPABASE_ANON_KEY = 'sb_publishable_7o0SP7VYOFhYJ0qyDrPtzw_2VvkuiMy';
     const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-    // Variabel penampung jumlah keranjang
     let cartCount = 0;
 
-    // Fungsi Share Toko Bawaan Perangkat (Native Share)
     function bagikanToko() {
       if (navigator.share) {
         navigator.share({
@@ -140,17 +138,15 @@
           url: window.location.href,
         }).catch((err) => console.log('Gagal membagikan:', err));
       } else {
-        // Cadangan jika browser HP tidak mendukung native share
         navigator.clipboard.writeText(window.location.href);
         alert('📋 Tautan toko berhasil disalin ke clipboard!');
       }
     }
 
-    // Fungsi Tambah ke Keranjang & Update Angka di Header
+    // Fungsi Tambah ke Keranjang Langsung Update Angka Tanpa Pop-up "Oke"
     function tambahKeKeranjang(namaProduk) {
       cartCount += 1;
       document.getElementById('cart-count').innerText = cartCount;
-      alert(`✅ Produk "${namaProduk}" berhasil dimasukkan ke keranjang!`);
     }
 
     async function loadBuyerProducts() {
