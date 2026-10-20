@@ -5,471 +5,99 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Borneoku - Karya Nusantara, Pasar Dunia</title>
   
-  <link rel="manifest" href="manifest.json">
-  <link rel="icon" type="image/x-icon" href="favicon.ico">
-  <meta name="theme-color" content="#064e3b">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   
   <style>
-    .bg-borneo-dark { background-color: #064e3b; }
-    body { background-color: #f8fafc; padding-bottom: 90px; }
+    body { background-color: #f4f5f7; padding-bottom: 80px; }
+    .no-scrollbar::-webkit-scrollbar { display: none; }
   </style>
 </head>
 <body class="font-sans text-gray-800">
 
-  <!-- HEADER UTAMA DENGAN LOGO VECTOR EMAS AMAN (DIJAMIN TIDAK ERROR) -->
-  <header class="bg-borneo-dark text-white p-3.5 shadow-md sticky top-0 z-50">
-    <div class="max-w-6xl mx-auto flex justify-between items-center">
-      <div class="flex items-center space-x-2.5">
-        <div class="w-11 h-11 rounded-full bg-gradient-to-tr from-amber-400 via-amber-200 to-yellow-100 p-0.5 shadow-md shrink-0 flex items-center justify-center border-2 border-amber-300 overflow-hidden">
-          <div class="w-full h-full rounded-full bg-emerald-950 flex flex-col items-center justify-center text-center p-0.5 border border-amber-400">
-            <i class="fa-solid fa-store text-amber-300 text-xs"></i>
-            <span class="text-[7.5px] font-black text-amber-300 leading-tight tracking-tighter">BORNEO</span>
-          </div>
-        </div>
-        <div>
-          <h1 class="font-extrabold text-sm tracking-wide leading-tight text-white">BORNEOKU</h1>
-          <p class="text-[9px] text-amber-300 font-bold tracking-wider">KARYA NUSANTARA, PASAR DUNIA</p>
-        </div>
+  <!-- HEADER UTAMA PEMBELI -->
+  <header class="bg-emerald-900 text-white p-3.5 sticky top-0 z-40 flex justify-between items-center shadow">
+    <div class="flex items-center gap-2">
+      <div class="w-8 h-8 rounded-full bg-amber-400 text-emerald-950 font-bold flex items-center justify-center text-xs shadow">
+        B
       </div>
-      
-      <div class="flex items-center gap-2">
-        <button onclick="shareApp()" class="bg-emerald-800 hover:bg-emerald-900 text-white px-3 py-1.5 rounded-xl text-xs font-bold border border-emerald-600 shadow-sm flex items-center gap-1">
-          <i class="fa-solid fa-share-nodes text-xs"></i> Bagikan
-        </button>
-        <button onclick="viewCart()" class="bg-emerald-800 hover:bg-emerald-900 text-xs px-2.5 py-1.5 rounded-xl border border-emerald-600 transition flex items-center gap-1 font-semibold shadow-sm text-white">
-          <i class="fa-solid fa-cart-shopping text-amber-300 text-xs"></i>
-          <span class="text-[11px]"><span id="cart-count" class="bg-amber-400 text-emerald-950 px-1.5 py-0.5 rounded-full text-[9px] font-bold">0</span></span>
-        </button>
+      <div>
+        <h1 class="font-extrabold text-xs tracking-wide">BORNEOKU</h1>
+        <p class="text-[8.5px] text-emerald-200">Karya Nusantara, Pasar Dunia</p>
       </div>
+    </div>
+    <div class="flex items-center gap-2">
+      <a href="admin.html" class="bg-amber-500 hover:bg-amber-600 text-emerald-950 font-extrabold text-[10px] px-3 py-1.5 rounded-xl shadow flex items-center gap-1">
+        <i class="fa-solid fa-gauge"></i> Seller Center
+      </a>
     </div>
   </header>
 
-  <!-- HALAMAN 1: BERANDA -->
-  <main id="sec-beranda" class="max-w-6xl mx-auto p-4 space-y-4">
-    <div class="bg-white p-5 rounded-2xl shadow-sm border border-emerald-100 text-center space-y-1">
-      <h2 class="text-base font-extrabold text-emerald-900">Satu Marketplace, <span class="text-amber-600">Berjuta Produk Unggulan</span> Indonesia</h2>
-      <p class="text-xs text-gray-500">Dukung UMKM & Pengrajin lokal Nusantara. Temukan berbagai produk unik & kerajinan pilihan.</p>
+  <!-- KONTEN UTAMA ETALASE -->
+  <main class="max-w-2xl mx-auto p-3.5 space-y-3">
+    <!-- BANNER UTAMA -->
+    <div class="bg-white p-4 rounded-2xl shadow-sm border space-y-2">
+      <h2 class="font-bold text-sm text-gray-900">Satu Marketplace, <span class="text-emerald-800">Berjuta Produk Unggulan</span> Indonesia</h2>
+      <p class="text-[11px] text-gray-500 leading-relaxed">Dukung UMKM & Pengrajin lokal Nusantara. Temukan berbagai kerajinan dan produk pilihan.</p>
     </div>
 
-    <!-- PENCARIAN PRODUK -->
-    <div class="relative">
-      <input type="text" placeholder="Cari produk, pakaian, atau kerajinan..." class="w-full p-3 pl-4 pr-10 bg-white border border-gray-200 rounded-full text-xs shadow-sm focus:outline-none focus:ring-2 focus:ring-emerald-700">
-      <div class="absolute right-3 top-2.5 text-gray-400">
-        <i class="fa-solid fa-search"></i>
+    <!-- DAFTAR PRODUK DARI DATABASE -->
+    <div class="space-y-2">
+      <h3 class="font-bold text-xs text-gray-900 px-1">Etalase Produk UMKM Nusantara</h3>
+      <div id="product-grid" class="grid grid-cols-2 gap-3">
+        <p class="text-xs text-gray-400 col-span-2 text-center py-6">Memuat produk...</p>
       </div>
-    </div>
-
-    <!-- 2 TOMBOL SEJAJAR KE SAMPING -->
-    <section class="max-w-4xl mx-auto grid grid-cols-2 gap-2.5">
-      <div onclick="bukaModalProduk()" class="bg-emerald-50 p-3 rounded-2xl shadow-sm border border-emerald-200 flex flex-col justify-between cursor-pointer hover:bg-emerald-100 transition">
-        <div class="flex items-center gap-2 mb-2">
-          <div class="bg-emerald-800 text-white p-2 rounded-xl text-xs font-bold shrink-0">
-            <i class="fa-solid fa-boxes-stacked"></i>
-          </div>
-          <div class="min-w-0">
-            <h4 class="font-bold text-[11px] text-emerald-950 truncate">Tambah Produk</h4>
-            <p class="text-[8.5px] text-emerald-800 truncate">Upload foto</p>
-          </div>
-        </div>
-        <button type="button" class="w-full bg-emerald-800 hover:bg-emerald-900 text-white font-bold py-1.5 rounded-xl text-[10px] shadow-sm">
-          + Tambah
-        </button>
-      </div>
-
-      <div onclick="bukaModalMitra()" class="bg-amber-50 p-3 rounded-2xl shadow-sm border border-amber-200 flex flex-col justify-between cursor-pointer hover:bg-amber-100 transition">
-        <div class="flex items-center gap-2 mb-2">
-          <div class="bg-amber-600 text-white p-2 rounded-xl text-xs font-bold shrink-0">
-            <i class="fa-solid fa-handshake"></i>
-          </div>
-          <div class="min-w-0">
-            <h4 class="font-bold text-[11px] text-amber-950 truncate">Mitra Penjual</h4>
-            <p class="text-[8.5px] text-amber-800 truncate">Daftar resmi</p>
-          </div>
-        </div>
-        <button type="button" class="w-full bg-amber-600 hover:bg-amber-700 text-white font-bold py-1.5 rounded-xl text-[10px] shadow-sm">
-          Gabung
-        </button>
-      </div>
-    </section>
-
-    <!-- ETALASE PRODUK -->
-    <div class="flex justify-between items-center px-1">
-      <h3 class="font-bold text-xs text-emerald-950 flex items-center gap-1.5">
-        <i class="fa-solid fa-bag-shopping text-emerald-800"></i> Etalase Produk UMKM Nusantara
-      </h3>
-      <span id="product-counter" class="text-[11px] text-gray-400 font-medium">Memuat...</span>
-    </div>
-
-    <div id="product-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3.5">
-      <p class="col-span-full text-center text-xs text-gray-400 py-8">Memuat etalase produk...</p>
     </div>
   </main>
 
-  <!-- HALAMAN 2: PESANAN SAYA -->
-  <main id="sec-pesanan" class="max-w-2xl mx-auto p-4 space-y-4 hidden">
-    <div class="bg-white p-4 rounded-2xl border border-gray-100 shadow-sm space-y-3">
-      <h3 class="font-extrabold text-sm text-emerald-900 border-b pb-2">
-        <i class="fa-solid fa-receipt text-emerald-800 mr-1.5"></i> Pesanan Saya
-      </h3>
-      <div class="grid grid-cols-4 gap-2 text-center text-[10px] text-gray-600 pt-1">
-        <div class="flex flex-col items-center gap-1.5 p-2 bg-gray-50 rounded-xl">
-          <i class="fa-solid fa-wallet text-base text-amber-600"></i>
-          <span>Belum Bayar</span>
-        </div>
-        <div class="flex flex-col items-center gap-1.5 p-2 bg-gray-50 rounded-xl">
-          <i class="fa-solid fa-box text-base text-amber-600"></i>
-          <span>Dikemas</span>
-        </div>
-        <div class="flex flex-col items-center gap-1.5 p-2 bg-gray-50 rounded-xl">
-          <i class="fa-solid fa-truck text-base text-amber-600"></i>
-          <span>Dikirim</span>
-        </div>
-        <div class="flex flex-col items-center gap-1.5 p-2 bg-gray-50 rounded-xl">
-          <i class="fa-solid fa-star text-base text-amber-600"></i>
-          <span>Selesai</span>
-        </div>
-      </div>
-    </div>
-    <div class="bg-white p-8 rounded-2xl border border-gray-100 shadow-sm text-center space-y-2">
-      <div class="w-12 h-12 bg-emerald-50 text-emerald-800 rounded-full flex items-center justify-center mx-auto text-xl">
-        <i class="fa-solid fa-bag-shopping"></i>
-      </div>
-      <h4 class="font-bold text-xs text-gray-800">Belum Ada Pesanan</h4>
-      <p class="text-[11px] text-gray-400">Anda belum melakukan transaksi belanja apapun.</p>
-    </div>
-  </main>
-
-  <!-- HALAMAN 3: NOTIFIKASI -->
-  <main id="sec-notif" class="max-w-2xl mx-auto p-4 space-y-4 hidden">
-    <div class="flex justify-between items-center bg-white p-4 rounded-2xl border border-gray-100 shadow-sm">
-      <h3 class="font-extrabold text-sm text-emerald-900">
-        <i class="fa-solid fa-bell text-amber-500 mr-1.5"></i> Notifikasi
-      </h3>
-      <span class="text-[10px] text-gray-400 font-semibold">Update Terbaru</span>
-    </div>
-    <div class="bg-white p-12 rounded-2xl border border-gray-100 shadow-sm text-center space-y-2">
-      <div class="w-14 h-14 bg-amber-50 text-amber-500 rounded-full flex items-center justify-center mx-auto text-2xl">
-        <i class="fa-regular fa-bell-slash"></i>
-      </div>
-      <h4 class="font-bold text-xs text-gray-800">Belum Ada Notifikasi</h4>
-      <p class="text-[11px] text-gray-400">Pemberitahuan promo atau pesanan Anda akan muncul di sini.</p>
-    </div>
-  </main>
-
-  <!-- MODAL DETAIL PRODUK -->
-  <div id="modal-detail" class="fixed inset-0 bg-black/60 z-50 flex items-center justify-center p-4 hidden">
-    <div class="bg-white w-full max-w-sm rounded-2xl p-4 space-y-3 shadow-xl max-h-[90vh] overflow-y-auto">
-      <div class="flex justify-between items-center border-b pb-2">
-        <h3 class="font-bold text-sm text-emerald-900"><i class="fa-solid fa-circle-info mr-1"></i> Detail Produk</h3>
-        <button type="button" onclick="tutupDetail()" class="text-gray-400 hover:text-gray-700 text-sm font-bold px-2 py-1">✕</button>
-      </div>
-      <div class="space-y-3">
-        <div class="h-48 bg-gray-100 rounded-xl overflow-hidden">
-          <img id="detail-img" src="" alt="Foto Produk" class="w-full h-full object-cover">
-        </div>
-        <div>
-          <span id="detail-kategori" class="bg-emerald-100 text-emerald-800 text-[9px] font-bold px-2 py-0.5 rounded-md">Kategori</span>
-          <h4 id="detail-title" class="font-extrabold text-sm text-gray-900 mt-1">Nama Produk</h4>
-          <p id="detail-price" class="text-emerald-800 font-extrabold text-sm mt-0.5">Rp 0</p>
-        </div>
-        <div class="bg-gray-50 p-2.5 rounded-xl space-y-1 text-xs text-gray-600">
-          <p><strong>Alamat UMKM:</strong> <span id="detail-address">-</span></p>
-          <p><strong>No. WhatsApp:</strong> <span id="detail-wa">-</span></p>
-        </div>
-        <div class="grid grid-cols-2 gap-2 pt-1">
-          <button type="button" onclick="tambahDariDetail()" class="bg-amber-500 hover:bg-amber-600 text-white font-bold py-2 rounded-xl text-xs transition shadow-sm">
-            + Keranjang
-          </button>
-          <a id="detail-wa-link" href="#" target="_blank" class="bg-emerald-800 hover:bg-emerald-900 text-white font-bold py-2 rounded-xl text-xs transition text-center flex items-center justify-center gap-1 shadow-sm">
-            <i class="fa-brands fa-whatsapp"></i> Pesan WA
-          </a>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- MODAL FORM TAMBAH PRODUK -->
-  <div id="modal-produk" class="fixed inset-0 bg-black/60 z-50 flex items-center justify-center p-4 hidden">
-    <div class="bg-white w-full max-w-md rounded-2xl p-4 space-y-3 shadow-xl max-h-[90vh] overflow-y-auto">
-      <div class="flex justify-between items-center border-b pb-2">
-        <h3 class="font-bold text-sm text-emerald-900"><i class="fa-solid fa-boxes-stacked mr-1"></i> Form Tambah Produk Baru</h3>
-        <button type="button" onclick="tutupModalProduk()" class="text-gray-400 hover:text-gray-700 text-sm font-bold px-2 py-1">✕</button>
-      </div>
-      <form id="product-form" onsubmit="submitProduct(event)" class="space-y-3">
-        <div>
-          <label class="block text-[11px] font-bold text-gray-700 mb-1">Nama Produk</label>
-          <input type="text" id="prod-title" required placeholder="Contoh: Kain Sasirangan Khas Kaltim" class="w-full p-2 border rounded-xl text-xs focus:ring-2 focus:ring-emerald-500 focus:outline-none">
-        </div>
-        <div class="grid grid-cols-2 gap-2">
-          <div>
-            <label class="block text-[11px] font-bold text-gray-700 mb-1">Harga (Rp)</label>
-            <input type="number" id="prod-price" required placeholder="150000" class="w-full p-2 border rounded-xl text-xs focus:ring-2 focus:ring-emerald-500 focus:outline-none">
-          </div>
-          <div>
-            <label class="block text-[11px] font-bold text-gray-700 mb-1">Kategori</label>
-            <select id="prod-category" class="w-full p-2 border rounded-xl text-xs focus:ring-2 focus:ring-emerald-500 focus:outline-none">
-              <option value="Pakaian">Pakaian / Batik</option>
-              <option value="Kerajinan">Kerajinan Tangan</option>
-              <option value="Kuliner">Kuliner / Makanan</option>
-              <option value="Aksesoris">Aksesoris</option>
-            </select>
-          </div>
-        </div>
-        <div>
-          <label class="block text-[11px] font-bold text-gray-700 mb-1">Ambil Foto Produk dari Galeri / Kamera</label>
-          <input type="file" id="prod-file" accept="image/*" required class="w-full p-1.5 border rounded-xl text-xs bg-gray-50 file:mr-4 file:py-1 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-bold file:bg-emerald-800 file:text-white cursor-pointer">
-        </div>
-        <div class="grid grid-cols-2 gap-2">
-          <div>
-            <label class="block text-[11px] font-bold text-gray-700 mb-1">No. WhatsApp Pemilik</label>
-            <input type="text" id="prod-wa" required placeholder="628123456789" class="w-full p-2 border rounded-xl text-xs focus:ring-2 focus:ring-emerald-500 focus:outline-none">
-          </div>
-          <div>
-            <label class="block text-[11px] font-bold text-gray-700 mb-1">Alamat UMKM</label>
-            <input type="text" id="prod-address" placeholder="Kota / Kecamatan" class="w-full p-2 border rounded-xl text-xs focus:ring-2 focus:ring-emerald-500 focus:outline-none">
-          </div>
-        </div>
-        <button type="submit" id="submit-btn" class="w-full bg-emerald-800 hover:bg-emerald-900 text-white font-bold py-2.5 rounded-xl text-xs shadow transition mt-2">
-          Kirim Produk untuk Diverifikasi Admin
-        </button>
-      </form>
-    </div>
-  </div>
-
-  <!-- MODAL FORM PENDAFTARAN MITRA -->
-  <div id="modal-mitra" class="fixed inset-0 bg-black/60 z-50 flex items-center justify-center p-4 hidden">
-    <div class="bg-white w-full max-w-md rounded-2xl p-4 space-y-3 shadow-xl max-h-[90vh] overflow-y-auto">
-      <div class="flex justify-between items-center border-b pb-2">
-        <h3 class="font-bold text-sm text-emerald-900"><i class="fa-solid fa-handshake mr-1"></i> Form Pendaftaran Mitra Penjual</h3>
-        <button type="button" onclick="tutupModalMitra()" class="text-gray-400 hover:text-gray-700 text-sm font-bold px-2 py-1">✕</button>
-      </div>
-      <form onsubmit="submitMitra(event)" class="space-y-3">
-        <div>
-          <label class="block text-[11px] font-bold text-gray-700 mb-1">Nama Lengkap Pemilik / UMKM</label>
-          <input type="text" id="mitra-nama" required placeholder="Contoh: Rumah Jahit Adisa" class="w-full p-2 border rounded-xl text-xs focus:ring-2 focus:ring-emerald-500 focus:outline-none">
-        </div>
-        <div>
-          <label class="block text-[11px] font-bold text-gray-700 mb-1">Nomor WhatsApp Aktif</label>
-          <input type="text" id="mitra-wa" required placeholder="62812xxxxxx" class="w-full p-2 border rounded-xl text-xs focus:ring-2 focus:ring-emerald-500 focus:outline-none">
-        </div>
-        <div>
-          <label class="block text-[11px] font-bold text-gray-700 mb-1">Alamat Usaha / Toko</label>
-          <input type="text" id="mitra-alamat" required placeholder="Kota Nunukan, Kalimantan Utara" class="w-full p-2 border rounded-xl text-xs focus:ring-2 focus:ring-emerald-500 focus:outline-none">
-        </div>
-        <button type="submit" class="w-full bg-emerald-800 hover:bg-emerald-900 text-white font-bold py-2.5 rounded-xl text-xs shadow transition mt-2">
-          Kirim Pendaftaran Mitra
-        </button>
-      </form>
-    </div>
-  </div>
-
-  <!-- NAVBAR BAWAH -->
-  <nav class="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 py-2 px-2 flex justify-around items-center z-50 shadow-lg text-[10px]">
-    <button type="button" onclick="pindahSeksi('beranda')" id="nav-beranda" class="flex flex-col items-center text-emerald-800 font-bold">
+  <!-- NAVBAR BAWAH PEMBELI -->
+  <nav class="fixed bottom-0 left-0 right-0 bg-white border-t py-1.5 px-1 flex justify-around items-center z-50 text-[9.5px]">
+    <a href="index.html" class="flex flex-col items-center text-emerald-800 font-bold">
       <i class="fa-solid fa-house text-base"></i>
       <span class="mt-0.5">Beranda</span>
-    </button>
-    <button type="button" onclick="bukaModalProduk()" class="flex flex-col items-center text-gray-400 hover:text-emerald-800">
-      <i class="fa-solid fa-boxes-stacked text-base"></i>
-      <span class="mt-0.5">Tambah Produk</span>
-    </button>
-    <button type="button" onclick="pindahSeksi('pesanan')" id="nav-pesanan" class="flex flex-col items-center text-gray-400 hover:text-emerald-800">
-      <i class="fa-solid fa-receipt text-base"></i>
-      <span class="mt-0.5">Pesanan</span>
-    </button>
-    <button type="button" onclick="pindahSeksi('notif')" id="nav-notif" class="flex flex-col items-center text-gray-400 hover:text-emerald-800">
-      <i class="fa-solid fa-bell text-base"></i>
-      <span class="mt-0.5">Notif</span>
-    </button>
+    </a>
     <a href="admin.html" class="flex flex-col items-center text-gray-400 hover:text-emerald-800">
-      <i class="fa-solid fa-lock text-base"></i>
-      <span class="mt-0.5">Admin</span>
+      <i class="fa-solid fa-bag-shopping text-base"></i>
+      <span class="mt-0.5">Seller Center</span>
     </a>
   </nav>
 
-  <!-- SCRIPT SUPABASE & FITUR UTAMA -->
+  <!-- SCRIPT -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
   <script>
     const SUPABASE_URL = 'https://iegqvegvoqjqjjyucpss.supabase.co';
     const SUPABASE_ANON_KEY = 'sb_publishable_7o0SP7VYOFhYJ0qyDrPtzw_2VvkuiMy';
     const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-    let cartCount = 0;
-
-    function pindahSeksi(seksi) {
-      document.getElementById('sec-beranda').classList.add('hidden');
-      document.getElementById('sec-pesanan').classList.add('hidden');
-      document.getElementById('sec-notif').classList.add('hidden');
-
-      document.getElementById('nav-beranda').className = "flex flex-col items-center text-gray-400 hover:text-emerald-800";
-      document.getElementById('nav-pesanan').className = "flex flex-col items-center text-gray-400 hover:text-emerald-800";
-      document.getElementById('nav-notif').className = "flex flex-col items-center text-gray-400 hover:text-emerald-800";
-
-      if (seksi === 'beranda') {
-        document.getElementById('sec-beranda').classList.remove('hidden');
-        document.getElementById('nav-beranda').className = "flex flex-col items-center text-emerald-800 font-bold";
-      } else if (seksi === 'pesanan') {
-        document.getElementById('sec-pesanan').classList.remove('hidden');
-        document.getElementById('nav-pesanan').className = "flex flex-col items-center text-emerald-800 font-bold";
-      } else if (seksi === 'notif') {
-        document.getElementById('sec-notif').classList.remove('hidden');
-        document.getElementById('nav-notif').className = "flex flex-col items-center text-emerald-800 font-bold";
-      }
-    }
-
-    async function fetchProducts() {
-      const grid = document.getElementById('product-grid');
-      const counter = document.getElementById('product-counter');
+    async function loadBuyerProducts() {
+      const container = document.getElementById('product-grid');
       try {
-        const { data, error } = await supabaseClient
-          .from('products')
-          .select('*');
-
+        const { data, error } = await supabaseClient.from('products').select('*').order('id', { ascending: false });
         if (error) throw error;
-
-        if (!data || data.length === 0) {
-          grid.innerHTML = `<p class="col-span-full text-center text-xs text-gray-400 py-8">Belum ada produk di etalase.</p>`;
-          counter.innerText = `0 Produk Tersedia`;
+        const list = data || [];
+        if (list.length === 0) {
+          container.innerHTML = `<p class="text-center text-xs text-gray-400 py-6 col-span-2">Belum ada produk tersedia di etalase.</p>`;
           return;
         }
-
-        counter.innerText = `${data.length} Produk Tersedia`;
-        grid.innerHTML = data.map(item => {
-          const title = item.title || item.name || 'Produk UMKM';
-          const price = item.price ? Number(item.price).toLocaleString('id-ID') : '0';
-          const category = item.category || 'Pakaian';
-          const img = item.image_url || item.image || item.foto || 'https://images.unsplash.com/photo-1544816155-12df9643f363?auto=format&fit=crop&w=400&q=80';
-          const wa = item.phone_number || item.whatsapp || '6281241170648';
-          const address = item.address || 'Nunukan, Kaltara';
-          const waLink = `https://wa.me/${wa}?text=` + encodeURIComponent(`Halo Kak, saya ingin memesan produk ${title} seharga Rp ${price} di Borneoku.`);
-
-          const escapedItem = JSON.stringify({ title, price, category, img, wa, address, waLink }).replace(/"/g, '&quot;');
-
-          return `
-            <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden flex flex-col justify-between">
-              <div onclick="bukaDetail(${escapedItem})" class="cursor-pointer">
-                <div class="h-36 bg-gray-100 overflow-hidden relative">
-                  <img src="${img}" alt="${title}" class="w-full h-full object-cover hover:scale-105 transition duration-300" onerror="this.src='https://images.unsplash.com/photo-1544816155-12df9643f363?auto=format&fit=crop&w=400&q=80'">
-                  <span class="absolute top-2 left-2 bg-emerald-900/80 text-amber-300 text-[8.5px] font-bold px-1.5 py-0.5 rounded-md">${category}</span>
-                </div>
-                <div class="p-2 space-y-0.5">
-                  <h4 class="font-bold text-xs text-gray-900 line-clamp-1">${title}</h4>
-                  <p class="text-xs text-emerald-800 font-extrabold">Rp ${price}</p>
-                </div>
-              </div>
-              <div class="p-2 pt-0 grid grid-cols-2 gap-1">
-                <button type="button" onclick="addToCart('${title}')" class="bg-amber-500 hover:bg-amber-600 text-white font-bold py-1.5 rounded-lg text-[9.5px] transition shadow-sm active:scale-95">
-                  + Keranjang
-                </button>
-                <a href="${waLink}" target="_blank" class="bg-emerald-800 hover:bg-emerald-900 text-white font-bold py-1.5 rounded-lg text-[9.5px] transition text-center flex items-center justify-center gap-0.5 shadow-sm">
-                  <i class="fa-brands fa-whatsapp text-[10px]"></i> Pesan
-                </a>
-              </div>
+        container.innerHTML = list.map(item => `
+          <div class="bg-white p-3 rounded-2xl border shadow-sm space-y-2 flex flex-col justify-between">
+            <div>
+              <img src="${item.image_url || 'https://images.unsplash.com/photo-1544816155-12df9643f363?auto=format&fit=crop&w=400&q=80'}" class="w-full h-32 rounded-xl object-cover border">
+              <span class="inline-block mt-2 bg-emerald-100 text-emerald-800 text-[8px] font-bold px-1.5 py-0.5 rounded">${item.category || 'Umum'}</span>
+              <h4 class="font-bold text-xs text-gray-900 truncate mt-1">${item.title}</h4>
+              <p class="text-[11px] text-emerald-800 font-extrabold mt-0.5">Rp ${Number(item.price).toLocaleString('id-ID')}</p>
             </div>
-          `;
-        }).join('');
+            <a href="https://wa.me/628123456789?text=Halo,%20saya%20tertarik%20dengan%20produk%20${encodeURIComponent(item.title)}" target="_blank" class="w-full bg-emerald-700 hover:bg-emerald-800 text-white font-bold py-1.5 rounded-xl text-[10px] text-center shadow">
+              <i class="fa-brands fa-whatsapp"></i> Pesan
+            </a>
+          </div>
+        `).join('');
       } catch (err) {
-        grid.innerHTML = `<p class="col-span-full text-center text-xs text-red-500 py-6">Gagal memuat etalase.</p>`;
+        container.innerHTML = `<p class="text-center text-xs text-red-500 col-span-2">Gagal memuat etalase: ${err.message}</p>`;
       }
     }
 
-    function bukaModalProduk() { document.getElementById('modal-produk').classList.remove('hidden'); }
-    function tutupModalProduk() { document.getElementById('modal-produk').classList.add('hidden'); }
-
-    function bukaModalMitra() { document.getElementById('modal-mitra').classList.remove('hidden'); }
-    function tutupModalMitra() { document.getElementById('modal-mitra').classList.add('hidden'); }
-    function submitMitra(e) {
-      e.preventDefault();
-      alert('✅ Pendaftaran Mitra Penjual berhasil dikirim! Selamat bergabung di Borneoku.');
-      tutupModalMitra();
-    }
-
-    function bukaDetail(item) {
-      document.getElementById('detail-img').src = item.img;
-      document.getElementById('detail-kategori').innerText = item.category;
-      document.getElementById('detail-title').innerText = item.title;
-      document.getElementById('detail-price').innerText = 'Rp ' + Number(item.price).toLocaleString('id-ID');
-      document.getElementById('detail-address').innerText = item.address;
-      document.getElementById('detail-wa').innerText = item.wa;
-      document.getElementById('detail-wa-link').href = item.waLink;
-      document.getElementById('modal-detail').classList.remove('hidden');
-    }
-
-    function tutupDetail() { document.getElementById('modal-detail').classList.add('hidden'); }
-
-    function tambahDariDetail() {
-      addToCart();
-      tutupDetail();
-    }
-
-    async function submitProduct(event) {
-      event.preventDefault();
-      const btn = document.getElementById('submit-btn');
-      btn.innerText = "Mengunggah...";
-      btn.disabled = true;
-
-      const title = document.getElementById('prod-title').value;
-      const price = document.getElementById('prod-price').value;
-      const category = document.getElementById('prod-category').value;
-      const whatsapp = document.getElementById('prod-wa').value;
-      const address = document.getElementById('prod-address').value;
-      const fileInput = document.getElementById('prod-file');
-
-      let image_url = 'https://images.unsplash.com/photo-1544816155-12df9643f363?auto=format&fit=crop&w=400&q=80';
-
-      if (fileInput.files && fileInput.files[0]) {
-        const file = fileInput.files[0];
-        const reader = new FileReader();
-        reader.readAsDataURL(file);
-        await new Promise(resolve => {
-          reader.onload = function () {
-            image_url = reader.result;
-            resolve();
-          };
-        });
-      }
-
-      try {
-        const { error } = await supabaseClient.from('products').insert([
-          { title, price, category, image_url, whatsapp, phone_number: whatsapp, address, status: 'approved' }
-        ]);
-
-        if (error) throw error;
-        alert('✅ Produk berhasil ditambahkan ke etalase!');
-        tutupModalProduk();
-        document.getElementById('product-form').reset();
-        fetchProducts();
-      } catch (err) {
-        alert('❌ Gagal mendaftarkan produk: ' + err.message);
-      } finally {
-        btn.innerText = "Kirim Produk untuk Diverifikasi Admin";
-        btn.disabled = false;
-      }
-    }
-
-    function addToCart(productTitle) {
-      cartCount++;
-      document.getElementById('cart-count').innerText = cartCount;
-      alert('🛒 Produk berhasil dimasukkan ke keranjang!');
-    }
-
-    function viewCart() {
-      alert(`Keranjang Belanja Anda saat ini berisi ${cartCount} item.`);
-    }
-
-    function shareApp() {
-      if (navigator.share) {
-        navigator.share({ title: 'Borneoku', text: 'Kunjungi etalase UMKM Borneoku!', url: window.location.href });
-      } else {
-        alert('Link toko disalin!');
-      }
-    }
-
-    fetchProducts();
+    loadBuyerProducts();
   </script>
 </body>
-          </html>
+</html>
