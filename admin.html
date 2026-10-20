@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Seller Center - Borneoku</title>
+  <title>Seller Center & Super Admin - Borneoku</title>
   
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -192,17 +192,17 @@
       </div>
     </div>
 
-    <!-- PANEL KHUSUS ADMIN (DENGAN IKON MATA PADA INPUT PIN PRIBADI) -->
+    <!-- PANEL KHUSUS ADMIN (2 LAPIS KEAMANAN & UBAH PIN LUAR) -->
     <div class="bg-gradient-to-r from-amber-50 to-emerald-50 rounded-2xl border-2 border-amber-400 p-4 text-xs space-y-3 shadow-sm">
       <div class="flex items-center justify-between border-b border-amber-200 pb-2">
-        <h4 class="font-extrabold text-emerald-950 flex items-center gap-1.5"><i class="fa-solid fa-lock text-amber-600"></i> Panel Khusus Admin (2 Lapis)</h4>
+        <h4 class="font-extrabold text-emerald-950 flex items-center gap-1.5"><i class="fa-solid fa-lock text-amber-600"></i> Panel Super Admin Borneoku</h4>
         <span class="text-[9px] bg-amber-400 text-emerald-950 font-extrabold px-2 py-0.5 rounded-full shadow-sm">Terkunci</span>
       </div>
-      <p class="text-[10px] text-gray-600 leading-relaxed">Dilindungi keamanan ganda: PIN Sistem Utama & PIN Konfirmasi Pribadi.</p>
+      <p class="text-[10px] text-gray-600 leading-relaxed">Pusat pengawasan aktivitas toko vendor & persetujuan produk.</p>
       
-      <!-- KOLOM GANTI PIN KEDUA DI LUAR DENGAN TOMBOL MATA & TOMBOL SIMPAN -->
+      <!-- NAVIGASI UBAH PIN PRIBADI DI LUAR -->
       <div class="bg-white p-3 rounded-xl border border-emerald-200 space-y-2">
-        <label class="block font-bold text-emerald-900 text-[10px]">Atur PIN Konfirmasi Pribadi (Bisa diubah bebas):</label>
+        <label class="block font-bold text-emerald-900 text-[10px]">Atur PIN Konfirmasi Pribadi:</label>
         <div class="flex gap-2">
           <div class="relative flex items-center flex-grow">
             <input type="password" id="input-ubah-pin-luar" placeholder="Masukkan PIN baru" class="w-full p-2.5 pr-8 border rounded-lg text-center font-bold text-xs outline-none focus:ring-1 focus:ring-emerald-700 bg-gray-50">
@@ -216,7 +216,7 @@
       </div>
 
       <button onclick="bukaPanelAdminTerkunci()" class="w-full bg-emerald-800 hover:bg-emerald-900 text-amber-300 font-extrabold py-2.5 rounded-xl shadow text-xs border border-amber-400 flex items-center justify-center gap-2">
-        <i class="fa-solid fa-key"></i> Buka Panel Admin (Verifikasi 2 PIN)
+        <i class="fa-solid fa-key"></i> Masuk Dashboard Super Admin
       </button>
     </div>
 
@@ -228,6 +228,42 @@
     </div>
   </main>
 
+  <!-- ================= 7. DASHBOARD SUPER ADMIN (MUNCUL SETELAH PIN BENAR) ================= -->
+  <div id="dashboard-super-admin" class="fixed inset-0 bg-[#f4f5f7] z-50 overflow-y-auto hidden pb-20">
+    <header class="bg-emerald-900 text-white p-3.5 sticky top-0 z-40 flex justify-between items-center shadow">
+      <div class="flex items-center gap-2">
+        <i class="fa-solid fa-shield-halved text-amber-400 text-base"></i>
+        <h2 class="font-extrabold text-xs">Pusat Pengawasan Super Admin Borneoku</h2>
+      </div>
+      <button onclick="tutupDashboardAdmin()" class="bg-red-600 text-white font-bold text-[10px] px-3 py-1 rounded-lg">Keluar Admin</button>
+    </header>
+
+    <div class="max-w-2xl mx-auto p-3.5 space-y-4">
+      <!-- STATISTIK RINGKASAN -->
+      <div class="grid grid-cols-2 gap-3">
+        <div class="bg-white p-3.5 rounded-2xl border shadow-sm">
+          <p class="text-[10px] text-gray-400 font-bold">Total Toko Mitra Vendor</p>
+          <h3 class="text-base font-extrabold text-emerald-900 mt-1">12 Toko Aktif</h3>
+        </div>
+        <div class="bg-white p-3.5 rounded-2xl border shadow-sm">
+          <p class="text-[10px] text-gray-400 font-bold">Produk Pending Review</p>
+          <h3 class="text-base font-extrabold text-amber-600 mt-1" id="admin-pending-count">0 Produk</h3>
+        </div>
+      </div>
+
+      <!-- DAFTAR PERSETUJUAN PRODUK VENDOR -->
+      <div class="bg-white p-4 rounded-2xl border shadow-sm space-y-3">
+        <h3 class="font-bold text-xs text-gray-900 border-b pb-2 flex items-center justify-between">
+          <span>Persetujuan Produk Vendor / Mitra</span>
+          <span class="text-[9px] bg-amber-100 text-amber-800 px-2 py-0.5 rounded-full">Butuh Aksi</span>
+        </h3>
+        <div id="admin-product-approval-list" class="space-y-2">
+          <p class="text-center text-xs text-gray-400 py-4">Memuat daftar produk...</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <!-- MODAL VERIFIKASI 2 PIN -->
   <div id="modal-pin-admin" class="fixed inset-0 bg-black/70 z-50 flex items-center justify-center p-4 hidden">
     <div class="bg-white w-full max-w-sm rounded-3xl p-5 space-y-3 shadow-2xl text-xs text-center border-4 border-amber-400">
@@ -237,7 +273,7 @@
       <h3 class="font-extrabold text-sm text-emerald-950">Verifikasi Keamanan Ganda</h3>
       <p class="text-[10px] text-gray-500">Masukkan PIN Utama Sistem (245758) dan PIN Konfirmasi Pribadi Anda.</p>
       
-      <!-- PIN 1: PIN UTAMA SISTEM -->
+      <!-- PIN 1 -->
       <div class="space-y-1 text-left">
         <label class="font-bold text-[10px] text-gray-700">1. PIN Utama Sistem:</label>
         <div class="relative flex items-center">
@@ -248,7 +284,7 @@
         </div>
       </div>
 
-      <!-- PIN 2: PIN KONFIRMASI PRIBADI -->
+      <!-- PIN 2 -->
       <div class="space-y-1 text-left">
         <label class="font-bold text-[10px] text-gray-700">2. PIN Konfirmasi Pribadi:</label>
         <div class="relative flex items-center">
@@ -371,9 +407,59 @@
 
       if (pinUtamaInput === pinUtamaValid && pinKeduaInput === pinKeduaValid) {
         tutupModalPin();
-        alert('🔓 Verifikasi Berhasil! Selamat datang di Panel Khusus Admin Borneoku.');
+        document.getElementById('dashboard-super-admin').classList.remove('hidden');
+        loadAdminProducts();
       } else {
         alert('❌ PIN Salah! Periksa kembali PIN Utama (245758) atau PIN Pribadi Anda.');
+      }
+    }
+
+    function tutupDashboardAdmin() {
+      document.getElementById('dashboard-super-admin').classList.add('hidden');
+    }
+
+    async function loadAdminProducts() {
+      const container = document.getElementById('admin-product-approval-list');
+      try {
+        const { data, error } = await supabaseClient.from('products').select('*').order('id', { ascending: false });
+        if (error) throw error;
+        const list = data || [];
+        document.getElementById('admin-pending-count').innerText = `${list.length} Produk`;
+
+        if (list.length === 0) {
+          container.innerHTML = `<p class="text-center text-xs text-gray-400 py-4">Tidak ada produk vendor yang menunggu persetujuan.</p>`;
+          return;
+        }
+
+        container.innerHTML = list.map(item => `
+          <div class="bg-gray-50 border p-3 rounded-xl flex items-center justify-between">
+            <div class="flex items-center gap-3">
+              <img src="${item.image_url || 'https://images.unsplash.com/photo-1544816155-12df9643f363?auto=format&fit=crop&w=400&q=80'}" class="w-12 h-12 rounded-lg object-cover border">
+              <div>
+                <h4 class="font-bold text-gray-900 text-xs">${item.title}</h4>
+                <p class="text-[10px] text-emerald-800 font-extrabold">Rp ${Number(item.price).toLocaleString('id-ID')}</p>
+              </div>
+            </div>
+            <div class="flex gap-1.5">
+              <button onclick="hapusProdukAdmin(${item.id})" class="bg-red-100 hover:bg-red-200 text-red-700 text-[10px] font-bold px-2.5 py-1.5 rounded-lg">Tolak</button>
+              <button onclick="alert('Produk ${item.title} berhasil disetujui tampil di etalase!')" class="bg-emerald-700 hover:bg-emerald-800 text-white text-[10px] font-bold px-2.5 py-1.5 rounded-lg">Setujui</button>
+            </div>
+          </div>
+        `).join('');
+      } catch (err) {
+        container.innerHTML = `<p class="text-center text-xs text-red-500">Gagal memuat data produk: ${err.message}</p>`;
+      }
+    }
+
+    async function hapusProdukAdmin(id) {
+      if (confirm('Yakin ingin menghapus/menolak produk ini dari marketplace?')) {
+        const { error } = await supabaseClient.from('products').delete().eq('id', id);
+        if (error) {
+          alert('Gagal menghapus: ' + error.message);
+        } else {
+          alert('Produk berhasil dihapus.');
+          loadAdminProducts();
+        }
       }
     }
 
@@ -435,4 +521,4 @@
     loadProductCount();
   </script>
 </body>
-</html>
+          </html>
