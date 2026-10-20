@@ -15,10 +15,9 @@
 </head>
 <body class="font-sans text-gray-800">
 
-  <!-- HEADER UTAMA BORNEOKU (MENGGUNAKAN LOGO ASLI) -->
+  <!-- HEADER UTAMA BORNEOKU -->
   <header class="bg-emerald-900 text-white p-3.5 sticky top-0 z-40 flex justify-between items-center shadow">
     <div class="flex items-center gap-2.5">
-      <!-- LOGO ASLI DARI GITHUB -->
       <img src="borneoku-logo.png" alt="Logo Borneoku" class="w-11 h-11 rounded-full object-cover border-2 border-yellow-400 shadow-md">
       <div>
         <h1 class="font-extrabold text-xs tracking-wide">BORNEOKU</h1>
@@ -26,11 +25,13 @@
       </div>
     </div>
     <div class="flex items-center gap-2">
-      <button onclick="alert('Bagikan Toko')" class="bg-emerald-800 hover:bg-emerald-700 text-white text-[10px] px-3 py-1.5 rounded-xl font-bold flex items-center gap-1.5 border border-emerald-700 shadow-sm">
+      <!-- TOMBOL BAGIKAN TOKO (TERHUBUNG KE FITUR NATIVE SHARE HP) -->
+      <button onclick="bagikanToko()" class="bg-emerald-800 hover:bg-emerald-700 text-white text-[10px] px-3 py-1.5 rounded-xl font-bold flex items-center gap-1.5 border border-emerald-700 shadow-sm cursor-pointer">
         <i class="fa-solid fa-share-nodes"></i> Bagikan
       </button>
+      <!-- IKON KERANJANG DENGAN ID AGAR ANGKANYA BISA BERUBAH -->
       <div class="bg-amber-400 text-emerald-950 text-[10px] px-3 py-1.5 rounded-xl font-extrabold flex items-center gap-1.5 shadow">
-        <i class="fa-solid fa-cart-shopping"></i> 0
+        <i class="fa-solid fa-cart-shopping"></i> <span id="cart-count">0</span>
       </div>
     </div>
   </header>
@@ -54,7 +55,7 @@
       <i class="fa-solid fa-magnifying-glass absolute right-3.5 top-3.5 text-gray-400"></i>
     </div>
 
-    <!-- KARTU PINTASAN ATAS (TAMBAH PRODUK & MITRA PENJUAL) -->
+    <!-- KARTU PINTASAN ATAS -->
     <div class="grid grid-cols-2 gap-3">
       <div class="bg-emerald-50/70 border border-emerald-200 p-3 rounded-2xl shadow-sm space-y-2">
         <div class="w-8 h-8 bg-emerald-800 text-white rounded-xl flex items-center justify-center text-xs shadow">
@@ -96,7 +97,7 @@
     </div>
   </main>
 
-  <!-- NAVBAR BAWAH (5 MENU TEKS LENGKAP) -->
+  <!-- NAVBAR BAWAH -->
   <nav class="fixed bottom-0 left-0 right-0 bg-white border-t py-1.5 px-1 flex justify-around items-center z-50 text-[9.5px] shadow-lg">
     <a href="index.html" class="flex flex-col items-center text-emerald-800 font-bold">
       <i class="fa-solid fa-house text-base"></i>
@@ -106,15 +107,15 @@
       <i class="fa-solid fa-bag-shopping text-base"></i>
       <span class="mt-0.5">Produk</span>
     </a>
-    <a href="admin.html" class="flex flex-col items-center text-gray-400 hover:text-emerald-800">
+    <a href="admin.html" class="flex flex-col items-center text-gray-400 hover:text-gray-600">
       <i class="fa-solid fa-clipboard-list text-base"></i>
       <span class="mt-0.5">Pesanan</span>
     </a>
-    <a href="admin.html" class="flex flex-col items-center text-gray-400 hover:text-emerald-800">
+    <a href="admin.html" class="flex flex-col items-center text-gray-400 hover:text-gray-600">
       <i class="fa-solid fa-shield-halved text-base"></i>
       <span class="mt-0.5">Izin LIVE</span>
     </a>
-    <a href="admin.html" class="flex flex-col items-center text-gray-400 hover:text-emerald-800">
+    <a href="admin.html" class="flex flex-col items-center text-gray-400 hover:text-gray-600">
       <i class="fa-solid fa-gear text-base"></i>
       <span class="mt-0.5">Pengaturan</span>
     </a>
@@ -126,6 +127,31 @@
     const SUPABASE_URL = 'https://iegqvegvoqjqjjyucpss.supabase.co';
     const SUPABASE_ANON_KEY = 'sb_publishable_7o0SP7VYOFhYJ0qyDrPtzw_2VvkuiMy';
     const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+    // Variabel penampung jumlah keranjang
+    let cartCount = 0;
+
+    // Fungsi Share Toko Bawaan Perangkat (Native Share)
+    function bagikanToko() {
+      if (navigator.share) {
+        navigator.share({
+          title: 'Borneoku - Karya Nusantara, Pasar Dunia',
+          text: 'Temukan berbagai produk unggulan UMKM & kerajinan pilihan di Borneoku!',
+          url: window.location.href,
+        }).catch((err) => console.log('Gagal membagikan:', err));
+      } else {
+        // Cadangan jika browser HP tidak mendukung native share
+        navigator.clipboard.writeText(window.location.href);
+        alert('📋 Tautan toko berhasil disalin ke clipboard!');
+      }
+    }
+
+    // Fungsi Tambah ke Keranjang & Update Angka di Header
+    function tambahKeKeranjang(namaProduk) {
+      cartCount += 1;
+      document.getElementById('cart-count').innerText = cartCount;
+      alert(`✅ Produk "${namaProduk}" berhasil dimasukkan ke keranjang!`);
+    }
 
     async function loadBuyerProducts() {
       const container = document.getElementById('product-grid');
@@ -149,10 +175,10 @@
               <p class="text-[11px] text-emerald-800 font-extrabold mt-0.5">Rp ${Number(item.price).toLocaleString('id-ID')}</p>
             </div>
             <div class="grid grid-cols-2 gap-1.5 pt-1">
-              <button onclick="alert('Produk dimasukkan ke keranjang!')" class="bg-amber-500 hover:bg-amber-600 text-emerald-950 font-extrabold py-1.5 rounded-xl text-[9.5px] text-center shadow">
+              <button onclick="tambahKeKeranjang('${item.title}')" class="bg-amber-500 hover:bg-amber-600 text-emerald-950 font-extrabold py-1.5 rounded-xl text-[9.5px] text-center shadow cursor-pointer">
                 + Keranjang
               </button>
-              <a href="https://wa.me/628123456789?text=Halo,%20saya%20tertarik%20dengan%20produk%20${encodeURIComponent(item.title)}" target="_blank" class="bg-emerald-800 hover:bg-emerald-900 text-white font-extrabold py-1.5 rounded-xl text-[9.5px] text-center shadow">
+              <a href="https://wa.me/628123456789?text=Halo,%20saya%20tertarik%20dengan%20produk%20${encodeURIComponent(item.title)}" target="_blank" class="bg-emerald-800 hover:bg-emerald-900 text-white font-extrabold py-1.5 rounded-xl text-[9.5px] text-center shadow flex items-center justify-center gap-1">
                 <i class="fa-brands fa-whatsapp"></i> Pesan
               </a>
             </div>
