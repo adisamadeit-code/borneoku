@@ -19,9 +19,7 @@
   <!-- HEADER UTAMA ADMIN BORNEOKU -->
   <header class="bg-white p-3.5 shadow-sm sticky top-0 z-40 flex justify-between items-center border-b">
     <div class="flex items-center gap-2">
-      <div class="w-8 h-8 rounded-full bg-emerald-100 flex items-center justify-center font-bold text-emerald-800 text-xs border border-emerald-300">
-        B
-      </div>
+      <img src="borneoku-logo.png" alt="Logo" class="w-8 h-8 rounded-full object-cover border">
       <div>
         <h1 class="font-bold text-xs text-gray-900 leading-tight">Borneoku Seller Center</h1>
         <p class="text-[9.5px] text-emerald-800 font-semibold">Pusat Kendali Penjual</p>
@@ -34,72 +32,70 @@
     </div>
   </header>
 
-  <!-- ================= 1. HALAMAN BERANDA SELLER ================= -->
-  <main id="tab-beranda" class="max-w-2xl mx-auto p-3.5 space-y-3">
-    <div class="bg-white p-4 rounded-2xl shadow-sm border border-gray-100 space-y-3">
-      <div class="flex justify-between items-center border-b pb-2">
-        <div>
-          <span class="text-[10px] text-emerald-700 font-bold bg-emerald-50 px-2 py-0.5 rounded-full">Status Toko: Aktif</span>
-          <h3 class="font-bold text-xs text-gray-900 mt-1">Borneoku Seller Dashboard</h3>
-        </div>
-        <i class="fa-solid fa-store text-emerald-700 text-xl"></i>
-      </div>
-
-      <div class="p-3 bg-emerald-50/50 rounded-xl border border-emerald-100 flex items-center justify-between gap-2">
-        <div class="flex items-center gap-2.5">
-          <i class="fa-solid fa-video text-emerald-600 text-base"></i>
-          <div>
-            <h4 class="font-bold text-xs text-emerald-950">Fasilitas Siaran LIVE Jualan</h4>
-            <p class="text-[10px] text-gray-500">Izin siaran LIVE aktif dan terpantau sistem.</p>
-          </div>
-        </div>
-        <button onclick="mulaiSesiLiveSeller()" class="bg-red-600 hover:bg-red-700 text-white text-[10px] px-3 py-1.5 rounded-xl font-bold shrink-0 shadow">
-          Mulai LIVE
-        </button>
-      </div>
+  <!-- ================= 1. HALAMAN BERANDA ================= -->
+  <main id="tab-beranda" class="max-w-2xl mx-auto p-3.5 space-y-3 hidden">
+    <div class="bg-white p-4 rounded-2xl shadow-sm border space-y-3">
+      <h3 class="font-bold text-xs text-gray-900">Borneoku Seller Dashboard</h3>
+      <p class="text-[11px] text-gray-500">Kelola produk, pesanan, dan siaran toko Anda dengan mudah.</p>
     </div>
   </main>
 
   <!-- ================= 2. HALAMAN PRODUK ================= -->
-  <main id="tab-produk" class="max-w-2xl mx-auto p-3.5 space-y-3 hidden">
+  <main id="tab-produk" class="max-w-2xl mx-auto p-3.5 space-y-3">
+    
+    <!-- SUB-VIEW A: DAFTAR PRODUK -->
     <div id="sub-produk-list-view" class="space-y-3">
-      <div class="bg-white border-b sticky top-[57px] z-30 -mx-3.5 px-3.5 pt-2 flex items-center justify-between">
-        <div class="flex overflow-x-auto no-scrollbar whitespace-nowrap gap-5 text-xs font-semibold text-gray-400 border-b pb-2 flex-grow">
+      <!-- HEADER TAB PRODUK & FILTER BISA DIGESER + TOMBOL GARIS TIGA -->
+      <div class="bg-white border-b sticky top-[57px] z-30 -mx-3.5 px-3.5 pt-2 flex items-center justify-between shadow-sm">
+        <div class="flex overflow-x-auto no-scrollbar whitespace-nowrap gap-5 text-xs font-semibold text-gray-400 border-b pb-2 flex-grow pr-2">
           <button class="text-emerald-700 font-bold border-b-2 border-emerald-700 pb-2">Aktif(<span id="count-aktif">0</span>)</button>
           <button class="hover:text-gray-700 pb-2">Stok Rendah(0)</button>
           <button class="hover:text-gray-700 pb-2">Nonaktif(0)</button>
+          <button class="hover:text-gray-700 pb-2">Dalam Pengecekan(0)</button>
+          <button class="hover:text-gray-700 pb-2">Gagal(1)</button>
+          <button class="hover:text-gray-700 pb-2">Diblokir(0)</button>
+          <button class="hover:text-gray-700 pb-2">Draf(0)</button>
         </div>
+        <button onclick="bukaDropdownFilter()" class="p-2 text-gray-700 font-bold bg-white shrink-0 border-l pl-3">
+          <i class="fa-solid fa-bars text-sm"></i>
+        </button>
       </div>
 
+      <!-- KOTAK MENU PILIHAN KETIKA IKON GARIS TIGA DIKLIK -->
+      <div id="dropdown-filter-produk" class="bg-white rounded-2xl border shadow-sm p-2 text-xs space-y-1 hidden">
+        <div class="p-2.5 hover:bg-emerald-50 rounded-xl font-bold text-emerald-700 flex justify-between items-center cursor-pointer border-b"><span>Aktif(0)</span><i class="fa-solid fa-check"></i></div>
+        <div class="p-2.5 hover:bg-gray-50 rounded-xl text-gray-600 flex justify-between items-center cursor-pointer border-b"><span>Stok Rendah(0)</span></div>
+        <div class="p-2.5 hover:bg-gray-50 rounded-xl text-gray-600 flex justify-between items-center cursor-pointer border-b"><span>Nonaktif(0)</span></div>
+        <div class="p-2.5 hover:bg-gray-50 rounded-xl text-gray-600 flex justify-between items-center cursor-pointer border-b"><span>Dalam Pengecekan(0)</span></div>
+        <div class="p-2.5 hover:bg-gray-50 rounded-xl text-gray-600 flex justify-between items-center cursor-pointer border-b"><span>Gagal(1)</span></div>
+        <div class="p-2.5 hover:bg-gray-50 rounded-xl text-gray-600 flex justify-between items-center cursor-pointer border-b"><span>Diblokir(0)</span></div>
+        <div class="p-2.5 hover:bg-gray-50 rounded-xl text-gray-600 flex justify-between items-center cursor-pointer"><span>Draf(0)</span></div>
+      </div>
+
+      <!-- KONTEN KOSONG / DAFTAR PRODUK -->
       <div class="bg-white p-8 rounded-2xl border text-center space-y-3 mt-4">
         <div class="w-12 h-12 bg-emerald-50 text-emerald-700 rounded-full flex items-center justify-center mx-auto">
           <i class="fa-solid fa-bag-shopping text-lg"></i>
         </div>
-        <h4 class="font-bold text-xs text-gray-800">Daftarkan produk pertama Anda</h4>
-        <p class="text-[11px] text-gray-400">Produk yang sudah didaftarkan akan ditinjau sebelum ditampilkan.</p>
-        <div class="pt-1">
-          <button onclick="bukaFormTambahProduk()" class="w-full bg-emerald-700 hover:bg-emerald-800 text-white font-bold py-2.5 rounded-xl text-xs shadow-sm">
-            Tambah Produk
-          </button>
-        </div>
+        <h4 class="font-bold text-xs text-gray-800">Belum ada produk</h4>
+        <p class="text-[11px] text-gray-400">Tambahkan produk pertama Anda untuk mulai berjualan.</p>
+      </div>
+
+      <!-- TOMBOL TAMBAH PRODUK DI BAWAH -->
+      <div class="pt-4">
+        <button onclick="bukaFormTambahProduk()" class="w-full bg-emerald-800 hover:bg-emerald-900 text-white font-bold py-3 rounded-2xl text-xs shadow-md">
+          Tambah Produk
+        </button>
       </div>
     </div>
 
-    <!-- FORMULIR TAMBAH PRODUK -->
+    <!-- SUB-VIEW B: FORMULIR TAMBAH PRODUK -->
     <div id="sub-produk-add-form" class="space-y-4 pb-20 hidden">
       <div class="flex items-center gap-2 bg-white p-3 rounded-2xl border shadow-sm">
         <button onclick="tutupFormTambahProduk()" class="text-gray-600 hover:text-black font-bold p-1">
           <i class="fa-solid fa-chevron-left text-sm"></i>
         </button>
         <h3 class="font-bold text-sm text-gray-900">Tambah produk</h3>
-      </div>
-
-      <div class="bg-gray-100 p-3 rounded-2xl border text-xs flex justify-between items-center">
-        <div class="flex items-center gap-2">
-          <i class="fa-solid fa-circle-info text-gray-500"></i>
-          <span>Draf Anda telah otomatis disimpan.</span>
-        </div>
-        <button onclick="alert('Memuat draf...')" class="bg-white border px-3 py-1 rounded-xl font-bold text-emerald-800 shadow-sm">Lanjut</button>
       </div>
 
       <form id="form-tambah-produk-lengkap" onsubmit="simpanProdukBaru(event)" class="space-y-4">
@@ -153,76 +149,42 @@
 
   <!-- ================= 3. HALAMAN PESANAN ================= -->
   <main id="tab-pesanan" class="max-w-2xl mx-auto p-3.5 space-y-3 hidden">
-    <div class="bg-gray-100 p-2.5 rounded-xl text-xs text-gray-700 flex items-center justify-between border">
-      <span class="text-[11px]">Harap siapkan metode penyerahan sebelum pesanan dikirimkan.</span>
-    </div>
-
-    <div class="flex items-center gap-2 overflow-x-auto no-scrollbar py-1">
-      <button onclick="alert('Filter Menunggu Pengiriman')" class="bg-emerald-50 text-emerald-800 border px-3 py-1.5 rounded-xl text-xs font-bold">Menunggu pengiriman</button>
-      <button onclick="bukaModalPerluTindakan()" class="bg-white border px-3 py-1.5 rounded-xl text-xs font-bold text-gray-700">Perlu tindakan(0)</button>
-    </div>
-
     <div class="bg-white p-12 rounded-2xl border shadow-sm text-center space-y-2">
-      <div class="w-14 h-14 bg-emerald-50 text-emerald-700 rounded-full flex items-center justify-center mx-auto text-2xl">
-        <i class="fa-solid fa-clipboard-list"></i>
-      </div>
       <h4 class="font-bold text-xs text-gray-800">Belum Ada Pesanan</h4>
     </div>
   </main>
 
-  <!-- MODAL PERLU TINDAKAN -->
-  <div id="modal-perlu-tindakan" class="fixed inset-0 bg-black/60 z-50 flex items-end justify-center hidden">
-    <div class="bg-white w-full max-w-2xl rounded-t-3xl p-4 space-y-4 shadow-xl max-h-[85vh] flex flex-col text-xs font-medium">
-      <div class="flex justify-between items-center border-b pb-2.5 shrink-0">
-        <h3 class="font-bold text-sm text-gray-900">Perlu tindakan</h3>
-        <button type="button" onclick="tutupModalPerluTindakan()" class="text-gray-400 font-bold p-1">✕</button>
-      </div>
-      <div class="space-y-3 overflow-y-auto no-scrollbar pr-1 flex-grow">
-        <div onclick="pilihFilterTindakan('Semua pesanan yang perlu tindakan')" class="py-2 hover:text-emerald-800 cursor-pointer border-b">Semua pesanan yang perlu tindakan</div>
-        <div onclick="pilihFilterTindakan('Perlu dikirim dalam 24 jam')" class="py-2 hover:text-emerald-800 cursor-pointer border-b">Perlu dikirim dalam 24 jam</div>
-        <div onclick="pilihFilterTindakan('Pembatalan otomatis dalam maks. 24 jam')" class="py-2 hover:text-emerald-800 cursor-pointer border-b">Pembatalan otomatis dalam maks. 24 jam</div>
-        <div onclick="pilihFilterTindakan('Pengiriman terlambat')" class="py-2 hover:text-emerald-800 cursor-pointer border-b">Pengiriman terlambat</div>
-        <div onclick="pilihFilterTindakan('Pengembalian barang/dana diajukan.')" class="py-2 hover:text-emerald-800 cursor-pointer border-b">Pengembalian barang/dana diajukan.</div>
-      </div>
-      <div class="pt-2 border-t shrink-0">
-        <button type="button" onclick="tutupModalPerluTindakan()" class="w-full border py-2.5 rounded-xl font-bold text-gray-700">Reset</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- ================= 4. IZIN LIVE ================= -->
-  <main id="tab-manajemen-live" class="max-w-2xl mx-auto p-3.5 space-y-3 hidden">
-    <div class="bg-white p-4 rounded-2xl border shadow-sm space-y-3 text-xs">
-      <h3 class="font-bold text-sm text-gray-900 border-b pb-2"><i class="fa-solid fa-shield-halved text-emerald-700 mr-1"></i> Manajemen Sesi LIVE Admin</h3>
-      <div class="p-3 bg-gray-50 rounded-xl border flex justify-between items-center">
-        <div>
-          <p class="font-bold text-gray-900">Status Izin Siaran Toko</p>
-          <span class="inline-block mt-1 bg-emerald-100 text-emerald-800 text-[9px] font-bold px-2 py-0.5 rounded">Disetujui Admin</span>
-        </div>
-        <button onclick="alert('Izin LIVE Aktif')" class="bg-emerald-700 text-white px-2.5 py-1 rounded-lg text-[9.5px] font-bold">Aktif</button>
-      </div>
+  <!-- ================= 4. HALAMAN IKLAN ================= -->
+  <main id="tab-iklan" class="max-w-2xl mx-auto p-3.5 space-y-3 hidden">
+    <div class="bg-white p-4 rounded-2xl border shadow-sm text-xs space-y-2">
+      <h3 class="font-bold text-gray-900">Iklan & Promosi Toko</h3>
     </div>
   </main>
 
-  <!-- ================= 5. PENGATURAN ================= -->
+  <!-- ================= 5. HALAMAN OBROLAN ================= -->
+  <main id="tab-obrolan" class="max-w-2xl mx-auto p-3.5 space-y-3 hidden">
+    <div class="bg-white p-8 rounded-2xl border shadow-sm text-center space-y-2">
+      <h4 class="font-bold text-xs text-gray-800">Tidak ada pesan baru</h4>
+    </div>
+  </main>
+
+  <!-- ================= 6. HALAMAN PENGATURAN ================= -->
   <main id="tab-pengaturan" class="max-w-2xl mx-auto p-3.5 space-y-3 hidden">
     <div class="bg-white rounded-2xl border shadow-sm p-4 text-xs space-y-2">
-      <h3 class="font-bold text-gray-900 border-b pb-2">Informasi Toko Borneoku</h3>
-      <p class="font-semibold text-gray-800">Pusat Penjual UMKM</p>
-      <p class="text-gray-500">Wilayah: Kalimantan, Indonesia</p>
+      <h3 class="font-bold text-gray-900 border-b pb-2">Pengaturan Toko</h3>
+      <a href="index.html" class="block w-full text-center bg-emerald-800 text-white font-bold py-2.5 rounded-xl mt-3 shadow">
+        Keluar ke Etalase Pembeli
+      </a>
     </div>
-    <button onclick="window.location.href='index.html'" class="w-full bg-white text-gray-800 font-bold py-3 rounded-2xl border text-xs shadow-sm">
-      Keluar ke Etalase Pembeli
-    </button>
   </main>
 
-  <!-- NAVBAR BAWAH ADMIN (5 TEKS PERSIS FOTO KEDUA: Beranda, Produk, Pesanan, Izin LIVE, Pengaturan)[span_5](start_span)[span_5](end_span) -->
-  <nav class="fixed bottom-0 left-0 right-0 bg-white border-t py-1.5 px-1 flex justify-around items-center z-50 text-[9.5px] shadow-lg">
-    <button onclick="pindahTab('beranda')" id="nav-beranda" class="flex flex-col items-center text-emerald-800 font-bold">
+  <!-- NAVBAR BAWAH (6 MENU UTAMA) -->
+  <nav class="fixed bottom-0 left-0 right-0 bg-white border-t py-1.5 px-1 flex justify-around items-center z-50 text-[9px] shadow-lg">
+    <button onclick="pindahTab('beranda')" id="nav-beranda" class="flex flex-col items-center text-gray-400 hover:text-emerald-800">
       <i class="fa-solid fa-house text-base"></i>
       <span class="mt-0.5">Beranda</span>
     </button>
-    <button onclick="pindahTab('produk')" id="nav-produk" class="flex flex-col items-center text-gray-400 hover:text-emerald-800">
+    <button onclick="pindahTab('produk')" id="nav-produk" class="flex flex-col items-center text-emerald-800 font-bold">
       <i class="fa-solid fa-bag-shopping text-base"></i>
       <span class="mt-0.5">Produk</span>
     </button>
@@ -230,9 +192,13 @@
       <i class="fa-solid fa-clipboard-list text-base"></i>
       <span class="mt-0.5">Pesanan</span>
     </button>
-    <button onclick="pindahTab('manajemen-live')" id="nav-manajemen-live" class="flex flex-col items-center text-gray-400 hover:text-emerald-800">
-      <i class="fa-solid fa-shield-halved text-base"></i>
-      <span class="mt-0.5">Izin LIVE</span>
+    <button onclick="pindahTab('iklan')" id="nav-iklan" class="flex flex-col items-center text-gray-400 hover:text-emerald-800">
+      <i class="fa-solid fa-chart-line text-base"></i>
+      <span class="mt-0.5">Iklan</span>
+    </button>
+    <button onclick="pindahTab('obrolan')" id="nav-obrolan" class="flex flex-col items-center text-gray-400 hover:text-emerald-800">
+      <i class="fa-solid fa-comments text-base"></i>
+      <span class="mt-0.5">Obrolan</span>
     </button>
     <button onclick="pindahTab('pengaturan')" id="nav-pengaturan" class="flex flex-col items-center text-gray-400 hover:text-emerald-800">
       <i class="fa-solid fa-gear text-base"></i>
@@ -250,7 +216,7 @@
     let base64ImageUpload = '';
 
     function pindahTab(tab) {
-      ['beranda', 'produk', 'pesanan', 'manajemen-live', 'pengaturan'].forEach(t => {
+      ['beranda', 'produk', 'pesanan', 'iklan', 'obrolan', 'pengaturan'].forEach(t => {
         const el = document.getElementById(`tab-${t}`);
         const nav = document.getElementById(`nav-${t}`);
         if (el) el.classList.add('hidden');
@@ -261,6 +227,13 @@
       const selectedNav = document.getElementById(`nav-${tab}`);
       if (selectedTab) selectedTab.classList.remove('hidden');
       if (selectedNav) selectedNav.className = "flex flex-col items-center text-emerald-800 font-bold";
+      
+      if (tab === 'produk') loadProductCount();
+    }
+
+    function bukaDropdownFilter() {
+      const drop = document.getElementById('dropdown-filter-produk');
+      drop.classList.toggle('hidden');
     }
 
     function bukaFormTambahProduk() {
@@ -302,16 +275,26 @@
         };
         const { error } = await supabaseClient.from('products').insert([payload]);
         if (error) throw error;
-        alert('✅ Produk berhasil dikirim untuk ditinjau oleh Admin!');
+        alert('✅ Produk berhasil dikirim untuk ditinjau!');
         tutupFormTambahProduk();
+        loadProductCount();
       } catch (err) {
         alert('❌ Gagal: ' + err.message);
       }
     }
 
-    function bukaModalPerluTindakan() { document.getElementById('modal-perlu-tindakan').classList.remove('hidden'); }
-    function tutupModalPerluTindakan() { document.getElementById('modal-perlu-tindakan').classList.add('hidden'); }
-    function pilihFilterTindakan(opsi) { tutupModalPerluTindakan(); alert(`📌 Filter Dipilih: ${opsi}`); }
+    async function loadProductCount() {
+      try {
+        const { count, error } = await supabaseClient.from('products').select('*', { count: 'exact', head: true });
+        if (!error && count !== null) {
+          document.getElementById('count-aktif').innerText = count;
+        }
+      } catch (err) {
+        console.error(err);
+      }
+    }
+
+    loadProductCount();
   </script>
 </body>
-      </html>
+  </html>
