@@ -41,11 +41,8 @@
   </main>
 
   <!-- ================= 2. HALAMAN PRODUK ================= -->
-  <main id="tab-produk" class="max-w-2xl mx-auto p-3.5 space-y-3">
-    
-    <!-- SUB-VIEW A: DAFTAR PRODUK -->
+  <main id="tab-produk" class="max-w-2xl mx-auto p-3.5 space-y-3 hidden">
     <div id="sub-produk-list-view" class="space-y-3">
-      <!-- HEADER TAB PRODUK & FILTER GESER -->
       <div class="bg-white border-b sticky top-[57px] z-30 -mx-3.5 px-3.5 pt-2 flex items-center justify-between shadow-sm">
         <div class="flex overflow-x-auto no-scrollbar whitespace-nowrap gap-5 text-xs font-semibold text-gray-400 border-b pb-2 flex-grow pr-2">
           <button class="text-emerald-700 font-bold border-b-2 border-emerald-700 pb-2">Aktif(<span id="count-aktif">0</span>)</button>
@@ -56,69 +53,41 @@
           <button class="hover:text-gray-700 pb-2">Diblokir(0)</button>
           <button class="hover:text-gray-700 pb-2">Draf(0)</button>
         </div>
-        <button onclick="bukaDropdownFilter()" class="p-2 text-gray-700 font-bold bg-white shrink-0 border-l pl-3">
-          <i class="fa-solid fa-bars text-sm"></i>
-        </button>
       </div>
-
-      <!-- KOTAK DROPDOWN FILTER -->
-      <div id="dropdown-filter-produk" class="bg-white rounded-2xl border shadow-sm p-2 text-xs space-y-1 hidden">
-        <div class="p-2.5 hover:bg-emerald-50 rounded-xl font-bold text-emerald-700 flex justify-between items-center cursor-pointer border-b"><span>Aktif(0)</span><i class="fa-solid fa-check"></i></div>
-        <div class="p-2.5 hover:bg-gray-50 rounded-xl text-gray-600 flex justify-between items-center cursor-pointer border-b"><span>Stok Rendah(0)</span></div>
-        <div class="p-2.5 hover:bg-gray-50 rounded-xl text-gray-600 flex justify-between items-center cursor-pointer border-b"><span>Nonaktif(0)</span></div>
-        <div class="p-2.5 hover:bg-gray-50 rounded-xl text-gray-600 flex justify-between items-center cursor-pointer border-b"><span>Dalam Pengecekan(0)</span></div>
-        <div class="p-2.5 hover:bg-gray-50 rounded-xl text-gray-600 flex justify-between items-center cursor-pointer border-b"><span>Gagal(1)</span></div>
-        <div class="p-2.5 hover:bg-gray-50 rounded-xl text-gray-600 flex justify-between items-center cursor-pointer border-b"><span>Diblokir(0)</span></div>
-        <div class="p-2.5 hover:bg-gray-50 rounded-xl text-gray-600 flex justify-between items-center cursor-pointer"><span>Draf(0)</span></div>
-      </div>
-
-      <!-- KONTEN KOSONG -->
       <div class="bg-white p-8 rounded-2xl border text-center space-y-3 mt-4">
         <div class="w-12 h-12 bg-emerald-50 text-emerald-700 rounded-full flex items-center justify-center mx-auto">
           <i class="fa-solid fa-bag-shopping text-lg"></i>
         </div>
         <h4 class="font-bold text-xs text-gray-800">Belum ada produk</h4>
-        <p class="text-[11px] text-gray-400">Tambahkan produk pertama Anda untuk mulai berjualan.</p>
-      </div>
-
-      <!-- TOMBOL TAMBAH PRODUK -->
-      <div class="pt-4">
-        <button onclick="bukaFormTambahProduk()" class="w-full bg-emerald-800 hover:bg-emerald-900 text-white font-bold py-3 rounded-2xl text-xs shadow-md">
-          Tambah Produk
-        </button>
+        <div class="pt-4">
+          <button onclick="bukaFormTambahProduk()" class="w-full bg-emerald-800 text-white font-bold py-3 rounded-2xl text-xs shadow-md">Tambah Produk</button>
+        </div>
       </div>
     </div>
-
-    <!-- SUB-VIEW B: FORMULIR TAMBAH PRODUK (DENGAN TEMPAT VIDEO DI BAWAH) -->
+    <!-- FORM TAMBAH PRODUK DENGAN VIDEO -->
     <div id="sub-produk-add-form" class="space-y-4 pb-20 hidden">
       <div class="flex items-center gap-2 bg-white p-3 rounded-2xl border shadow-sm">
-        <button onclick="tutupFormTambahProduk()" class="text-gray-600 hover:text-black font-bold p-1">
-          <i class="fa-solid fa-chevron-left text-sm"></i>
-        </button>
+        <button onclick="tutupFormTambahProduk()" class="text-gray-600 font-bold p-1"><i class="fa-solid fa-chevron-left text-sm"></i></button>
         <h3 class="font-bold text-sm text-gray-900">Tambah produk</h3>
       </div>
-
       <form id="form-tambah-produk-lengkap" onsubmit="simpanProdukBaru(event)" class="space-y-4">
-        <!-- Informasi Dasar -->
         <div class="bg-white p-4 rounded-2xl border shadow-sm space-y-4 text-xs">
           <h4 class="font-bold text-gray-900 border-b pb-1.5">Informasi dasar</h4>
           <div>
-            <label class="block font-bold text-gray-800 mb-1">Gambar <span class="text-red-500">*</span></label>
-            <div class="border-2 border-dashed border-gray-300 rounded-2xl p-6 text-center hover:bg-gray-50 cursor-pointer" onclick="document.getElementById('input-foto-baru').click()">
+            <label class="block font-bold text-gray-800 mb-1">Gambar *</label>
+            <div class="border-2 border-dashed border-gray-300 rounded-2xl p-6 text-center cursor-pointer" onclick="document.getElementById('input-foto-baru').click()">
               <i class="fa-regular fa-images text-gray-400 text-2xl mb-1"></i>
               <p class="text-[10px] text-gray-400">Klik untuk unggah foto</p>
               <input type="file" id="input-foto-baru" accept="image/*" class="hidden" onchange="previewFotoUpload(this)">
             </div>
-            <div id="preview-container" class="mt-2 hidden">
-              <img id="img-preview" class="w-20 h-20 rounded-xl object-cover border">
-            </div>
+            <div id="preview-container" class="mt-2 hidden"><img id="img-preview" class="w-20 h-20 rounded-xl object-cover border"></div>
           </div>
           <div>
-            <label class="block font-bold text-gray-800 mb-1">Nama produk <span class="text-red-500">*</span></label>
+            <label class="block font-bold text-gray-800 mb-1">Nama produk *</label>
             <input type="text" id="input-nama-baru" required placeholder="Contoh: Kain Sasirangan" class="w-full p-2.5 border rounded-xl outline-none">
           </div>
           <div>
-            <label class="block font-bold text-gray-800 mb-1">Kategori <span class="text-red-500">*</span></label>
+            <label class="block font-bold text-gray-800 mb-1">Kategori *</label>
             <select id="input-kategori-baru" class="w-full p-2.5 border rounded-xl bg-white outline-none">
               <option value="Pakaian">Pakaian / Kebaya / Batik</option>
               <option value="Kerajinan">Kerajinan Tangan / Aksesoris</option>
@@ -126,39 +95,23 @@
             </select>
           </div>
         </div>
-
-        <!-- Detail Produk -->
         <div class="bg-white p-4 rounded-2xl border shadow-sm space-y-4 text-xs">
-          <h4 class="font-bold text-gray-900 border-b pb-1.5">Detail produk <span class="text-red-500">*</span></h4>
-          <div>
-            <label class="block font-bold text-gray-800 mb-1">Deskripsi <span class="text-red-500">*</span></label>
-            <textarea id="input-deskripsi-baru" rows="4" placeholder="Tuliskan spesifikasi bahan & ukuran..." class="w-full p-2.5 border rounded-xl outline-none"></textarea>
-          </div>
+          <h4 class="font-bold text-gray-900 border-b pb-1.5">Detail produk *</h4>
+          <div><textarea id="input-deskripsi-baru" rows="4" placeholder="Tuliskan spesifikasi..." class="w-full p-2.5 border rounded-xl outline-none"></textarea></div>
         </div>
-
-        <!-- Harga Produk -->
         <div class="bg-white p-4 rounded-2xl border shadow-sm space-y-2 text-xs">
-          <h4 class="font-bold text-gray-900 border-b pb-1.5">Harga Produk (Rp) <span class="text-red-500">*</span></h4>
-          <input type="number" id="input-harga-baru" required placeholder="Contoh: 150000" class="w-full p-2.5 border rounded-xl outline-none">
+          <h4 class="font-bold text-gray-900 border-b pb-1.5">Harga Produk (Rp) *</h4>
+          <input type="number" id="input-harga-baru" required placeholder="150000" class="w-full p-2.5 border rounded-xl outline-none">
         </div>
-
-        <!-- TEMPAT UNGGAH VIDEO DI BAGIAN BAWAH -->
         <div class="bg-white p-4 rounded-2xl border shadow-sm space-y-3 text-xs">
           <h4 class="font-bold text-gray-900 border-b pb-1.5">Video Produk</h4>
-          <div>
-            <label class="block font-bold text-gray-800 mb-1">Unggah Video</label>
-            <div class="border-2 border-dashed border-gray-300 rounded-2xl p-6 text-center hover:bg-gray-50 cursor-pointer" onclick="document.getElementById('input-video-baru').click()">
-              <i class="fa-solid fa-video text-gray-400 text-2xl mb-1"></i>
-              <p class="text-[10px] text-gray-400">Klik untuk unggah video produk</p>
-              <input type="file" id="input-video-baru" accept="video/*" class="hidden" onchange="previewVideoUpload(this)">
-            </div>
-            <div id="video-preview-container" class="mt-2 hidden text-center">
-              <p class="text-[10px] text-emerald-700 font-bold" id="video-file-name">Video berhasil dipilih</p>
-            </div>
+          <div class="border-2 border-dashed border-gray-300 rounded-2xl p-6 text-center cursor-pointer" onclick="document.getElementById('input-video-baru').click()">
+            <i class="fa-solid fa-video text-gray-400 text-2xl mb-1"></i>
+            <p class="text-[10px] text-gray-400">Klik untuk unggah video produk</p>
+            <input type="file" id="input-video-baru" accept="video/*" class="hidden" onchange="previewVideoUpload(this)">
           </div>
+          <div id="video-preview-container" class="mt-2 hidden text-center"><p class="text-[10px] text-emerald-700 font-bold" id="video-file-name">Video terpilih</p></div>
         </div>
-
-        <!-- TOMBOL AKSI BAWAH -->
         <div class="fixed bottom-0 left-0 right-0 p-3 bg-white border-t z-50 flex gap-2 max-w-2xl mx-auto">
           <button type="button" onclick="tutupFormTambahProduk()" class="flex-1 bg-gray-100 font-bold py-2.5 rounded-xl text-xs">Batal</button>
           <button type="submit" class="flex-1 bg-emerald-700 text-white font-bold py-2.5 rounded-xl text-xs shadow">Kirim untuk ditinjau</button>
@@ -169,34 +122,115 @@
 
   <!-- ================= 3. HALAMAN PESANAN ================= -->
   <main id="tab-pesanan" class="max-w-2xl mx-auto p-3.5 space-y-3 hidden">
-    <div class="bg-white p-12 rounded-2xl border shadow-sm text-center space-y-2">
-      <h4 class="font-bold text-xs text-gray-800">Belum Ada Pesanan</h4>
-    </div>
+    <div class="bg-white p-12 rounded-2xl border shadow-sm text-center"><h4 class="font-bold text-xs text-gray-800">Belum Ada Pesanan</h4></div>
   </main>
 
   <!-- ================= 4. HALAMAN IKLAN ================= -->
   <main id="tab-iklan" class="max-w-2xl mx-auto p-3.5 space-y-3 hidden">
-    <div class="bg-white p-4 rounded-2xl border shadow-sm text-xs space-y-2">
-      <h3 class="font-bold text-gray-900">Iklan & Promosi Toko</h3>
-    </div>
+    <div class="bg-white p-4 rounded-2xl border shadow-sm text-xs"><h3 class="font-bold text-gray-900">Iklan & Promosi Toko</h3></div>
   </main>
 
   <!-- ================= 5. HALAMAN OBROLAN ================= -->
   <main id="tab-obrolan" class="max-w-2xl mx-auto p-3.5 space-y-3 hidden">
-    <div class="bg-white p-8 rounded-2xl border shadow-sm text-center space-y-2">
-      <h4 class="font-bold text-xs text-gray-800">Tidak ada pesan baru</h4>
-    </div>
+    <div class="bg-white p-8 rounded-2xl border shadow-sm text-center"><h4 class="font-bold text-xs text-gray-800">Tidak ada pesan baru</h4></div>
   </main>
 
-  <!-- ================= 6. HALAMAN PENGATURAN ================= -->
-  <main id="tab-pengaturan" class="max-w-2xl mx-auto p-3.5 space-y-3 hidden">
-    <div class="bg-white rounded-2xl border shadow-sm p-4 text-xs space-y-2">
-      <h3 class="font-bold text-gray-900 border-b pb-2">Pengaturan Toko</h3>
-      <a href="index.html" class="block w-full text-center bg-emerald-800 text-white font-bold py-2.5 rounded-xl mt-3 shadow">
-        Keluar ke Etalase Pembeli
+  <!-- ================= 6. HALAMAN PENGATURAN (SESUAI FOTO KEDUA & KETIGA + PANEL ADMIN TERKUNCI) ================= -->
+  <main id="tab-pengaturan" class="max-w-2xl mx-auto p-3.5 space-y-3.5 hidden pb-20">
+    <div class="bg-white rounded-2xl border shadow-sm overflow-hidden text-xs">
+      <div onclick="alert('Menu Informasi Akun')" class="p-3.5 border-b flex justify-between items-center hover:bg-gray-50 cursor-pointer">
+        <span class="flex items-center gap-2.5 font-medium"><i class="fa-regular fa-user text-gray-500 w-4"></i> Informasi akun</span>
+        <i class="fa-solid fa-chevron-right text-gray-400 text-[10px]"></i>
+      </div>
+      <div onclick="alert('Menu Informasi Toko')" class="p-3.5 border-b flex justify-between items-center hover:bg-gray-50 cursor-pointer">
+        <span class="flex items-center gap-2.5 font-medium"><i class="fa-solid fa-store text-gray-500 w-4"></i> Informasi toko</span>
+        <i class="fa-solid fa-chevron-right text-gray-400 text-[10px]"></i>
+      </div>
+      <div onclick="alert('Menu Informasi Bisnis')" class="p-3.5 border-b flex justify-between items-center hover:bg-gray-50 cursor-pointer">
+        <span class="flex items-center gap-2.5 font-medium"><i class="fa-solid fa-briefcase text-gray-500 w-4"></i> Informasi bisnis</span>
+        <i class="fa-solid fa-chevron-right text-gray-400 text-[10px]"></i>
+      </div>
+      <div onclick="alert('Menu Informasi Pajak')" class="p-3.5 border-b flex justify-between items-center hover:bg-gray-50 cursor-pointer">
+        <span class="flex items-center gap-2.5 font-medium"><i class="fa-solid fa-percent text-gray-500 w-4"></i> Informasi pajak</span>
+        <i class="fa-solid fa-chevron-right text-gray-400 text-[10px]"></i>
+      </div>
+      <div onclick="alert('Menu Pengiriman')" class="p-3.5 border-b flex justify-between items-center hover:bg-gray-50 cursor-pointer">
+        <span class="flex items-center gap-2.5 font-medium"><i class="fa-solid fa-truck text-gray-500 w-4"></i> Pengiriman</span>
+        <i class="fa-solid fa-chevron-right text-gray-400 text-[10px]"></i>
+      </div>
+      <div onclick="alert('Menu Pembayaran')" class="p-3.5 border-b flex justify-between items-center hover:bg-gray-50 cursor-pointer">
+        <span class="flex items-center gap-2.5 font-medium"><i class="fa-solid fa-wallet text-gray-500 w-4"></i> Pembayaran</span>
+        <i class="fa-solid fa-chevron-right text-gray-400 text-[10px]"></i>
+      </div>
+      <div onclick="alert('Menu Alamat Gudang')" class="p-3.5 border-b flex justify-between items-center hover:bg-gray-50 cursor-pointer">
+        <span class="flex items-center gap-2.5 font-medium"><i class="fa-solid fa-location-dot text-gray-500 w-4"></i> Alamat gudang</span>
+        <i class="fa-solid fa-chevron-right text-gray-400 text-[10px]"></i>
+      </div>
+      <div onclick="alert('Menu Mode Hari Libur')" class="p-3.5 border-b flex justify-between items-center hover:bg-gray-50 cursor-pointer">
+        <span class="flex items-center gap-2.5 font-medium"><i class="fa-solid fa-umbrella-beach text-gray-500 w-4"></i> Mode hari libur</span>
+        <i class="fa-solid fa-chevron-right text-gray-400 text-[10px]"></i>
+      </div>
+      <div onclick="alert('Menu Akun TikTok yang ditautkan')" class="p-3.5 border-b flex justify-between items-center hover:bg-gray-50 cursor-pointer">
+        <span class="flex items-center gap-2.5 font-medium"><i class="fa-solid fa-link text-gray-500 w-4"></i> Akun TikTok yang ditautkan</span>
+        <i class="fa-solid fa-chevron-right text-gray-400 text-[10px]"></i>
+      </div>
+      <div onclick="alert('Menu Pengaturan Chat')" class="p-3.5 border-b flex justify-between items-center hover:bg-gray-50 cursor-pointer">
+        <span class="flex items-center gap-2.5 font-medium"><i class="fa-regular fa-comment-dots text-gray-500 w-4"></i> Pengaturan Chat</span>
+        <i class="fa-solid fa-chevron-right text-gray-400 text-[10px]"></i>
+      </div>
+      <div onclick="alert('Menu Push Notif')" class="p-3.5 border-b flex justify-between items-center hover:bg-gray-50 cursor-pointer">
+        <span class="flex items-center gap-2.5 font-medium"><i class="fa-regular fa-bell text-gray-500 w-4"></i> Push notif</span>
+        <i class="fa-solid fa-chevron-right text-gray-400 text-[10px]"></i>
+      </div>
+      <div onclick="alert('Menu Bahasa')" class="p-3.5 border-b flex justify-between items-center hover:bg-gray-50 cursor-pointer">
+        <span class="flex items-center gap-2.5 font-medium"><i class="fa-solid fa-globe text-gray-500 w-4"></i> Bahasa</span>
+        <i class="fa-solid fa-chevron-right text-gray-400 text-[10px]"></i>
+      </div>
+      <div onclick="alert('Menu Zona Waktu')" class="p-3.5 border-b flex justify-between items-center hover:bg-gray-50 cursor-pointer">
+        <span class="flex items-center gap-2.5 font-medium"><i class="fa-regular fa-clock text-gray-500 w-4"></i> Zona waktu</span>
+        <i class="fa-solid fa-chevron-right text-gray-400 text-[10px]"></i>
+      </div>
+      <div onclick="alert('Borneoku Seller Center v11.5.0')" class="p-3.5 flex justify-between items-center hover:bg-gray-50 cursor-pointer">
+        <span class="flex items-center gap-2.5 font-medium"><i class="fa-solid fa-circle-info text-gray-500 w-4"></i> Tentang Aplikasi</span>
+        <i class="fa-solid fa-chevron-right text-gray-400 text-[10px]"></i>
+      </div>
+    </div>
+
+    <!-- KOLOM KHUSUS ADMIN (TERKUNCI PIN) -->
+    <div class="bg-amber-50 rounded-2xl border border-amber-200 p-4 text-xs space-y-2 shadow-sm">
+      <div class="flex items-center justify-between border-b border-amber-200 pb-2">
+        <h4 class="font-bold text-amber-950 flex items-center gap-1.5"><i class="fa-solid fa-lock text-amber-600"></i> Panel Khusus Admin</h4>
+        <span class="text-[9px] bg-amber-200 text-amber-900 font-bold px-2 py-0.5 rounded-full">Terkunci</span>
+      </div>
+      <p class="text-[10px] text-amber-900 leading-relaxed">Fitur manajemen sistem tingkat lanjut hanya dapat dibuka oleh Admin Utama Borneoku.</p>
+      <button onclick="bukaPanelAdminTerkunci()" class="w-full bg-amber-600 hover:bg-amber-700 text-white font-bold py-2 rounded-xl shadow-sm text-xs">
+        Buka Panel Admin (Masukkan PIN)
+      </button>
+    </div>
+
+    <!-- TOMBOL KELUAR -->
+    <div class="pt-1">
+      <a href="index.html" class="block w-full text-center bg-white border border-gray-300 text-red-600 font-bold py-3 rounded-2xl shadow-sm">
+        Keluar
       </a>
     </div>
   </main>
+
+  <!-- MODAL PIN ADMIN TERKUNCI -->
+  <div id="modal-pin-admin" class="fixed inset-0 bg-black/70 z-50 flex items-center justify-center p-4 hidden">
+    <div class="bg-white w-full max-w-sm rounded-2xl p-5 space-y-4 shadow-2xl text-xs text-center">
+      <div class="w-12 h-12 bg-amber-100 text-amber-700 rounded-full flex items-center justify-center mx-auto text-xl">
+        <i class="fa-solid fa-shield-halved"></i>
+      </div>
+      <h3 class="font-bold text-sm text-gray-900">Verifikasi Sandi Admin</h3>
+      <p class="text-[11px] text-gray-500">Masukkan PIN keamanan rahasia untuk membuka Panel Khusus Admin.</p>
+      <input type="password" id="input-pin-admin" placeholder="Masukkan PIN Admin (Contoh: 1234)" class="w-full p-3 border rounded-xl text-center text-sm font-bold tracking-widest outline-none focus:ring-2 focus:ring-amber-500">
+      <div class="flex gap-2 pt-1">
+        <button onclick="tutupModalPin()" class="flex-1 bg-gray-100 font-bold py-2.5 rounded-xl">Batal</button>
+        <button onclick="verifikasiPinAdmin()" class="flex-1 bg-amber-600 text-white font-bold py-2.5 rounded-xl shadow">Masuk</button>
+      </div>
+    </div>
+  </div>
 
   <!-- NAVBAR BAWAH (6 MENU UTAMA) -->
   <nav class="fixed bottom-0 left-0 right-0 bg-white border-t py-1.5 px-1 flex justify-around items-center z-50 text-[9px] shadow-lg">
@@ -204,7 +238,7 @@
       <i class="fa-solid fa-house text-base"></i>
       <span class="mt-0.5">Beranda</span>
     </button>
-    <button onclick="pindahTab('produk')" id="nav-produk" class="flex flex-col items-center text-emerald-800 font-bold">
+    <button onclick="pindahTab('produk')" id="nav-produk" class="flex flex-col items-center text-gray-400 hover:text-emerald-800">
       <i class="fa-solid fa-bag-shopping text-base"></i>
       <span class="mt-0.5">Produk</span>
     </button>
@@ -251,19 +285,23 @@
       if (tab === 'produk') loadProductCount();
     }
 
-    function bukaDropdownFilter() {
-      const drop = document.getElementById('dropdown-filter-produk');
-      drop.classList.toggle('hidden');
+    function bukaPanelAdminTerkunci() {
+      document.getElementById('modal-pin-admin').classList.remove('hidden');
     }
 
-    function bukaFormTambahProduk() {
-      document.getElementById('sub-produk-list-view').classList.add('hidden');
-      document.getElementById('sub-produk-add-form').classList.remove('hidden');
+    function tutupModalPin() {
+      document.getElementById('modal-pin-admin').classList.add('hidden');
+      document.getElementById('input-pin-admin').value = '';
     }
 
-    function tutupFormTambahProduk() {
-      document.getElementById('sub-produk-add-form').classList.add('hidden');
-      document.getElementById('sub-produk-list-view').classList.remove('hidden');
+    function verifikasiPinAdmin() {
+      const pin = document.getElementById('input-pin-admin').value;
+      if (pin === '1234') { // PIN Admin default (bisa diganti sesuai keinginan)
+        tutupModalPin();
+        alert('🔓 PIN Benar! Selamat datang di Panel Khusus Admin Borneoku.');
+      } else {
+        alert('❌ PIN Salah! Akses ditolak.');
+      }
     }
 
     function previewFotoUpload(input) {
@@ -324,4 +362,4 @@
     loadProductCount();
   </script>
 </body>
-</html>
+            </html>
