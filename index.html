@@ -42,7 +42,7 @@
     <!-- BANNER UTAMA -->
     <div class="bg-white p-4 rounded-2xl shadow-sm border space-y-1.5">
       <h2 class="font-bold text-sm text-gray-900">Satu Marketplace, <span class="text-amber-600">Berjuta Produk Unggulan</span> Indonesia</h2>
-      <p class="text-[11px] text-gray-500 leading-relaxed">Dukung UMKM & Pengrajin lokal Nusantara. Temukan berbagai produk unik & kerajinan pilihan[span_3](start_span)[span_3](end_span).</p>
+      <p class="text-[11px] text-gray-500 leading-relaxed">Dukung UMKM & Pengrajin lokal Nusantara. Temukan berbagai produk unik & kerajinan pilihan[span_2](start_span)[span_2](end_span).</p>
     </div>
 
     <!-- KOLOM PENCARIAN -->
@@ -83,7 +83,7 @@
     <!-- DAFTAR PRODUK DARI DATABASE -->
     <div class="space-y-2 pt-1">
       <div class="flex justify-between items-center px-1">
-        <h3 class="font-bold text-xs text-gray-900">Etalase Produk UMKM Nusantara[span_4](start_span)[span_4](end_span)</h3>
+        <h3 class="font-bold text-xs text-gray-900">Etalase Produk UMKM Nusantara[span_3](start_span)[span_3](end_span)</h3>
         <span class="text-[10px] text-gray-400" id="product-count">0 Produk Tersedia</span>
       </div>
 
@@ -93,28 +93,27 @@
     </div>
   </main>
 
-  <!-- NAVBAR BAWAH PEMBELI (PERSIS FOTO PERTAMA) -->
-  <nav class="fixed bottom-0 left-0 right-0 bg-white border-t py-2 px-1 flex justify-around items-center z-50 text-[9.5px] shadow-lg">
+  <!-- NAVBAR BAWAH (5 TEKS PERSIS FOTO KEDUA: Beranda, Produk, Pesanan, Izin LIVE, Pengaturan)[span_4](start_span)[span_4](end_span) -->
+  <nav class="fixed bottom-0 left-0 right-0 bg-white border-t py-1.5 px-1 flex justify-around items-center z-50 text-[9.5px] shadow-lg">
     <a href="index.html" class="flex flex-col items-center text-emerald-800 font-bold">
       <i class="fa-solid fa-house text-base"></i>
       <span class="mt-0.5">Beranda</span>
     </a>
     <a href="admin.html" class="flex flex-col items-center text-gray-400 hover:text-emerald-800">
-      <i class="fa-solid fa-box-archive text-base"></i>
-      <span class="mt-0.5">Tambah Produk</span>
+      <i class="fa-solid fa-bag-shopping text-base"></i>
+      <span class="mt-0.5">Produk</span>
     </a>
     <a href="admin.html" class="flex flex-col items-center text-gray-400 hover:text-emerald-800">
       <i class="fa-solid fa-clipboard-list text-base"></i>
       <span class="mt-0.5">Pesanan</span>
     </a>
-    <a href="admin.html" class="flex flex-col items-center text-gray-400 hover:text-emerald-800 relative">
-      <i class="fa-solid fa-bell text-base"></i>
-      <span class="absolute -top-1 right-1 bg-red-600 text-white text-[8px] font-bold px-1 rounded-full">1</span>
-      <span class="mt-0.5">Notif</span>
+    <a href="admin.html" class="flex flex-col items-center text-gray-400 hover:text-emerald-800">
+      <i class="fa-solid fa-shield-halved text-base"></i>
+      <span class="mt-0.5">Izin LIVE</span>
     </a>
     <a href="admin.html" class="flex flex-col items-center text-gray-400 hover:text-emerald-800">
-      <i class="fa-solid fa-gauge text-base"></i>
-      <span class="mt-0.5">Admin</span>
+      <i class="fa-solid fa-gear text-base"></i>
+      <span class="mt-0.5">Pengaturan</span>
     </a>
   </nav>
 
@@ -139,7 +138,7 @@
         }
 
         container.innerHTML = list.map(item => `
-          <div class="bg-white p-3 rounded-2xl border shadow-sm space-y-2 flex flex-col justify-between">
+          <div class="bg-white p-3.5 rounded-2xl border shadow-sm space-y-2 flex flex-col justify-between">
             <div>
               <img src="${item.image_url || 'https://images.unsplash.com/photo-1544816155-12df9643f363?auto=format&fit=crop&w=400&q=80'}" class="w-full h-32 rounded-xl object-cover border">
               <span class="inline-block mt-2 bg-emerald-100 text-emerald-800 text-[8px] font-bold px-1.5 py-0.5 rounded">${item.category || 'Umum'}</span>
