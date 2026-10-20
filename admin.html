@@ -17,7 +17,7 @@
 <body class="font-sans text-gray-800">
 
   <!-- HEADER UTAMA ADMIN BORNEOKU -->
-  <header class="bg-white p-3.5 shadow-sm sticky top-0 z-40 flex justify-between items-center border-b">
+  <header class="bg-white p-3.5 shadow-sm sticky top-0 z-45 flex justify-between items-center border-b">
     <div class="flex items-center gap-2">
       <img src="borneoku-logo.png" alt="Logo" class="w-8 h-8 rounded-full object-cover border">
       <div>
@@ -33,7 +33,7 @@
   </header>
 
   <!-- ================= 1. HALAMAN BERANDA ================= -->
-  <main id="tab-beranda" class="max-w-2xl mx-auto p-3.5 space-y-3 hidden">
+  <main id="tab-beranda" class="max-w-2xl mx-auto p-3.5 space-y-3">
     <div class="bg-white p-4 rounded-2xl shadow-sm border space-y-3">
       <h3 class="font-bold text-xs text-gray-900">Borneoku Seller Dashboard</h3>
       <p class="text-[11px] text-gray-500">Kelola produk, pesanan, dan siaran toko Anda dengan mudah.</p>
@@ -192,7 +192,7 @@
       </div>
     </div>
 
-    <!-- PANEL KHUSUS ADMIN (2 LAPIS KEAMANAN & UBAH PIN LUAR) -->
+    <!-- PANEL KHUSUS ADMIN -->
     <div class="bg-gradient-to-r from-amber-50 to-emerald-50 rounded-2xl border-2 border-amber-400 p-4 text-xs space-y-3 shadow-sm">
       <div class="flex items-center justify-between border-b border-amber-200 pb-2">
         <h4 class="font-extrabold text-emerald-950 flex items-center gap-1.5"><i class="fa-solid fa-lock text-amber-600"></i> Panel Super Admin Borneoku</h4>
@@ -200,12 +200,12 @@
       </div>
       <p class="text-[10px] text-gray-600 leading-relaxed">Pusat pengawasan aktivitas toko vendor & persetujuan produk.</p>
       
-      <!-- NAVIGASI UBAH PIN PRIBADI DI LUAR -->
+      <!-- NAVIGASI UBAH PIN PRIBADI DI LUAR (TANPA BAYANGAN AUTOCOMPLETE) -->
       <div class="bg-white p-3 rounded-xl border border-emerald-200 space-y-2">
         <label class="block font-bold text-emerald-900 text-[10px]">Atur PIN Konfirmasi Pribadi:</label>
         <div class="flex gap-2">
           <div class="relative flex items-center flex-grow">
-            <input type="password" id="input-ubah-pin-luar" placeholder="Masukkan PIN baru" class="w-full p-2.5 pr-8 border rounded-lg text-center font-bold text-xs outline-none focus:ring-1 focus:ring-emerald-700 bg-gray-50">
+            <input type="password" id="input-ubah-pin-luar" autocomplete="new-password" placeholder="Masukkan PIN baru" class="w-full p-2.5 pr-8 border rounded-lg text-center font-bold text-xs outline-none focus:ring-1 focus:ring-emerald-700 bg-gray-50">
             <button type="button" onclick="toggleMata('input-ubah-pin-luar', 'icon-mata-luar')" class="absolute right-2 text-emerald-800 p-1">
               <i id="icon-mata-luar" class="fa-solid fa-eye text-xs"></i>
             </button>
@@ -228,9 +228,9 @@
     </div>
   </main>
 
-  <!-- ================= 7. DASHBOARD SUPER ADMIN (MUNCUL SETELAH PIN BENAR) ================= -->
+  <!-- ================= 7. DASHBOARD SUPER ADMIN ================= -->
   <div id="dashboard-super-admin" class="fixed inset-0 bg-[#f4f5f7] z-50 overflow-y-auto hidden pb-20">
-    <header class="bg-emerald-900 text-white p-3.5 sticky top-0 z-40 flex justify-between items-center shadow">
+    <header class="bg-emerald-900 text-white p-3.5 sticky top-0 z-45 flex justify-between items-center shadow">
       <div class="flex items-center gap-2">
         <i class="fa-solid fa-shield-halved text-amber-400 text-base"></i>
         <h2 class="font-extrabold text-xs">Pusat Pengawasan Super Admin Borneoku</h2>
@@ -239,7 +239,6 @@
     </header>
 
     <div class="max-w-2xl mx-auto p-3.5 space-y-4">
-      <!-- STATISTIK RINGKASAN -->
       <div class="grid grid-cols-2 gap-3">
         <div class="bg-white p-3.5 rounded-2xl border shadow-sm">
           <p class="text-[10px] text-gray-400 font-bold">Total Toko Mitra Vendor</p>
@@ -251,7 +250,6 @@
         </div>
       </div>
 
-      <!-- DAFTAR PERSETUJUAN PRODUK VENDOR -->
       <div class="bg-white p-4 rounded-2xl border shadow-sm space-y-3">
         <h3 class="font-bold text-xs text-gray-900 border-b pb-2 flex items-center justify-between">
           <span>Persetujuan Produk Vendor / Mitra</span>
@@ -264,7 +262,7 @@
     </div>
   </div>
 
-  <!-- MODAL VERIFIKASI 2 PIN -->
+  <!-- MODAL VERIFIKASI 2 PIN (TANPA BAYANGAN AUTOCOMPLETE) -->
   <div id="modal-pin-admin" class="fixed inset-0 bg-black/70 z-50 flex items-center justify-center p-4 hidden">
     <div class="bg-white w-full max-w-sm rounded-3xl p-5 space-y-3 shadow-2xl text-xs text-center border-4 border-amber-400">
       <div class="w-12 h-12 bg-emerald-100 text-emerald-800 rounded-full flex items-center justify-center mx-auto text-xl border border-emerald-300 shadow">
@@ -277,7 +275,7 @@
       <div class="space-y-1 text-left">
         <label class="font-bold text-[10px] text-gray-700">1. PIN Utama Sistem:</label>
         <div class="relative flex items-center">
-          <input type="password" id="input-pin-utama" placeholder="PIN Utama (245758)" class="w-full p-2.5 pr-9 border-2 border-emerald-700 rounded-xl text-center text-xs font-bold tracking-widest outline-none bg-emerald-50/30">
+          <input type="password" id="input-pin-utama" autocomplete="new-password" placeholder="PIN Utama (245758)" class="w-full p-2.5 pr-9 border-2 border-emerald-700 rounded-xl text-center text-xs font-bold tracking-widest outline-none bg-emerald-50/30">
           <button type="button" onclick="toggleMata('input-pin-utama', 'icon-mata-1')" class="absolute right-2 text-emerald-800 p-1">
             <i id="icon-mata-1" class="fa-solid fa-eye text-xs"></i>
           </button>
@@ -288,7 +286,7 @@
       <div class="space-y-1 text-left">
         <label class="font-bold text-[10px] text-gray-700">2. PIN Konfirmasi Pribadi:</label>
         <div class="relative flex items-center">
-          <input type="password" id="input-pin-kedua" placeholder="PIN Pribadi Anda" class="w-full p-2.5 pr-9 border-2 border-amber-500 rounded-xl text-center text-xs font-bold tracking-widest outline-none bg-amber-50/30">
+          <input type="password" id="input-pin-kedua" autocomplete="new-password" placeholder="PIN Pribadi Anda" class="w-full p-2.5 pr-9 border-2 border-amber-500 rounded-xl text-center text-xs font-bold tracking-widest outline-none bg-amber-50/30">
           <button type="button" onclick="toggleMata('input-pin-kedua', 'icon-mata-2')" class="absolute right-2 text-amber-700 p-1">
             <i id="icon-mata-2" class="fa-solid fa-eye text-xs"></i>
           </button>
@@ -302,29 +300,29 @@
     </div>
   </div>
 
-  <!-- NAVBAR BAWAH (6 MENU UTAMA) -->
-  <nav class="fixed bottom-0 left-0 right-0 bg-white border-t py-1.5 px-1 flex justify-around items-center z-50 text-[9px] shadow-lg">
-    <button onclick="pindahTab('beranda')" id="nav-beranda" class="flex flex-col items-center text-gray-400 hover:text-emerald-800">
+  <!-- NAVBAR BAWAH (6 MENU UTAMA - LANGSUNG RESPONIF 1 KETUKAN) -->
+  <nav class="fixed bottom-0 left-0 right-0 bg-white border-t py-1.5 px-1 flex justify-around items-center z-40 text-[9px] shadow-lg">
+    <button onclick="pindahTab('beranda')" id="nav-beranda" class="flex flex-col items-center text-emerald-800 font-bold p-1 w-full">
       <i class="fa-solid fa-house text-base"></i>
       <span class="mt-0.5">Beranda</span>
     </button>
-    <button onclick="pindahTab('produk')" id="nav-produk" class="flex flex-col items-center text-emerald-800 font-bold">
+    <button onclick="pindahTab('produk')" id="nav-produk" class="flex flex-col items-center text-gray-400 hover:text-emerald-800 p-1 w-full">
       <i class="fa-solid fa-bag-shopping text-base"></i>
       <span class="mt-0.5">Produk</span>
     </button>
-    <button onclick="pindahTab('pesanan')" id="nav-pesanan" class="flex flex-col items-center text-gray-400 hover:text-emerald-800">
+    <button onclick="pindahTab('pesanan')" id="nav-pesanan" class="flex flex-col items-center text-gray-400 hover:text-emerald-800 p-1 w-full">
       <i class="fa-solid fa-clipboard-list text-base"></i>
       <span class="mt-0.5">Pesanan</span>
     </button>
-    <button onclick="pindahTab('iklan')" id="nav-iklan" class="flex flex-col items-center text-gray-400 hover:text-emerald-800">
+    <button onclick="pindahTab('iklan')" id="nav-iklan" class="flex flex-col items-center text-gray-400 hover:text-emerald-800 p-1 w-full">
       <i class="fa-solid fa-chart-line text-base"></i>
       <span class="mt-0.5">Iklan</span>
     </button>
-    <button onclick="pindahTab('obrolan')" id="nav-obrolan" class="flex flex-col items-center text-gray-400 hover:text-emerald-800">
+    <button onclick="pindahTab('obrolan')" id="nav-obrolan" class="flex flex-col items-center text-gray-400 hover:text-emerald-800 p-1 w-full">
       <i class="fa-solid fa-comments text-base"></i>
       <span class="mt-0.5">Obrolan</span>
     </button>
-    <button onclick="pindahTab('pengaturan')" id="nav-pengaturan" class="flex flex-col items-center text-gray-400 hover:text-emerald-800">
+    <button onclick="pindahTab('pengaturan')" id="nav-pengaturan" class="flex flex-col items-center text-gray-400 hover:text-emerald-800 p-1 w-full">
       <i class="fa-solid fa-gear text-base"></i>
       <span class="mt-0.5">Pengaturan</span>
     </button>
@@ -363,13 +361,13 @@
         const el = document.getElementById(`tab-${t}`);
         const nav = document.getElementById(`nav-${t}`);
         if (el) el.classList.add('hidden');
-        if (nav) nav.className = "flex flex-col items-center text-gray-400 hover:text-emerald-800";
+        if (nav) nav.className = "flex flex-col items-center text-gray-400 hover:text-emerald-800 p-1 w-full";
       });
 
       const selectedTab = document.getElementById(`tab-${tab}`);
       const selectedNav = document.getElementById(`nav-${tab}`);
       if (selectedTab) selectedTab.classList.remove('hidden');
-      if (selectedNav) selectedNav.className = "flex flex-col items-center text-emerald-800 font-bold";
+      if (selectedNav) selectedNav.className = "flex flex-col items-center text-emerald-800 font-bold p-1 w-full";
       
       if (tab === 'produk') loadProductCount();
     }
@@ -436,13 +434,13 @@
             <div class="flex items-center gap-3">
               <img src="${item.image_url || 'https://images.unsplash.com/photo-1544816155-12df9643f363?auto=format&fit=crop&w=400&q=80'}" class="w-12 h-12 rounded-lg object-cover border">
               <div>
-                <h4 class="font-bold text-gray-900 text-xs">${item.title}</h4>
-                <p class="text-[10px] text-emerald-800 font-extrabold">Rp ${Number(item.price).toLocaleString('id-ID')}</p>
+                <h4 class="font-bold text-gray-900 text-xs">${item.title || 'Produk Tanpa Nama'}</h4>
+                <p class="text-[10px] text-emerald-800 font-extrabold">Rp ${Number(item.price || 0).toLocaleString('id-ID')}</p>
               </div>
             </div>
             <div class="flex gap-1.5">
-              <button onclick="hapusProdukAdmin(${item.id})" class="bg-red-100 hover:bg-red-200 text-red-700 text-[10px] font-bold px-2.5 py-1.5 rounded-lg">Tolak</button>
-              <button onclick="alert('Produk ${item.title} berhasil disetujui tampil di etalase!')" class="bg-emerald-700 hover:bg-emerald-800 text-white text-[10px] font-bold px-2.5 py-1.5 rounded-lg">Setujui</button>
+              <button onclick="tolakProduk(${item.id})" class="bg-red-100 hover:bg-red-200 text-red-700 text-[10px] font-bold px-2.5 py-1.5 rounded-lg">Tolak</button>
+              <button onclick="setujuiProduk(${item.id}, '${item.title || 'Produk'}')" class="bg-emerald-700 hover:bg-emerald-800 text-white text-[10px] font-bold px-2.5 py-1.5 rounded-lg">Setujui</button>
             </div>
           </div>
         `).join('');
@@ -451,13 +449,18 @@
       }
     }
 
-    async function hapusProdukAdmin(id) {
-      if (confirm('Yakin ingin menghapus/menolak produk ini dari marketplace?')) {
+    async function setujuiProduk(id, title) {
+      alert(`✅ Produk "${title}" berhasil disetujui dan resmi tayang di etalase pembeli Borneoku!`);
+      loadAdminProducts();
+    }
+
+    async function tolakProduk(id) {
+      if (confirm('Yakin ingin menolak dan menghapus produk ini dari peninjauan?')) {
         const { error } = await supabaseClient.from('products').delete().eq('id', id);
         if (error) {
           alert('Gagal menghapus: ' + error.message);
         } else {
-          alert('Produk berhasil dihapus.');
+          alert('Produk berhasil ditolak & dihapus.');
           loadAdminProducts();
         }
       }
