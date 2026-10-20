@@ -15,7 +15,7 @@
 </head>
 <body class="font-sans text-gray-800">
 
-  <!-- HEADER UTAMA PEMBELI -->
+  <!-- HEADER UTAMA BORNEOKU -->
   <header class="bg-emerald-900 text-white p-3.5 sticky top-0 z-40 flex justify-between items-center shadow">
     <div class="flex items-center gap-2">
       <div class="w-8 h-8 rounded-full bg-amber-400 text-emerald-950 font-bold flex items-center justify-center text-xs shadow">
@@ -27,38 +27,94 @@
       </div>
     </div>
     <div class="flex items-center gap-2">
-      <a href="admin.html" class="bg-amber-500 hover:bg-amber-600 text-emerald-950 font-extrabold text-[10px] px-3 py-1.5 rounded-xl shadow flex items-center gap-1">
-        <i class="fa-solid fa-gauge"></i> Seller Center
-      </a>
+      <button onclick="alert('Bagikan Toko')" class="bg-emerald-800 text-white text-[10px] px-2.5 py-1.5 rounded-xl font-bold flex items-center gap-1 border border-emerald-700">
+        <i class="fa-solid fa-share-nodes"></i> Bagikan
+      </button>
+      <div class="bg-amber-400 text-emerald-950 text-[10px] px-2.5 py-1.5 rounded-xl font-extrabold flex items-center gap-1 shadow">
+        <i class="fa-solid fa-cart-shopping"></i> 0
+      </div>
     </div>
   </header>
 
   <!-- KONTEN UTAMA ETALASE -->
   <main class="max-w-2xl mx-auto p-3.5 space-y-3">
+    
     <!-- BANNER UTAMA -->
-    <div class="bg-white p-4 rounded-2xl shadow-sm border space-y-2">
-      <h2 class="font-bold text-sm text-gray-900">Satu Marketplace, <span class="text-emerald-800">Berjuta Produk Unggulan</span> Indonesia</h2>
-      <p class="text-[11px] text-gray-500 leading-relaxed">Dukung UMKM & Pengrajin lokal Nusantara. Temukan berbagai kerajinan dan produk pilihan.</p>
+    <div class="bg-white p-4 rounded-2xl shadow-sm border space-y-1.5">
+      <h2 class="font-bold text-sm text-gray-900">Satu Marketplace, <span class="text-amber-600">Berjuta Produk Unggulan</span> Indonesia</h2>
+      <p class="text-[11px] text-gray-500 leading-relaxed">Dukung UMKM & Pengrajin lokal Nusantara. Temukan berbagai produk unik & kerajinan pilihan[span_3](start_span)[span_3](end_span).</p>
+    </div>
+
+    <!-- KOLOM PENCARIAN -->
+    <div class="relative">
+      <input type="text" placeholder="Cari produk, pakaian, atau kerajinan..." class="w-full p-3 pl-4 pr-10 bg-white border rounded-2xl text-xs outline-none shadow-sm focus:ring-1 focus:ring-emerald-700">
+      <i class="fa-solid fa-magnifying-glass absolute right-3.5 top-3.5 text-gray-400"></i>
+    </div>
+
+    <!-- KARTU PINTASAN ATAS (TAMBAH PRODUK & MITRA PENJUAL) -->
+    <div class="grid grid-cols-2 gap-3">
+      <div class="bg-emerald-50/70 border border-emerald-200 p-3 rounded-2xl shadow-sm space-y-2">
+        <div class="w-8 h-8 bg-emerald-800 text-white rounded-xl flex items-center justify-center text-xs shadow">
+          <i class="fa-solid fa-box-archive"></i>
+        </div>
+        <div>
+          <h4 class="font-bold text-xs text-emerald-950">Tambah Produk</h4>
+          <p class="text-[9.5px] text-gray-500">Upload foto</p>
+        </div>
+        <a href="admin.html" class="block w-full bg-emerald-800 hover:bg-emerald-900 text-white font-bold py-1.5 rounded-xl text-[10.5px] text-center shadow">
+          + Tambah
+        </a>
+      </div>
+
+      <div class="bg-amber-50/70 border border-amber-200 p-3 rounded-2xl shadow-sm space-y-2">
+        <div class="w-8 h-8 bg-amber-600 text-white rounded-xl flex items-center justify-center text-xs shadow">
+          <i class="fa-solid fa-handshake"></i>
+        </div>
+        <div>
+          <h4 class="font-bold text-xs text-amber-950">Mitra Penjual</h4>
+          <p class="text-[9.5px] text-gray-500">Daftar resmi</p>
+        </div>
+        <button onclick="alert('Status Mitra Penjual: Terverifikasi Aktif')" class="w-full bg-amber-600 hover:bg-amber-700 text-white font-bold py-1.5 rounded-xl text-[10.5px] text-center shadow">
+          Gabung
+        </button>
+      </div>
     </div>
 
     <!-- DAFTAR PRODUK DARI DATABASE -->
-    <div class="space-y-2">
-      <h3 class="font-bold text-xs text-gray-900 px-1">Etalase Produk UMKM Nusantara</h3>
+    <div class="space-y-2 pt-1">
+      <div class="flex justify-between items-center px-1">
+        <h3 class="font-bold text-xs text-gray-900">Etalase Produk UMKM Nusantara[span_4](start_span)[span_4](end_span)</h3>
+        <span class="text-[10px] text-gray-400" id="product-count">0 Produk Tersedia</span>
+      </div>
+
       <div id="product-grid" class="grid grid-cols-2 gap-3">
-        <p class="text-xs text-gray-400 col-span-2 text-center py-6">Memuat produk...</p>
+        <p class="text-xs text-gray-400 col-span-2 text-center py-8">Memuat produk...</p>
       </div>
     </div>
   </main>
 
-  <!-- NAVBAR BAWAH PEMBELI -->
-  <nav class="fixed bottom-0 left-0 right-0 bg-white border-t py-1.5 px-1 flex justify-around items-center z-50 text-[9.5px]">
+  <!-- NAVBAR BAWAH PEMBELI (PERSIS FOTO PERTAMA) -->
+  <nav class="fixed bottom-0 left-0 right-0 bg-white border-t py-2 px-1 flex justify-around items-center z-50 text-[9.5px] shadow-lg">
     <a href="index.html" class="flex flex-col items-center text-emerald-800 font-bold">
       <i class="fa-solid fa-house text-base"></i>
       <span class="mt-0.5">Beranda</span>
     </a>
     <a href="admin.html" class="flex flex-col items-center text-gray-400 hover:text-emerald-800">
-      <i class="fa-solid fa-bag-shopping text-base"></i>
-      <span class="mt-0.5">Seller Center</span>
+      <i class="fa-solid fa-box-archive text-base"></i>
+      <span class="mt-0.5">Tambah Produk</span>
+    </a>
+    <a href="admin.html" class="flex flex-col items-center text-gray-400 hover:text-emerald-800">
+      <i class="fa-solid fa-clipboard-list text-base"></i>
+      <span class="mt-0.5">Pesanan</span>
+    </a>
+    <a href="admin.html" class="flex flex-col items-center text-gray-400 hover:text-emerald-800 relative">
+      <i class="fa-solid fa-bell text-base"></i>
+      <span class="absolute -top-1 right-1 bg-red-600 text-white text-[8px] font-bold px-1 rounded-full">1</span>
+      <span class="mt-0.5">Notif</span>
+    </a>
+    <a href="admin.html" class="flex flex-col items-center text-gray-400 hover:text-emerald-800">
+      <i class="fa-solid fa-gauge text-base"></i>
+      <span class="mt-0.5">Admin</span>
     </a>
   </nav>
 
@@ -75,10 +131,13 @@
         const { data, error } = await supabaseClient.from('products').select('*').order('id', { ascending: false });
         if (error) throw error;
         const list = data || [];
+        document.getElementById('product-count').innerText = `${list.length} Produk Tersedia`;
+        
         if (list.length === 0) {
-          container.innerHTML = `<p class="text-center text-xs text-gray-400 py-6 col-span-2">Belum ada produk tersedia di etalase.</p>`;
+          container.innerHTML = `<p class="text-center text-xs text-gray-400 py-8 col-span-2">Belum ada produk tersedia di etalase.</p>`;
           return;
         }
+
         container.innerHTML = list.map(item => `
           <div class="bg-white p-3 rounded-2xl border shadow-sm space-y-2 flex flex-col justify-between">
             <div>
@@ -87,9 +146,14 @@
               <h4 class="font-bold text-xs text-gray-900 truncate mt-1">${item.title}</h4>
               <p class="text-[11px] text-emerald-800 font-extrabold mt-0.5">Rp ${Number(item.price).toLocaleString('id-ID')}</p>
             </div>
-            <a href="https://wa.me/628123456789?text=Halo,%20saya%20tertarik%20dengan%20produk%20${encodeURIComponent(item.title)}" target="_blank" class="w-full bg-emerald-700 hover:bg-emerald-800 text-white font-bold py-1.5 rounded-xl text-[10px] text-center shadow">
-              <i class="fa-brands fa-whatsapp"></i> Pesan
-            </a>
+            <div class="grid grid-cols-2 gap-1.5 pt-1">
+              <button onclick="alert('Produk dimasukkan ke keranjang!')" class="bg-amber-500 hover:bg-amber-600 text-emerald-950 font-extrabold py-1.5 rounded-xl text-[9.5px] text-center shadow">
+                + Keranjang
+              </button>
+              <a href="https://wa.me/628123456789?text=Halo,%20saya%20tertarik%20dengan%20produk%20${encodeURIComponent(item.title)}" target="_blank" class="bg-emerald-800 hover:bg-emerald-900 text-white font-extrabold py-1.5 rounded-xl text-[9.5px] text-center shadow">
+                <i class="fa-brands fa-whatsapp"></i> Pesan
+              </a>
+            </div>
           </div>
         `).join('');
       } catch (err) {
