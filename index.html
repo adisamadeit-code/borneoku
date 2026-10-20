@@ -15,7 +15,7 @@
 </head>
 <body class="font-sans text-gray-800">
 
-  <!-- HEADER UTAMA BORNEOKU (LOGO BULAT KUNING SEPERTI FOTO KIRI) -->
+  <!-- HEADER UTAMA BORNEOKU (PERSIS SEPERTI FOTO) -->
   <header class="bg-emerald-900 text-white p-3.5 sticky top-0 z-40 flex justify-between items-center shadow">
     <div class="flex items-center gap-2.5">
       <div class="w-10 h-10 rounded-full bg-amber-400 border-2 border-yellow-200 text-emerald-950 font-black flex flex-col items-center justify-center text-[9px] shadow leading-none">
@@ -28,10 +28,10 @@
       </div>
     </div>
     <div class="flex items-center gap-2">
-      <button onclick="alert('Bagikan Toko')" class="bg-emerald-800 text-white text-[10px] px-2.5 py-1.5 rounded-xl font-bold flex items-center gap-1 border border-emerald-700">
+      <button onclick="alert('Bagikan Toko')" class="bg-emerald-800 hover:bg-emerald-700 text-white text-[10px] px-3 py-1.5 rounded-xl font-bold flex items-center gap-1.5 border border-emerald-700 shadow-sm">
         <i class="fa-solid fa-share-nodes"></i> Bagikan
       </button>
-      <div class="bg-amber-400 text-emerald-950 text-[10px] px-2.5 py-1.5 rounded-xl font-extrabold flex items-center gap-1 shadow">
+      <div class="bg-amber-400 text-emerald-950 text-[10px] px-3 py-1.5 rounded-xl font-extrabold flex items-center gap-1.5 shadow">
         <i class="fa-solid fa-cart-shopping"></i> 0
       </div>
     </div>
@@ -40,10 +40,14 @@
   <!-- KONTEN UTAMA ETALASE -->
   <main class="max-w-2xl mx-auto p-3.5 space-y-3">
     
-    <!-- BANNER UTAMA -->
-    <div class="bg-white p-4 rounded-2xl shadow-sm border space-y-1.5">
-      <h2 class="font-bold text-sm text-gray-900">Satu Marketplace, <span class="text-amber-600">Berjuta Produk Unggulan</span> Indonesia</h2>
-      <p class="text-[11px] text-gray-500 leading-relaxed">Dukung UMKM & Pengrajin lokal Nusantara. Temukan berbagai produk unik & kerajinan pilihan[span_2](start_span)[span_2](end_span).</p>
+    <!-- BANNER UTAMA PUTIH (PERSIS SEPERTI FOTO) -->
+    <div class="bg-white p-5 rounded-2xl shadow-sm border space-y-2 text-center">
+      <h2 class="font-bold text-sm text-gray-900 leading-snug">
+        Satu Marketplace, <span class="text-amber-600">Berjuta Produk Unggulan</span> Indonesia
+      </h2>
+      <p class="text-[11px] text-gray-500 leading-relaxed max-w-lg mx-auto">
+        Dukung UMKM & Pengrajin lokal Nusantara. Temukan berbagai produk unik & kerajinan pilihan.
+      </p>
     </div>
 
     <!-- KOLOM PENCARIAN -->
@@ -84,7 +88,7 @@
     <!-- DAFTAR PRODUK DARI DATABASE -->
     <div class="space-y-2 pt-1">
       <div class="flex justify-between items-center px-1">
-        <h3 class="font-bold text-xs text-gray-900">Etalase Produk UMKM Nusantara[span_3](start_span)[span_3](end_span)</h3>
+        <h3 class="font-bold text-xs text-gray-900">Etalase Produk UMKM Nusantara</h3>
         <span class="text-[10px] text-gray-400" id="product-count">0 Produk Tersedia</span>
       </div>
 
