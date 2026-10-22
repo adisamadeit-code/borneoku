@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BORNEOKU - Belanja Mudah, Jualan Lebih Luas</title>
     <style>
+        /* --- RESET & GAYA DASAR --- */
         * {
             box-sizing: border-box;
             margin: 0;
@@ -19,6 +20,8 @@
             align-items: center;
             min-height: 100vh;
         }
+
+        /* --- KERANGKA LAYAR HP (MOBILE CONTAINER) --- */
         .phone-container {
             width: 100%;
             max-width: 412px;
@@ -31,24 +34,21 @@
             box-shadow: 0 10px 25px rgba(0,0,0,0.15);
             overflow: hidden;
             border-radius: 20px;
-            border: 6px solid #1b5e20;
         }
+
+        /* --- KONTEN HALAMAN YANG BISA DIGULIR --- */
         .scrollable-content {
             flex: 1;
             overflow-y: auto;
-            padding-bottom: 70px;
-            display: none;
-        }
-        .scrollable-content.active-page {
-            display: block;
+            padding-bottom: 70px; /* Ruang untuk navigasi bawah */
         }
 
-        /* Header */
+        /* --- 1. HEADER HALAMAN 1 --- */
         .app-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 10px 16px;
+            padding: 12px 16px;
             background-color: #ffffff;
             position: sticky;
             top: 0;
@@ -60,31 +60,35 @@
             align-items: center;
             gap: 8px;
         }
-        .logo-official-img {
-            width: 42px;
-            height: 42px;
+        .logo-circle {
+            width: 38px;
+            height: 38px;
+            background: linear-gradient(135deg, #2e7d32, #fbc02d);
             border-radius: 50%;
-            object-fit: cover;
-            border: 2px solid #fbc02d;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.15);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-weight: bold;
+            font-size: 14px;
         }
         .logo-text h1 {
-            font-size: 15px;
+            font-size: 16px;
             color: #1b5e20;
             font-weight: 800;
             letter-spacing: 0.5px;
         }
         .logo-text p {
-            font-size: 8px;
+            font-size: 9px;
             color: #555;
         }
         .header-icons {
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 12px;
         }
         .lang-btn {
-            font-size: 11px;
+            font-size: 12px;
             font-weight: 600;
             background: #f1f8f5;
             padding: 4px 8px;
@@ -111,7 +115,7 @@
             font-weight: bold;
         }
 
-        /* Search */
+        /* --- 2. KOLOM PENCARIAN --- */
         .search-section {
             padding: 10px 16px;
             background-color: #ffffff;
@@ -129,44 +133,46 @@
             border: none;
             background: none;
             outline: none;
-            font-size: 12px;
+            font-size: 13px;
             margin-left: 8px;
             color: #333;
         }
+        .search-bar input::placeholder {
+            color: #757575;
+        }
 
-        /* Banners */
+        /* --- 3. DUA BANNER PROMOSI --- */
         .promo-banners {
             display: flex;
             gap: 10px;
-            padding: 8px 16px;
+            padding: 10px 16px;
         }
         .banner-card {
             flex: 1;
             border-radius: 12px;
-            padding: 10px;
+            padding: 12px;
             color: white;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
-            height: 95px;
+            height: 100px;
             background-size: cover;
             background-position: center;
         }
         .banner-left {
-            background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1590736969955-71cc9480175f?w=300') center/cover;
+            background: linear-gradient(135deg, #1b5e20, #388e3c);
         }
         .banner-right {
-            background: linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.4)), url('https://images.unsplash.com/photo-1436491865332-7a61a109cc05?w=300') center/cover;
+            background: linear-gradient(135deg, #e65100, #fbc02d);
         }
         .banner-card h3 {
             font-size: 11px;
             font-weight: bold;
             line-height: 1.2;
-            text-shadow: 0 1px 2px rgba(0,0,0,0.6);
         }
         .banner-btn {
             align-self: flex-start;
-            background-color: #fbc02d;
+            background-color: #ffffff;
             color: #1b5e20;
             border: none;
             padding: 4px 8px;
@@ -175,27 +181,30 @@
             font-weight: bold;
             cursor: pointer;
         }
+        .banner-right .banner-btn {
+            color: #e65100;
+        }
 
-        /* Mitra Banner */
+        /* --- 4. BANNER PENDAFTARAN MITRA --- */
         .mitra-banner-wrapper {
-            padding: 0 16px 8px 16px;
+            padding: 0 16px 10px 16px;
         }
         .mitra-banner {
             background: linear-gradient(135deg, #e8f5e9, #fffde7);
             border: 1px solid #a5d6a7;
             border-radius: 12px;
-            padding: 10px 14px;
+            padding: 12px 16px;
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
         .mitra-info h4 {
-            font-size: 11px;
+            font-size: 12px;
             color: #1b5e20;
             font-weight: bold;
         }
         .mitra-info p {
-            font-size: 9px;
+            font-size: 10px;
             color: #555;
             margin-top: 2px;
         }
@@ -203,60 +212,69 @@
             background-color: #fbc02d;
             color: #1b5e20;
             border: none;
-            padding: 5px 10px;
+            padding: 6px 12px;
             border-radius: 8px;
-            font-size: 10px;
+            font-size: 11px;
             font-weight: bold;
             cursor: pointer;
         }
 
-        /* Categories Scroll */
+        /* --- 5. KATEGORI PRODUK (SATU BARIS GESER) --- */
         .section-title {
-            padding: 8px 16px 4px 16px;
+            padding: 10px 16px 6px 16px;
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
         .section-title h3 {
-            font-size: 13px;
+            font-size: 14px;
             font-weight: bold;
             color: #1b5e20;
+        }
+        .section-title a {
+            font-size: 11px;
+            color: #2e7d32;
+            text-decoration: none;
+            font-weight: 600;
         }
         .categories-scroll {
             display: flex;
             overflow-x: auto;
-            gap: 12px;
-            padding: 6px 16px;
-            scrollbar-width: none;
+            gap: 16px;
+            padding: 8px 16px 12px 16px;
+            scroll-behavior: smooth;
+            scrollbar-width: none; /* Hilangkan scrollbar Firefox */
         }
-        .categories-scroll::-webkit-scrollbar { display: none; }
+        .categories-scroll::-webkit-scrollbar {
+            display: none; /* Hilangkan scrollbar Chrome/Safari */
+        }
         .cat-item {
             display: flex;
             flex-direction: column;
             align-items: center;
-            min-width: 52px;
+            min-width: 55px;
             cursor: pointer;
         }
         .cat-icon {
-            width: 42px;
-            height: 42px;
+            width: 45px;
+            height: 45px;
             background-color: #e8f5e9;
             border-radius: 50%;
             display: flex;
             justify-content: center;
             align-items: center;
-            font-size: 18px;
-            margin-bottom: 3px;
+            font-size: 20px;
+            margin-bottom: 4px;
             border: 1px solid #c8e6c9;
         }
         .cat-item span {
-            font-size: 9px;
+            font-size: 10px;
             text-align: center;
             color: #333;
             white-space: nowrap;
         }
 
-        /* Features / Menu Cepat */
+        /* --- 6. FITUR UNGGULAN --- */
         .features-grid {
             display: flex;
             justify-content: space-between;
@@ -269,11 +287,10 @@
             flex-direction: column;
             align-items: center;
             text-align: center;
-            cursor: pointer;
         }
         .feature-icon {
-            width: 38px;
-            height: 38px;
+            width: 36px;
+            height: 36px;
             background-color: #f1f8f5;
             border-radius: 50%;
             display: flex;
@@ -281,21 +298,20 @@
             align-items: center;
             font-size: 16px;
             color: #2e7d32;
-            margin-bottom: 3px;
-            border: 1px solid #c8e6c9;
+            margin-bottom: 2px;
         }
         .feature-item span {
             font-size: 9px;
-            color: #333;
-            font-weight: 600;
+            color: #555;
+            line-height: 1.1;
         }
 
-        /* Products Grid */
+        /* --- 7. PRODUK TERBARU --- */
         .products-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
-            gap: 8px;
-            padding: 6px 16px;
+            gap: 10px;
+            padding: 8px 16px;
         }
         .product-card {
             background: #fff;
@@ -304,63 +320,72 @@
             overflow: hidden;
             display: flex;
             flex-direction: column;
+            position: relative;
         }
         .product-img {
             width: 100%;
-            height: 100px;
+            height: 110px;
             background-color: #e0e0e0;
             display: flex;
             justify-content: center;
             align-items: center;
             font-size: 10px;
-            color: #666;
+            color: #775;
         }
         .product-body {
-            padding: 6px;
+            padding: 8px;
             display: flex;
             flex-direction: column;
-            gap: 3px;
+            gap: 4px;
+            flex: 1;
         }
         .product-title {
-            font-size: 10px;
+            font-size: 11px;
             font-weight: 600;
             color: #333;
-            height: 24px;
+            line-height: 1.2;
+            height: 26px;
             overflow: hidden;
         }
         .product-price {
-            font-size: 11px;
+            font-size: 12px;
             font-weight: bold;
             color: #d32f2f;
         }
         .product-footer {
-            font-size: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 9px;
             color: #777;
+            margin-top: 4px;
         }
 
-        /* Stores Scroll */
+        /* --- 8. TOKO PILIHAN --- */
         .stores-scroll {
             display: flex;
             overflow-x: auto;
-            gap: 8px;
-            padding: 6px 16px 16px 16px;
+            gap: 10px;
+            padding: 8px 16px 16px 16px;
             scrollbar-width: none;
         }
-        .stores-scroll::-webkit-scrollbar { display: none; }
+        .stores-scroll::-webkit-scrollbar {
+            display: none;
+        }
         .store-card {
-            min-width: 100px;
+            min-width: 110px;
             background: #fff;
             border: 1px solid #eaeaea;
             border-radius: 10px;
-            padding: 8px;
+            padding: 10px;
             display: flex;
             flex-direction: column;
             align-items: center;
             text-align: center;
         }
         .store-logo {
-            width: 40px;
-            height: 40px;
+            width: 45px;
+            height: 45px;
             background-color: #fbc02d;
             border-radius: 50%;
             display: flex;
@@ -368,13 +393,21 @@
             align-items: center;
             font-weight: bold;
             color: #1b5e20;
-            font-size: 11px;
-            margin-bottom: 4px;
+            font-size: 12px;
+            margin-bottom: 6px;
         }
-        .store-name { font-size: 10px; font-weight: bold; color: #333; }
-        .store-cat { font-size: 8px; color: #777; }
+        .store-name {
+            font-size: 11px;
+            font-weight: bold;
+            color: #333;
+        }
+        .store-cat {
+            font-size: 9px;
+            color: #777;
+            margin-top: 2px;
+        }
 
-        /* Bottom Nav */
+        /* --- 9. NAVIGASI UTAMA DI BAGIAN BAWAH --- */
         .bottom-nav {
             position: absolute;
             bottom: 0;
@@ -394,26 +427,29 @@
             align-items: center;
             text-decoration: none;
             color: #757575;
-            font-size: 9px;
+            font-size: 10px;
             gap: 2px;
-            cursor: pointer;
         }
         .nav-item.active {
             color: #2e7d32;
             font-weight: bold;
         }
-        .nav-item span.icon { font-size: 16px; }
+        .nav-item span.icon {
+            font-size: 18px;
+        }
     </style>
 </head>
 <body>
 
     <div class="phone-container">
         
-        <!-- ================= HALAMAN 1: BERANDA ================= -->
-        <div class="scrollable-content active-page" id="page-beranda">
+        <!-- KONTEN UTAMA BERANDA -->
+        <div class="scrollable-content">
+            
+            <!-- 1. HEADER -->
             <header class="app-header">
                 <div class="logo-area">
-                    <img src="https://raw.githubusercontent.com/adisamadeit-code/borneoku/main/logo.png" alt="Logo BorneoKu" class="logo-official-img" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'42\' height=\'42\'><circle cx=\'21\' cy=\'21\' r=\'20\' fill=\'%231b5e20\'/><text x=\'50%%\' y=\'55%%\' dominant-baseline=\'middle\' text-anchor=\'middle\' fill=\'%23fbc02d\' font-size=\'14\' font-weight=\'bold\'>BK</text></svg>'">
+                    <div class="logo-circle">BK</div>
                     <div class="logo-text">
                         <h1>BORNEOKU</h1>
                         <p>Belanja Mudah, Jualan Luas</p>
@@ -426,6 +462,7 @@
                 </div>
             </header>
 
+            <!-- 2. KOLOM PENCARIAN -->
             <div class="search-section">
                 <div class="search-bar">
                     <span>🔍</span>
@@ -434,6 +471,7 @@
                 </div>
             </div>
 
+            <!-- 3. DUA BANNER PROMOSI -->
             <div class="promo-banners">
                 <div class="banner-card banner-left">
                     <h3>Produk Pilihan Nusantara</h3>
@@ -445,6 +483,7 @@
                 </div>
             </div>
 
+            <!-- 4. BANNER MITRA PENJUAL -->
             <div class="mitra-banner-wrapper">
                 <div class="mitra-banner">
                     <div class="mitra-info">
@@ -455,6 +494,7 @@
                 </div>
             </div>
 
+            <!-- 5. KATEGORI PRODUK (SATU BARIS GESER) -->
             <div class="section-title">
                 <h3>Kategori Pilihan</h3>
             </div>
@@ -467,8 +507,13 @@
                 <div class="cat-item"><div class="cat-icon">💻</div><span>Elektronik</span></div>
                 <div class="cat-item"><div class="cat-icon">💄</div><span>Kecantikan</span></div>
                 <div class="cat-item"><div class="cat-icon">🧸</div><span>Ibu & Anak</span></div>
+                <div class="cat-item"><div class="cat-icon">⚽</div><span>Olahraga</span></div>
+                <div class="cat-item"><div class="cat-icon">📚</div><span>Buku & Hobi</span></div>
+                <div class="cat-item"><div class="cat-icon">🚗</div><span>Otomotif</span></div>
+                <div class="cat-item"><div class="cat-icon">🔲</div><span>Semua</span></div>
             </div>
 
+            <!-- 6. FITUR UNGGULAN -->
             <div class="features-grid">
                 <div class="feature-item"><div class="feature-icon">📦</div><span>Gratis Ongkir</span></div>
                 <div class="feature-item"><div class="feature-icon">🛡️</div><span>Terverifikasi</span></div>
@@ -477,6 +522,7 @@
                 <div class="feature-item"><div class="feature-icon">⭐</div><span>Tepercaya</span></div>
             </div>
 
+            <!-- 7. PRODUK TERBARU -->
             <div class="section-title">
                 <h3>Produk Terbaru</h3>
                 <a href="#">Lihat Semua →</a>
@@ -487,7 +533,9 @@
                     <div class="product-body">
                         <div class="product-title">Gamis Elegan Premium Syari</div>
                         <div class="product-price">Rp 149.000</div>
-                        <div class="product-footer">⭐ 4.9 (122 terjual)</div>
+                        <div class="product-footer">
+                            <span>⭐ 4.9 (122 terjual)</span>
+                        </div>
                     </div>
                 </div>
                 <div class="product-card">
@@ -495,11 +543,14 @@
                     <div class="product-body">
                         <div class="product-title">Jamu Kunyit Temulawak Asli</div>
                         <div class="product-price">Rp 10.000</div>
-                        <div class="product-footer">⭐ 4.9 (542 terjual)</div>
+                        <div class="product-footer">
+                            <span>⭐ 4.9 (542 terjual)</span>
+                        </div>
                     </div>
                 </div>
             </div>
 
+            <!-- 8. TOKO PILIHAN -->
             <div class="section-title">
                 <h3>Toko Pilihan Mitra</h3>
                 <a href="#">Lihat Semua →</a>
@@ -515,233 +566,38 @@
                     <div class="store-name">Borneo Fashion</div>
                     <div class="store-cat">Pakaian Muslim</div>
                 </div>
-            </div>
-        </div>
-
-        <!-- ================= HALAMAN 2: KATEGORI, VIDEO & LIVE ================= -->
-        <div class="scrollable-content" id="page-kategori">
-            <header class="app-header">
-                <div class="logo-area">
-                    <img src="https://raw.githubusercontent.com/adisamadeit-code/borneoku/main/logo.png" alt="Logo" class="logo-official-img" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'42\' height=\'42\'><circle cx=\'21\' cy=\'21\' r=\'20\' fill=\'%231b5e20\'/><text x=\'50%%\' y=\'55%%\' dominant-baseline=\'middle\' text-anchor=\'middle\' fill=\'%23fbc02d\' font-size=\'14\' font-weight=\'bold\'>BK</text></svg>'">
-                    <div class="logo-text">
-                        <h1>Kategori & Hiburan</h1>
-                        <p>Produk, Video, & Live Streaming</p>
-                    </div>
-                </div>
-                <div class="header-icons">
-                    <button class="icon-btn">🛒<span class="badge">2</span></button>
-                </div>
-            </header>
-
-            <div class="search-section">
-                <div class="search-bar">
-                    <span>🔍</span>
-                    <input type="text" placeholder="Cari kategori, video, atau live produk...">
+                <div class="store-card">
+                    <div class="store-logo">KC</div>
+                    <div class="store-name">Kalimantan Craft</div>
+                    <div class="store-cat">Kerajinan Tangan</div>
                 </div>
             </div>
 
-            <!-- Banner Pintu Masuk Video & Live -->
-            <div class="promo-banners">
-                <div class="banner-card" style="background: linear-gradient(135deg, #1b5e20, #004d40); width: 100%; height: 85px;">
-                    <h3>Temukan Produk, Tonton Videonya!</h3>
-                    <p style="font-size: 8px; margin: 2px 0;">Lihat produk pilihan & saksikan live streaming penjual.</p>
-                    <button class="banner-btn">Tonton Sekarang →</button>
-                </div>
-            </div>
+        </div> <!-- Akhir dari scrollable-content -->
 
-            <!-- 5 Menu Cepat (Termasuk Kategori, Video, & Live) -->
-            <div class="features-grid" style="padding: 10px 16px; background: #fff; margin-bottom: 6px; border-bottom: 1px solid #eaeaea;">
-                <div class="feature-item"><div class="feature-icon" style="background:#e8f5e9;">▦</div><span>Kategori</span></div>
-                <div class="feature-item"><div class="feature-icon" style="background:#e8f5e9;">▶️</div><span>Video</span></div>
-                <div class="feature-item"><div class="feature-icon" style="background:#e8f5e9;">🔴</div><span>Live</span></div>
-                <div class="feature-item"><div class="feature-icon" style="background:#e8f5e9;">♡</div><span>Favorit</span></div>
-                <div class="feature-item"><div class="feature-icon" style="background:#e8f5e9;">🕘</div><span>Terbaru</span></div>
-            </div>
-
-            <div class="section-title"><h3>Daftar Kategori Utama</h3></div>
-            
-            <!-- Daftar Kategori Lengkap Vertikal -->
-            <div style="padding: 0 16px; display: flex; flex-direction: column; gap: 8px; margin-bottom: 20px;">
-                
-                <div style="display: flex; align-items: center; background: #fff; padding: 10px 12px; border-radius: 10px; border: 1px solid #eaeaea; justify-content: space-between; cursor: pointer;">
-                    <div style="display: flex; align-items: center; gap: 10px;">
-                        <span style="font-size: 22px;">👗</span>
-                        <div>
-                            <div style="font-size: 12px; font-weight: bold; color: #1b5e20;">Fashion</div>
-                            <div style="font-size: 9px; color: #666;">Lihat produk dan subkategori</div>
-                        </div>
-                    </div>
-                    <span style="font-size: 12px; color: #888;">›</span>
-                </div>
-
-                <div style="display: flex; align-items: center; background: #fff; padding: 10px 12px; border-radius: 10px; border: 1px solid #eaeaea; justify-content: space-between; cursor: pointer;">
-                    <div style="display: flex; align-items: center; gap: 10px;">
-                        <span style="font-size: 22px;">🍲</span>
-                        <div>
-                            <div style="font-size: 12px; font-weight: bold; color: #1b5e20;">Makanan & Minuman</div>
-                            <div style="font-size: 9px; color: #666;">Lihat produk dan subkategori</div>
-                        </div>
-                    </div>
-                    <span style="font-size: 12px; color: #888;">›</span>
-                </div>
-
-                <div style="display: flex; align-items: center; background: #fff; padding: 10px 12px; border-radius: 10px; border: 1px solid #eaeaea; justify-content: space-between; cursor: pointer;">
-                    <div style="display: flex; align-items: center; gap: 10px;">
-                        <span style="font-size: 22px;">🧺</span>
-                        <div>
-                            <div style="font-size: 12px; font-weight: bold; color: #1b5e20;">Kerajinan Tangan</div>
-                            <div style="font-size: 9px; color: #666;">Lihat produk dan subkategori</div>
-                        </div>
-                    </div>
-                    <span style="font-size: 12px; color: #888;">›</span>
-                </div>
-
-                <div style="display: flex; align-items: center; background: #fff; padding: 10px 12px; border-radius: 10px; border: 1px solid #eaeaea; justify-content: space-between; cursor: pointer;">
-                    <div style="display: flex; align-items: center; gap: 10px;">
-                        <span style="font-size: 22px;">🌿</span>
-                        <div>
-                            <div style="font-size: 12px; font-weight: bold; color: #1b5e20;">Kesehatan & Herbal</div>
-                            <div style="font-size: 9px; color: #666;">Lihat produk dan subkategori</div>
-                        </div>
-                    </div>
-                    <span style="font-size: 12px; color: #888;">›</span>
-                </div>
-
-                <div style="display: flex; align-items: center; background: #fff; padding: 10px 12px; border-radius: 10px; border: 1px solid #eaeaea; justify-content: space-between; cursor: pointer;">
-                    <div style="display: flex; align-items: center; gap: 10px;">
-                        <span style="font-size: 22px;">🏠</span>
-                        <div>
-                            <div style="font-size: 12px; font-weight: bold; color: #1b5e20;">Rumah Tangga</div>
-                            <div style="font-size: 9px; color: #666;">Lihat produk dan subkategori</div>
-                        </div>
-                    </div>
-                    <span style="font-size: 12px; color: #888;">›</span>
-                </div>
-
-                <div style="display: flex; align-items: center; background: #fff; padding: 10px 12px; border-radius: 10px; border: 1px solid #eaeaea; justify-content: space-between; cursor: pointer;">
-                    <div style="display: flex; align-items: center; gap: 10px;">
-                        <span style="font-size: 22px;">💻</span>
-                        <div>
-                            <div style="font-size: 12px; font-weight: bold; color: #1b5e20;">Elektronik</div>
-                            <div style="font-size: 9px; color: #666;">Lihat produk dan subkategori</div>
-                        </div>
-                    </div>
-                    <span style="font-size: 12px; color: #888;">›</span>
-                </div>
-
-                <div style="display: flex; align-items: center; background: #fff; padding: 10px 12px; border-radius: 10px; border: 1px solid #eaeaea; justify-content: space-between; cursor: pointer;">
-                    <div style="display: flex; align-items: center; gap: 10px;">
-                        <span style="font-size: 22px;">💄</span>
-                        <div>
-                            <div style="font-size: 12px; font-weight: bold; color: #1b5e20;">Kecantikan</div>
-                            <div style="font-size: 9px; color: #666;">Lihat produk dan subkategori</div>
-                        </div>
-                    </div>
-                    <span style="font-size: 12px; color: #888;">›</span>
-                </div>
-
-                <div style="display: flex; align-items: center; background: #fff; padding: 10px 12px; border-radius: 10px; border: 1px solid #eaeaea; justify-content: space-between; cursor: pointer;">
-                    <div style="display: flex; align-items: center; gap: 10px;">
-                        <span style="font-size: 22px;">🧸</span>
-                        <div>
-                            <div style="font-size: 12px; font-weight: bold; color: #1b5e20;">Ibu & Anak</div>
-                            <div style="font-size: 9px; color: #666;">Lihat produk dan subkategori</div>
-                        </div>
-                    </div>
-                    <span style="font-size: 12px; color: #888;">›</span>
-                </div>
-
-                <div style="display: flex; align-items: center; background: #fff; padding: 10px 12px; border-radius: 10px; border: 1px solid #eaeaea; justify-content: space-between; cursor: pointer;">
-                    <div style="display: flex; align-items: center; gap: 10px;">
-                        <span style="font-size: 22px;">📚</span>
-                        <div>
-                            <div style="font-size: 12px; font-weight: bold; color: #1b5e20;">Buku & Hobi</div>
-                            <div style="font-size: 9px; color: #666;">Lihat produk dan subkategori</div>
-                        </div>
-                    </div>
-                    <span style="font-size: 12px; color: #888;">›</span>
-                </div>
-
-                <div style="display: flex; align-items: center; background: #fff; padding: 10px 12px; border-radius: 10px; border: 1px solid #eaeaea; justify-content: space-between; cursor: pointer;">
-                    <div style="display: flex; align-items: center; gap: 10px;">
-                        <span style="font-size: 22px;">🚗</span>
-                        <div>
-                            <div style="font-size: 12px; font-weight: bold; color: #1b5e20;">Otomotif</div>
-                            <div style="font-size: 9px; color: #666;">Lihat produk dan subkategori</div>
-                        </div>
-                    </div>
-                    <span style="font-size: 12px; color: #888;">›</span>
-                </div>
-
-            </div>
-        </div>
-
-        <!-- ================= HALAMAN 3: TOKO MITRA ================= -->
-        <div class="scrollable-content" id="page-toko">
-            <header class="app-header">
-                <div class="logo-area">
-                    <div class="logo-text"><h1>Mitra Toko</h1><p>Direktori Penjual</p></div>
-                </div>
-            </header>
-            <div class="search-section">
-                <div class="search-bar"><span>🔍</span><input type="text" placeholder="Cari nama toko..."></div>
-            </div>
-            <div class="section-title"><h3>Daftar Mitra Penjual</h3></div>
-            <div style="padding: 0 16px; display: flex; flex-direction: column; gap: 8px;">
-                <div style="background: #fff; border: 1px solid #eaeaea; border-radius: 10px; padding: 10px; display: flex; align-items: center; justify-content: space-between;">
-                    <div><div style="font-size: 11px; font-weight: bold; color: #1b5e20;">Adisa Fresh Mart 🛡️</div><div style="font-size: 8px; color: #666;">Kuliner & Herbal • ⭐ 4.9</div></div>
-                    <button style="background: #2e7d32; color: white; border: none; padding: 5px 8px; border-radius: 6px; font-size: 9px;">Kunjungi</button>
-                </div>
-            </div>
-        </div>
-
-        <!-- ================= HALAMAN 4: DETAIL TOKO ================= -->
-        <div class="scrollable-content" id="page-detail">
-            <header class="app-header"><div class="logo-area"><div class="logo-text"><h1>Etalase Toko</h1></div></div></header>
-            <div style="padding: 16px; text-align: center;"><p style="font-size: 11px; color: #555;">Halaman Detail Toko & Produk Pilihan Mitra.</p></div>
-        </div>
-
-        <!-- ================= HALAMAN 5: PROMO ================= -->
-        <div class="scrollable-content" id="page-promo">
-            <header class="app-header"><div class="logo-area"><div class="logo-text"><h1>Promo BorneoKu</h1></div></div></header>
-            <div style="padding: 16px;"><p style="font-size: 11px; color: #555;">Daftar voucher diskon & gratis ongkir aktif.</p></div>
-        </div>
-
-        <!-- ================= HALAMAN 6: CHAT ================= -->
-        <div class="scrollable-content" id="page-chat">
-            <header class="app-header"><div class="logo-area"><div class="logo-text"><h1>Pusat Chat</h1></div></div></header>
-            <div style="padding: 16px;"><p style="font-size: 11px; color: #555;">Daftar percakapan dengan penjual.</p></div>
-        </div>
-
-        <!-- ================= HALAMAN 7: AKUN ================= -->
-        <div class="scrollable-content" id="page-akun">
-            <header class="app-header"><div class="logo-area"><div class="logo-text"><h1>Akun Saya</h1></div></div></header>
-            <div style="padding: 16px;"><p style="font-size: 11px; color: #555;">Pengaturan profil, pesanan, & pendaftaran mitra.</p></div>
-        </div>
-
-        <!-- ================= NAVIGASI BAWAH (KONSISTEN) ================= -->
+        <!-- 9. NAVIGASI UTAMA DI BAGIAN BAWAH -->
         <nav class="bottom-nav">
-            <a href="#" class="nav-item active" data-target="page-beranda">
+            <a href="#" class="nav-item active">
                 <span class="icon">🏠</span>
                 <span>Beranda</span>
             </a>
-            <a href="#" class="nav-item" data-target="page-kategori">
+            <a href="#" class="nav-item">
                 <span class="icon">▦</span>
                 <span>Kategori</span>
             </a>
-            <a href="#" class="nav-item" data-target="page-toko">
+            <a href="#" class="nav-item">
                 <span class="icon">🏬</span>
                 <span>Toko</span>
             </a>
-            <a href="#" class="nav-item" data-target="page-promo">
+            <a href="#" class="nav-item">
                 <span class="icon">🏷️</span>
                 <span>Promo</span>
             </a>
-            <a href="#" class="nav-item" data-target="page-chat">
+            <a href="#" class="nav-item">
                 <span class="icon">💬</span>
                 <span>Chat</span>
             </a>
-            <a href="#" class="nav-item" data-target="page-akun">
+            <a href="#" class="nav-item">
                 <span class="icon">👤</span>
                 <span>Akun</span>
             </a>
@@ -749,25 +605,5 @@
 
     </div>
 
-    <script>
-        const navItems = document.querySelectorAll('.bottom-nav .nav-item');
-        const pages = document.querySelectorAll('.phone-container .scrollable-content');
-
-        navItems.forEach(item => {
-            item.addEventListener('click', (e) => {
-                e.preventDefault();
-                navItems.forEach(nav => nav.classList.remove('active'));
-                item.classList.add('active');
-
-                pages.forEach(p => p.classList.remove('active-page'));
-
-                const targetId = item.getAttribute('data-target');
-                const targetPage = document.getElementById(targetId);
-                if (targetPage) {
-                    targetPage.classList.add('active-page');
-                }
-            });
-        });
-    </script>
 </body>
-  </html>
+</html>
