@@ -1,97 +1,695 @@
-        <!-- ========================================== -->
-        <!-- HALAMAN 7 — AKUN PENGGUNA & PENDAFTARAN MITRA -->
-        <!-- ========================================== -->
-        <div class="scrollable-content" id="page-akun" style="display: none;">
-            
-            <!-- 1. HEADER HALAMAN AKUN -->
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BORNEOKU - Belanja Mudah, Jualan Lebih Luas</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        body {
+            background-color: #f4f6f5;
+            color: #2c3e50;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        .phone-container {
+            width: 100%;
+            max-width: 412px;
+            height: 100vh;
+            max-height: 890px;
+            background-color: #ffffff;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+            overflow: hidden;
+            border-radius: 20px;
+            border: 6px solid #1b5e20;
+        }
+        .scrollable-content {
+            flex: 1;
+            overflow-y: auto;
+            padding-bottom: 70px;
+            display: none;
+        }
+        .scrollable-content.active-page {
+            display: block;
+        }
+
+        /* Header */
+        .app-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 16px;
+            background-color: #ffffff;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 1px solid #eaeaea;
+        }
+        .logo-area {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        /* Logo Resmi Lingkaran Hijau Emas */
+        .logo-circle-official {
+            width: 42px;
+            height: 42px;
+            background: radial-gradient(circle, #fffde7 0%, #fbc02d 60%, #1b5e20 100%);
+            border: 2px solid #2e7d32;
+            border-radius: 50%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: #1b5e20;
+            font-weight: 900;
+            font-size: 11px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+            text-align: center;
+            line-height: 1;
+        }
+        .logo-text h1 {
+            font-size: 15px;
+            color: #1b5e20;
+            font-weight: 800;
+            letter-spacing: 0.5px;
+        }
+        .logo-text p {
+            font-size: 8px;
+            color: #555;
+        }
+        .header-icons {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .lang-btn {
+            font-size: 11px;
+            font-weight: 600;
+            background: #f1f8f5;
+            padding: 4px 8px;
+            border-radius: 12px;
+            border: 1px solid #c8e6c9;
+            cursor: pointer;
+        }
+        .icon-btn {
+            position: relative;
+            font-size: 18px;
+            cursor: pointer;
+            background: none;
+            border: none;
+        }
+        .badge {
+            position: absolute;
+            top: -5px;
+            right: -6px;
+            background-color: #e53935;
+            color: white;
+            font-size: 9px;
+            padding: 2px 5px;
+            border-radius: 10px;
+            font-weight: bold;
+        }
+
+        /* Search */
+        .search-section {
+            padding: 10px 16px;
+            background-color: #ffffff;
+        }
+        .search-bar {
+            display: flex;
+            align-items: center;
+            background-color: #f1f3f4;
+            border-radius: 10px;
+            padding: 8px 12px;
+            border: 1px solid #e0e0e0;
+        }
+        .search-bar input {
+            flex: 1;
+            border: none;
+            background: none;
+            outline: none;
+            font-size: 12px;
+            margin-left: 8px;
+            color: #333;
+        }
+
+        /* Banners */
+        .promo-banners {
+            display: flex;
+            gap: 10px;
+            padding: 8px 16px;
+        }
+        .banner-card {
+            flex: 1;
+            border-radius: 12px;
+            padding: 10px;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            height: 95px;
+            background-size: cover;
+            background-position: center;
+        }
+        .banner-left {
+            background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1590736969955-71cc9480175f?w=300') center/cover;
+        }
+        .banner-right {
+            background: linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.4)), url('https://images.unsplash.com/photo-1436491865332-7a61a109cc05?w=300') center/cover;
+        }
+        .banner-card h3 {
+            font-size: 11px;
+            font-weight: bold;
+            line-height: 1.2;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.6);
+        }
+        .banner-btn {
+            align-self: flex-start;
+            background-color: #fbc02d;
+            color: #1b5e20;
+            border: none;
+            padding: 4px 8px;
+            border-radius: 6px;
+            font-size: 10px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        /* Mitra Banner */
+        .mitra-banner-wrapper {
+            padding: 0 16px 8px 16px;
+        }
+        .mitra-banner {
+            background: linear-gradient(135deg, #e8f5e9, #fffde7);
+            border: 1px solid #a5d6a7;
+            border-radius: 12px;
+            padding: 10px 14px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .mitra-info h4 {
+            font-size: 11px;
+            color: #1b5e20;
+            font-weight: bold;
+        }
+        .mitra-info p {
+            font-size: 9px;
+            color: #555;
+            margin-top: 2px;
+        }
+        .mitra-btn {
+            background-color: #fbc02d;
+            color: #1b5e20;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 8px;
+            font-size: 10px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        /* Categories Scroll */
+        .section-title {
+            padding: 8px 16px 4px 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .section-title h3 {
+            font-size: 13px;
+            font-weight: bold;
+            color: #1b5e20;
+        }
+        .section-title a {
+            font-size: 11px;
+            color: #2e7d32;
+            text-decoration: none;
+            font-weight: 600;
+        }
+        .categories-scroll {
+            display: flex;
+            overflow-x: auto;
+            gap: 12px;
+            padding: 6px 16px;
+            scrollbar-width: none;
+        }
+        .categories-scroll::-webkit-scrollbar { display: none; }
+        .cat-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-width: 52px;
+            cursor: pointer;
+        }
+        .cat-icon {
+            width: 42px;
+            height: 42px;
+            background-color: #e8f5e9;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 18px;
+            margin-bottom: 3px;
+            border: 1px solid #c8e6c9;
+        }
+        .cat-item span {
+            font-size: 9px;
+            text-align: center;
+            color: #333;
+            white-space: nowrap;
+        }
+
+        /* Features */
+        .features-grid {
+            display: flex;
+            justify-content: space-between;
+            padding: 6px 16px;
+            gap: 4px;
+        }
+        .feature-item {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+        .feature-icon {
+            width: 34px;
+            height: 34px;
+            background-color: #f1f8f5;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 15px;
+            color: #2e7d32;
+            margin-bottom: 2px;
+        }
+        .feature-item span {
+            font-size: 8px;
+            color: #555;
+            line-height: 1.1;
+        }
+
+        /* Products Grid */
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 8px;
+            padding: 6px 16px;
+        }
+        .product-card {
+            background: #fff;
+            border: 1px solid #eaeaea;
+            border-radius: 10px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+        .product-img {
+            width: 100%;
+            height: 100px;
+            background-color: #e0e0e0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 10px;
+            color: #666;
+        }
+        .product-body {
+            padding: 6px;
+            display: flex;
+            flex-direction: column;
+            gap: 3px;
+        }
+        .product-title {
+            font-size: 10px;
+            font-weight: 600;
+            color: #333;
+            height: 24px;
+            overflow: hidden;
+        }
+        .product-price {
+            font-size: 11px;
+            font-weight: bold;
+            color: #d32f2f;
+        }
+        .product-footer {
+            font-size: 8px;
+            color: #777;
+        }
+
+        /* Stores Scroll */
+        .stores-scroll {
+            display: flex;
+            overflow-x: auto;
+            gap: 8px;
+            padding: 6px 16px 16px 16px;
+            scrollbar-width: none;
+        }
+        .stores-scroll::-webkit-scrollbar { display: none; }
+        .store-card {
+            min-width: 100px;
+            background: #fff;
+            border: 1px solid #eaeaea;
+            border-radius: 10px;
+            padding: 8px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+        .store-logo {
+            width: 40px;
+            height: 40px;
+            background-color: #fbc02d;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: bold;
+            color: #1b5e20;
+            font-size: 11px;
+            margin-bottom: 4px;
+        }
+        .store-name { font-size: 10px; font-weight: bold; color: #333; }
+        .store-cat { font-size: 8px; color: #777; }
+
+        /* Bottom Nav */
+        .bottom-nav {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 60px;
+            background-color: #ffffff;
+            border-top: 1px solid #eaeaea;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            z-index: 1000;
+        }
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-decoration: none;
+            color: #757575;
+            font-size: 9px;
+            gap: 2px;
+            cursor: pointer;
+        }
+        .nav-item.active {
+            color: #2e7d32;
+            font-weight: bold;
+        }
+        .nav-item span.icon { font-size: 16px; }
+    </style>
+</head>
+<body>
+
+    <div class="phone-container">
+        
+        <!-- ================= HALAMAN 1: BERANDA ================= -->
+        <div class="scrollable-content active-page" id="page-beranda">
             <header class="app-header">
                 <div class="logo-area">
-                    <div class="logo-circle">BK</div>
+                    <!-- Logo Resmi Lingkaran Hijau Emas -->
+                    <div class="logo-circle-official">
+                        <span>BK</span>
+                    </div>
                     <div class="logo-text">
-                        <h1>Akun BorneoKu</h1>
-                        <p>Profil & Pengaturan</p>
+                        <h1>BORNEOKU</h1>
+                        <p>Belanja Mudah, Jualan Luas</p>
                     </div>
                 </div>
                 <div class="header-icons">
-                    <button class="icon-btn">⚙️</button>
+                    <button class="lang-btn">ID 🌐</button>
+                    <button class="icon-btn">🔔<span class="badge">3</span></button>
+                    <button class="icon-btn">🛒<span class="badge">2</span></button>
                 </div>
             </header>
 
-            <!-- 2. KARTU PROFIL PENGGUNA -->
-            <div style="background: linear-gradient(135deg, #1b5e20, #2e7d32); padding: 20px 16px; color: white; display: flex; align-items: center; gap: 14px;">
-                <div style="width: 55px; height: 55px; background: #fbc02d; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-weight: bold; color: #1b5e20; font-size: 18px; border: 2px solid #fff;">
-                    U
-                </div>
-                <div>
-                    <div style="font-size: 14px; font-weight: bold;">Pengguna BorneoKu</div>
-                    <div style="font-size: 10px; opacity: 0.9; margin-top: 2px;">+62 812-3456-7890</div>
-                    <div style="font-size: 9px; background: rgba(255,255,255,0.2); padding: 2px 6px; border-radius: 6px; display: inline-block; margin-top: 4px;">Anggota Pembeli</div>
+            <div class="search-section">
+                <div class="search-bar">
+                    <span>🔍</span>
+                    <input type="text" placeholder="Cari produk, toko, atau kategori...">
+                    <span>🔲</span>
                 </div>
             </div>
 
-            <!-- 3. KARTU KHUSUS: MULAI BERJUALAN (PENDAFTARAN MITRA) -->
-            <div style="padding: 12px 16px;">
-                <div style="background: linear-gradient(135deg, #fffde7, #e8f5e9); border: 1px solid #a5d6a7; border-radius: 12px; padding: 14px; display: flex; justify-content: space-between; align-items: center;">
-                    <div>
-                        <div style="font-size: 12px; font-weight: bold; color: #1b5e20;">Mulai Berjualan di BorneoKu</div>
-                        <div style="font-size: 10px; color: #555; margin-top: 2px;">Daftarkan toko & jangkau lebih banyak pembeli!</div>
-                    </div>
-                    <button style="background: #fbc02d; color: #1b5e20; border: none; padding: 8px 12px; border-radius: 8px; font-size: 11px; font-weight: bold; cursor: pointer;">Daftar →</button>
+            <div class="promo-banners">
+                <div class="banner-card banner-left">
+                    <h3>Produk Pilihan Nusantara</h3>
+                    <button class="banner-btn">Belanja →</button>
+                </div>
+                <div class="banner-card banner-right">
+                    <h3>UMKM Go Global</h3>
+                    <button class="banner-btn">Promo →</button>
                 </div>
             </div>
 
-            <!-- 4. MENU PESANAN SAYA -->
-            <div style="background: #fff; margin: 0 16px 12px 16px; border-radius: 10px; border: 1px solid #eaeaea; padding: 12px;">
-                <div style="font-size: 11px; font-weight: bold; color: #1b5e20; margin-bottom: 10px; display: flex; justify-content: space-between;">
-                    <span>Pesanan Saya</span>
-                    <span style="font-size: 10px; color: #2e7d32; cursor: pointer;">Lihat Semua →</span>
+            <div class="mitra-banner-wrapper">
+                <div class="mitra-banner">
+                    <div class="mitra-info">
+                        <h4>Jadi Mitra Penjual BORNEOKU</h4>
+                        <p>Jual produkmu & jangkau lebih luas!</p>
+                    </div>
+                    <button class="mitra-btn">Daftar →</button>
                 </div>
-                <div style="display: flex; justify-content: space-around; text-align: center;">
-                    <div style="font-size: 10px; color: #555; cursor: pointer;">
-                        <div style="font-size: 18px; margin-bottom: 4px;">📦</div>
-                        <span>Belum Bayar</span>
+            </div>
+
+            <div class="section-title">
+                <h3>Kategori Pilihan</h3>
+            </div>
+            <div class="categories-scroll">
+                <div class="cat-item"><div class="cat-icon">👗</div><span>Fashion</span></div>
+                <div class="cat-item"><div class="cat-icon">🍲</div><span>Kuliner</span></div>
+                <div class="cat-item"><div class="cat-icon">🧺</div><span>Kerajinan</span></div>
+                <div class="cat-item"><div class="cat-icon">🌿</div><span>Herbal</span></div>
+                <div class="cat-item"><div class="cat-icon">🏠</div><span>Rumah</span></div>
+                <div class="cat-item"><div class="cat-icon">💻</div><span>Elektronik</span></div>
+                <div class="cat-item"><div class="cat-icon">💄</div><span>Kecantikan</span></div>
+                <div class="cat-item"><div class="cat-icon">🧸</div><span>Ibu & Anak</span></div>
+            </div>
+
+            <div class="features-grid">
+                <div class="feature-item"><div class="feature-icon">📦</div><span>Gratis Ongkir</span></div>
+                <div class="feature-item"><div class="feature-icon">🛡️</div><span>Terverifikasi</span></div>
+                <div class="feature-item"><div class="feature-icon">🌿</div><span>Lokal ID</span></div>
+                <div class="feature-item"><div class="feature-icon">✈️</div><span>Internasional</span></div>
+                <div class="feature-item"><div class="feature-icon">⭐</div><span>Tepercaya</span></div>
+            </div>
+
+            <div class="section-title">
+                <h3>Produk Terbaru</h3>
+                <a href="#">Lihat Semua →</a>
+            </div>
+            <div class="products-grid">
+                <div class="product-card">
+                    <div class="product-img">Foto Gamis</div>
+                    <div class="product-body">
+                        <div class="product-title">Gamis Elegan Premium Syari</div>
+                        <div class="product-price">Rp 149.000</div>
+                        <div class="product-footer">⭐ 4.9 (122 terjual)</div>
                     </div>
-                    <div style="font-size: 10px; color: #555; cursor: pointer;">
-                        <div style="font-size: 18px; margin-bottom: 4px;">⏳</div>
-                        <span>Dikemas</span>
-                    </div>
-                    <div style="font-size: 10px; color: #555; cursor: pointer;">
-                        <div style="font-size: 18px; margin-bottom: 4px;">🚚</div>
-                        <span>Dikirim</span>
-                    </div>
-                    <div style="font-size: 10px; color: #555; cursor: pointer;">
-                        <div style="font-size: 18px; margin-bottom: 4px;">⭐</div>
-                        <span>Ulasan</span>
+                </div>
+                <div class="product-card">
+                    <div class="product-img">Foto Jamu</div>
+                    <div class="product-body">
+                        <div class="product-title">Jamu Kunyit Temulawak Asli</div>
+                        <div class="product-price">Rp 10.000</div>
+                        <div class="product-footer">⭐ 4.9 (542 terjual)</div>
                     </div>
                 </div>
             </div>
 
-            <!-- 5. DAFTAR MENU PENGATURAN AKUN -->
-            <div style="background: #fff; margin: 0 16px 20px 16px; border-radius: 10px; border: 1px solid #eaeaea; display: flex; flex-direction: column;">
-                <div style="padding: 12px 14px; font-size: 11px; font-weight: 500; border-bottom: 1px solid #f1f1f1; display: flex; justify-content: space-between; align-items: center; cursor: pointer;">
-                    <span>📍 Alamat Pengiriman</span>
-                    <span style="color: #888;">➔</span>
+            <div class="section-title">
+                <h3>Toko Pilihan Mitra</h3>
+                <a href="#">Lihat Semua →</a>
+            </div>
+            <div class="stores-scroll">
+                <div class="store-card">
+                    <div class="store-logo">AM</div>
+                    <div class="store-name">Adisa Fresh</div>
+                    <div class="store-cat">Kuliner & Herbal</div>
                 </div>
-                <div style="padding: 12px 14px; font-size: 11px; font-weight: 500; border-bottom: 1px solid #f1f1f1; display: flex; justify-content: space-between; align-items: center; cursor: pointer;">
-                    <span>❤️ Produk & Toko Favorit</span>
-                    <span style="color: #888;">➔</span>
-                </div>
-                <div style="padding: 12px 14px; font-size: 11px; font-weight: 500; border-bottom: 1px solid #f1f1f1; display: flex; justify-content: space-between; align-items: center; cursor: pointer;">
-                    <span>💳 Metode Pembayaran</span>
-                    <span style="color: #888;">➔</span>
-                </div>
-                <div style="padding: 12px 14px; font-size: 11px; font-weight: 500; border-bottom: 1px solid #f1f1f1; display: flex; justify-content: space-between; align-items: center; cursor: pointer;">
-                    <span>🛡️ Keamanan Akun & Sandi</span>
-                    <span style="color: #888;">➔</span>
-                </div>
-                <div style="padding: 12px 14px; font-size: 11px; font-weight: 500; border-bottom: 1px solid #f1f1f1; display: flex; justify-content: space-between; align-items: center; cursor: pointer;">
-                    <span>❓ Pusat Bantuan BorneoKu</span>
-                    <span style="color: #888;">➔</span>
-                </div>
-                <div style="padding: 12px 14px; font-size: 11px; font-weight: 500; display: flex; justify-content: space-between; align-items: center; cursor: pointer; color: #e53935;">
-                    <span>🚪 Keluar (Log Out)</span>
-                    <span>➔</span>
+                <div class="store-card">
+                    <div class="store-logo">BF</div>
+                    <div class="store-name">Borneo Fashion</div>
+                    <div class="store-cat">Pakaian Muslim</div>
                 </div>
             </div>
-
         </div>
+
+        <!-- ================= HALAMAN 2: KATEGORI & VIDEO/LIVE ================= -->
+        <div class="scrollable-content" id="page-kategori">
+            <header class="app-header">
+                <div class="logo-area">
+                    <div class="logo-circle-official"><span>BK</span></div>
+                    <div class="logo-text">
+                        <h1>Kategori BorneoKu</h1>
+                        <p>Jelajahi Produk & Hiburan</p>
+                    </div>
+                </div>
+                <div class="header-icons">
+                    <button class="lang-btn">ID 🌐</button>
+                    <button class="icon-btn">🛒<span class="badge">2</span></button>
+                </div>
+            </header>
+
+            <div class="search-section">
+                <div class="search-bar">
+                    <span>🔍</span>
+                    <input type="text" placeholder="Cari dalam kategori atau produk...">
+                </div>
+            </div>
+
+            <div class="promo-banners">
+                <div class="banner-card" style="background: linear-gradient(135deg, #1b5e20, #004d40); width: 100%; height: 85px;">
+                    <h3>Temukan Produk, Tonton Videonya!</h3>
+                    <p style="font-size: 8px; margin: 2px 0;">Lihat produk pilihan & saksikan live streaming penjual.</p>
+                    <button class="banner-btn">Tonton Sekarang →</button>
+                </div>
+            </div>
+
+            <div class="features-grid" style="padding: 10px 16px; background: #fff; margin-bottom: 6px;">
+                <div class="feature-item"><div class="feature-icon" style="background:#e8f5e9;">▦</div><span>Kategori</span></div>
+                <div class="feature-item"><div class="feature-icon" style="background:#e8f5e9;">▶️</div><span>Video</span></div>
+                <div class="feature-item"><div class="feature-icon" style="background:#e8f5e9;">🔴</div><span>Live</span></div>
+                <div class="feature-item"><div class="feature-icon" style="background:#e8f5e9;">♡</div><span>Favorit</span></div>
+                <div class="feature-item"><div class="feature-icon" style="background:#e8f5e9;">🕘</div><span>Terbaru</span></div>
+            </div>
+
+            <div class="section-title"><h3>Daftar Kategori Utama</h3></div>
+            <div style="padding: 0 16px; display: flex; flex-direction: column; gap: 6px; margin-bottom: 16px;">
+                <div style="display: flex; align-items: center; background: #fff; padding: 8px 10px; border-radius: 8px; border: 1px solid #eaeaea; justify-content: space-between;">
+                    <div style="display: flex; align-items: center; gap: 8px;"><span style="font-size: 16px;">👗</span><div><div style="font-size: 11px; font-weight: bold; color: #1b5e20;">Fashion Indonesia</div><div style="font-size: 8px; color: #666;">Gamis, Tunik, Kain & Bahan</div></div></div>
+                    <span style="font-size: 10px; color: #888;">➔</span>
+                </div>
+                <div style="display: flex; align-items: center; background: #fff; padding: 8px 10px; border-radius: 8px; border: 1px solid #eaeaea; justify-content: space-between;">
+                    <div style="display: flex; align-items: center; gap: 8px;"><span style="font-size: 16px;">🍲</span><div><div style="font-size: 11px; font-weight: bold; color: #1b5e20;">Makanan & Minuman</div><div style="font-size: 8px; color: #666;">Cwie Mie, Jamu, Jajan Pasar</div></div></div>
+                    <span style="font-size: 10px; color: #888;">➔</span>
+                </div>
+                <div style="display: flex; align-items: center; background: #fff; padding: 8px 10px; border-radius: 8px; border: 1px solid #eaeaea; justify-content: space-between;">
+                    <div style="display: flex; align-items: center; gap: 8px;"><span style="font-size: 16px;">🌿</span><div><div style="font-size: 11px; font-weight: bold; color: #1b5e20;">Kesehatan & Herbal</div><div style="font-size: 8px; color: #666;">Jamu Tradisional, Ginger Shot</div></div></div>
+                    <span style="font-size: 10px; color: #888;">➔</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- ================= HALAMAN 3: TOKO MITRA ================= -->
+        <div class="scrollable-content" id="page-toko">
+            <header class="app-header">
+                <div class="logo-area">
+                    <div class="logo-circle-official"><span>BK</span></div>
+                    <div class="logo-text"><h1>Mitra Toko</h1><p>Direktori Penjual</p></div>
+                </div>
+            </header>
+            <div class="search-section">
+                <div class="search-bar"><span>🔍</span><input type="text" placeholder="Cari nama toko..."></div>
+            </div>
+            <div class="section-title"><h3>Daftar Mitra Penjual</h3></div>
+            <div style="padding: 0 16px; display: flex; flex-direction: column; gap: 8px;">
+                <div style="background: #fff; border: 1px solid #eaeaea; border-radius: 10px; padding: 10px; display: flex; align-items: center; justify-content: space-between;">
+                    <div><div style="font-size: 11px; font-weight: bold; color: #1b5e20;">Adisa Fresh Mart 🛡️</div><div style="font-size: 8px; color: #666;">Kuliner & Herbal • ⭐ 4.9</div></div>
+                    <button style="background: #2e7d32; color: white; border: none; padding: 5px 8px; border-radius: 6px; font-size: 9px;">Kunjungi</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- ================= HALAMAN 4: DETAIL TOKO ================= -->
+        <div class="scrollable-content" id="page-detail">
+            <header class="app-header"><div class="logo-area"><div class="logo-text"><h1>Etalase Toko</h1></div></div></header>
+            <div style="padding: 16px; text-align: center;"><p style="font-size: 11px; color: #555;">Halaman Detail Toko & Produk Pilihan Mitra.</p></div>
+        </div>
+
+        <!-- ================= HALAMAN 5: PROMO ================= -->
+        <div class="scrollable-content" id="page-promo">
+            <header class="app-header"><div class="logo-area"><div class="logo-text"><h1>Promo BorneoKu</h1></div></div></header>
+            <div style="padding: 16px;"><p style="font-size: 11px; color: #555;">Daftar voucher diskon & gratis ongkir aktif.</p></div>
+        </div>
+
+        <!-- ================= HALAMAN 6: CHAT ================= -->
+        <div class="scrollable-content" id="page-chat">
+            <header class="app-header"><div class="logo-area"><div class="logo-text"><h1>Pusat Chat</h1></div></div></header>
+            <div style="padding: 16px;"><p style="font-size: 11px; color: #555;">Daftar percakapan dengan penjual.</p></div>
+        </div>
+
+        <!-- ================= HALAMAN 7: AKUN ================= -->
+        <div class="scrollable-content" id="page-akun">
+            <header class="app-header"><div class="logo-area"><div class="logo-text"><h1>Akun Saya</h1></div></div></header>
+            <div style="padding: 16px;"><p style="font-size: 11px; color: #555;">Pengaturan profil, pesanan, & pendaftaran mitra.</p></div>
+        </div>
+
+        <!-- ================= NAVIGASI BAWAH (KONSISTEN) ================= -->
+        <nav class="bottom-nav">
+            <a href="#" class="nav-item active" data-target="page-beranda">
+                <span class="icon">🏠</span>
+                <span>Beranda</span>
+            </a>
+            <a href="#" class="nav-item" data-target="page-kategori">
+                <span class="icon">▦</span>
+                <span>Kategori</span>
+            </a>
+            <a href="#" class="nav-item" data-target="page-toko">
+                <span class="icon">🏬</span>
+                <span>Toko</span>
+            </a>
+            <a href="#" class="nav-item" data-target="page-promo">
+                <span class="icon">🏷️</span>
+                <span>Promo</span>
+            </a>
+            <a href="#" class="nav-item" data-target="page-chat">
+                <span class="icon">💬</span>
+                <span>Chat</span>
+            </a>
+            <a href="#" class="nav-item" data-target="page-akun">
+                <span class="icon">👤</span>
+                <span>Akun</span>
+            </a>
+        </nav>
+
+    </div>
+
+    <script>
+        // Skrip interaktif agar tombol navigasi bawah dapat berfungsi berpindah halaman
+        const navItems = document.querySelectorAll('.bottom-nav .nav-item');
+        const pages = document.querySelectorAll('.phone-container .scrollable-content');
+
+        navItems.forEach(item => {
+            item.addEventListener('click', (e) => {
+                e.preventDefault();
+                
+                // Hapus kelas aktif dari semua tombol nav
+                navItems.forEach(nav => nav.classList.remove('active'));
+                // Tambahkan kelas aktif ke tombol yang diklik
+                item.classList.add('active');
+
+                // Sembunyikan semua halaman
+                pages.forEach(p => p.classList.remove('active-page'));
+
+                // Tampilkan halaman tujuan berdasarkan atribut data-target
+                const targetId = item.getAttribute('data-target');
+                const targetPage = document.getElementById(targetId);
+                if (targetPage) {
+                    targetPage.classList.add('active-page');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
