@@ -1,191 +1,1222 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Borneoku - Karya Nusantara, Pasar Dunia</title>
-  
-  <script src="https://cdn.tailwindcss.com"></script>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  
-  <style>
-    body { background-color: #f4f5f7; padding-bottom: 80px; }
-    .no-scrollbar::-webkit-scrollbar { display: none; }
-  </style>
-</head>
-<body class="font-sans text-gray-800">
-
-  <!-- HEADER UTAMA BORNEOKU -->
-  <header class="bg-emerald-900 text-white p-3.5 sticky top-0 z-40 flex justify-between items-center shadow">
-    <div class="flex items-center gap-2.5">
-      <img src="borneoku-logo.png" alt="Logo Borneoku" class="w-11 h-11 rounded-full object-cover border-2 border-yellow-400 shadow-md">
-      <div>
-        <h1 class="font-extrabold text-xs tracking-wide">BORNEOKU</h1>
-        <p class="text-[8.5px] text-emerald-200">KARYA NUSANTARA, PASAR DUNIA</p>
-      </div>
-    </div>
-    <div class="flex items-center gap-2">
-      <!-- TOMBOL BAGIKAN TOKO -->
-      <button onclick="bagikanToko()" class="bg-emerald-800 hover:bg-emerald-700 text-white text-[10px] px-3 py-1.5 rounded-xl font-bold flex items-center gap-1.5 border border-emerald-700 shadow-sm cursor-pointer">
-        <i class="fa-solid fa-share-nodes"></i> Bagikan
-      </button>
-      <!-- IKON KERANJANG -->
-      <div class="bg-amber-400 text-emerald-950 text-[10px] px-3 py-1.5 rounded-xl font-extrabold flex items-center gap-1.5 shadow">
-        <i class="fa-solid fa-cart-shopping"></i> <span id="cart-count">0</span>
-      </div>
-    </div>
-  </header>
-
-  <!-- KONTEN UTAMA ETALASE -->
-  <main class="max-w-2xl mx-auto p-3.5 space-y-3">
-    
-    <!-- BANNER UTAMA PUTIH -->
-    <div class="bg-white p-5 rounded-2xl shadow-sm border space-y-2 text-center">
-      <h2 class="font-bold text-sm text-gray-900 leading-snug">
-        Satu Marketplace, <span class="text-amber-600">Berjuta Produk Unggulan</span> Indonesia
-      </h2>
-      <p class="text-[11px] text-gray-500 leading-relaxed max-w-lg mx-auto">
-        Dukung UMKM & Pengrajin lokal Nusantara. Temukan berbagai produk unik & kerajinan pilihan.
-      </p>
-    </div>
-
-    <!-- KOLOM PENCARIAN -->
-    <div class="relative">
-      <input type="text" placeholder="Cari produk, pakaian, atau kerajinan..." class="w-full p-3 pl-4 pr-10 bg-white border rounded-2xl text-xs outline-none shadow-sm focus:ring-1 focus:ring-emerald-700">
-      <i class="fa-solid fa-magnifying-glass absolute right-3.5 top-3.5 text-gray-400"></i>
-    </div>
-
-    <!-- KARTU PINTASAN ATAS -->
-    <div class="grid grid-cols-2 gap-3">
-      <div class="bg-emerald-50/70 border border-emerald-200 p-3 rounded-2xl shadow-sm space-y-2">
-        <div class="w-8 h-8 bg-emerald-800 text-white rounded-xl flex items-center justify-center text-xs shadow">
-          <i class="fa-solid fa-box-archive"></i>
-        </div>
-        <div>
-          <h4 class="font-bold text-xs text-emerald-950">Tambah Produk</h4>
-          <p class="text-[9.5px] text-gray-500">Upload foto</p>
-        </div>
-        <a href="admin.html" class="block w-full bg-emerald-800 hover:bg-emerald-900 text-white font-bold py-1.5 rounded-xl text-[10.5px] text-center shadow">
-          + Tambah
-        </a>
-      </div>
-
-      <div class="bg-amber-50/70 border border-amber-200 p-3 rounded-2xl shadow-sm space-y-2">
-        <div class="w-8 h-8 bg-amber-600 text-white rounded-xl flex items-center justify-center text-xs shadow">
-          <i class="fa-solid fa-handshake"></i>
-        </div>
-        <div>
-          <h4 class="font-bold text-xs text-amber-950">Mitra Penjual</h4>
-          <p class="text-[9.5px] text-gray-500">Daftar resmi</p>
-        </div>
-        <button onclick="alert('Status Mitra Penjual: Terverifikasi Aktif')" class="w-full bg-amber-600 hover:bg-amber-700 text-white font-bold py-1.5 rounded-xl text-[10.5px] text-center shadow">
-          Gabung
-        </button>
-      </div>
-    </div>
-
-    <!-- DAFTAR PRODUK DARI DATABASE -->
-    <div class="space-y-2 pt-1">
-      <div class="flex justify-between items-center px-1">
-        <h3 class="font-bold text-xs text-gray-900">Etalase Produk UMKM Nusantara</h3>
-        <span class="text-[10px] text-gray-400" id="product-count">0 Produk Tersedia</span>
-      </div>
-
-      <div id="product-grid" class="grid grid-cols-2 gap-3">
-        <p class="text-xs text-gray-400 col-span-2 text-center py-8">Memuat produk...</p>
-      </div>
-    </div>
-  </main>
-
-  <!-- NAVBAR BAWAH -->
-  <nav class="fixed bottom-0 left-0 right-0 bg-white border-t py-1.5 px-1 flex justify-around items-center z-50 text-[9.5px] shadow-lg">
-    <a href="index.html" class="flex flex-col items-center text-emerald-800 font-bold">
-      <i class="fa-solid fa-house text-base"></i>
-      <span class="mt-0.5">Beranda</span>
-    </a>
-    <a href="admin.html" class="flex flex-col items-center text-gray-400 hover:text-emerald-800">
-      <i class="fa-solid fa-bag-shopping text-base"></i>
-      <span class="mt-0.5">Produk</span>
-    </a>
-    <a href="admin.html" class="flex flex-col items-center text-gray-400 hover:text-gray-600">
-      <i class="fa-solid fa-clipboard-list text-base"></i>
-      <span class="mt-0.5">Pesanan</span>
-    </a>
-    <a href="admin.html" class="flex flex-col items-center text-gray-400 hover:text-gray-600">
-      <i class="fa-solid fa-shield-halved text-base"></i>
-      <span class="mt-0.5">Izin LIVE</span>
-    </a>
-    <a href="admin.html" class="flex flex-col items-center text-gray-400 hover:text-gray-600">
-      <i class="fa-solid fa-gear text-base"></i>
-      <span class="mt-0.5">Pengaturan</span>
-    </a>
-  </nav>
-
-  <!-- SCRIPT -->
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
-  <script>
-    const SUPABASE_URL = 'https://iegqvegvoqjqjjyucpss.supabase.co';
-    const SUPABASE_ANON_KEY = 'sb_publishable_7o0SP7VYOFhYJ0qyDrPtzw_2VvkuiMy';
-    const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-
-    let cartCount = 0;
-
-    function bagikanToko() {
-      if (navigator.share) {
-        navigator.share({
-          title: 'Borneoku - Karya Nusantara, Pasar Dunia',
-          text: 'Temukan berbagai produk unggulan UMKM & kerajinan pilihan di Borneoku!',
-          url: window.location.href,
-        }).catch((err) => console.log('Gagal membagikan:', err));
-      } else {
-        navigator.clipboard.writeText(window.location.href);
-        alert('📋 Tautan toko berhasil disalin ke clipboard!');
-      }
-    }
-
-    // Fungsi Tambah ke Keranjang Langsung Update Angka Tanpa Pop-up "Oke"
-    function tambahKeKeranjang(namaProduk) {
-      cartCount += 1;
-      document.getElementById('cart-count').innerText = cartCount;
-    }
-
-    async function loadBuyerProducts() {
-      const container = document.getElementById('product-grid');
-      try {
-        const { data, error } = await supabaseClient.from('products').select('*').order('id', { ascending: false });
-        if (error) throw error;
-        const list = data || [];
-        document.getElementById('product-count').innerText = `${list.length} Produk Tersedia`;
-        
-        if (list.length === 0) {
-          container.innerHTML = `<p class="text-center text-xs text-gray-400 py-8 col-span-2">Belum ada produk tersedia di etalase.</p>`;
-          return;
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BORNEOKU - Belanja Mudah, Jualan Lebih Luas</title>
+    <style>
+        /* --- RESET & GAYA DASAR --- */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        body {
+            background-color: #f4f6f5;
+            color: #2c3e50;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
         }
 
-        container.innerHTML = list.map(item => `
-          <div class="bg-white p-3.5 rounded-2xl border shadow-sm space-y-2 flex flex-col justify-between">
-            <div>
-              <img src="${item.image_url || 'https://images.unsplash.com/photo-1544816155-12df9643f363?auto=format&fit=crop&w=400&q=80'}" class="w-full h-32 rounded-xl object-cover border">
-              <span class="inline-block mt-2 bg-emerald-100 text-emerald-800 text-[8px] font-bold px-1.5 py-0.5 rounded">${item.category || 'Umum'}</span>
-              <h4 class="font-bold text-xs text-gray-900 truncate mt-1">${item.title}</h4>
-              <p class="text-[11px] text-emerald-800 font-extrabold mt-0.5">Rp ${Number(item.price).toLocaleString('id-ID')}</p>
-            </div>
-            <div class="grid grid-cols-2 gap-1.5 pt-1">
-              <button onclick="tambahKeKeranjang('${item.title}')" class="bg-amber-500 hover:bg-amber-600 text-emerald-950 font-extrabold py-1.5 rounded-xl text-[9.5px] text-center shadow cursor-pointer">
-                + Keranjang
-              </button>
-              <a href="https://wa.me/628123456789?text=Halo,%20saya%20tertarik%20dengan%20produk%20${encodeURIComponent(item.title)}" target="_blank" class="bg-emerald-800 hover:bg-emerald-900 text-white font-extrabold py-1.5 rounded-xl text-[9.5px] text-center shadow flex items-center justify-center gap-1">
-                <i class="fa-brands fa-whatsapp"></i> Pesan
-              </a>
-            </div>
-          </div>
-        `).join('');
-      } catch (err) {
-        container.innerHTML = `<p class="text-center text-xs text-red-500 col-span-2">Gagal memuat etalase: ${err.message}</p>`;
-      }
-    }
+        /* --- KERANGKA LAYAR HP (MOBILE CONTAINER) --- */
+        .phone-container {
+            width: 100%;
+            max-width: 412px;
+            height: 100vh;
+            max-height: 890px;
+            background-color: #ffffff;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+            overflow: hidden;
+            border-radius: 20px;
+        }
 
-    loadBuyerProducts();
-  </script>
+        /* --- KONTEN HALAMAN YANG BISA DIGULIR --- */
+        .scrollable-content {
+            flex: 1;
+            overflow-y: auto;
+            padding-bottom: 70px; /* Ruang untuk navigasi bawah */
+        }
+
+        /* --- 1. HEADER HALAMAN 1 --- */
+        .app-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 16px;
+            background-color: #ffffff;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 1px solid #eaeaea;
+        }
+        .logo-area {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .logo-circle {
+            width: 38px;
+            height: 38px;
+            background: linear-gradient(135deg, #2e7d32, #fbc02d);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-weight: bold;
+            font-size: 14px;
+        }
+        .logo-text h1 {
+            font-size: 16px;
+            color: #1b5e20;
+            font-weight: 800;
+            letter-spacing: 0.5px;
+        }
+        .logo-text p {
+            font-size: 9px;
+            color: #555;
+        }
+        .header-icons {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .lang-btn {
+            font-size: 12px;
+            font-weight: 600;
+            background: #f1f8f5;
+            padding: 4px 8px;
+            border-radius: 12px;
+            border: 1px solid #c8e6c9;
+            cursor: pointer;
+        }
+        .icon-btn {
+            position: relative;
+            font-size: 18px;
+            cursor: pointer;
+            background: none;
+            border: none;
+        }
+        .badge {
+            position: absolute;
+            top: -5px;
+            right: -6px;
+            background-color: #e53935;
+            color: white;
+            font-size: 9px;
+            padding: 2px 5px;
+            border-radius: 10px;
+            font-weight: bold;
+        }
+
+        /* --- 2. KOLOM PENCARIAN --- */
+        .search-section {
+            padding: 10px 16px;
+            background-color: #ffffff;
+        }
+        .search-bar {
+            display: flex;
+            align-items: center;
+            background-color: #f1f3f4;
+            border-radius: 10px;
+            padding: 8px 12px;
+            border: 1px solid #e0e0e0;
+        }
+        .search-bar input {
+            flex: 1;
+            border: none;
+            background: none;
+            outline: none;
+            font-size: 13px;
+            margin-left: 8px;
+            color: #333;
+        }
+        .search-bar input::placeholder {
+            color: #757575;
+        }
+
+        /* --- 3. DUA BANNER PROMOSI --- */
+        .promo-banners {
+            display: flex;
+            gap: 10px;
+            padding: 10px 16px;
+        }
+        .banner-card {
+            flex: 1;
+            border-radius: 12px;
+            padding: 12px;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            height: 100px;
+            background-size: cover;
+            background-position: center;
+        }
+        .banner-left {
+            background: linear-gradient(135deg, #1b5e20, #388e3c);
+        }
+        .banner-right {
+            background: linear-gradient(135deg, #e65100, #fbc02d);
+        }
+        .banner-card h3 {
+            font-size: 11px;
+            font-weight: bold;
+            line-height: 1.2;
+        }
+        .banner-btn {
+            align-self: flex-start;
+            background-color: #ffffff;
+            color: #1b5e20;
+            border: none;
+            padding: 4px 8px;
+            border-radius: 6px;
+            font-size: 10px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .banner-right .banner-btn {
+            color: #e65100;
+        }
+
+        /* --- 4. BANNER PENDAFTARAN MITRA --- */
+        .mitra-banner-wrapper {
+            padding: 0 16px 10px 16px;
+        }
+        .mitra-banner {
+            background: linear-gradient(135deg, #e8f5e9, #fffde7);
+            border: 1px solid #a5d6a7;
+            border-radius: 12px;
+            padding: 12px 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .mitra-info h4 {
+            font-size: 12px;
+            color: #1b5e20;
+            font-weight: bold;
+        }
+        .mitra-info p {
+            font-size: 10px;
+            color: #555;
+            margin-top: 2px;
+        }
+        .mitra-btn {
+            background-color: #fbc02d;
+            color: #1b5e20;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 8px;
+            font-size: 11px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        /* --- 5. KATEGORI PRODUK (SATU BARIS GESER) --- */
+        .section-title {
+            padding: 10px 16px 6px 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .section-title h3 {
+            font-size: 14px;
+            font-weight: bold;
+            color: #1b5e20;
+        }
+        .section-title a {
+            font-size: 11px;
+            color: #2e7d32;
+            text-decoration: none;
+            font-weight: 600;
+        }
+        .categories-scroll {
+            display: flex;
+            overflow-x: auto;
+            gap: 16px;
+            padding: 8px 16px 12px 16px;
+            scroll-behavior: smooth;
+            scrollbar-width: none; /* Hilangkan scrollbar Firefox */
+        }
+        .categories-scroll::-webkit-scrollbar {
+            display: none; /* Hilangkan scrollbar Chrome/Safari */
+        }
+        .cat-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-width: 55px;
+            cursor: pointer;
+        }
+        .cat-icon {
+            width: 45px;
+            height: 45px;
+            background-color: #e8f5e9;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 20px;
+            margin-bottom: 4px;
+            border: 1px solid #c8e6c9;
+        }
+        .cat-item span {
+            font-size: 10px;
+            text-align: center;
+            color: #333;
+            white-space: nowrap;
+        }
+
+        /* --- 6. FITUR UNGGULAN --- */
+        .features-grid {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 16px;
+            gap: 6px;
+        }
+        .feature-item {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+        .feature-icon {
+            width: 36px;
+            height: 36px;
+            background-color: #f1f8f5;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 16px;
+            color: #2e7d32;
+            margin-bottom: 2px;
+        }
+        .feature-item span {
+            font-size: 9px;
+            color: #555;
+            line-height: 1.1;
+        }
+
+        /* --- 7. PRODUK TERBARU --- */
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            padding: 8px 16px;
+        }
+        .product-card {
+            background: #fff;
+            border: 1px solid #eaeaea;
+            border-radius: 10px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+        .product-img {
+            width: 100%;
+            height: 110px;
+            background-color: #e0e0e0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 10px;
+            color: #775;
+        }
+        .product-body {
+            padding: 8px;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            flex: 1;
+        }
+        .product-title {
+            font-size: 11px;
+            font-weight: 600;
+            color: #333;
+            line-height: 1.2;
+            height: 26px;
+            overflow: hidden;
+        }
+        .product-price {
+            font-size: 12px;
+            font-weight: bold;
+            color: #d32f2f;
+        }
+        .product-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 9px;
+            color: #777;
+            margin-top: 4px;
+        }
+
+        /* --- 8. TOKO PILIHAN --- */
+        .stores-scroll {
+            display: flex;
+            overflow-x: auto;
+            gap: 10px;
+            padding: 8px 16px 16px 16px;
+            scrollbar-width: none;
+        }
+        .stores-scroll::-webkit-scrollbar {
+            display: none;
+        }
+        .store-card {
+            min-width: 110px;
+            background: #fff;
+            border: 1px solid #eaeaea;
+            border-radius: 10px;
+            padding: 10px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+        .store-logo {
+            width: 45px;
+            height: 45px;
+            background-color: #fbc02d;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: bold;
+            color: #1b5e20;
+            font-size: 12px;
+            margin-bottom: 6px;
+        }
+        .store-name {
+            font-size: 11px;
+            font-weight: bold;
+            color: #333;
+        }
+        .store-cat {
+            font-size: 9px;
+            color: #777;
+            margin-top: 2px;
+        }
+
+        /* --- 9. NAVIGASI UTAMA DI BAGIAN BAWAH --- */
+        .bottom-nav {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 60px;
+            background-color: #ffffff;
+            border-top: 1px solid #eaeaea;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            z-index: 1000;
+        }
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-decoration: none;
+            color: #757575;
+            font-size: 10px;
+            gap: 2px;
+        }
+        .nav-item.active {
+            color: #2e7d32;
+            font-weight: bold;
+        }
+        .nav-item span.icon {
+            font-size: 18px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="phone-container">
+        
+        <!-- KONTEN UTAMA BERANDA -->
+        <div class="scrollable-content">
+            
+            <!-- 1. HEADER -->
+            <header class="app-header">
+                <div class="logo-area">
+                    <div class="logo-circle">BK</div>
+                    <div class="logo-text">
+                        <h1>BORNEOKU</h1>
+                        <p>Belanja Mudah, Jualan Luas</p>
+                    </div>
+                </div>
+                <div class="header-icons">
+                    <button class="lang-btn">ID 🌐</button>
+                    <button class="icon-btn">🔔<span class="badge">3</span></button>
+                    <button class="icon-btn">🛒<span class="badge">2</span></button>
+                </div>
+            </header>
+
+            <!-- 2. KOLOM PENCARIAN -->
+            <div class="search-section">
+                <div class="search-bar">
+                    <span>🔍</span>
+                    <input type="text" placeholder="Cari produk, toko, atau kategori...">
+                    <span>🔲</span>
+                </div>
+            </div>
+
+            <!-- 3. DUA BANNER PROMOSI -->
+            <div class="promo-banners">
+                <div class="banner-card banner-left">
+                    <h3>Produk Pilihan Nusantara</h3>
+                    <button class="banner-btn">Belanja →</button>
+                </div>
+                <div class="banner-card banner-right">
+                    <h3>UMKM Go Global</h3>
+                    <button class="banner-btn">Promo →</button>
+                </div>
+            </div>
+
+            <!-- 4. BANNER MITRA PENJUAL -->
+            <div class="mitra-banner-wrapper">
+                <div class="mitra-banner">
+                    <div class="mitra-info">
+                        <h4>Jadi Mitra Penjual BORNEOKU</h4>
+                        <p>Jual produkmu & jangkau lebih luas!</p>
+                    </div>
+                    <button class="mitra-btn">Daftar →</button>
+                </div>
+            </div>
+
+            <!-- 5. KATEGORI PRODUK (SATU BARIS GESER) -->
+            <div class="section-title">
+                <h3>Kategori Pilihan</h3>
+            </div>
+            <div class="categories-scroll">
+                <div class="cat-item"><div class="cat-icon">👗</div><span>Fashion</span></div>
+                <div class="cat-item"><div class="cat-icon">🍲</div><span>Kuliner</span></div>
+                <div class="cat-item"><div class="cat-icon">🧺</div><span>Kerajinan</span></div>
+                <div class="cat-item"><div class="cat-icon">🌿</div><span>Herbal</span></div>
+                <div class="cat-item"><div class="cat-icon">🏠</div><span>Rumah</span></div>
+                <div class="cat-item"><div class="cat-icon">💻</div><span>Elektronik</span></div>
+                <div class="cat-item"><div class="cat-icon">💄</div><span>Kecantikan</span></div>
+                <div class="cat-item"><div class="cat-icon">🧸</div><span>Ibu & Anak</span></div>
+                <div class="cat-item"><div class="cat-icon">⚽</div><span>Olahraga</span></div>
+                <div class="cat-item"><div class="cat-icon">📚</div><span>Buku & Hobi</span></div>
+                <div class="cat-item"><div class="cat-icon">🚗</div><span>Otomotif</span></div>
+                <div class="cat-item"><div class="cat-icon">🔲</div><span>Semua</span></div>
+            </div>
+
+            <!-- 6. FITUR UNGGULAN -->
+            <div class="features-grid">
+                <div class="feature-item"><div class="feature-icon">📦</div><span>Gratis Ongkir</span></div>
+                <div class="feature-item"><div class="feature-icon">🛡️</div><span>Terverifikasi</span></div>
+                <div class="feature-item"><div class="feature-icon">🌿</div><span>Lokal ID</span></div>
+                <div class="feature-item"><div class="feature-icon">✈️</div><span>Internasional</span></div>
+                <div class="feature-item"><div class="feature-icon">⭐</div><span>Tepercaya</span></div>
+            </div>
+
+            <!-- 7. PRODUK TERBARU -->
+            <div class="section-title">
+                <h3>Produk Terbaru</h3>
+                <a href="#">Lihat Semua →</a>
+            </div>
+            <div class="products-grid">
+                <div class="product-card">
+                    <div class="product-img">Foto Gamis</div>
+                    <div class="product-body">
+                        <div class="product-title">Gamis Elegan Premium Syari</div>
+                        <div class="product-price">Rp 149.000</div>
+                        <div class="product-footer">
+                            <span>⭐ 4.9 (122 terjual)</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <div class="product-img">Foto Jamu</div>
+                    <div class="product-body">
+                        <div class="product-title">Jamu Kunyit Temulawak Asli</div>
+                        <div class="product-price">Rp 10.000</div>
+                        <div class="product-footer">
+                            <span>⭐ 4.9 (542 terjual)</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 8. TOKO PILIHAN -->
+            <div class="section-title">
+                <h3>Toko Pilihan Mitra</h3>
+                <a href="#">Lihat Semua →</a>
+            </div>
+            <div class="stores-scroll">
+                <div class="store-card">
+                    <div class="store-logo">AM</div>
+                    <div class="store-name">Adisa Fresh</div>
+                    <div class="store-cat">Kuliner & Herbal</div>
+                </div>
+                <div class="store-card">
+                    <div class="store-logo">BF</div>
+                    <div class="store-name">Borneo Fashion</div>
+                    <div class="store-cat">Pakaian Muslim</div>
+                </div>
+                <div class="store-card">
+                    <div class="store-logo">KC</div>
+                    <div class="store-name">Kalimantan Craft</div>
+                    <div class="store-cat">Kerajinan Tangan</div>
+                </div>
+            </div>
+
+        </div> <!-- Akhir dari scrollable-content -->
+
+        <!-- 9. NAVIGASI UTAMA DI BAGIAN BAWAH -->
+        <nav class="bottom-nav">
+            <a href="#" class="nav-item active">
+                <span class="icon">🏠</span>
+                <span>Beranda</span>
+            </a>
+            <a href="#" class="nav-item">
+                <span class="icon">▦</span>
+                <span>Kategori</span>
+            </a>
+            <a href="#" class="nav-item">
+                <span class="icon">🏬</span>
+                <span>Toko</span>
+            </a>
+            <a href="#" class="nav-item">
+                <span class="icon">🏷️</span>
+                <span>Promo</span>
+            </a>
+            <a href="#" class="nav-item">
+                <span class="icon">💬</span>
+                <span>Chat</span>
+            </a>
+            <a href="#" class="nav-item">
+                <span class="icon">👤</span>
+                <span>Akun</span>
+            </a>
+        </nav>
+
+    </div>
+
 </body>
 </html>
+        <!-- ========================================== -->
+        <!-- HALAMAN 2 — KATEGORI & VIDEO/LIVE PRODUK -->
+        <!-- ========================================== -->
+        <div class="scrollable-content" id="page-kategori" style="display: none;">
+            
+            <!-- 1. HEADER HALAMAN KATEGORI -->
+            <header class="app-header">
+                <div class="logo-area">
+                    <div class="logo-circle">BK</div>
+                    <div class="logo-text">
+                        <h1>Kategori BorneoKu</h1>
+                        <p>Jelajahi Produk & Hiburan</p>
+                    </div>
+                </div>
+                <div class="header-icons">
+                    <button class="lang-btn">ID 🌐</button>
+                    <button class="icon-btn">🔔<span class="badge">3</span></button>
+                    <button class="icon-btn">🛒<span class="badge">2</span></button>
+                </div>
+            </header>
+
+            <!-- 2. KOLOM PENCARIAN KATEGORI -->
+            <div class="search-section">
+                <div class="search-bar">
+                    <span>🔍</span>
+                    <input type="text" placeholder="Cari dalam kategori atau produk...">
+                    <span>🔲</span>
+                </div>
+            </div>
+
+            <!-- 3. BANNER FITUR VIDEO & LIVE -->
+            <div class="promo-banners">
+                <div class="banner-card" style="background: linear-gradient(135deg, #1b5e20, #004d40); width: 100%;">
+                    <h3>Temukan Produk, Tonton Videonya!</h3>
+                    <p style="font-size: 9px; margin: 4px 0;">Lihat produk pilihan & saksikan penjual secara langsung.</p>
+                    <button class="banner-btn">Tonton Sekarang →</button>
+                </div>
+            </div>
+
+            <!-- 4. MENU CEPAT DI HALAMAN KATEGORI -->
+            <div class="features-grid" style="padding: 12px 16px; background: #fff; margin-bottom: 8px;">
+                <div class="feature-item">
+                    <div class="feature-icon" style="background: #e8f5e9;">▦</div>
+                    <span>Kategori</span>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon" style="background: #e8f5e9;">▶️</div>
+                    <span>Video</span>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon" style="background: #e8f5e9;">🔴</div>
+                    <span>Live</span>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon" style="background: #e8f5e9;">♡</div>
+                    <span>Favorit</span>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon" style="background: #e8f5e9;">🕘</div>
+                    <span>Terbaru</span>
+                </div>
+            </div>
+
+            <!-- 5. DAFTAR KATEGORI UTAMA (GRID/LIST) -->
+            <div class="section-title">
+                <h3>Semua Kategori Pilihan</h3>
+            </div>
+            
+            <div style="padding: 0 16px; display: flex; flex-direction: column; gap: 8px; margin-bottom: 16px;">
+                <!-- Item Kategori 1: Fashion -->
+                <div style="display: flex; align-items: center; background: #fff; padding: 10px 12px; border-radius: 10px; border: 1px solid #eaeaea; justify-content: space-between;">
+                    <div style="display: flex; align-items: center; gap: 10px;">
+                        <span style="font-size: 20px;">👗</span>
+                        <div>
+                            <div style="font-size: 12px; font-weight: bold; color: #1b5e20;">Fashion Indonesia</div>
+                            <div style="font-size: 9px; color: #666;">Gamis, Tunik, Kemeja, Kain & Bahan</div>
+                        </div>
+                    </div>
+                    <span style="font-size: 12px; color: #888;">➔</span>
+                </div>
+
+                <!-- Item Kategori 2: Makanan & Minuman -->
+                <div style="display: flex; align-items: center; background: #fff; padding: 10px 12px; border-radius: 10px; border: 1px solid #eaeaea; justify-content: space-between;">
+                    <div style="display: flex; align-items: center; gap: 10px;">
+                        <span style="font-size: 20px;">🍲</span>
+                        <div>
+                            <div style="font-size: 12px; font-weight: bold; color: #1b5e20;">Makanan & Minuman</div>
+                            <div style="font-size: 9px; color: #666;">Cwie Mie, Jamu, Jajan Pasar, Herbal</div>
+                        </div>
+                    </div>
+                    <span style="font-size: 12px; color: #888;">➔</span>
+                </div>
+
+                <!-- Item Kategori 3: Kerajinan Tangan -->
+                <div style="display: flex; align-items: center; background: #fff; padding: 10px 12px; border-radius: 10px; border: 1px solid #eaeaea; justify-content: space-between;">
+                    <div style="display: flex; align-items: center; gap: 10px;">
+                        <span style="font-size: 20px;">🧺</span>
+                        <div>
+                            <div style="font-size: 12px; font-weight: bold; color: #1b5e20;">Kerajinan Tangan</div>
+                            <div style="font-size: 9px; color: #666;">Tas Anyaman, Aksesoris, Dekorasi</div>
+                        </div>
+                    </div>
+                    <span style="font-size: 12px; color: #888;">➔</span>
+                </div>
+
+                <!-- Item Kategori 4: Kesehatan & Herbal -->
+                <div style="display: flex; align-items: center; background: #fff; padding: 10px 12px; border-radius: 10px; border: 1px solid #eaeaea; justify-content: space-between;">
+                    <div style="display: flex; align-items: center; gap: 10px;">
+                        <span style="font-size: 20px;">🌿</span>
+                        <div>
+                            <div style="font-size: 12px; font-weight: bold; color: #1b5e20;">Kesehatan & Herbal</div>
+                            <div style="font-size: 9px; color: #666;">Jamu Tradisional, Ginger Shot, Rempah</div>
+                        </div>
+                    </div>
+                    <span style="font-size: 12px; color: #888;">➔</span>
+                </div>
+            </div>
+
+        </div>
+        <!-- ========================================== -->
+        <!-- HALAMAN 3 — TOKO BORNEOKU (DIREKTORI MITRA) -->
+        <!-- ========================================== -->
+        <div class="scrollable-content" id="page-toko" style="display: none;">
+            
+            <!-- 1. HEADER HALAMAN TOKO -->
+            <header class="app-header">
+                <div class="logo-area">
+                    <div class="logo-circle">BK</div>
+                    <div class="logo-text">
+                        <h1>Mitra Toko BorneoKu</h1>
+                        <p>Temukan Toko & UMKM Pilihan</p>
+                    </div>
+                </div>
+                <div class="header-icons">
+                    <button class="lang-btn">ID 🌐</button>
+                    <button class="icon-btn">🔔<span class="badge">3</span></button>
+                    <button class="icon-btn">🛒<span class="badge">2</span></button>
+                </div>
+            </header>
+
+            <!-- 2. PENCARIAN TOKO -->
+            <div class="search-section">
+                <div class="search-bar">
+                    <span>🔍</span>
+                    <input type="text" placeholder="Cari nama toko, produk, atau kategori...">
+                    <span>🔲</span>
+                </div>
+            </div>
+
+            <!-- 3. BANNER KECIL TOKO -->
+            <div class="promo-banners">
+                <div class="banner-card" style="background: linear-gradient(135deg, #004d40, #1b5e20); width: 100%;">
+                    <h3>Temukan Toko Favoritmu</h3>
+                    <p style="font-size: 9px; margin: 4px 0;">Beragam produk pilihan dari penjual lokal hingga internasional.</p>
+                </div>
+            </div>
+
+            <!-- 4. FILTER TOKO -->
+            <div class="categories-scroll" style="padding: 4px 16px 8px 16px;">
+                <div style="background: #2e7d32; color: white; padding: 6px 12px; border-radius: 15px; font-size: 10px; font-weight: bold; white-space: nowrap; cursor: pointer;">Semua Toko</div>
+                <div style="background: #e8f5e9; color: #1b5e20; border: 1px solid #c8e6c9; padding: 6px 12px; border-radius: 15px; font-size: 10px; font-weight: bold; white-space: nowrap; cursor: pointer;">Terverifikasi 🛡️</div>
+                <div style="background: #e8f5e9; color: #1b5e20; border: 1px solid #c8e6c9; padding: 6px 12px; border-radius: 15px; font-size: 10px; font-weight: bold; white-space: nowrap; cursor: pointer;">Toko Lokal 🌿</div>
+                <div style="background: #e8f5e9; color: #1b5e20; border: 1px solid #c8e6c9; padding: 6px 12px; border-radius: 15px; font-size: 10px; font-weight: bold; white-space: nowrap; cursor: pointer;">Rating Tertinggi ⭐</div>
+                <div style="background: #e8f5e9; color: #1b5e20; border: 1px solid #c8e6c9; padding: 6px 12px; border-radius: 15px; font-size: 10px; font-weight: bold; white-space: nowrap; cursor: pointer;">Terbaru 🆕</div>
+            </div>
+
+            <!-- 5. DAFTAR KARTU TOKO MITRA -->
+            <div class="section-title">
+                <h3>Daftar Mitra Penjual</h3>
+            </div>
+
+            <div style="padding: 0 16px; display: flex; flex-direction: column; gap: 10px; margin-bottom: 20px;">
+                
+                <!-- Toko 1 -->
+                <div style="background: #fff; border: 1px solid #eaeaea; border-radius: 12px; padding: 12px; display: flex; align-items: center; justify-content: space-between;">
+                    <div style="display: flex; align-items: center; gap: 10px;">
+                        <div style="width: 45px; height: 45px; background: #fbc02d; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-weight: bold; color: #1b5e20; font-size: 14px;">AM</div>
+                        <div>
+                            <div style="font-size: 12px; font-weight: bold; color: #1b5e20; display: flex; align-items: center; gap: 4px;">
+                                Adisa Fresh Mart <span>🛡️</span>
+                            </div>
+                            <div style="font-size: 9px; color: #666; margin-top: 2px;">Kuliner & Herbal • ⭐ 4.9 (1.2rb ulasan)</div>
+                            <div style="font-size: 9px; color: #888; margin-top: 1px;">45 Produk Tersedia</div>
+                        </div>
+                    </div>
+                    <div style="display: flex; gap: 6px;">
+                        <button style="background: #e8f5e9; color: #1b5e20; border: 1px solid #a5d6a7; padding: 6px 10px; border-radius: 8px; font-size: 10px; font-weight: bold; cursor: pointer;">Ikuti</button>
+                        <button style="background: #2e7d32; color: white; border: none; padding: 6px 10px; border-radius: 8px; font-size: 10px; font-weight: bold; cursor: pointer;">Kunjungi</button>
+                    </div>
+                </div>
+
+                <!-- Toko 2 -->
+                <div style="background: #fff; border: 1px solid #eaeaea; border-radius: 12px; padding: 12px; display: flex; align-items: center; justify-content: space-between;">
+                    <div style="display: flex; align-items: center; gap: 10px;">
+                        <div style="width: 45px; height: 45px; background: #e8f5e9; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-weight: bold; color: #2e7d32; font-size: 14px; border: 1px solid #c8e6c9;">BF</div>
+                        <div>
+                            <div style="font-size: 12px; font-weight: bold; color: #1b5e20; display: flex; align-items: center; gap: 4px;">
+                                Borneo Fashion <span>🛡️</span>
+                            </div>
+                            <div style="font-size: 9px; color: #666; margin-top: 2px;">Pakaian Muslim & Gamis • ⭐ 4.8 (850 ulasan)</div>
+                            <div style="font-size: 9px; color: #888; margin-top: 1px;">120 Produk Tersedia</div>
+                        </div>
+                    </div>
+                    <div style="display: flex; gap: 6px;">
+                        <button style="background: #e8f5e9; color: #1b5e20; border: 1px solid #a5d6a7; padding: 6px 10px; border-radius: 8px; font-size: 10px; font-weight: bold; cursor: pointer;">Ikuti</button>
+                        <button style="background: #2e7d32; color: white; border: none; padding: 6px 10px; border-radius: 8px; font-size: 10px; font-weight: bold; cursor: pointer;">Kunjungi</button>
+                    </div>
+                </div>
+
+                <!-- Toko 3 -->
+                <div style="background: #fff; border: 1px solid #eaeaea; border-radius: 12px; padding: 12px; display: flex; align-items: center; justify-content: space-between;">
+                    <div style="display: flex; align-items: center; gap: 10px;">
+                        <div style="width: 45px; height: 45px; background: #fffde7; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-weight: bold; color: #fbc02d; font-size: 14px; border: 1px solid #fff59d;">KC</div>
+                        <div>
+                            <div style="font-size: 12px; font-weight: bold; color: #1b5e20; display: flex; align-items: center; gap: 4px;">
+                                Kalimantan Craft
+                            </div>
+                            <div style="font-size: 9px; color: #666; margin-top: 2px;">Kerajinan Tangan • ⭐ 4.7 (420 ulasan)</div>
+                            <div style="font-size: 9px; color: #888; margin-top: 1px;">35 Produk Tersedia</div>
+                        </div>
+                    </div>
+                    <div style="display: flex; gap: 6px;">
+                        <button style="background: #e8f5e9; color: #1b5e20; border: 1px solid #a5d6a7; padding: 6px 10px; border-radius: 8px; font-size: 10px; font-weight: bold; cursor: pointer;">Ikuti</button>
+                        <button style="background: #2e7d32; color: white; border: none; padding: 6px 10px; border-radius: 8px; font-size: 10px; font-weight: bold; cursor: pointer;">Kunjungi</button>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+        <!-- ========================================== -->
+        <!-- HALAMAN 4 — DETAIL TOKO (ETALASE MITRA)   -->
+        <!-- ========================================== -->
+        <div class="scrollable-content" id="page-detail-toko" style="display: none;">
+            
+            <!-- 1. HEADER HALAMAN DETAIL TOKO -->
+            <header class="app-header">
+                <div class="logo-area">
+                    <button style="background: none; border: none; font-size: 16px; cursor: pointer; color: #1b5e20; font-weight: bold;">←</button>
+                    <div class="logo-text" style="margin-left: 6px;">
+                        <h1 style="font-size: 14px;">Adisa Fresh Mart</h1>
+                        <p>Etalase Toko Mitra</p>
+                    </div>
+                </div>
+                <div class="header-icons">
+                    <button class="icon-btn">🔗</button>
+                    <button class="icon-btn">🛒<span class="badge">2</span></button>
+                </div>
+            </header>
+
+            <!-- 2. PROFIL TOKO & FOTO SAMPUL -->
+            <div style="background: #fff; border-bottom: 1px solid #eaeaea; padding-bottom: 12px;">
+                <!-- Foto Sampul Toko -->
+                <div style="width: 100%; height: 110px; background: linear-gradient(135deg, #2e7d32, #fbc02d); display: flex; justify-content: center; align-items: center; color: white; font-size: 11px; font-weight: bold;">
+                    [ Foto Sampul / Banner Toko ]
+                </div>
+                
+                <!-- Info Toko & Tombol Ikuti/Chat -->
+                <div style="padding: 0 16px; margin-top: -20px; position: relative;">
+                    <div style="display: flex; justify-content: space-between; align-items: flex-end;">
+                        <div style="width: 55px; height: 55px; background: #fbc02d; border-radius: 50%; border: 3px solid #fff; display: flex; justify-content: center; align-items: center; font-weight: bold; color: #1b5e20; font-size: 16px; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">
+                            AM
+                        </div>
+                        <div style="display: flex; gap: 6px; margin-top: 25px;">
+                            <button style="background: #e8f5e9; color: #1b5e20; border: 1px solid #a5d6a7; padding: 6px 12px; border-radius: 8px; font-size: 10px; font-weight: bold; cursor: pointer;">💬 Chat</button>
+                            <button style="background: #2e7d32; color: white; border: none; padding: 6px 14px; border-radius: 8px; font-size: 10px; font-weight: bold; cursor: pointer;">+ Ikuti</button>
+                        </div>
+                    </div>
+
+                    <div style="margin-top: 8px;">
+                        <div style="font-size: 14px; font-weight: bold; color: #1b5e20; display: flex; align-items: center; gap: 4px;">
+                            Adisa Fresh Mart <span>🛡️</span>
+                        </div>
+                        <div style="font-size: 10px; color: #666; margin-top: 2px;">
+                            Kuliner Tradisional, Herbal Alami, & Cwie Mie Malang • Nunukan, Kaltara
+                        </div>
+                        <div style="font-size: 10px; color: #444; margin-top: 4px; font-weight: 500;">
+                            ⭐ 4.9 (1.2rb Ulasan) • 45 Produk • 98% Pesanan Selesai
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 3. TAB ISI TOKO (BERANDA, PRODUK, KATEGORI, ULASAN) -->
+            <div style="display: flex; background: #fff; border-bottom: 1px solid #eaeaea; padding: 0 16px; overflow-x: auto;">
+                <div style="padding: 10px 12px; font-size: 11px; font-weight: bold; color: #2e7d32; border-bottom: 2px solid #2e7d32; white-space: nowrap; cursor: pointer;">Beranda Toko</div>
+                <div style="padding: 10px 12px; font-size: 11px; color: #666; white-space: nowrap; cursor: pointer;">Semua Produk (45)</div>
+                <div style="padding: 10px 12px; font-size: 11px; color: #666; white-space: nowrap; cursor: pointer;">Kategori</div>
+                <div style="padding: 10px 12px; font-size: 11px; color: #666; white-space: nowrap; cursor: pointer;">Video & Live</div>
+                <div style="padding: 10px 12px; font-size: 11px; color: #666; white-space: nowrap; cursor: pointer;">Ulasan (1.2rb)</div>
+            </div>
+
+            <!-- 4. DAFTAR PRODUK DI DALAM TOKO -->
+            <div class="section-title">
+                <h3>Produk Pilihan Toko Ini</h3>
+            </div>
+
+            <div class="products-grid" style="margin-bottom: 16px;">
+                <div class="product-card">
+                    <div class="product-img">Foto Jamu</div>
+                    <div class="product-body">
+                        <div class="product-title">Jamu Kunyit Temulawak Asli & Segar</div>
+                        <div class="product-price">Rp 10.000</div>
+                        <div class="product-footer">
+                            <span>⭐ 4.9 (542 terjual)</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <div class="product-img">Foto Cwie Mie</div>
+                    <div class="product-body">
+                        <div class="product-title">Cwie Mie Malang Paket Keluarga</div>
+                        <div class="product-price">Rp 25.000</div>
+                        <div class="product-footer">
+                            <span>⭐ 4.8 (210 terjual)</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <div class="product-img">Foto Ginger</div>
+                    <div class="product-body">
+                        <div class="product-title">Ginger Shot Extra Madu Murni</div>
+                        <div class="product-price">Rp 18.000</div>
+                        <div class="product-footer">
+                            <span>⭐ 5.0 (98 terjual)</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <div class="product-img">Foto Sinom</div>
+                    <div class="product-body">
+                        <div class="product-title">Es Sinom Tradisional Segar 500ml</div>
+                        <div class="product-price">Rp 12.000</div>
+                        <div class="product-footer">
+                            <span>⭐ 4.9 (315 terjual)</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 5. INFORMASI PENGIRIMAN & KEBIJAKAN TOKO -->
+            <div style="background: #fff; margin: 0 16px 20px 16px; padding: 12px; border-radius: 10px; border: 1px solid #eaeaea;">
+                <div style="font-size: 11px; font-weight: bold; color: #1b5e20; margin-bottom: 6px;">📦 Informasi & Kebijakan Toko</div>
+                <div style="font-size: 10px; color: #555; line-height: 1.4; display: flex; flex-direction: column; gap: 3px;">
+                    <div>• Pengiriman dari: Kabupaten Nunukan, Kalimantan Utara</div>
+                    <div>• Kurir tersedia: JNE, J&T, SiCepat, & Kurir Lokal BorneoKu</div>
+                    <div>• Jam Operasional: Senin - Sabtu (08:00 - 17:00 WITA)</div>
+                    <div>• Kebijakan Pengembalian: Menerima retur jika produk rusak dengan video unboxing</div>
+                </div>
+            </div>
+
+        </div>
+        <!-- ========================================== -->
+        <!-- HALAMAN 5 — PROMO BORNEOKU (KLAIM VOUCHER)  -->
+        <!-- ========================================== -->
+        <div class="scrollable-content" id="page-promo" style="display: none;">
+            
+            <!-- 1. HEADER HALAMAN PROMO -->
+            <header class="app-header">
+                <div class="logo-area">
+                    <div class="logo-circle">BK</div>
+                    <div class="logo-text">
+                        <h1>Promo BorneoKu</h1>
+                        <p>Klaim Voucher Belanja</p>
+                    </div>
+                </div>
+                <div class="header-icons">
+                    <button class="icon-btn">🔔</button>
+                    <button class="icon-btn">🛒<span class="badge">2</span></button>
+                </div>
+            </header>
+
+            <!-- 2. PENCARIAN PROMO -->
+            <div class="search-section">
+                <div class="search-bar">
+                    <span>🔍</span>
+                    <input type="text" placeholder="Cari voucher atau promo toko...">
+                    <span>🔲</span>
+                </div>
+            </div>
+
+            <!-- 3. KATEGORI PROMO -->
+            <div class="categories-scroll" style="padding: 4px 16px 8px 16px;">
+                <div style="background: #2e7d32; color: white; padding: 6px 12px; border-radius: 15px; font-size: 10px; font-weight: bold; white-space: nowrap; cursor: pointer;">Semua Promo</div>
+                <div style="background: #e8f5e9; color: #1b5e20; border: 1px solid #c8e6c9; padding: 6px 12px; border-radius: 15px; font-size: 10px; font-weight: bold; white-space: nowrap; cursor: pointer;">Diskon Produk 🏷️</div>
+                <div style="background: #e8f5e9; color: #1b5e20; border: 1px solid #c8e6c9; padding: 6px 12px; border-radius: 15px; font-size: 10px; font-weight: bold; white-space: nowrap; cursor: pointer;">Voucher Toko 🏬</div>
+                <div style="background: #e8f5e9; color: #1b5e20; border: 1px solid #c8e6c9; padding: 6px 12px; border-radius: 15px; font-size: 10px; font-weight: bold; white-space: nowrap; cursor: pointer;">Gratis Ongkir 📦</div>
+            </div>
+
+            <!-- 4. DAFTAR KARTU PROMO -->
+            <div class="section-title">
+                <h3>Vouchers & Penawaran Spesial</h3>
+            </div>
+
+            <div style="padding: 0 16px; display: flex; flex-direction: column; gap: 12px; margin-bottom: 20px;">
+                
+                <!-- Kartu Promo 1 -->
+                <div style="background: linear-gradient(90deg, #1b5e20, #2e7d32); border-radius: 10px; color: white; display: flex; align-items: center; position: relative; overflow: hidden;">
+                    <div style="padding: 16px; flex: 1;">
+                        <div style="font-size: 11px; font-weight: bold; opacity: 0.9;">GRATIS ONGKIR NASIONAL</div>
+                        <div style="font-size: 14px; font-weight: bold; margin-top: 4px;">Potongan Ongkir s.d Rp 20rb</div>
+                        <div style="font-size: 9px; margin-top: 6px; opacity: 0.8;">Berlaku untuk semua kurir di BorneoKu</div>
+                        <div style="font-size: 9px; margin-top: 2px; font-weight: bold;">Berakhir dlm 2 hari ⏳</div>
+                    </div>
+                    <div style="padding: 16px; border-left: 2px dashed rgba(255,255,255,0.3); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px;">
+                        <button style="background: #fbc02d; color: #1b5e20; border: none; padding: 6px 10px; border-radius: 8px; font-size: 10px; font-weight: bold; cursor: pointer;">Klaim</button>
+                    </div>
+                </div>
+
+                <!-- Kartu Promo 2 -->
+                <div style="background: linear-gradient(90deg, #e65100, #fbc02d); border-radius: 10px; color: white; display: flex; align-items: center; position: relative; overflow: hidden;">
+                    <div style="padding: 16px; flex: 1;">
+                        <div style="font-size: 11px; font-weight: bold; opacity: 0.9;">FASHION MERDEKA SALE</div>
+                        <div style="font-size: 14px; font-weight: bold; margin-top: 4px;">Diskon s.d 50% Apparel Lokal</div>
+                        <div style="font-size: 9px; margin-top: 6px; opacity: 0.8;">Min. belanja Rp 100rb di Toko Partner</div>
+                        <div style="font-size: 9px; margin-top: 2px; font-weight: bold;">Berakhir dlm 5 jam ⏳</div>
+                    </div>
+                    <div style="padding: 16px; border-left: 2px dashed rgba(255,255,255,0.3); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px;">
+                        <button style="background: #ffffff; color: #e65100; border: none; padding: 6px 10px; border-radius: 8px; font-size: 10px; font-weight: bold; cursor: pointer;">Pakai</button>
+                    </div>
+                </div>
+
+                <!-- Kartu Promo 3 -->
+                <div style="background: linear-gradient(90deg, #004d40, #00796b); border-radius: 10px; color: white; display: flex; align-items: center; position: relative; overflow: hidden;">
+                    <div style="padding: 16px; flex: 1;">
+                        <div style="font-size: 11px; font-weight: bold; opacity: 0.9;">CASHBACK HERBAL ALAMI</div>
+                        <div style="font-size: 14px; font-weight: bold; margin-top: 4px;">Cashback Rp 15rb Jamu & Herbal</div>
+                        <div style="font-size: 9px; margin-top: 6px; opacity: 0.8;">Khusus pembayaran via VA Bank</div>
+                        <div style="font-size: 9px; margin-top: 2px; font-weight: bold;">Berakhir dlm 3 hari ⏳</div>
+                    </div>
+                    <div style="padding: 16px; border-left: 2px dashed rgba(255,255,255,0.3); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px;">
+                        <button style="background: #fbc02d; color: #1b5e20; border: none; padding: 6px 10px; border-radius: 8px; font-size: 10px; font-weight: bold; cursor: pointer;">Klaim</button>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+        <!-- ========================================== -->
+        <!-- HALAMAN 6 — CHAT (KOMUNIKASI PEMBELI & TOKO) -->
+        <!-- ========================================== -->
+        <div class="scrollable-content" id="page-chat" style="display: none;">
+            
+            <!-- 1. HEADER HALAMAN CHAT -->
+            <header class="app-header">
+                <div class="logo-area">
+                    <div class="logo-circle">BK</div>
+                    <div class="logo-text">
+                        <h1>Pusat Pesan BorneoKu</h1>
+                        <p>Chat dengan Mitra Penjual</p>
+                    </div>
+                </div>
+                <div class="header-icons">
+                    <button class="icon-btn">🔍</button>
+                    <button class="icon-btn">⚙️</button>
+                </div>
+            </header>
+
+            <!-- 2. DAFTAR PERCAKAPAN (CHAT LIST) -->
+            <div style="padding: 12px 16px; display: flex; flex-direction: column; gap: 8px;">
+                
+                <!-- Item Chat 1 -->
+                <div style="background: #fff; border: 1px solid #eaeaea; border-radius: 10px; padding: 12px; display: flex; align-items: center; gap: 12px; cursor: pointer;">
+                    <div style="position: relative;">
+                        <div style="width: 45px; height: 45px; background: #fbc02d; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-weight: bold; color: #1b5e20; font-size: 14px;">AM</div>
+                        <div style="position: absolute; bottom: 0; right: 0; width: 10px; height: 10px; background: #4caf50; border-radius: 50%; border: 2px solid #fff;"></div>
+                    </div>
+                    <div style="flex: 1; min-width: 0;">
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                            <div style="font-size: 12px; font-weight: bold; color: #1b5e20;">Adisa Fresh Mart</div>
+                            <div style="font-size: 9px; color: #888;">10:42 WITA</div>
+                        </div>
+                        <div style="font-size: 10px; color: #555; margin-top: 3px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+                            Baik Kak, pesanan Jamu Kunyit Temulawak sedang kami siapkan ya. Terima kasih!
+                        </div>
+                    </div>
+                    <div style="background: #e53935; color: white; font-size: 9px; font-weight: bold; padding: 2px 6px; border-radius: 10px;">
+                        1
+                    </div>
+                </div>
+
+                <!-- Item Chat 2 -->
+                <div style="background: #fff; border: 1px solid #eaeaea; border-radius: 10px; padding: 12px; display: flex; align-items: center; gap: 12px; cursor: pointer;">
+                    <div style="position: relative;">
+                        <div style="width: 45px; height: 45px; background: #e8f5e9; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-weight: bold; color: #2e7d32; font-size: 14px; border: 1px solid #c8e6c9;">BF</div>
+                    </div>
+                    <div style="flex: 1; min-width: 0;">
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                            <div style="font-size: 12px; font-weight: bold; color: #1b5e20;">Borneo Fashion</div>
+                            <div style="font-size: 9px; color: #888;">Kemarin</div>
+                        </div>
+                        <div style="font-size: 10px; color: #777; margin-top: 3px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+                            Untuk ukuran gamis XL ready warna lavender Kak. Silakan diorder.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Item Chat 3 -->
+                <div style="background: #fff; border: 1px solid #eaeaea; border-radius: 10px; padding: 12px; display: flex; align-items: center; gap: 12px; cursor: pointer;">
+                    <div style="position: relative;">
+                        <div style="width: 45px; height: 45px; background: #fffde7; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-weight: bold; color: #fbc02d; font-size: 14px; border: 1px solid #fff59d;">KC</div>
+                    </div>
+                    <div style="flex: 1; min-width: 0;">
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                            <div style="font-size: 12px; font-weight: bold; color: #1b5e20;">Kalimantan Craft</div>
+                            <div style="font-size: 9px; color: #888;">20 Okt</div>
+                        </div>
+                        <div style="font-size: 10px; color: #777; margin-top: 3px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+                            Tas anyaman rotan pesanan khusus sudah dikirim via kurir ya Kak.
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+        <!-- ========================================== -->
+        <!-- HALAMAN 7 — AKUN PENGGUNA & PENDAFTARAN MITRA -->
+        <!-- ========================================== -->
+        <div class="scrollable-content" id="page-akun" style="display: none;">
+            
+            <!-- 1. HEADER HALAMAN AKUN -->
+            <header class="app-header">
+                <div class="logo-area">
+                    <div class="logo-circle">BK</div>
+                    <div class="logo-text">
+                        <h1>Akun BorneoKu</h1>
+                        <p>Profil & Pengaturan</p>
+                    </div>
+                </div>
+                <div class="header-icons">
+                    <button class="icon-btn">⚙️</button>
+                </div>
+            </header>
+
+            <!-- 2. KARTU PROFIL PENGGUNA -->
+            <div style="background: linear-gradient(135deg, #1b5e20, #2e7d32); padding: 20px 16px; color: white; display: flex; align-items: center; gap: 14px;">
+                <div style="width: 55px; height: 55px; background: #fbc02d; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-weight: bold; color: #1b5e20; font-size: 18px; border: 2px solid #fff;">
+                    U
+                </div>
+                <div>
+                    <div style="font-size: 14px; font-weight: bold;">Pengguna BorneoKu</div>
+                    <div style="font-size: 10px; opacity: 0.9; margin-top: 2px;">+62 812-3456-7890</div>
+                    <div style="font-size: 9px; background: rgba(255,255,255,0.2); padding: 2px 6px; border-radius: 6px; display: inline-block; margin-top: 4px;">Anggota Pembeli</div>
+                </div>
+            </div>
+
+            <!-- 3. KARTU KHUSUS: MULAI BERJUALAN (PENDAFTARAN MITRA) -->
+            <div style="padding: 12px 16px;">
+                <div style="background: linear-gradient(135deg, #fffde7, #e8f5e9); border: 1px solid #a5d6a7; border-radius: 12px; padding: 14px; display: flex; justify-content: space-between; align-items: center;">
+                    <div>
+                        <div style="font-size: 12px; font-weight: bold; color: #1b5e20;">Mulai Berjualan di BorneoKu</div>
+                        <div style="font-size: 10px; color: #555; margin-top: 2px;">Daftarkan toko & jangkau lebih banyak pembeli!</div>
+                    </div>
+                    <button style="background: #fbc02d; color: #1b5e20; border: none; padding: 8px 12px; border-radius: 8px; font-size: 11px; font-weight: bold; cursor: pointer;">Daftar →</button>
+                </div>
+            </div>
+
+            <!-- 4. MENU PESANAN SAYA -->
+            <div style="background: #fff; margin: 0 16px 12px 16px; border-radius: 10px; border: 1px solid #eaeaea; padding: 12px;">
+                <div style="font-size: 11px; font-weight: bold; color: #1b5e20; margin-bottom: 10px; display: flex; justify-content: space-between;">
+                    <span>Pesanan Saya</span>
+                    <span style="font-size: 10px; color: #2e7d32; cursor: pointer;">Lihat Semua →</span>
+                </div>
+                <div style="display: flex; justify-content: space-around; text-align: center;">
+                    <div style="font-size: 10px; color: #555; cursor: pointer;">
+                        <div style="font-size: 18px; margin-bottom: 4px;">📦</div>
+                        <span>Belum Bayar</span>
+                    </div>
+                    <div style="font-size: 10px; color: #555; cursor: pointer;">
+                        <div style="font-size: 18px; margin-bottom: 4px;">⏳</div>
+                        <span>Dikemas</span>
+                    </div>
+                    <div style="font-size: 10px; color: #555; cursor: pointer;">
+                        <div style="font-size: 18px; margin-bottom: 4px;">🚚</div>
+                        <span>Dikirim</span>
+                    </div>
+                    <div style="font-size: 10px; color: #555; cursor: pointer;">
+                        <div style="font-size: 18px; margin-bottom: 4px;">⭐</div>
+                        <span>Ulasan</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 5. DAFTAR MENU PENGATURAN AKUN -->
+            <div style="background: #fff; margin: 0 16px 20px 16px; border-radius: 10px; border: 1px solid #eaeaea; display: flex; flex-direction: column;">
+                <div style="padding: 12px 14px; font-size: 11px; font-weight: 500; border-bottom: 1px solid #f1f1f1; display: flex; justify-content: space-between; align-items: center; cursor: pointer;">
+                    <span>📍 Alamat Pengiriman</span>
+                    <span style="color: #888;">➔</span>
+                </div>
+                <div style="padding: 12px 14px; font-size: 11px; font-weight: 500; border-bottom: 1px solid #f1f1f1; display: flex; justify-content: space-between; align-items: center; cursor: pointer;">
+                    <span>❤️ Produk & Toko Favorit</span>
+                    <span style="color: #888;">➔</span>
+                </div>
+                <div style="padding: 12px 14px; font-size: 11px; font-weight: 500; border-bottom: 1px solid #f1f1f1; display: flex; justify-content: space-between; align-items: center; cursor: pointer;">
+                    <span>💳 Metode Pembayaran</span>
+                    <span style="color: #888;">➔</span>
+                </div>
+                <div style="padding: 12px 14px; font-size: 11px; font-weight: 500; border-bottom: 1px solid #f1f1f1; display: flex; justify-content: space-between; align-items: center; cursor: pointer;">
+                    <span>🛡️ Keamanan Akun & Sandi</span>
+                    <span style="color: #888;">➔</span>
+                </div>
+                <div style="padding: 12px 14px; font-size: 11px; font-weight: 500; border-bottom: 1px solid #f1f1f1; display: flex; justify-content: space-between; align-items: center; cursor: pointer;">
+                    <span>❓ Pusat Bantuan BorneoKu</span>
+                    <span style="color: #888;">➔</span>
+                </div>
+                <div style="padding: 12px 14px; font-size: 11px; font-weight: 500; display: flex; justify-content: space-between; align-items: center; cursor: pointer; color: #e53935;">
+                    <span>🚪 Keluar (Log Out)</span>
+                    <span>➔</span>
+                </div>
+            </div>
+
+        </div>
