@@ -1,695 +1,2492 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BORNEOKU - Belanja Mudah, Jualan Lebih Luas</title>
-    <style>
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-        body {
-            background-color: #f4f6f5;
-            color: #2c3e50;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-        }
-        .phone-container {
-            width: 100%;
-            max-width: 412px;
-            height: 100vh;
-            max-height: 890px;
-            background-color: #ffffff;
-            display: flex;
-            flex-direction: column;
-            position: relative;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
-            overflow: hidden;
-            border-radius: 20px;
-            border: 6px solid #1b5e20;
-        }
-        .scrollable-content {
-            flex: 1;
-            overflow-y: auto;
-            padding-bottom: 70px;
-            display: none;
-        }
-        .scrollable-content.active-page {
-            display: block;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#006b45">
 
-        /* Header */
-        .app-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 10px 16px;
-            background-color: #ffffff;
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            border-bottom: 1px solid #eaeaea;
-        }
-        .logo-area {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-        /* Logo Resmi Lingkaran Hijau Emas */
-        .logo-circle-official {
-            width: 42px;
-            height: 42px;
-            background: radial-gradient(circle, #fffde7 0%, #fbc02d 60%, #1b5e20 100%);
-            border: 2px solid #2e7d32;
-            border-radius: 50%;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            color: #1b5e20;
-            font-weight: 900;
-            font-size: 11px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
-            text-align: center;
-            line-height: 1;
-        }
-        .logo-text h1 {
-            font-size: 15px;
-            color: #1b5e20;
-            font-weight: 800;
-            letter-spacing: 0.5px;
-        }
-        .logo-text p {
-            font-size: 8px;
-            color: #555;
-        }
-        .header-icons {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        .lang-btn {
-            font-size: 11px;
-            font-weight: 600;
-            background: #f1f8f5;
-            padding: 4px 8px;
-            border-radius: 12px;
-            border: 1px solid #c8e6c9;
-            cursor: pointer;
-        }
-        .icon-btn {
-            position: relative;
-            font-size: 18px;
-            cursor: pointer;
-            background: none;
-            border: none;
-        }
-        .badge {
-            position: absolute;
-            top: -5px;
-            right: -6px;
-            background-color: #e53935;
-            color: white;
-            font-size: 9px;
-            padding: 2px 5px;
-            border-radius: 10px;
-            font-weight: bold;
-        }
+<title>BORNEOKU — Belanja Mudah, Jualan Lebih Luas</title>
 
-        /* Search */
-        .search-section {
-            padding: 10px 16px;
-            background-color: #ffffff;
-        }
-        .search-bar {
-            display: flex;
-            align-items: center;
-            background-color: #f1f3f4;
-            border-radius: 10px;
-            padding: 8px 12px;
-            border: 1px solid #e0e0e0;
-        }
-        .search-bar input {
-            flex: 1;
-            border: none;
-            background: none;
-            outline: none;
-            font-size: 12px;
-            margin-left: 8px;
-            color: #333;
-        }
+<style>
+:root {
+  --green: #006b45;
+  --dark-green: #004d32;
+  --yellow: #ffd43b;
+  --light-green: #f1f8ed;
+  --cream: #fffdf1;
+  --white: #ffffff;
+  --text: #1b2922;
+  --muted: #718078;
+  --border: #e5ebe7;
+  --red: #e53935;
+}
 
-        /* Banners */
-        .promo-banners {
-            display: flex;
-            gap: 10px;
-            padding: 8px 16px;
-        }
-        .banner-card {
-            flex: 1;
-            border-radius: 12px;
-            padding: 10px;
-            color: white;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            height: 95px;
-            background-size: cover;
-            background-position: center;
-        }
-        .banner-left {
-            background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1590736969955-71cc9480175f?w=300') center/cover;
-        }
-        .banner-right {
-            background: linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.4)), url('https://images.unsplash.com/photo-1436491865332-7a61a109cc05?w=300') center/cover;
-        }
-        .banner-card h3 {
-            font-size: 11px;
-            font-weight: bold;
-            line-height: 1.2;
-            text-shadow: 0 1px 2px rgba(0,0,0,0.6);
-        }
-        .banner-btn {
-            align-self: flex-start;
-            background-color: #fbc02d;
-            color: #1b5e20;
-            border: none;
-            padding: 4px 8px;
-            border-radius: 6px;
-            font-size: 10px;
-            font-weight: bold;
-            cursor: pointer;
-        }
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
 
-        /* Mitra Banner */
-        .mitra-banner-wrapper {
-            padding: 0 16px 8px 16px;
-        }
-        .mitra-banner {
-            background: linear-gradient(135deg, #e8f5e9, #fffde7);
-            border: 1px solid #a5d6a7;
-            border-radius: 12px;
-            padding: 10px 14px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        .mitra-info h4 {
-            font-size: 11px;
-            color: #1b5e20;
-            font-weight: bold;
-        }
-        .mitra-info p {
-            font-size: 9px;
-            color: #555;
-            margin-top: 2px;
-        }
-        .mitra-btn {
-            background-color: #fbc02d;
-            color: #1b5e20;
-            border: none;
-            padding: 5px 10px;
-            border-radius: 8px;
-            font-size: 10px;
-            font-weight: bold;
-            cursor: pointer;
-        }
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  background: #f4f7f4;
+  color: var(--text);
+  line-height: 1.45;
+}
 
-        /* Categories Scroll */
-        .section-title {
-            padding: 8px 16px 4px 16px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        .section-title h3 {
-            font-size: 13px;
-            font-weight: bold;
-            color: #1b5e20;
-        }
-        .section-title a {
-            font-size: 11px;
-            color: #2e7d32;
-            text-decoration: none;
-            font-weight: 600;
-        }
-        .categories-scroll {
-            display: flex;
-            overflow-x: auto;
-            gap: 12px;
-            padding: 6px 16px;
-            scrollbar-width: none;
-        }
-        .categories-scroll::-webkit-scrollbar { display: none; }
-        .cat-item {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            min-width: 52px;
-            cursor: pointer;
-        }
-        .cat-icon {
-            width: 42px;
-            height: 42px;
-            background-color: #e8f5e9;
-            border-radius: 50%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 18px;
-            margin-bottom: 3px;
-            border: 1px solid #c8e6c9;
-        }
-        .cat-item span {
-            font-size: 9px;
-            text-align: center;
-            color: #333;
-            white-space: nowrap;
-        }
+button, input, select, textarea {
+  font: inherit;
+}
 
-        /* Features */
-        .features-grid {
-            display: flex;
-            justify-content: space-between;
-            padding: 6px 16px;
-            gap: 4px;
-        }
-        .feature-item {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            text-align: center;
-        }
-        .feature-icon {
-            width: 34px;
-            height: 34px;
-            background-color: #f1f8f5;
-            border-radius: 50%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 15px;
-            color: #2e7d32;
-            margin-bottom: 2px;
-        }
-        .feature-item span {
-            font-size: 8px;
-            color: #555;
-            line-height: 1.1;
-        }
+button {
+  cursor: pointer;
+}
 
-        /* Products Grid */
-        .products-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 8px;
-            padding: 6px 16px;
-        }
-        .product-card {
-            background: #fff;
-            border: 1px solid #eaeaea;
-            border-radius: 10px;
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
-        }
-        .product-img {
-            width: 100%;
-            height: 100px;
-            background-color: #e0e0e0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 10px;
-            color: #666;
-        }
-        .product-body {
-            padding: 6px;
-            display: flex;
-            flex-direction: column;
-            gap: 3px;
-        }
-        .product-title {
-            font-size: 10px;
-            font-weight: 600;
-            color: #333;
-            height: 24px;
-            overflow: hidden;
-        }
-        .product-price {
-            font-size: 11px;
-            font-weight: bold;
-            color: #d32f2f;
-        }
-        .product-footer {
-            font-size: 8px;
-            color: #777;
-        }
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+  outline: 2px solid var(--green);
+  outline-offset: 2px;
+}
 
-        /* Stores Scroll */
-        .stores-scroll {
-            display: flex;
-            overflow-x: auto;
-            gap: 8px;
-            padding: 6px 16px 16px 16px;
-            scrollbar-width: none;
-        }
-        .stores-scroll::-webkit-scrollbar { display: none; }
-        .store-card {
-            min-width: 100px;
-            background: #fff;
-            border: 1px solid #eaeaea;
-            border-radius: 10px;
-            padding: 8px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            text-align: center;
-        }
-        .store-logo {
-            width: 40px;
-            height: 40px;
-            background-color: #fbc02d;
-            border-radius: 50%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-weight: bold;
-            color: #1b5e20;
-            font-size: 11px;
-            margin-bottom: 4px;
-        }
-        .store-name { font-size: 10px; font-weight: bold; color: #333; }
-        .store-cat { font-size: 8px; color: #777; }
+.app {
+  max-width: 600px;
+  min-height: 100vh;
+  margin: auto;
+  background: var(--white);
+  padding-bottom: 86px;
+  box-shadow: 0 0 24px #00000008;
+}
 
-        /* Bottom Nav */
-        .bottom-nav {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            height: 60px;
-            background-color: #ffffff;
-            border-top: 1px solid #eaeaea;
-            display: flex;
-            justify-content: space-around;
-            align-items: center;
-            z-index: 1000;
-        }
-        .nav-item {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            text-decoration: none;
-            color: #757575;
-            font-size: 9px;
-            gap: 2px;
-            cursor: pointer;
-        }
-        .nav-item.active {
-            color: #2e7d32;
-            font-weight: bold;
-        }
-        .nav-item span.icon { font-size: 16px; }
-    </style>
+/* HEADER */
+
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: var(--cream);
+  border-bottom: 1px solid var(--border);
+  padding: 12px 15px;
+}
+
+.header-top {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  flex: 1;
+  min-width: 0;
+}
+
+.brand-logo {
+  width: 58px;
+  height: 58px;
+  object-fit: contain;
+  flex-shrink: 0;
+}
+
+.brand-name {
+  color: var(--green);
+  font-size: clamp(19px, 5vw, 26px);
+  font-weight: 900;
+  letter-spacing: -1px;
+  white-space: nowrap;
+}
+
+.brand-name span {
+  color: #e9b900;
+}
+
+.brand-tagline {
+  font-size: 10px;
+  color: #58665e;
+  line-height: 1.3;
+}
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.icon-button {
+  border: 0;
+  background: transparent;
+  font-size: 22px;
+  position: relative;
+  padding: 5px;
+}
+
+.badge {
+  position: absolute;
+  top: -3px;
+  right: -3px;
+  min-width: 17px;
+  height: 17px;
+  padding: 0 4px;
+  border-radius: 20px;
+  background: var(--red);
+  color: white;
+  font-size: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.language-button {
+  border: 0;
+  background: transparent;
+  font-size: 12px;
+  color: var(--text);
+}
+
+/* SEARCH */
+
+.search-box {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: white;
+  border: 1px solid #dfe6e1;
+  border-radius: 17px;
+  padding: 12px 14px;
+  margin-top: 13px;
+}
+
+.search-box span {
+  font-size: 22px;
+}
+
+.search-box input {
+  width: 100%;
+  border: 0;
+  outline: none;
+  background: transparent;
+  font-size: 14px;
+}
+
+/* GENERAL */
+
+.page {
+  display: none;
+}
+
+.page.active {
+  display: block;
+}
+
+.section {
+  padding: 17px 17px 0;
+}
+
+.section-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
+.section-heading h2 {
+  font-size: 20px;
+  color: var(--text);
+}
+
+.text-button {
+  color: var(--green);
+  border: 0;
+  background: transparent;
+  font-weight: 700;
+  font-size: 13px;
+}
+
+.page-title {
+  font-size: 25px;
+  color: var(--green);
+  margin-bottom: 5px;
+}
+
+.page-description {
+  color: var(--muted);
+  font-size: 14px;
+  margin-bottom: 17px;
+}
+
+.primary-button {
+  background: var(--green);
+  color: white;
+  border: 0;
+  border-radius: 12px;
+  padding: 12px 17px;
+  font-weight: 700;
+}
+
+.yellow-button {
+  background: var(--yellow);
+  color: #1d281f;
+  border: 0;
+  border-radius: 24px;
+  padding: 10px 16px;
+  font-weight: 800;
+  font-size: 13px;
+}
+
+.outline-button {
+  background: white;
+  color: var(--green);
+  border: 1px solid #cbd9d0;
+  border-radius: 12px;
+  padding: 10px 13px;
+  font-weight: 700;
+}
+
+.full-button {
+  width: 100%;
+  margin-top: 12px;
+}
+
+.card {
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  background: white;
+  padding: 15px;
+  margin-bottom: 13px;
+}
+
+.notice {
+  background: var(--light-green);
+  border: 1px solid #dcebd7;
+  border-radius: 13px;
+  padding: 13px;
+  font-size: 13px;
+  margin: 12px 17px 0;
+}
+
+/* HOME BANNERS */
+
+.banner-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  padding: 14px 14px 0;
+}
+
+.banner {
+  min-height: 155px;
+  padding: 15px 12px;
+  border-radius: 17px;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: space-between;
+  overflow: hidden;
+}
+
+.banner-one {
+  background: linear-gradient(140deg, #004a31, #087c50 60%, #93b95b);
+}
+
+.banner-two {
+  background: linear-gradient(140deg, #075a43, #07566b 65%, #173f72);
+}
+
+.banner h2 {
+  font-size: clamp(14px, 3.7vw, 19px);
+  line-height: 1.2;
+}
+
+.banner p {
+  font-size: 11px;
+  margin-top: 7px;
+}
+
+.banner .yellow-button {
+  margin-top: 10px;
+  padding: 9px 12px;
+  font-size: 11px;
+}
+
+.banner-art {
+  font-size: 26px;
+  align-self: flex-end;
+  opacity: .9;
+  margin-top: -12px;
+}
+
+.partner-banner {
+  margin: 12px 14px 0;
+  padding: 14px;
+  border: 1px solid #dcebd7;
+  background: linear-gradient(110deg, #f0f8e9, #fffef4);
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.partner-banner .partner-copy {
+  flex: 1;
+  min-width: 0;
+}
+
+.partner-banner strong {
+  color: var(--green);
+  font-size: 15px;
+}
+
+.partner-banner p {
+  font-size: 12px;
+  margin-top: 3px;
+}
+
+/* CATEGORY SCROLLER */
+
+.category-scroll {
+  display: flex;
+  overflow-x: auto;
+  gap: 15px;
+  padding: 18px 15px 12px;
+  scrollbar-width: none;
+}
+
+.category-scroll::-webkit-scrollbar {
+  display: none;
+}
+
+.category-shortcut {
+  flex: 0 0 74px;
+  text-align: center;
+  border: 0;
+  background: white;
+  color: var(--text);
+  font-size: 11px;
+}
+
+.category-icon {
+  display: flex;
+  width: 53px;
+  height: 53px;
+  border-radius: 50%;
+  background: var(--light-green);
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 7px;
+  font-size: 27px;
+}
+
+.benefits {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 5px;
+  background: var(--light-green);
+  margin: 12px 14px 0;
+  padding: 14px 5px;
+  border-radius: 16px;
+}
+
+.benefit {
+  text-align: center;
+  font-size: 10px;
+  color: var(--green);
+}
+
+.benefit-icon {
+  font-size: 23px;
+  display: block;
+  margin-bottom: 5px;
+}
+
+/* PRODUCTS */
+
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.product-card {
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  overflow: hidden;
+  background: white;
+}
+
+.product-image {
+  width: 100%;
+  height: 130px;
+  background: linear-gradient(135deg, #eef7e8, #fff5d9);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 57px;
+  border: 0;
+}
+
+.product-info {
+  padding: 11px;
+}
+
+.product-name {
+  font-size: 13px;
+  font-weight: 700;
+  min-height: 37px;
+  border: 0;
+  background: transparent;
+  text-align: left;
+  width: 100%;
+  color: var(--text);
+}
+
+.price {
+  color: var(--red);
+  font-weight: 800;
+  font-size: 15px;
+  margin: 8px 0 5px;
+}
+
+.product-meta {
+  font-size: 11px;
+  color: var(--muted);
+}
+
+.product-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 6px;
+  margin-top: 10px;
+}
+
+.cart-button {
+  background: var(--green);
+  color: white;
+  border: 0;
+  border-radius: 9px;
+  padding: 8px 11px;
+}
+
+/* STORE LIST */
+
+.store-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 13px 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.store-avatar {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: var(--light-green);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 25px;
+  flex-shrink: 0;
+  border: 1px solid var(--border);
+}
+
+.store-details {
+  flex: 1;
+  min-width: 0;
+}
+
+.store-details strong {
+  display: block;
+  font-size: 14px;
+}
+
+.store-details small {
+  color: var(--muted);
+  font-size: 11px;
+}
+
+.store-row:last-child {
+  border-bottom: 0;
+}
+
+/* FILTERS */
+
+.filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 12px 0 17px;
+}
+
+.filter-button {
+  background: white;
+  color: var(--green);
+  border: 1px solid #cbd9d0;
+  border-radius: 12px;
+  padding: 10px 12px;
+  font-size: 12px;
+}
+
+.filter-button.selected {
+  background: var(--green);
+  color: white;
+}
+
+/* FORMS */
+
+.form-group {
+  margin-bottom: 14px;
+}
+
+.form-group label {
+  display: block;
+  font-size: 13px;
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+  display: block;
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #dce4de;
+  border-radius: 11px;
+  background: white;
+  color: var(--text);
+}
+
+.form-group textarea {
+  min-height: 85px;
+  resize: vertical;
+}
+
+.form-note {
+  font-size: 11px;
+  color: var(--muted);
+  margin-top: 5px;
+}
+
+.checkbox-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 9px;
+  font-size: 12px;
+  margin: 12px 0;
+}
+
+.checkbox-row input {
+  margin-top: 4px;
+}
+
+.link-button {
+  color: var(--green);
+  text-decoration: underline;
+  background: none;
+  border: 0;
+  font-weight: 700;
+}
+
+/* DETAILS */
+
+.detail-hero {
+  text-align: center;
+  padding: 25px 12px;
+  background: linear-gradient(135deg, #f1f8ed, #fffbea);
+  border-radius: 16px;
+  margin-bottom: 16px;
+}
+
+.detail-emoji {
+  font-size: 70px;
+  margin-bottom: 10px;
+}
+
+.detail-title {
+  font-size: 23px;
+  margin-bottom: 7px;
+}
+
+.empty-state {
+  text-align: center;
+  padding: 32px 18px;
+  border: 1px dashed #cbd9d0;
+  border-radius: 16px;
+  color: var(--muted);
+}
+
+.empty-state .emoji {
+  font-size: 42px;
+  margin-bottom: 12px;
+}
+
+/* BOTTOM NAV */
+
+.bottom-nav {
+  position: fixed;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 100;
+  width: 100%;
+  max-width: 600px;
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  background: white;
+  border-top: 1px solid var(--border);
+  padding: 8px 2px max(8px, env(safe-area-inset-bottom));
+}
+
+.nav-button {
+  background: transparent;
+  border: 0;
+  color: #758078;
+  padding: 5px 1px;
+  font-size: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+.nav-icon {
+  font-size: 22px;
+  line-height: 1.1;
+}
+
+.nav-button.active {
+  color: var(--green);
+  font-weight: 800;
+}
+
+.nav-button.active .nav-icon {
+  transform: translateY(-1px);
+}
+
+/* TOAST */
+
+.toast {
+  position: fixed;
+  z-index: 200;
+  left: 50%;
+  bottom: 95px;
+  transform: translateX(-50%);
+  width: max-content;
+  max-width: 88%;
+  background: #153f2d;
+  color: white;
+  border-radius: 12px;
+  padding: 13px 17px;
+  font-size: 13px;
+  box-shadow: 0 5px 20px #0002;
+  display: none;
+}
+
+.toast.show {
+  display: block;
+}
+
+/* SMALL SCREENS */
+
+@media (max-width: 360px) {
+  .brand-logo {
+    width: 45px;
+    height: 45px;
+  }
+
+  .brand-tagline {
+    font-size: 9px;
+  }
+
+  .header-actions {
+    gap: 5px;
+  }
+
+  .banner {
+    min-height: 145px;
+  }
+
+  .product-image {
+    height: 110px;
+  }
+
+  .category-shortcut {
+    flex-basis: 67px;
+  }
+}
+</style>
 </head>
+
 <body>
+<div class="app">
 
-    <div class="phone-container">
-        
-        <!-- ================= HALAMAN 1: BERANDA ================= -->
-        <div class="scrollable-content active-page" id="page-beranda">
-            <header class="app-header">
-                <div class="logo-area">
-                    <!-- Logo Resmi Lingkaran Hijau Emas -->
-                    <div class="logo-circle-official">
-                        <span>BK</span>
-                    </div>
-                    <div class="logo-text">
-                        <h1>BORNEOKU</h1>
-                        <p>Belanja Mudah, Jualan Luas</p>
-                    </div>
-                </div>
-                <div class="header-icons">
-                    <button class="lang-btn">ID 🌐</button>
-                    <button class="icon-btn">🔔<span class="badge">3</span></button>
-                    <button class="icon-btn">🛒<span class="badge">2</span></button>
-                </div>
-            </header>
+  <!-- HEADER -->
+  <header class="header">
+    <div class="header-top">
+      <div class="brand">
+        <img
+          src="borneoku-logo.png"
+          alt="Logo resmi BORNEOKU"
+          class="brand-logo"
+          onerror="this.style.display='none';document.getElementById('logoFallback').style.display='flex';"
+        >
 
-            <div class="search-section">
-                <div class="search-bar">
-                    <span>🔍</span>
-                    <input type="text" placeholder="Cari produk, toko, atau kategori...">
-                    <span>🔲</span>
-                </div>
-            </div>
-
-            <div class="promo-banners">
-                <div class="banner-card banner-left">
-                    <h3>Produk Pilihan Nusantara</h3>
-                    <button class="banner-btn">Belanja →</button>
-                </div>
-                <div class="banner-card banner-right">
-                    <h3>UMKM Go Global</h3>
-                    <button class="banner-btn">Promo →</button>
-                </div>
-            </div>
-
-            <div class="mitra-banner-wrapper">
-                <div class="mitra-banner">
-                    <div class="mitra-info">
-                        <h4>Jadi Mitra Penjual BORNEOKU</h4>
-                        <p>Jual produkmu & jangkau lebih luas!</p>
-                    </div>
-                    <button class="mitra-btn">Daftar →</button>
-                </div>
-            </div>
-
-            <div class="section-title">
-                <h3>Kategori Pilihan</h3>
-            </div>
-            <div class="categories-scroll">
-                <div class="cat-item"><div class="cat-icon">👗</div><span>Fashion</span></div>
-                <div class="cat-item"><div class="cat-icon">🍲</div><span>Kuliner</span></div>
-                <div class="cat-item"><div class="cat-icon">🧺</div><span>Kerajinan</span></div>
-                <div class="cat-item"><div class="cat-icon">🌿</div><span>Herbal</span></div>
-                <div class="cat-item"><div class="cat-icon">🏠</div><span>Rumah</span></div>
-                <div class="cat-item"><div class="cat-icon">💻</div><span>Elektronik</span></div>
-                <div class="cat-item"><div class="cat-icon">💄</div><span>Kecantikan</span></div>
-                <div class="cat-item"><div class="cat-icon">🧸</div><span>Ibu & Anak</span></div>
-            </div>
-
-            <div class="features-grid">
-                <div class="feature-item"><div class="feature-icon">📦</div><span>Gratis Ongkir</span></div>
-                <div class="feature-item"><div class="feature-icon">🛡️</div><span>Terverifikasi</span></div>
-                <div class="feature-item"><div class="feature-icon">🌿</div><span>Lokal ID</span></div>
-                <div class="feature-item"><div class="feature-icon">✈️</div><span>Internasional</span></div>
-                <div class="feature-item"><div class="feature-icon">⭐</div><span>Tepercaya</span></div>
-            </div>
-
-            <div class="section-title">
-                <h3>Produk Terbaru</h3>
-                <a href="#">Lihat Semua →</a>
-            </div>
-            <div class="products-grid">
-                <div class="product-card">
-                    <div class="product-img">Foto Gamis</div>
-                    <div class="product-body">
-                        <div class="product-title">Gamis Elegan Premium Syari</div>
-                        <div class="product-price">Rp 149.000</div>
-                        <div class="product-footer">⭐ 4.9 (122 terjual)</div>
-                    </div>
-                </div>
-                <div class="product-card">
-                    <div class="product-img">Foto Jamu</div>
-                    <div class="product-body">
-                        <div class="product-title">Jamu Kunyit Temulawak Asli</div>
-                        <div class="product-price">Rp 10.000</div>
-                        <div class="product-footer">⭐ 4.9 (542 terjual)</div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="section-title">
-                <h3>Toko Pilihan Mitra</h3>
-                <a href="#">Lihat Semua →</a>
-            </div>
-            <div class="stores-scroll">
-                <div class="store-card">
-                    <div class="store-logo">AM</div>
-                    <div class="store-name">Adisa Fresh</div>
-                    <div class="store-cat">Kuliner & Herbal</div>
-                </div>
-                <div class="store-card">
-                    <div class="store-logo">BF</div>
-                    <div class="store-name">Borneo Fashion</div>
-                    <div class="store-cat">Pakaian Muslim</div>
-                </div>
-            </div>
+        <div id="logoFallback"
+             style="display:none;width:52px;height:52px;border:2px solid #d8b72d;border-radius:50%;align-items:center;justify-content:center;color:#006b45;font-weight:900;font-size:17px;flex-shrink:0;">
+          BK
         </div>
 
-        <!-- ================= HALAMAN 2: KATEGORI & VIDEO/LIVE ================= -->
-        <div class="scrollable-content" id="page-kategori">
-            <header class="app-header">
-                <div class="logo-area">
-                    <div class="logo-circle-official"><span>BK</span></div>
-                    <div class="logo-text">
-                        <h1>Kategori BorneoKu</h1>
-                        <p>Jelajahi Produk & Hiburan</p>
-                    </div>
-                </div>
-                <div class="header-icons">
-                    <button class="lang-btn">ID 🌐</button>
-                    <button class="icon-btn">🛒<span class="badge">2</span></button>
-                </div>
-            </header>
-
-            <div class="search-section">
-                <div class="search-bar">
-                    <span>🔍</span>
-                    <input type="text" placeholder="Cari dalam kategori atau produk...">
-                </div>
-            </div>
-
-            <div class="promo-banners">
-                <div class="banner-card" style="background: linear-gradient(135deg, #1b5e20, #004d40); width: 100%; height: 85px;">
-                    <h3>Temukan Produk, Tonton Videonya!</h3>
-                    <p style="font-size: 8px; margin: 2px 0;">Lihat produk pilihan & saksikan live streaming penjual.</p>
-                    <button class="banner-btn">Tonton Sekarang →</button>
-                </div>
-            </div>
-
-            <div class="features-grid" style="padding: 10px 16px; background: #fff; margin-bottom: 6px;">
-                <div class="feature-item"><div class="feature-icon" style="background:#e8f5e9;">▦</div><span>Kategori</span></div>
-                <div class="feature-item"><div class="feature-icon" style="background:#e8f5e9;">▶️</div><span>Video</span></div>
-                <div class="feature-item"><div class="feature-icon" style="background:#e8f5e9;">🔴</div><span>Live</span></div>
-                <div class="feature-item"><div class="feature-icon" style="background:#e8f5e9;">♡</div><span>Favorit</span></div>
-                <div class="feature-item"><div class="feature-icon" style="background:#e8f5e9;">🕘</div><span>Terbaru</span></div>
-            </div>
-
-            <div class="section-title"><h3>Daftar Kategori Utama</h3></div>
-            <div style="padding: 0 16px; display: flex; flex-direction: column; gap: 6px; margin-bottom: 16px;">
-                <div style="display: flex; align-items: center; background: #fff; padding: 8px 10px; border-radius: 8px; border: 1px solid #eaeaea; justify-content: space-between;">
-                    <div style="display: flex; align-items: center; gap: 8px;"><span style="font-size: 16px;">👗</span><div><div style="font-size: 11px; font-weight: bold; color: #1b5e20;">Fashion Indonesia</div><div style="font-size: 8px; color: #666;">Gamis, Tunik, Kain & Bahan</div></div></div>
-                    <span style="font-size: 10px; color: #888;">➔</span>
-                </div>
-                <div style="display: flex; align-items: center; background: #fff; padding: 8px 10px; border-radius: 8px; border: 1px solid #eaeaea; justify-content: space-between;">
-                    <div style="display: flex; align-items: center; gap: 8px;"><span style="font-size: 16px;">🍲</span><div><div style="font-size: 11px; font-weight: bold; color: #1b5e20;">Makanan & Minuman</div><div style="font-size: 8px; color: #666;">Cwie Mie, Jamu, Jajan Pasar</div></div></div>
-                    <span style="font-size: 10px; color: #888;">➔</span>
-                </div>
-                <div style="display: flex; align-items: center; background: #fff; padding: 8px 10px; border-radius: 8px; border: 1px solid #eaeaea; justify-content: space-between;">
-                    <div style="display: flex; align-items: center; gap: 8px;"><span style="font-size: 16px;">🌿</span><div><div style="font-size: 11px; font-weight: bold; color: #1b5e20;">Kesehatan & Herbal</div><div style="font-size: 8px; color: #666;">Jamu Tradisional, Ginger Shot</div></div></div>
-                    <span style="font-size: 10px; color: #888;">➔</span>
-                </div>
-            </div>
+        <div>
+          <div class="brand-name">BORNEO<span>KU</span></div>
+          <div class="brand-tagline">Belanja Mudah, Jualan Lebih Luas</div>
         </div>
+      </div>
 
-        <!-- ================= HALAMAN 3: TOKO MITRA ================= -->
-        <div class="scrollable-content" id="page-toko">
-            <header class="app-header">
-                <div class="logo-area">
-                    <div class="logo-circle-official"><span>BK</span></div>
-                    <div class="logo-text"><h1>Mitra Toko</h1><p>Direktori Penjual</p></div>
-                </div>
-            </header>
-            <div class="search-section">
-                <div class="search-bar"><span>🔍</span><input type="text" placeholder="Cari nama toko..."></div>
-            </div>
-            <div class="section-title"><h3>Daftar Mitra Penjual</h3></div>
-            <div style="padding: 0 16px; display: flex; flex-direction: column; gap: 8px;">
-                <div style="background: #fff; border: 1px solid #eaeaea; border-radius: 10px; padding: 10px; display: flex; align-items: center; justify-content: space-between;">
-                    <div><div style="font-size: 11px; font-weight: bold; color: #1b5e20;">Adisa Fresh Mart 🛡️</div><div style="font-size: 8px; color: #666;">Kuliner & Herbal • ⭐ 4.9</div></div>
-                    <button style="background: #2e7d32; color: white; border: none; padding: 5px 8px; border-radius: 6px; font-size: 9px;">Kunjungi</button>
-                </div>
-            </div>
-        </div>
+      <div class="header-actions">
+        <button class="language-button" onclick="showToast('Bahasa Indonesia dipilih')">
+          🌐 ID⌄
+        </button>
 
-        <!-- ================= HALAMAN 4: DETAIL TOKO ================= -->
-        <div class="scrollable-content" id="page-detail">
-            <header class="app-header"><div class="logo-area"><div class="logo-text"><h1>Etalase Toko</h1></div></div></header>
-            <div style="padding: 16px; text-align: center;"><p style="font-size: 11px; color: #555;">Halaman Detail Toko & Produk Pilihan Mitra.</p></div>
-        </div>
+        <button class="icon-button"
+                aria-label="Notifikasi"
+                onclick="showToast('Notifikasi akan tersedia setelah sistem akun diaktifkan')">
+          ♧
+          <span class="badge">3</span>
+        </button>
 
-        <!-- ================= HALAMAN 5: PROMO ================= -->
-        <div class="scrollable-content" id="page-promo">
-            <header class="app-header"><div class="logo-area"><div class="logo-text"><h1>Promo BorneoKu</h1></div></div></header>
-            <div style="padding: 16px;"><p style="font-size: 11px; color: #555;">Daftar voucher diskon & gratis ongkir aktif.</p></div>
-        </div>
-
-        <!-- ================= HALAMAN 6: CHAT ================= -->
-        <div class="scrollable-content" id="page-chat">
-            <header class="app-header"><div class="logo-area"><div class="logo-text"><h1>Pusat Chat</h1></div></div></header>
-            <div style="padding: 16px;"><p style="font-size: 11px; color: #555;">Daftar percakapan dengan penjual.</p></div>
-        </div>
-
-        <!-- ================= HALAMAN 7: AKUN ================= -->
-        <div class="scrollable-content" id="page-akun">
-            <header class="app-header"><div class="logo-area"><div class="logo-text"><h1>Akun Saya</h1></div></div></header>
-            <div style="padding: 16px;"><p style="font-size: 11px; color: #555;">Pengaturan profil, pesanan, & pendaftaran mitra.</p></div>
-        </div>
-
-        <!-- ================= NAVIGASI BAWAH (KONSISTEN) ================= -->
-        <nav class="bottom-nav">
-            <a href="#" class="nav-item active" data-target="page-beranda">
-                <span class="icon">🏠</span>
-                <span>Beranda</span>
-            </a>
-            <a href="#" class="nav-item" data-target="page-kategori">
-                <span class="icon">▦</span>
-                <span>Kategori</span>
-            </a>
-            <a href="#" class="nav-item" data-target="page-toko">
-                <span class="icon">🏬</span>
-                <span>Toko</span>
-            </a>
-            <a href="#" class="nav-item" data-target="page-promo">
-                <span class="icon">🏷️</span>
-                <span>Promo</span>
-            </a>
-            <a href="#" class="nav-item" data-target="page-chat">
-                <span class="icon">💬</span>
-                <span>Chat</span>
-            </a>
-            <a href="#" class="nav-item" data-target="page-akun">
-                <span class="icon">👤</span>
-                <span>Akun</span>
-            </a>
-        </nav>
-
+        <button class="icon-button"
+                aria-label="Keranjang"
+                onclick="navigate('cart')">
+          🛒
+          <span class="badge" id="cartCount">0</span>
+        </button>
+      </div>
     </div>
 
-    <script>
-        // Skrip interaktif agar tombol navigasi bawah dapat berfungsi berpindah halaman
-        const navItems = document.querySelectorAll('.bottom-nav .nav-item');
-        const pages = document.querySelectorAll('.phone-container .scrollable-content');
+    <form class="search-box" onsubmit="searchProducts(event)">
+      <span>⌕</span>
+      <input id="globalSearch"
+             type="search"
+             placeholder="Cari produk, toko, atau kategori..."
+             aria-label="Cari produk, toko, atau kategori">
+      <button type="submit"
+              style="border:0;background:none;font-size:20px"
+              aria-label="Cari">⌕</button>
+    </form>
+  </header>
 
-        navItems.forEach(item => {
-            item.addEventListener('click', (e) => {
-                e.preventDefault();
-                
-                // Hapus kelas aktif dari semua tombol nav
-                navItems.forEach(nav => nav.classList.remove('active'));
-                // Tambahkan kelas aktif ke tombol yang diklik
-                item.classList.add('active');
+  <!-- ================= BERANDA ================= -->
+  <main id="page-home" class="page active">
 
-                // Sembunyikan semua halaman
-                pages.forEach(p => p.classList.remove('active-page'));
+    <section class="banner-row">
+      <article class="banner banner-one">
+        <div>
+          <h2>Produk Pilihan dari Seluruh Indonesia</h2>
+          <p>UMKM Maju, Indonesia Kuat</p>
+        </div>
+        <div>
+          <button class="yellow-button" onclick="navigate('products')">
+            Belanja Sekarang ›
+          </button>
+          <div class="banner-art">🧺</div>
+        </div>
+      </article>
 
-                // Tampilkan halaman tujuan berdasarkan atribut data-target
-                const targetId = item.getAttribute('data-target');
-                const targetPage = document.getElementById(targetId);
-                if (targetPage) {
-                    targetPage.classList.add('active-page');
-                }
-            });
-        });
-    </script>
+      <article class="banner banner-two">
+        <div>
+          <h2>UMKM Indonesia <span style="color:#ffd43b">Go Global</span></h2>
+          <p>Dukung Produk Lokal, Dikenal Dunia</p>
+        </div>
+        <div>
+          <button class="yellow-button" onclick="navigate('promo')">
+            Lihat Promo ›
+          </button>
+          <div class="banner-art">🌐</div>
+        </div>
+      </article>
+    </section>
+
+    <section class="partner-banner">
+      <div style="font-size:30px">🌿</div>
+      <div class="partner-copy">
+        <strong>Jadi Mitra Penjual BORNEOKU</strong>
+        <p>Punya produk? Jual di BORNEOKU dan jangkau lebih banyak pembeli!</p>
+      </div>
+      <button class="yellow-button" onclick="navigate('register')">
+        Daftar ›
+      </button>
+    </section>
+
+    <div class="category-scroll" id="homeCategories"></div>
+
+    <section class="benefits">
+      <div class="benefit">
+        <span class="benefit-icon">🚚</span>
+        Gratis Ongkir*
+      </div>
+      <div class="benefit">
+        <span class="benefit-icon">🛡️</span>
+        Produk Terverifikasi
+      </div>
+      <div class="benefit">
+        <span class="benefit-icon">🌱</span>
+        Produk Lokal Indonesia
+      </div>
+      <div class="benefit">
+        <span class="benefit-icon">🌐</span>
+        Pengiriman Internasional
+      </div>
+      <div class="benefit">
+        <span class="benefit-icon">⭐</span>
+        Pilihan Tepercaya
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-heading">
+        <h2>Produk Terbaru</h2>
+        <button class="text-button" onclick="navigate('products')">
+          Lihat Semua ›
+        </button>
+      </div>
+      <div class="product-grid" id="homeProducts"></div>
+    </section>
+
+    <section class="section">
+      <div class="section-heading">
+        <h2>Toko Pilihan</h2>
+        <button class="text-button" onclick="navigate('stores')">
+          Lihat Semua ›
+        </button>
+      </div>
+      <div class="card" id="homeStores"></div>
+    </section>
+
+    <div class="notice">
+      *Gratis ongkir, verifikasi, dan pengiriman internasional berlaku sesuai
+      layanan serta ketentuan yang telah diaktifkan.
+    </div>
+  </main>
+
+  <!-- ================= KATEGORI ================= -->
+  <main id="page-categories" class="page">
+    <section class="section">
+      <h1 class="page-title">Kategori Produk</h1>
+      <p class="page-description">
+        Temukan produk berdasarkan kategori favoritmu.
+      </p>
+
+      <div class="search-box" style="margin:0 0 16px">
+        <span>⌕</span>
+        <input id="categorySearch"
+               type="search"
+               placeholder="Cari kategori atau produk..."
+               oninput="renderCategoryList(this.value)">
+      </div>
+
+      <div id="categoryList"></div>
+    </section>
+  </main>
+
+  <!-- ================= DAFTAR PRODUK ================= -->
+  <main id="page-products" class="page">
+    <section class="section">
+      <h1 class="page-title" id="productsTitle">Produk Pilihan</h1>
+      <p class="page-description" id="productsDescription">
+        Temukan produk dari berbagai toko.
+      </p>
+
+      <div class="filters" id="productFilters"></div>
+      <div class="product-grid" id="allProducts"></div>
+    </section>
+  </main>
+
+  <!-- ================= DETAIL PRODUK ================= -->
+  <main id="page-product-detail" class="page">
+    <section class="section">
+      <button class="outline-button" onclick="goBack()">‹ Kembali</button>
+      <div id="productDetail" style="margin-top:15px"></div>
+    </section>
+  </main>
+
+  <!-- ================= TOKO ================= -->
+  <main id="page-stores" class="page">
+    <section class="section">
+      <h1 class="page-title">Jelajahi Toko</h1>
+      <p class="page-description">
+        Temukan toko mitra dari berbagai daerah dan kategori.
+      </p>
+
+      <div class="search-box" style="margin:0">
+        <span>⌕</span>
+        <input id="storeSearch"
+               type="search"
+               placeholder="Cari nama toko..."
+               oninput="renderStores()">
+      </div>
+
+      <div class="filters">
+        <button class="filter-button selected" onclick="setStoreFilter('all',this)">
+          Semua Toko
+        </button>
+        <button class="filter-button" onclick="setStoreFilter('verified',this)">
+          Terverifikasi
+        </button>
+        <button class="filter-button" onclick="setStoreFilter('rating',this)">
+          Rating Tertinggi
+        </button>
+        <button class="filter-button" onclick="setStoreFilter('new',this)">
+          Toko Terbaru
+        </button>
+      </div>
+
+      <div class="card" id="storeList"></div>
+    </section>
+  </main>
+
+  <!-- ================= DETAIL TOKO ================= -->
+  <main id="page-store-detail" class="page">
+    <section class="section">
+      <button class="outline-button" onclick="goBack()">‹ Kembali</button>
+      <div id="storeDetail" style="margin-top:15px"></div>
+    </section>
+  </main>
+
+  <!-- ================= PROMO ================= -->
+  <main id="page-promo" class="page">
+    <section class="section">
+      <h1 class="page-title">Promo BORNEOKU</h1>
+      <p class="page-description">
+        Periksa penawaran dan ketentuan sebelum digunakan.
+      </p>
+
+      <div class="card">
+        <h2>🎁 Voucher dan Penawaran</h2>
+
+        <div class="store-row">
+          <div class="store-avatar">🏷️</div>
+          <div class="store-details">
+            <strong>Voucher Selamat Datang</strong>
+            <small>Contoh program promo. Aktifkan setelah syarat ditetapkan.</small>
+          </div>
+          <button class="outline-button" onclick="showPromoDetail('welcome')">
+            Lihat
+          </button>
+        </div>
+
+        <div class="store-row">
+          <div class="store-avatar">🚚</div>
+          <div class="store-details">
+            <strong>Promo Ongkir</strong>
+            <small>Periksa wilayah, minimum belanja, dan periode.</small>
+          </div>
+          <button class="outline-button" onclick="showPromoDetail('shipping')">
+            Detail
+          </button>
+        </div>
+
+        <div class="store-row">
+          <div class="store-avatar">⚡</div>
+          <div class="store-details">
+            <strong>Promo Pilihan</strong>
+            <small>Penawaran yang tersedia akan ditampilkan di sini.</small>
+          </div>
+          <button class="outline-button" onclick="showPromoDetail('special')">
+            Lihat
+          </button>
+        </div>
+      </div>
+
+      <div id="promoDetail"></div>
+    </section>
+  </main>
+
+  <!-- ================= CHAT ================= -->
+  <main id="page-chat" class="page">
+    <section class="section">
+      <h1 class="page-title">Chat</h1>
+      <p class="page-description">
+        Percakapan dengan penjual akan muncul di sini.
+      </p>
+
+      <div class="card">
+        <div class="empty-state">
+          <div class="emoji">💬</div>
+          <h3>Belum ada percakapan</h3>
+          <p style="margin-top:7px;font-size:13px">
+            Kunjungi halaman toko atau produk untuk memulai percakapan.
+          </p>
+          <button class="primary-button full-button"
+                  onclick="navigate('stores')">
+            Jelajahi Toko
+          </button>
+        </div>
+      </div>
+
+      <div class="notice" style="margin:12px 0">
+        Chat demo belum mengirim pesan ke penjual sungguhan. Fitur pesan
+        memerlukan akun dan sistem backend.
+      </div>
+    </section>
+  </main>
+
+  <!-- ================= AKUN ================= -->
+  <main id="page-account" class="page">
+    <section class="section">
+      <h1 class="page-title">Akun Saya</h1>
+      <p class="page-description">
+        Kelola akun, pesanan, dan keamananmu.
+      </p>
+
+      <div class="card">
+        <div class="store-row">
+          <div class="store-avatar">👤</div>
+          <div class="store-details">
+            <strong>Masuk / Daftar</strong>
+            <small>Masuk untuk mengakses fitur akun.</small>
+          </div>
+          <button class="outline-button" onclick="navigate('login')">
+            Masuk
+          </button>
+        </div>
+
+        <div class="store-row">
+          <div class="store-avatar">📦</div>
+          <div class="store-details">
+            <strong>Pesanan Saya</strong>
+            <small>Lihat status dan riwayat pesanan.</small>
+          </div>
+          <button class="outline-button" onclick="navigate('orders')">
+            Buka
+          </button>
+        </div>
+
+        <div class="store-row">
+          <div class="store-avatar">❤️</div>
+          <div class="store-details">
+            <strong>Favorit Saya</strong>
+            <small>Produk yang kamu simpan.</small>
+          </div>
+          <button class="outline-button" onclick="navigate('favorites')">
+            Buka
+          </button>
+        </div>
+
+        <div class="store-row">
+          <div class="store-avatar">🎟️</div>
+          <div class="store-details">
+            <strong>Voucher Saya</strong>
+            <small>Voucher yang tersedia untuk akunmu.</small>
+          </div>
+          <button class="outline-button" onclick="navigate('promo')">
+            Buka
+          </button>
+        </div>
+
+        <div class="store-row">
+          <div class="store-avatar">🔐</div>
+          <div class="store-details">
+            <strong>Keamanan Akun</strong>
+            <small>Informasi keamanan dan perlindungan akun.</small>
+          </div>
+          <button class="outline-button" onclick="navigate('security')">
+            Buka
+          </button>
+        </div>
+      </div>
+
+      <div class="partner-banner" style="margin:12px 0">
+        <div class="partner-copy">
+          <strong>Mulai Berjualan di BORNEOKU</strong>
+          <p>Daftarkan toko dan jadilah mitra penjual.</p>
+        </div>
+        <button class="yellow-button" onclick="navigate('register')">
+          Daftar ›
+        </button>
+      </div>
+
+      <div class="card">
+        <button class="text-button"
+                style="font-size:15px;padding:7px 0"
+                onclick="navigate('help')">
+          ❓ Pusat Bantuan ›
+        </button>
+        <hr style="border:0;border-top:1px solid var(--border);margin:10px 0">
+
+        <button class="text-button"
+                style="font-size:15px;padding:7px 0"
+                onclick="navigate('settings')">
+          ⚙️ Pengaturan ›
+        </button>
+        <hr style="border:0;border-top:1px solid var(--border);margin:10px 0">
+
+        <button class="text-button"
+                style="font-size:15px;padding:7px 0"
+                onclick="navigate('privacy')">
+          🛡️ Privasi dan Perlindungan Data ›
+        </button>
+      </div>
+    </section>
+  </main>
+
+  <!-- ================= PENDAFTARAN MITRA ================= -->
+  <main id="page-register" class="page">
+    <section class="section">
+      <button class="outline-button" onclick="goBack()">‹ Kembali</button>
+
+      <h1 class="page-title" style="margin-top:17px">
+        Pendaftaran Mitra BORNEOKU
+      </h1>
+
+      <p class="page-description">
+        Lengkapi informasi untuk mengajukan pendaftaran toko.
+      </p>
+
+      <div class="notice" style="margin:0 0 17px">
+        Data identitas digunakan untuk proses verifikasi sesuai kebijakan
+        privasi. Jangan mengirim dokumen identitas melalui kolom chat umum.
+      </div>
+
+      <form id="partnerForm" class="card">
+        <h2 style="margin-bottom:15px">A. Identitas Pemilik</h2>
+
+        <div class="form-group">
+          <label for="ownerName">Nama lengkap sesuai KTP *</label>
+          <input id="ownerName" name="ownerName" required
+                 autocomplete="name">
+        </div>
+
+        <div class="form-group">
+          <label for="ownerPhone">Nomor telepon aktif *</label>
+          <input id="ownerPhone" name="ownerPhone" type="tel"
+                 required autocomplete="tel">
+        </div>
+
+        <div class="form-group">
+          <label for="ownerEmail">Alamat email *</label>
+          <input id="ownerEmail" name="ownerEmail" type="email"
+                 required autocomplete="email">
+        </div>
+
+        <div class="form-group">
+          <label for="nik">Nomor NIK *</label>
+          <input id="nik" name="nik" inputmode="numeric"
+                 maxlength="16" minlength="16" required
+                 placeholder="16 digit NIK">
+          <p class="form-note">
+            Untuk demo, NIK tidak dikirim atau disimpan ke server.
+          </p>
+        </div>
+
+        <div class="form-group">
+          <label for="ktpFile">Foto KTP *</label>
+          <input id="ktpFile" name="ktpFile" type="file"
+                 accept="image/*" required>
+        </div>
+
+        <div class="form-group">
+          <label for="selfieFile">Foto diri untuk verifikasi</label>
+          <input id="selfieFile" name="selfieFile" type="file"
+                 accept="image/*">
+          <p class="form-note">
+            Persyaratan verifikasi sebenarnya harus ditetapkan sebelum
+            pendaftaran resmi dibuka.
+          </p>
+        </div>
+
+        <div class="form-group">
+          <label for="ktpAddress">Alamat sesuai KTP *</label>
+          <textarea id="ktpAddress" name="ktpAddress"
+                    required></textarea>
+        </div>
+
+        <hr style="border:0;border-top:1px solid var(--border);margin:20px 0">
+
+        <h2 style="margin-bottom:15px">B. Informasi Toko</h2>
+
+        <div class="form-group">
+          <label for="shopName">Nama toko *</label>
+          <input id="shopName" name="shopName" required>
+        </div>
+
+        <div class="form-group">
+          <label for="shopCategory">Kategori produk *</label>
+          <select id="shopCategory" name="shopCategory" required>
+            <option value="">Pilih kategori</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="shopAddress">Alamat operasional toko *</label>
+          <textarea id="shopAddress" name="shopAddress"
+                    required></textarea>
+        </div>
+
+        <div class="form-group">
+          <label for="shopLogo">Logo toko</label>
+          <input id="shopLogo" name="shopLogo" type="file"
+                 accept="image/*">
+          <p class="form-note">
+            Setiap mitra menggunakan identitas tokonya sendiri.
+            Logo BORNEOKU bukan logo otomatis untuk semua toko.
+          </p>
+        </div>
+
+        <div class="form-group">
+          <label for="shopCover">Foto sampul toko</label>
+          <input id="shopCover" name="shopCover" type="file"
+                 accept="image/*">
+        </div>
+
+        <div class="form-group">
+          <label for="shopDescription">Deskripsi toko</label>
+          <textarea id="shopDescription" name="shopDescription"></textarea>
+        </div>
+
+        <div class="form-group">
+          <label for="shopHours">Jam operasional</label>
+          <input id="shopHours" name="shopHours"
+                 placeholder="Contoh: Senin–Sabtu, 08.00–17.00">
+        </div>
+
+        <div class="checkbox-row">
+          <input id="agreeContract" type="checkbox" required>
+          <label for="agreeContract">
+            Saya menyetujui
+            <button type="button" class="link-button"
+                    onclick="navigate('partner-agreement')">
+              Perjanjian Mitra
+            </button>
+            dan memahami bahwa pendaftaran memerlukan pemeriksaan.
+          </label>
+        </div>
+
+        <div class="checkbox-row">
+          <input id="agreePrivacy" type="checkbox" required>
+          <label for="agreePrivacy">
+            Saya telah membaca
+            <button type="button" class="link-button"
+                    onclick="navigate('privacy')">
+              Privasi dan Perlindungan Data Mitra
+            </button>
+            serta memahami penggunaan data untuk verifikasi.
+          </label>
+        </div>
+
+        <button class="primary-button full-button" type="submit">
+          Kirim Pendaftaran
+        </button>
+
+        <p class="form-note" style="margin-top:12px">
+          Demo ini tidak mengunggah KTP atau foto ke server dan belum
+          mengirim pendaftaran ke admin.
+        </p>
+      </form>
+    </section>
+  </main>
+
+  <!-- ================= MASUK ================= -->
+  <main id="page-login" class="page">
+    <section class="section">
+      <h1 class="page-title">Masuk / Daftar Akun</h1>
+      <p class="page-description">
+        Tampilan awal untuk proses masuk akun.
+      </p>
+
+      <form class="card" onsubmit="demoLogin(event)">
+        <div class="form-group">
+          <label for="loginEmail">Email atau nomor telepon</label>
+          <input id="loginEmail" required>
+        </div>
+
+        <div class="form-group">
+          <label for="loginPassword">Kata sandi</label>
+          <input id="loginPassword" type="password" required>
+        </div>
+
+        <button type="submit" class="primary-button full-button">
+          Masuk
+        </button>
+
+        <p class="form-note" style="margin-top:12px">
+          Ini hanya formulir demo. Autentikasi sebenarnya belum aktif.
+        </p>
+      </form>
+    </section>
+  </main>
+
+  <!-- ================= KERANJANG ================= -->
+  <main id="page-cart" class="page">
+    <section class="section">
+      <h1 class="page-title">Keranjang Saya</h1>
+      <p class="page-description">Periksa produk pilihanmu.</p>
+      <div id="cartContents"></div>
+    </section>
+  </main>
+
+  <!-- ================= FAVORIT ================= -->
+  <main id="page-favorites" class="page">
+    <section class="section">
+      <h1 class="page-title">Favorit Saya</h1>
+      <p class="page-description">Produk yang kamu simpan.</p>
+      <div class="product-grid" id="favoriteProducts"></div>
+    </section>
+  </main>
+
+  <!-- ================= PESANAN ================= -->
+  <main id="page-orders" class="page">
+    <section class="section">
+      <h1 class="page-title">Pesanan Saya</h1>
+      <div class="empty-state">
+        <div class="emoji">📦</div>
+        <h3>Belum ada pesanan</h3>
+        <p>Riwayat pesanan sungguhan tersedia setelah sistem transaksi diaktifkan.</p>
+        <button class="primary-button full-button"
+                onclick="navigate('products')">
+          Mulai Belanja
+        </button>
+      </div>
+    </section>
+  </main>
+
+  <!-- ================= KEAMANAN ================= -->
+  <main id="page-security" class="page">
+    <section class="section">
+      <h1 class="page-title">Keamanan Akun</h1>
+      <div class="card">
+        <h3>Perlindungan akun</h3>
+        <p style="margin-top:8px">
+          Gunakan kata sandi yang kuat dan jangan bagikan kode OTP atau PIN.
+        </p>
+        <p style="margin-top:10px;color:var(--muted);font-size:13px">
+          Pengaturan kata sandi, OTP, dan sesi masuk memerlukan sistem akun
+          yang aman.
+        </p>
+      </div>
+    </section>
+  </main>
+
+  <!-- ================= PUSAT BANTUAN ================= -->
+  <main id="page-help" class="page">
+    <section class="section">
+      <h1 class="page-title">Pusat Bantuan</h1>
+      <p class="page-description">
+        Informasi untuk pembeli dan mitra penjual.
+      </p>
+
+      <div class="card">
+        <button class="text-button"
+                onclick="navigate('partner-agreement')">
+          Perjanjian Mitra ›
+        </button>
+        <hr style="border:0;border-top:1px solid var(--border);margin:14px 0">
+
+        <button class="text-button"
+                onclick="navigate('commission')">
+          Komisi dan Biaya Layanan ›
+        </button>
+        <hr style="border:0;border-top:1px solid var(--border);margin:14px 0">
+
+        <button class="text-button"
+                onclick="navigate('tax')">
+          Ketentuan Pajak ›
+        </button>
+        <hr style="border:0;border-top:1px solid var(--border);margin:14px 0">
+
+        <button class="text-button"
+                onclick="navigate('shipping')">
+          Pengiriman dan Pengembalian ›
+        </button>
+        <hr style="border:0;border-top:1px solid var(--border);margin:14px 0">
+
+        <button class="text-button"
+                onclick="navigate('payments')">
+          Pembayaran dan Pencairan Dana ›
+        </button>
+        <hr style="border:0;border-top:1px solid var(--border);margin:14px 0">
+
+        <button class="text-button"
+                onclick="navigate('privacy')">
+          Privasi dan Perlindungan Data Mitra ›
+        </button>
+      </div>
+    </section>
+  </main>
+
+  <!-- ================= PRIVASI ================= -->
+  <main id="page-privacy" class="page">
+    <section class="section">
+      <h1 class="page-title">Privasi dan Perlindungan Data</h1>
+
+      <div class="card">
+        <h3>Penggunaan data</h3>
+        <p style="margin-top:8px">
+          Data identitas yang diminta dalam pendaftaran mitra ditujukan
+          untuk pemeriksaan identitas, keamanan, dan administrasi kemitraan
+          sesuai tujuan yang dijelaskan kepada pendaftar.
+        </p>
+
+        <h3 style="margin-top:17px">Perlindungan dokumen</h3>
+        <p style="margin-top:8px">
+          Foto KTP, NIK, dan foto verifikasi tidak boleh ditampilkan kepada
+          pembeli. Akses harus dibatasi kepada petugas berwenang.
+        </p>
+
+        <h3 style="margin-top:17px">Penggunaan dan pembagian data</h3>
+        <p style="margin-top:8px">
+          Data tidak boleh dijual atau dibagikan secara sembarangan.
+          Pemrosesan oleh penyedia layanan atau pengungkapan yang diwajibkan
+          hukum harus mengikuti ketentuan yang berlaku dan perlindungan
+          yang sesuai.
+        </p>
+
+        <h3 style="margin-top:17px">Penyimpanan dan penghapusan</h3>
+        <p style="margin-top:8px">
+          BORNEOKU harus menetapkan masa penyimpanan, pembatasan akses,
+          pengamanan, prosedur penghapusan, serta penanganan insiden sebelum
+          pendaftaran resmi dibuka.
+        </p>
+
+        <p class="form-note" style="margin-top:17px">
+          Halaman ini merupakan rancangan awal dan harus disesuaikan dengan
+          sistem yang benar-benar digunakan serta ketentuan perlindungan
+          data yang berlaku.
+        </p>
+      </div>
+    </section>
+  </main>
+
+  <!-- ================= PERJANJIAN MITRA ================= -->
+  <main id="page-partner-agreement" class="page">
+    <section class="section">
+      <h1 class="page-title">Perjanjian Mitra</h1>
+      <div class="card">
+        <h3>Hak dan tanggung jawab</h3>
+        <p style="margin-top:8px">
+          Mitra bertanggung jawab atas kebenaran informasi toko, kualitas
+          produk, ketersediaan stok, dan pemenuhan pesanan.
+        </p>
+        <p style="margin-top:12px">
+          BORNEOKU harus menjelaskan biaya, proses pembayaran, penyelesaian
+          sengketa, penanganan pengembalian, dan kondisi penangguhan akun
+          sebelum mitra menyetujui perjanjian.
+        </p>
+        <p class="form-note" style="margin-top:15px">
+          Ketentuan final harus ditetapkan dan ditinjau sebelum digunakan
+          untuk pendaftaran resmi.
+        </p>
+      </div>
+    </section>
+  </main>
+
+  <!-- ================= KOMISI ================= -->
+  <main id="page-commission" class="page">
+    <section class="section">
+      <h1 class="page-title">Komisi dan Biaya Layanan</h1>
+      <div class="card">
+        <p>
+          Besaran komisi dan biaya BORNEOKU belum ditetapkan dalam demo ini.
+          Jangan menganggap contoh atau angka apa pun sebagai tarif resmi.
+        </p>
+        <p style="margin-top:12px">
+          Sebelum mulai berjualan, mitra harus dapat melihat persentase
+          komisi, biaya layanan, biaya transaksi jika ada, dasar perhitungan,
+          dan waktu berlakunya setiap ketentuan.
+        </p>
+      </div>
+    </section>
+  </main>
+
+  <!-- ================= PAJAK ================= -->
+  <main id="page-tax" class="page">
+    <section class="section">
+      <h1 class="page-title">Ketentuan Pajak</h1>
+      <div class="card">
+        <p>
+          Perlakuan pajak bergantung pada jenis transaksi, status pihak yang
+          terlibat, dan peraturan yang berlaku. Ketentuan final perlu
+          diperiksa oleh tenaga profesional yang memahami perpajakan Indonesia.
+        </p>
+      </div>
+    </section>
+  </main>
+
+  <!-- ================= PENGIRIMAN ================= -->
+  <main id="page-shipping" class="page">
+    <section class="section">
+      <h1 class="page-title">Pengiriman dan Pengembalian</h1>
+      <div class="card">
+        <p>
+          Informasi ongkos kirim, estimasi pengiriman, wilayah layanan,
+          syarat pengembalian, dan penanggung biaya harus ditampilkan secara
+          jelas sebelum pembeli menyelesaikan transaksi.
+        </p>
+        <p style="margin-top:12px">
+          Pilihan kurir dan perhitungan ongkos kirim otomatis belum aktif
+          pada versi demo ini.
+        </p>
+      </div>
+    </section>
+  </main>
+
+  <!-- ================= PEMBAYARAN ================= -->
+  <main id="page-payments" class="page">
+    <section class="section">
+      <h1 class="page-title">Pembayaran dan Pencairan Dana</h1>
+      <div class="card">
+        <p>
+          Pembayaran pembeli dan pencairan dana mitra memerlukan integrasi
+          layanan pembayaran yang sah, pencatatan transaksi, serta prosedur
+          penanganan pengembalian dana.
+        </p>
+        <p style="margin-top:12px">
+          Belum ada pembayaran atau pencairan dana sungguhan dalam demo ini.
+        </p>
+      </div>
+    </section>
+  </main>
+
+  <!-- ================= PENGATURAN ================= -->
+  <main id="page-settings" class="page">
+    <section class="section">
+      <h1 class="page-title">Pengaturan</h1>
+      <div class="card">
+        <button class="text-button" onclick="navigate('security')">
+          Keamanan Akun ›
+        </button>
+        <hr style="border:0;border-top:1px solid var(--border);margin:14px 0">
+
+        <button class="text-button" onclick="navigate('privacy')">
+          Privasi dan Data ›
+        </button>
+        <hr style="border:0;border-top:1px solid var(--border);margin:14px 0">
+
+        <button class="text-button" onclick="navigate('help')">
+          Bantuan ›
+        </button>
+      </div>
+    </section>
+  </main>
+
+  <!-- NAVIGASI BAWAH -->
+  <nav class="bottom-nav" aria-label="Navigasi utama">
+    <button class="nav-button active" data-page="home"
+            onclick="navigate('home')">
+      <span class="nav-icon">⌂</span>
+      Beranda
+    </button>
+
+    <button class="nav-button" data-page="categories"
+            onclick="navigate('categories')">
+      <span class="nav-icon">▦</span>
+      Kategori
+    </button>
+
+    <button class="nav-button" data-page="stores"
+            onclick="navigate('stores')">
+      <span class="nav-icon">▣</span>
+      Toko
+    </button>
+
+    <button class="nav-button" data-page="promo"
+            onclick="navigate('promo')">
+      <span class="nav-icon">%</span>
+      Promo
+    </button>
+
+    <button class="nav-button" data-page="chat"
+            onclick="navigate('chat')">
+      <span class="nav-icon">☏</span>
+      Chat
+    </button>
+
+    <button class="nav-button" data-page="account"
+            onclick="navigate('account')">
+      <span class="nav-icon">♙</span>
+      Akun
+    </button>
+  </nav>
+
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+</div>
+
+<script>
+/* ======================================
+   DATA DEMO
+====================================== */
+
+const categories = [
+  { name: "Fashion", icon: "👗" },
+  { name: "Makanan & Minuman", icon: "🍊" },
+  { name: "Kerajinan Tangan", icon: "🧺" },
+  { name: "Kesehatan & Herbal", icon: "🌿" },
+  { name: "Rumah Tangga", icon: "🏠" },
+  { name: "Elektronik", icon: "💻" },
+  { name: "Kecantikan", icon: "🧴" },
+  { name: "Ibu & Anak", icon: "🧸" },
+  { name: "Olahraga", icon: "⚽" },
+  { name: "Perlengkapan Sekolah", icon: "🎒" },
+  { name: "Semua Kategori", icon: "▦" }
+];
+
+const products = [
+  {
+    id: 1,
+    name: "Gamis Elegan Premium",
+    price: 149000,
+    category: "Fashion",
+    icon: "👗",
+    rating: 4.9,
+    sold: 122,
+    store: "Borneo Fashion",
+    description: "Gamis elegan untuk berbagai acara."
+  },
+  {
+    id: 2,
+    name: "Kerupuk Udang Khas Nusantara",
+    price: 10000,
+    category: "Makanan & Minuman",
+    icon: "🍘",
+    rating: 4.8,
+    sold: 256,
+    store: "Adisa Fresh Mart",
+    description: "Kerupuk udang untuk teman makan dan camilan."
+  },
+  {
+    id: 3,
+    name: "Jamu Kunyit Temulawak",
+    price: 10000,
+    category: "Kesehatan & Herbal",
+    icon: "🧃",
+    rating: 4.9,
+    sold: 542,
+    store: "Adisa Fresh Mart",
+    description: "Minuman herbal. Periksa komposisi dan informasi produk."
+  },
+  {
+    id: 4,
+    name: "Tas Selempang Premium",
+    price: 89000,
+    category: "Fashion",
+    icon: "👜",
+    rating: 4.7,
+    sold: 187,
+    store: "Borneo Fashion",
+    description: "Tas selempang untuk kebutuhan sehari-hari."
+  },
+  {
+    id: 5,
+    name: "Keranjang Anyaman",
+    price: 45000,
+    category: "Kerajinan Tangan",
+    icon: "🧺",
+    rating: 4.9,
+    sold: 43,
+    store: "Kalimantan Craft",
+    description: "Kerajinan anyaman untuk rumah dan hadiah."
+  },
+  {
+    id: 6,
+    name: "Perlengkapan Rumah",
+    price: 35000,
+    category: "Rumah Tangga",
+    icon: "🏠",
+    rating: 4.8,
+    sold: 61,
+    store: "Kalimantan Craft",
+    description: "Pilihan perlengkapan rumah dari mitra."
+  },
+  {
+    id: 7,
+    name: "Perawatan Kecantikan",
+    price: 55000,
+    category: "Kecantikan",
+    icon: "🧴",
+    rating: 4.7,
+    sold: 35,
+    store: "Herbal Nusantara",
+    description: "Produk perawatan sesuai informasi pada kemasan."
+  },
+  {
+    id: 8,
+    name: "Tas Anak",
+    price: 65000,
+    category: "Ibu & Anak",
+    icon: "🎒",
+    rating: 4.8,
+    sold: 29,
+    store: "Borneo Fashion",
+    description: "Tas untuk kebutuhan anak."
+  },
+  {
+    id: 9,
+    name: "Perangkat Elektronik",
+    price: 120000,
+    category: "Elektronik",
+    icon: "💻",
+    rating: 4.6,
+    sold: 17,
+    store: "Kalimantan Craft",
+    description: "Periksa spesifikasi, garansi, dan kompatibilitas produk."
+  }
+];
+
+const stores = [
+  {
+    name: "Adisa Fresh Mart",
+    category: "Makanan & Minuman",
+    icon: "🌿",
+    rating: 4.9,
+    verified: false,
+    description: "Pilihan minuman herbal, jamu, dan makanan ringan."
+  },
+  {
+    name: "Borneo Fashion",
+    category: "Fashion",
+    icon: "👗",
+    rating: 4.8,
+    verified: false,
+    description: "Pilihan busana dan aksesori."
+  },
+  {
+    name: "Kalimantan Craft",
+    category: "Kerajinan Tangan",
+    icon: "🧺",
+    rating: 4.9,
+    verified: false,
+    description: "Kerajinan dan produk kreatif."
+  },
+  {
+    name: "Herbal Nusantara",
+    category: "Kesehatan & Herbal",
+    icon: "🌱",
+    rating: 4.7,
+    verified: false,
+    description: "Pilihan produk herbal dan kebutuhan alami."
+  }
+];
+
+/* ======================================
+   STATE DEMO
+====================================== */
+
+let cart = [];
+let favorites = [];
+let activeCategory = "Semua Kategori";
+let storeFilter = "all";
+let pageHistory = ["home"];
+let currentPage = "home";
+
+function formatRupiah(value) {
+  return new Intl.NumberFormat("id-ID", {
+    style: "currency",
+    currency: "IDR",
+    maximumFractionDigits: 0
+  }).format(value);
+}
+
+function escapeHTML(value) {
+  return String(value).replace(/[&<>"']/g, function(char) {
+    return {
+      "&": "&amp;",
+      "<": "&lt;",
+      ">": "&gt;",
+      '"': "&quot;",
+      "'": "&#039;"
+    }[char];
+  });
+}
+
+function showToast(message) {
+  const toast = document.getElementById("toast");
+  toast.textContent = message;
+  toast.classList.add("show");
+
+  clearTimeout(window.toastTimer);
+  window.toastTimer = setTimeout(function() {
+    toast.classList.remove("show");
+  }, 2600);
+}
+
+/* ======================================
+   NAVIGASI
+====================================== */
+
+function navigate(page, options = {}) {
+  const target = document.getElementById("page-" + page);
+
+  if (!target) {
+    showToast("Halaman belum tersedia.");
+    return;
+  }
+
+  if (!options.replace && page !== currentPage) {
+    pageHistory.push(page);
+  }
+
+  currentPage = page;
+
+  document.querySelectorAll(".page").forEach(function(element) {
+    element.classList.remove("active");
+  });
+
+  target.classList.add("active");
+
+  document.querySelectorAll(".nav-button").forEach(function(button) {
+    button.classList.toggle(
+      "active",
+      button.dataset.page === page
+    );
+  });
+
+  renderCart();
+  renderFavorites();
+
+  window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
+function goBack() {
+  if (pageHistory.length > 1) {
+    pageHistory.pop();
+    const previous = pageHistory[pageHistory.length - 1];
+    navigate(previous, { replace: true });
+  } else {
+    navigate("home");
+  }
+}
+
+/* ======================================
+   RENDER KATEGORI
+====================================== */
+
+function renderHomeCategories() {
+  const container = document.getElementById("homeCategories");
+
+  container.innerHTML = categories.map(function(category) {
+    return `
+      <button class="category-shortcut"
+              onclick="openCategory('${escapeHTML(category.name)}')">
+        <span class="category-icon">${category.icon}</span>
+        ${escapeHTML(category.name)}
+      </button>
+    `;
+  }).join("");
+}
+
+function renderCategoryList(query = "") {
+  const container = document.getElementById("categoryList");
+  const normalized = query.trim().toLowerCase();
+
+  const filtered = categories.filter(function(category) {
+    return category.name.toLowerCase().includes(normalized);
+  });
+
+  if (!filtered.length) {
+    container.innerHTML = `
+      <div class="empty-state">
+        <div class="emoji">🔎</div>
+        <h3>Kategori tidak ditemukan</h3>
+        <p>Coba kata pencarian yang lain.</p>
+      </div>
+    `;
+    return;
+  }
+
+  container.innerHTML = filtered.map(function(category) {
+    const count = products.filter(function(product) {
+      return product.category === category.name;
+    }).length;
+
+    return `
+      <button class="card"
+              style="display:flex;width:100%;align-items:center;gap:14px;text-align:left"
+              onclick="openCategory('${escapeHTML(category.name)}')">
+        <span class="category-icon" style="margin:0;flex-shrink:0">
+          ${category.icon}
+        </span>
+        <span style="flex:1">
+          <strong>${escapeHTML(category.name)}</strong>
+          <span style="display:block;color:var(--muted);font-size:12px;margin-top:3px">
+            Lihat produk dan subkategori · ${count} produk demo
+          </span>
+        </span>
+        <span>›</span>
+      </button>
+    `;
+  }).join("");
+}
+
+function openCategory(categoryName) {
+  activeCategory = categoryName;
+  renderProducts();
+  navigate("products");
+}
+
+/* ======================================
+   RENDER PRODUK
+====================================== */
+
+function productCard(product) {
+  const isFavorite = favorites.includes(product.id);
+
+  return `
+    <article class="product-card">
+      <button class="product-image"
+              aria-label="Lihat ${escapeHTML(product.name)}"
+              onclick="openProduct(${product.id})">
+        ${product.icon}
+      </button>
+
+      <div class="product-info">
+        <button class="product-name"
+                onclick="openProduct(${product.id})">
+          ${escapeHTML(product.name)}
+        </button>
+
+        <div class="price">${formatRupiah(product.price)}</div>
+
+        <div class="product-meta">
+          ⭐ ${product.rating} · ${product.sold} terjual
+        </div>
+
+        <div class="product-actions">
+          <button class="text-button"
+                  onclick="toggleFavorite(${product.id})">
+            ${isFavorite ? "❤️ Favorit" : "♡ Simpan"}
+          </button>
+
+          <button class="cart-button"
+                  aria-label="Tambah ke keranjang"
+                  onclick="addToCart(${product.id})">
+            🛒
+          </button>
+        </div>
+      </div>
+    </article>
+  `;
+}
+
+function renderHomeProducts() {
+  document.getElementById("homeProducts").innerHTML =
+    products.slice(0, 4).map(productCard).join("");
+}
+
+function renderProducts(query = "") {
+  const normalized = query.trim().toLowerCase();
+
+  let filtered = products.filter(function(product) {
+    const matchesCategory =
+      activeCategory === "Semua Kategori" ||
+      product.category === activeCategory;
+
+    const matchesSearch =
+      product.name.toLowerCase().includes(normalized) ||
+      product.category.toLowerCase().includes(normalized) ||
+      product.store.toLowerCase().includes(normalized);
+
+    return matchesCategory && matchesSearch;
+  });
+
+  document.getElementById("productsTitle").textContent =
+    activeCategory === "Semua Kategori"
+      ? "Produk Pilihan"
+      : activeCategory;
+
+  document.getElementById("productsDescription").textContent =
+    "Pilih produk untuk melihat detail dan informasi toko.";
+
+  document.getElementById("productFilters").innerHTML = `
+    <button class="filter-button ${activeCategory === "Semua Kategori" ? "selected" : ""}"
+            onclick="openCategory('Semua Kategori')">
+      Semua Produk
+    </button>
+    <button class="filter-button"
+            onclick="sortProducts('cheap')">
+      Harga Terendah
+    </button>
+    <button class="filter-button"
+            onclick="sortProducts('rating')">
+      Rating Tertinggi
+    </button>
+  `;
+
+  const container = document.getElementById("allProducts");
+
+  if (!filtered.length) {
+    container.innerHTML = `
+      <div class="empty-state" style="grid-column:1/-1">
+        <div class="emoji">🔎</div>
+        <h3>Produk belum tersedia</h3>
+        <p>Kategori ini belum memiliki produk demo.</p>
+        <button class="primary-button full-button"
+                onclick="openCategory('Semua Kategori')">
+          Lihat Semua Produk
+        </button>
+      </div>
+    `;
+    return;
+  }
+
+  container.innerHTML = filtered.map(productCard).join("");
+}
+
+function sortProducts(type) {
+  if (type === "cheap") {
+    products.sort((a, b) => a.price - b.price);
+  } else if (type === "rating") {
+    products.sort((a, b) => b.rating - a.rating);
+  }
+
+  renderProducts();
+}
+
+function searchProducts(event) {
+  event.preventDefault();
+
+  const query = document.getElementById("globalSearch").value.trim();
+
+  activeCategory = "Semua Kategori";
+  navigate("products");
+  renderProducts(query);
+
+  if (!query) {
+    showToast("Menampilkan semua produk.");
+  }
+}
+
+function openProduct(id) {
+  const product = products.find(function(item) {
+    return item.id === id;
+  });
+
+  if (!product) {
+    showToast("Produk tidak ditemukan.");
+    return;
+  }
+
+  const isFavorite = favorites.includes(product.id);
+
+  document.getElementById("productDetail").innerHTML = `
+    <div class="detail-hero">
+      <div class="detail-emoji">${product.icon}</div>
+      <h1 class="detail-title">${escapeHTML(product.name)}</h1>
+      <div class="price">${formatRupiah(product.price)}</div>
+      <p>⭐ ${product.rating} · ${product.sold} terjual</p>
+    </div>
+
+    <div class="card">
+      <h3>Informasi Produk</h3>
+      <p style="margin-top:8px">${escapeHTML(product.description)}</p>
+      <p style="margin-top:10px;color:var(--muted);font-size:13px">
+        Kategori: ${escapeHTML(product.category)}
+      </p>
+
+      <hr style="border:0;border-top:1px solid var(--border);margin:15px 0">
+
+      <h3>Toko Penjual</h3>
+      <p style="margin:7px 0 12px">${escapeHTML(product.store)}</p>
+
+      <button class="outline-button"
+              onclick="openStore('${escapeHTML(product.store)}')">
+        Kunjungi Toko
+      </button>
+
+      <button class="outline-button"
+              onclick="toggleFavorite(${product.id});openProduct(${product.id})">
+        ${isFavorite ? "❤️ Hapus dari Favorit" : "♡ Simpan ke Favorit"}
+      </button>
+
+      <button class="primary-button full-button"
+              onclick="addToCart(${product.id})">
+        Tambahkan ke Keranjang
+      </button>
+
+      <button class="outline-button full-button"
+              onclick="startChat('${escapeHTML(product.store)}')">
+        Chat Penjual
+      </button>
+    </div>
+  `;
+
+  navigate("product-detail");
+}
+
+/* ======================================
+   KERANJANG DAN FAVORIT
+====================================== */
+
+function addToCart(id) {
+  const product = products.find(item => item.id === id);
+  if (!product) return;
+
+  const existing = cart.find(item => item.id === id);
+
+  if (existing) {
+    existing.qty += 1;
+  } else {
+    cart.push({ id: id, qty: 1 });
+  }
+
+  document.getElementById("cartCount").textContent =
+    cart.reduce((sum, item) => sum + item.qty, 0);
+
+  renderCart();
+  showToast(product.name + " ditambahkan ke keranjang.");
+}
+
+function changeQty(id, amount) {
+  const item = cart.find(product => product.id === id);
+  if (!item) return;
+
+  item.qty += amount;
+
+  if (item.qty <= 0) {
+    cart = cart.filter(product => product.id !== id);
+  }
+
+  document.getElementById("cartCount").textContent =
+    cart.reduce((sum, item) => sum + item.qty, 0);
+
+  renderCart();
+}
+
+function renderCart() {
+  const container = document.getElementById("cartContents");
+  if (!container) return;
+
+  if (!cart.length) {
+    container.innerHTML = `
+      <div class="empty-state">
+        <div class="emoji">🛒</div>
+        <h3>Keranjang masih kosong</h3>
+        <p>Yuk, pilih produk yang kamu suka.</p>
+        <button class="primary-button full-button"
+                onclick="navigate('products')">
+          Belanja Sekarang
+        </button>
+      </div>
+    `;
+    return;
+  }
+
+  let total = 0;
+
+  const rows = cart.map(function(item) {
+    const product = products.find(p => p.id === item.id);
+    if (!product) return "";
+
+    total += product.price * item.qty;
+
+    return `
+      <div class="store-row">
+        <div class="store-avatar">${product.icon}</div>
+        <div class="store-details">
+          <strong>${escapeHTML(product.name)}</strong>
+          <small>${formatRupiah(product.price)} × ${item.qty}</small>
+          <div style="margin-top:7px;display:flex;gap:7px;align-items:center">
+            <button class="outline-button"
+                    onclick="changeQty(${item.id},-1)">−</button>
+            <span>${item.qty}</span>
+            <button class="outline-button"
+                    onclick="changeQty(${item.id},1)">+</button>
+          </div>
+        </div>
+      </div>
+    `;
+  }).join("");
+
+  container.innerHTML = `
+    <div class="card">
+      ${rows}
+      <hr style="border:0;border-top:1px solid var(--border);margin:12px 0">
+      <h3>Total demo: ${formatRupiah(total)}</h3>
+      <button class="primary-button full-button"
+              onclick="showToast('Checkout belum aktif. Sistem pembayaran perlu dihubungkan.')">
+        Lanjut ke Pembayaran
+      </button>
+    </div>
+  `;
+}
+
+function toggleFavorite(id) {
+  if (favorites.includes(id)) {
+    favorites = favorites.filter(item => item !== id);
+    showToast("Produk dihapus dari favorit.");
+  } else {
+    favorites.push(id);
+    showToast("Produk disimpan ke favorit.");
+  }
+
+  renderHomeProducts();
+  renderProducts();
+  renderFavorites();
+}
+
+function renderFavorites() {
+  const container = document.getElementById("favoriteProducts");
+  if (!container) return;
+
+  const selected = products.filter(product =>
+    favorites.includes(product.id)
+  );
+
+  container.innerHTML = selected.length
+    ? selected.map(productCard).join("")
+    : `
+      <div class="empty-state" style="grid-column:1/-1">
+        <div class="emoji">❤️</div>
+        <h3>Belum ada produk favorit</h3>
+        <p>Simpan produk menggunakan tombol favorit.</p>
+        <button class="primary-button full-button"
+                onclick="navigate('products')">
+          Cari Produk
+        </button>
+      </div>
+    `;
+}
+
+/* ======================================
+   TOKO
+====================================== */
+
+function renderHomeStores() {
+  document.getElementById("homeStores").innerHTML =
+    stores.slice(0, 4).map(function(store) {
+      return `
+        <button class="store-row"
+                style="width:100%;background:white;border:0;text-align:left"
+                onclick="openStore('${escapeHTML(store.name)}')">
+          <span class="store-avatar">${store.icon}</span>
+          <span class="store-details">
+            <strong>${escapeHTML(store.name)}</strong>
+            <small>${escapeHTML(store.category)}</small>
+          </span>
+          <span>›</span>
+        </button>
+      `;
+    }).join("");
+}
+
+function setStoreFilter(filter, button) {
+  storeFilter = filter;
+
+  document.querySelectorAll(".filter-button").forEach(function(item) {
+    if (item.closest("#page-stores")) {
+      item.classList.remove("selected");
+    }
+  });
+
+  button.classList.add("selected");
+  renderStores();
+}
+
+function renderStores() {
+  const container = document.getElementById("storeList");
+  const search = (
+    document.getElementById("storeSearch")?.value || ""
+  ).toLowerCase();
+
+  let filtered = stores.filter(function(store) {
+    const matchesSearch =
+      store.name.toLowerCase().includes(search) ||
+      store.category.toLowerCase().includes(search);
+
+    const matchesFilter =
+      storeFilter !== "verified" || store.verified;
+
+    return matchesSearch && matchesFilter;
+  });
+
+  if (storeFilter === "rating") {
+    filtered.sort((a, b) => b.rating - a.rating);
+  }
+
+  if (storeFilter === "new") {
+    filtered = filtered.slice().reverse();
+  }
+
+  if (!filtered.length) {
+    container.innerHTML = `
+      <div class="empty-state">
+        <div class="emoji">🏪</div>
+        <h3>Toko belum ditemukan</h3>
+        <p>Coba kata pencarian lain.</p>
+      </div>
+    `;
+    return;
+  }
+
+  container.innerHTML = filtered.map(function(store) {
+    return `
+      <div class="store-row">
+        <div class="store-avatar">${store.icon}</div>
+        <div class="store-details">
+          <strong>${escapeHTML(store.name)}</strong>
+          <small>⭐ ${store.rating} · ${escapeHTML(store.category)}</small>
+          <small style="display:block;margin-top:3px">
+            ${store.verified ? "Terverifikasi" : "Status verifikasi belum ditetapkan"}
+          </small>
+        </div>
+        <button class="outline-button"
+                onclick="openStore('${escapeHTML(store.name)}')">
+          Kunjungi
+        </button>
+      </div>
+    `;
+  }).join("");
+}
+
+function openStore(storeName) {
+  const store = stores.find(item => item.name === storeName);
+
+  if (!store) {
+    showToast("Informasi toko tidak ditemukan.");
+    return;
+  }
+
+  const storeProducts = products.filter(item =>
+    item.store === storeName
+  );
+
+  document.getElementById("storeDetail").innerHTML = `
+    <div class="detail-hero">
+      <div class="detail-emoji">${store.icon}</div>
+      <h1 class="detail-title">${escapeHTML(store.name)}</h1>
+      <p>⭐ ${store.rating} · ${escapeHTML(store.category)}</p>
+      <p style="margin-top:12px">${escapeHTML(store.description)}</p>
+
+      <div style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:16px">
+        <button class="outline-button"
+                onclick="showToast('Fitur mengikuti toko memerlukan akun.')">
+          + Ikuti Toko
+        </button>
+        <button class="primary-button"
+                onclick="startChat('${escapeHTML(store.name)}')">
+          Chat
+        </button>
+      </div>
+    </div>
+
+    <div class="section-heading">
+      <h2>Produk Toko</h2>
+      <span>${storeProducts.length} produk demo</span>
+    </div>
+
+    <div class="product-grid">
+      ${storeProducts.length
+        ? storeProducts.map(productCard).join("")
+        : '<div class="empty-state" style="grid-column:1/-1">Belum ada produk.</div>'}
+    </div>
+  `;
+
+  navigate("store-detail");
+}
+
+function startChat(storeName) {
+  navigate("chat");
+  showToast("Chat dengan " + storeName + " memerlukan sistem pesan aktif.");
+}
+
+/* ======================================
+   PROMO
+====================================== */
+
+function showPromoDetail(type) {
+  const content = {
+    welcome: {
+      title: "Voucher Selamat Datang",
+      text: "Nilai voucher, minimum belanja, masa berlaku, dan syarat penggunaan perlu ditetapkan sebelum promo diaktifkan."
+    },
+    shipping: {
+      title: "Promo Ongkir",
+      text: "Wilayah layanan, batas minimum belanja, periode, dan batas subsidi harus ditentukan sebelum penawaran berlaku."
+    },
+    special: {
+      title: "Promo Pilihan",
+      text: "Promo aktif akan ditampilkan setelah produk, periode, dan ketentuan disiapkan."
+    }
+  }[type];
+
+  document.getElementById("promoDetail").innerHTML = `
+    <div class="card">
+      <h3>${content.title}</h3>
+      <p style="margin-top:9px">${content.text}</p>
+      <button class="outline-button full-button"
+              onclick="navigate('products')">
+        Jelajahi Produk
+      </button>
+    </div>
+  `;
+}
+
+/* ======================================
+   FORM DEMO
+====================================== */
+
+document.getElementById("partnerForm").addEventListener("submit", function(event) {
+  event.preventDefault();
+
+  if (!document.getElementById("agreeContract").checked ||
+      !document.getElementById("agreePrivacy").checked) {
+    showToast("Persetujuan perjanjian dan privasi diperlukan.");
+    return;
+  }
+
+  const nik = document.getElementById("nik").value.trim();
+
+  if (!/^\d{16}$/.test(nik)) {
+    showToast("Periksa kembali NIK. Format demo memerlukan 16 digit.");
+    return;
+  }
+
+  /*
+    PENTING:
+    Form ini hanya memeriksa kelengkapan demo.
+    Data, NIK, KTP, dan foto tidak diunggah ke server.
+    Jangan menambahkan pengiriman data identitas ke layanan publik
+    tanpa backend aman, pembatasan akses, dan kebijakan privasi.
+  */
+
+  showToast(
+    "Formulir demo diperiksa. Belum dikirim ke admin karena backend belum aktif."
+  );
+});
+
+function demoLogin(event) {
+  event.preventDefault();
+  showToast("Login belum aktif. Sistem autentikasi perlu dipasang.");
+}
+
+/* ======================================
+   INISIALISASI
+====================================== */
+
+function initializeCategoryOptions() {
+  const select = document.getElementById("shopCategory");
+
+  select.innerHTML += categories
+    .filter(category => category.name !== "Semua Kategori")
+    .map(category =>
+      `<option value="${escapeHTML(category.name)}">${escapeHTML(category.name)}</option>`
+    ).join("");
+}
+
+renderHomeCategories();
+renderCategoryList();
+renderHomeProducts();
+renderProducts();
+renderHomeStores();
+renderStores();
+renderCart();
+renderFavorites();
+initializeCategoryOptions();
+
+</script>
 </body>
-</html>
+    </html>
