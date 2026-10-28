@@ -1,5 +1,7 @@
 <!doctype html>
 <html lang="id"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#006b45"><title>BORNEOKU — Belanja Mudah, Jualan Lebih Luas</title>
+<!-- Pustaka Supabase JS SDK -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
 :root{--g:#006b45;--dg:#004d32;--y:#ffd43b;--p:#f1f8ed;--cream:#fffdf1;--t:#1b2922;--m:#718078;--b:#e5ebe7;--r:#e53935}*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:#f4f7f4;color:var(--t);font:14px/1.45 Arial,sans-serif;-webkit-text-size-adjust:100%;overflow-y:auto;-webkit-overflow-scrolling:touch}button,input,select,textarea{font:inherit}button{cursor:pointer}.app{max-width:600px;min-height:100vh;margin:auto;background:white;padding-bottom:84px}.header{position:sticky;top:0;z-index:50;background:var(--cream);border-bottom:1px solid var(--b);padding:10px 13px}.head,.brand,.actions{display:flex;align-items:center}.head{gap:8px}.brand{gap:8px;flex:1;min-width:0}.logo{width:48px;height:48px;object-fit:contain}.brand b{font-size:24px;color:var(--g);letter-spacing:-1px}.brand b span{color:#e9b900}.tag{font-size:10px;color:#58665e}.actions{gap:7px}.actions button{border:0;background:none;font-size:20px;position:relative}.badge{position:absolute;top:-4px;right:-5px;background:var(--r);color:#fff;font-size:10px;border-radius:15px;padding:2px 5px}.search{display:flex;gap:8px;align-items:center;margin-top:10px;padding:10px 12px;border:1px solid var(--b);border-radius:14px;background:#fff}.search input{width:100%;min-width:0;border:0;outline:0}.page{display:none}.page.active{display:block}.sec{padding:16px 15px 0}.title{font-size:25px;color:var(--g);margin:0 0 5px}.desc{font-size:13px;color:var(--m);margin:0 0 15px}.heading{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:12px}.heading h2{font-size:19px;margin:0}.btn,.outline,.yellow,.text{border:0;border-radius:11px;padding:10px 13px;font-weight:700}.btn{background:var(--g);color:white}.outline{background:white;color:var(--g);border:1px solid #cbd9d0}.yellow{background:var(--y);color:#1d281f;border-radius:22px}.text{background:transparent;color:var(--g);padding:5px}.full{width:100%;margin-top:10px}.card{border:1px solid var(--b);border-radius:15px;padding:13px;margin-bottom:12px;background:white}.note{margin:12px 13px;padding:12px;border-radius:12px;background:var(--p);border:1px solid #dcebd7;font-size:12px}.banners{display:grid;grid-template-columns:1fr 1fr;gap:9px;padding:13px 13px 0}.banner{min-height:145px;border-radius:15px;color:white;padding:12px;display:flex;flex-direction:column;justify-content:space-between}.one{background:linear-gradient(140deg,#004a31,#087c50,#93b95b)}.two{background:linear-gradient(140deg,#075a43,#07566b,#173f72)}.banner h2{font-size:17px;line-height:1.2;margin:0}.banner p{font-size:11px}.partner{margin:12px 13px 0;padding:12px;background:linear-gradient(110deg,#f0f8e9,#fffef4);border:1px solid #dcebd7;border-radius:14px;display:flex;align-items:center;gap:9px}.partner div:nth-child(2){flex:1}.partner strong{color:var(--g)}.partner p{font-size:11px;margin:3px 0 0}.hscroll{display:flex;flex-wrap:nowrap;gap:11px;overflow-x:auto;overflow-y:hidden;padding:3px 2px 12px;scrollbar-width:thin;scroll-snap-type:x proximity;-webkit-overflow-scrolling:touch;touch-action:pan-x pan-y;overscroll-behavior-x:contain}.hscroll::-webkit-scrollbar{height:4px}.hscroll::-webkit-scrollbar-thumb{background:#cbd9d0;border-radius:8px}.catstrip{padding:16px 13px 10px}.cat{flex:0 0 72px;border:0;background:white;text-align:center;font-size:11px;scroll-snap-align:start}.ico{width:50px;height:50px;border-radius:50%;background:var(--p);display:grid;place-items:center;margin:0 auto 6px;font-size:26px}.benefit{flex:0 0 100px;background:var(--p);border-radius:10px;padding:8px;text-align:center;color:var(--g);font-size:10px}.benefit span{display:block;font-size:22px}.prodgrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.prod{border:1px solid var(--b);border-radius:14px;overflow:hidden}.hprods .prod{flex:0 0 153px;min-width:153px;scroll-snap-align:start}.photo{width:100%;height:120px;border:0;background:linear-gradient(135deg,#eef7e8,#fff5d9);font-size:50px}.pinfo{padding:9px}.pname{width:100%;text-align:left;background:none;border:0;padding:0;font-size:12px;font-weight:bold;min-height:34px}.price{color:var(--r);font-weight:800;margin:7px 0 4px}.meta{font-size:10px;color:var(--m)}.pactions{display:flex;justify-content:space-between;align-items:center;margin-top:7px;gap:3px}.cartbtn{background:var(--g);color:white;border:0;border-radius:8px;padding:7px}.storetile{flex:0 0 175px;min-width:175px;text-align:left;background:#fff;border:1px solid var(--b);border-radius:14px;padding:12px;scroll-snap-align:start}.avatar{width:46px;height:46px;border-radius:50%;background:var(--p);display:grid;place-items:center;font-size:24px;margin-bottom:7px}.row{display:flex;align-items:center;gap:10px;padding:11px 0;border-bottom:1px solid var(--b)}.row:last-child{border:0}.rowinfo{flex:1;min-width:0}.rowinfo strong{display:block;font-size:13px}.rowinfo small{display:block;color:var(--m);font-size:11px}.filters{display:flex;flex-wrap:wrap;gap:7px;margin:12px 0}.filter{border:1px solid #cbd9d0;background:white;color:var(--g);border-radius:10px;padding:8px;font-size:12px}.filter.selected{background:var(--g);color:white}.videoarea,.livearea{border-radius:15px;padding:12px;margin-bottom:15px}.videoarea{background:linear-gradient(135deg,#f2faef,#fffdf1);border:1px solid #dcebd7}.livearea{background:linear-gradient(135deg,#fff7f4,#fffdf1);border:1px solid #f0d7d7}.tile{flex:0 0 132px;min-width:132px;border:1px solid var(--b);border-radius:12px;overflow:hidden;background:#fff;text-align:left;padding:0;scroll-snap-align:start}.cover{height:82px;display:grid;place-items:center;font-size:38px;background:linear-gradient(135deg,#dff1df,#fff0c8);position:relative}.play{position:absolute;background:#0008;color:#fff;border-radius:50%;padding:7px}.tileinfo{padding:8px}.tileinfo strong,.tileinfo small{display:block}.tileinfo strong{font-size:12px}.tileinfo small{font-size:10px;color:var(--m);margin-top:4px}.livebadge{position:absolute;top:5px;left:5px;background:var(--r);color:white;padding:3px 5px;border-radius:4px;font-size:10px}.livehead{color:#c62828;font-weight:800;margin-bottom:8px}.empty{text-align:center;padding:25px 12px;border:1px dashed #cbd9d0;border-radius:14px;color:var(--m)}.hero{text-align:center;padding:22px;background:linear-gradient(135deg,#f1f8ed,#fffbea);border-radius:15px;margin-bottom:12px}.hero .big{font-size:62px}.formgroup{margin-bottom:12px}.formgroup label{display:block;font-size:12px;font-weight:bold;margin-bottom:5px}.formgroup input,.formgroup select,.formgroup textarea{width:100%;padding:10px;border:1px solid #dce4de;border-radius:9px}.formgroup textarea{min-height:70px}.level{background:linear-gradient(120deg,#004d32,#087c50);color:white;border-radius:16px;padding:14px;margin:12px 0}.levelbadge{display:inline-block;background:var(--y);color:#23402d;border-radius:20px;padding:5px 10px;font-size:12px;font-weight:bold;margin:8px 0}.progress{height:7px;background:#ffffff50;border-radius:10px}.progress span{display:block;width:25%;height:100%;background:var(--y);border-radius:10px}.bottom{position:fixed;z-index:100;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:600px;display:grid;grid-template-columns:repeat(6,1fr);background:white;border-top:1px solid var(--b);padding:7px 2px max(7px,env(safe-area-inset-bottom))}.nav{border:0;background:transparent;color:#758078;font-size:10px;display:flex;flex-direction:column;align-items:center;gap:3px;padding:3px 0}.nav span{font-size:21px}.nav.active{color:var(--g);font-weight:bold}.toast{display:none;position:fixed;z-index:200;bottom:95px;left:50%;transform:translateX(-50%);max-width:88%;background:#153f2d;color:white;border-radius:12px;padding:12px 16px}.toast.show{display:block}@media(max-width:360px){.cat-hero{min-height:100px}.cat-hero h2{font-size:16px}.cat-hero-art{font-size:32px}.cat-quick{gap:3px;padding-left:10px;padding-right:10px}.cat-quick button{font-size:8px}.tile{flex-basis:124px;min-width:124px}.cover{height:78px}.logo{width:42px}.brand b{font-size:20px}.banner h2{font-size:14px}.photo{height:108px}}
 
@@ -64,6 +66,13 @@
 <main id="page-cart" class="page"><section class="sec"><button class="outline" onclick="goBack()">‹ Kembali</button><h1 class="title">Keranjang Saya</h1><div id="cartContents"></div></section></main><main id="page-favorites" class="page"><section class="sec"><button class="outline" onclick="goBack()">‹ Kembali</button><h1 class="title">Favorit Saya</h1><div id="favoriteProducts" class="prodgrid"></div></section></main><main id="page-orders" class="page"><section class="sec"><button class="outline" onclick="goBack()">‹ Kembali</button><h1 class="title">Pesanan Saya</h1><div class="empty">📦<p>Riwayat tersedia setelah sistem transaksi aktif.</p></div></section></main><main id="page-security" class="page"><section class="sec"><button class="outline" onclick="goBack()">‹ Kembali</button><h1 class="title">Keamanan Akun</h1><div class="card">Gunakan kata sandi kuat dan jangan bagikan OTP/PIN. Jangan gunakan digit nomor telepon sebagai PIN.</div></section></main><main id="page-help" class="page"><section class="sec"><button class="outline" onclick="goBack()">‹ Kembali</button><h1 class="title">Pusat Bantuan</h1><div class="card"><button class="text" onclick="navigate('commission')">Komisi dan Biaya Layanan ›</button><hr><button class="text" onclick="navigate('payments')">Pembayaran dan Pencairan ›</button><hr><button class="text" onclick="navigate('privacy')">Privasi dan Data ›</button></div></section></main><main id="page-privacy" class="page"><section class="sec"><button class="outline" onclick="goBack()">‹ Kembali</button><h1 class="title">Privasi dan Data</h1><div class="card">Dokumen identitas tidak boleh ditampilkan kepada pembeli dan harus disimpan secara aman di backend.</div></section></main><main id="page-commission" class="page"><section class="sec"><button class="outline" onclick="goBack()">‹ Kembali</button><h1 class="title">Komisi dan Biaya Layanan</h1><div class="card">Contoh awal: komisi marketplace 5% dan afiliasi 3%. Ketentuan final perlu ditetapkan.</div><button class="btn full" onclick="navigate('earnings')">Simulasi Komisi</button></section></main><main id="page-settings" class="page"><section class="sec"><button class="outline" onclick="goBack()">‹ Kembali</button><h1 class="title">Pengaturan</h1><div class="card"><button class="text" onclick="navigate('security')">Keamanan Akun</button><hr><button class="text" onclick="navigate('privacy')">Privasi dan Data</button></div></section></main><main id="page-payments" class="page"><section class="sec"><button class="outline" onclick="goBack()">‹ Kembali</button><h1 class="title">Pembayaran dan Pencairan</h1><div class="card">Pembayaran, pemisahan dana, dan pencairan sungguhan memerlukan backend serta penyedia pembayaran.</div></section></main>
 <nav class="bottom"><button class="nav active" data-page="home" onclick="navigate('home')"><span>⌂</span>Beranda</button><button class="nav" data-page="categories" onclick="navigate('categories')"><span>▦</span>Kategori</button><button class="nav" data-page="stores" onclick="navigate('stores')"><span>▣</span>Toko</button><button class="nav" data-page="promo" onclick="navigate('promo')"><span>%</span>Promo</button><button class="nav" data-page="chat" onclick="navigate('chat')"><span>☏</span>Chat</button><button class="nav" data-page="account" onclick="navigate('account')"><span>♙</span>Akun</button></nav><div class="toast" id="toast"></div></div>
 <script>
+// ==========================================
+// INISIALISASI SUPABASE (Ganti dengan URL & Anon Key project Anda)
+// ==========================================
+const SUPABASE_URL = 'ISI_SUPABASE_URL_ANDA';
+const SUPABASE_ANON_KEY = 'ISI_SUPABASE_ANON_KEY_ANDA';
+const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
 const categories=[['Fashion','👗'],['Makanan & Minuman','🍊'],['Kerajinan Tangan','🧺'],['Kesehatan & Herbal','🌿'],['Rumah Tangga','🏠'],['Elektronik','💻'],['Kecantikan','🧴'],['Ibu & Anak','🧸'],['Olahraga','⚽'],['Perlengkapan Sekolah','🎒'],['Semua Kategori','▦']];
 const products=[{id:1,name:'Gamis Elegan Premium',price:149000,category:'Fashion',icon:'👗',rating:4.9,sold:122,store:'Borneo Fashion',description:'Gamis elegan untuk berbagai acara.'},{id:2,name:'Kerupuk Udang Khas Nusantara',price:10000,category:'Makanan & Minuman',icon:'🍘',rating:4.8,sold:256,store:'Adisa Fresh Mart',description:'Kerupuk udang untuk camilan.'},{id:3,name:'Jamu Kunyit Temulawak',price:10000,category:'Kesehatan & Herbal',icon:'🧃',rating:4.9,sold:542,store:'Adisa Fresh Mart',description:'Minuman herbal; periksa komposisi.'},{id:4,name:'Tas Selempang Premium',price:89000,category:'Fashion',icon:'👜',rating:4.7,sold:187,store:'Borneo Fashion',description:'Tas untuk sehari-hari.'},{id:5,name:'Keranjang Anyaman',price:45000,category:'Kerajinan Tangan',icon:'🧺',rating:4.9,sold:43,store:'Kalimantan Craft',description:'Kerajinan anyaman.'},{id:6,name:'Perlengkapan Rumah',price:35000,category:'Rumah Tangga',icon:'🏠',rating:4.8,sold:61,store:'Kalimantan Craft',description:'Pilihan perlengkapan rumah.'},{id:7,name:'Perawatan Kecantikan',price:55000,category:'Kecantikan',icon:'🧴',rating:4.7,sold:35,store:'Herbal Nusantara',description:'Produk perawatan.'},{id:8,name:'Tas Anak',price:65000,category:'Ibu & Anak',icon:'🎒',rating:4.8,sold:29,store:'Borneo Fashion',description:'Tas anak.'},{id:9,name:'Perangkat Elektronik',price:120000,category:'Elektronik',icon:'💻',rating:4.6,sold:17,store:'Kalimantan Craft',description:'Periksa spesifikasi produk.'}];
 const stores=[{name:'Adisa Fresh Mart',category:'Makanan & Minuman',icon:'🌿',rating:4.9,verified:false,description:'Minuman herbal, jamu, dan makanan ringan.'},{name:'Borneo Fashion',category:'Fashion',icon:'👗',rating:4.8,verified:false,description:'Busana dan aksesori.'},{name:'Kalimantan Craft',category:'Kerajinan Tangan',icon:'🧺',rating:4.9,verified:false,description:'Kerajinan dan produk kreatif.'},{name:'Herbal Nusantara',category:'Kesehatan & Herbal',icon:'🌱',rating:4.7,verified:false,description:'Produk herbal.'}];
@@ -104,7 +113,81 @@ function renderLives(){liveStrip.innerHTML=lives.map(l=>`<button class="tile" on
 function openLive(id){let l=lives.find(x=>x.id===id);liveRoom.innerHTML=`<div class="hero"><div class="big">${l.icon}</div><h2>${esc(l.title)}</h2><p>${esc(l.store)} · ${l.viewers} penonton demo</p></div><div class="card"><h3>Pratinjau BORNEOKU LIVE</h3><p>Siaran sungguhan, komentar, dan penonton nyata belum aktif. Penjual wajib menunggu persetujuan admin.</p><button class="btn full" onclick="showToast('Siaran perlu layanan video dan backend dengan persetujuan admin.')">Gabung Live Demo</button></div>`;navigate('live')}
 async function shareItem(text){let d={title:'BORNEOKU',text:text+' — Belanja Mudah, Jualan Lebih Luas',url:location.href};try{if(navigator.share)await navigator.share(d);else window.open('https://wa.me/?text='+encodeURIComponent(d.text+' '+d.url),'_blank','noopener')}catch(e){if(e.name!=='AbortError')showToast('Gagal membuka menu berbagi.')}}
 function calc(){let a=Math.max(0,+saleAmount.value||0),s=Math.min(100,Math.max(0,+sellerRate.value||0)),r=Math.min(100,Math.max(0,+affiliateRate.value||0));marketFee.textContent=rupiah(a*s/100);sellerNet.textContent=rupiah(a-a*s/100);affiliateFee.textContent=rupiah(a*r/100)}
-partnerForm.addEventListener('submit',e=>{e.preventDefault();showToast('Formulir pendaftaran mitra dengan NIK dan KTP siap dihubungkan ke Supabase.');});
+
+// ==========================================
+// INTEGRASI FORMULIR MITRA KE SUPABASE STORAGE & DATABASE
+// ==========================================
+partnerForm.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  showToast('Mengunggah dokumen dan mengirim pengajuan...');
+
+  const owner = document.getElementById('regOwner').value;
+  const nik = document.getElementById('regNik').value;
+  const phone = document.getElementById('regPhone').value;
+  const email = document.getElementById('regEmail').value;
+  const storeName = document.getElementById('regStoreName').value;
+  const category = document.getElementById('shopCategory').value;
+  const address = document.getElementById('regAddress').value;
+  const desc = document.getElementById('regDesc').value;
+
+  const ktpFiles = document.getElementById('regKtp').files;
+  const selfieFiles = document.getElementById('regSelfie').files;
+
+  if (!ktpFiles.length || !selfieFiles.length) {
+    showToast('Harap unggah foto KTP dan Selfie.');
+    return;
+  }
+
+  try {
+    const timestamp = Date.now();
+    
+    // 1. Upload KTP ke Bucket Privat "vendor-documents"
+    const ktpFileName = `ktp_${timestamp}_${ktpFiles[0].name}`;
+    const { data: ktpData, error: ktpError } = await supabaseClient.storage
+      .from('vendor-documents')
+      .upload(ktpFileName, ktpFiles[0]);
+
+    if (ktpError) throw ktpError;
+
+    // 2. Upload Selfie ke Bucket Privat "vendor-documents"
+    const selfieFileName = `selfie_${timestamp}_${selfieFiles[0].name}`;
+    const { data: selfieData, error: selfieError } = await supabaseClient.storage
+      .from('vendor-documents')
+      .upload(selfieFileName, selfieFiles[0]);
+
+    if (selfieError) throw selfieError;
+
+    // 3. Simpan Data Teks & Path Dokumen ke Tabel "vendor_applications"
+    const { error: dbError } = await supabaseClient
+      .from('vendor_applications')
+      .insert([
+        {
+          owner_name: owner,
+          nik: nik,
+          phone: phone,
+          email: email,
+          store_name: storeName,
+          category: category,
+          store_address: address,
+          description: desc,
+          ktp_url: ktpData.path,
+          selfie_url: selfieData.path,
+          status: 'pending'
+        }
+      ]);
+
+    if (dbError) throw dbError;
+
+    showToast('Pengajuan mitra berhasil dikirim! Menunggu verifikasi admin.');
+    partnerForm.reset();
+    navigate('home');
+
+  } catch (error) {
+    console.error('Error:', error.message);
+    showToast('Gagal mengirim pengajuan: ' + error.message);
+  }
+});
+
 function otp(e){e.preventDefault();otpArea.style.display='block';showToast('OTP demo: gunakan 123456. SMS belum aktif.')}
 function verifyOtp(){if(otpCode.value==='123456'){showToast('OTP demo berhasil.');navigate('account')}else showToast('Kode demo salah. Gunakan 123456.')}
 shopCategory.innerHTML += categories.filter(c=>c[0]!=='Semua Kategori').map(c=>`<option>${esc(c[0])}</option>`).join('');
